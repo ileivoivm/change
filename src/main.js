@@ -509,7 +509,7 @@ function selectVillage(v) {
   if (!drilledDistrict || drilledDistrict.slice(0, -1) !== townStem) {
     drillByStem(townStem);
   }
-  panZoomTo(vm.userData.centroid, 5);
+  panZoomWithPitch(vm.userData.centroid, 15, 42);
   sticky = false;
   setHover(vm);
   sticky = true;
@@ -520,6 +520,22 @@ function selectVillage(v) {
 function panZoomTo(targetVec, distance = 20) {
   const dir = new THREE.Vector3().subVectors(camera.position, controls.target).normalize();
   const newPos = new THREE.Vector3().copy(targetVec).addScaledVector(dir, distance);
+  tweenCamera(newPos, targetVec.clone(), 800);
+}
+
+// Pan / zoom while also forcing a specific pitch (keeps current azimuth)
+function panZoomWithPitch(targetVec, distance, pitchDeg) {
+  const dx = camera.position.x - controls.target.x;
+  const dz = camera.position.z - controls.target.z;
+  const azimuth = Math.atan2(dx, dz); // preserve heading
+  const pitch = (pitchDeg * Math.PI) / 180;
+  const y = distance * Math.sin(pitch);
+  const planar = distance * Math.cos(pitch);
+  const newPos = new THREE.Vector3(
+    targetVec.x + planar * Math.sin(azimuth),
+    targetVec.y + y,
+    targetVec.z + planar * Math.cos(azimuth),
+  );
   tweenCamera(newPos, targetVec.clone(), 800);
 }
 
