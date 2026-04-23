@@ -1,0 +1,764 @@
+{
+  "election": "2018 新北市長（3屆）",
+  "year": 2018,
+  "date": "2018-11-24",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "蘇貞昌",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "侯友宜",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "010",
+      "name": "板橋區",
+      "stem": "板橋",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 7.949999999999996,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 154687,
+          "rate": 53.97
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 131905,
+          "rate": 46.02
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "三重區",
+      "stem": "三重",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 0.44999999999999574,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 100823,
+          "rate": 50.22
+        },
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 99925,
+          "rate": 49.77
+        }
+      ]
+    },
+    {
+      "area": "030",
+      "name": "中和區",
+      "stem": "中和",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 26.630000000000003,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 139022,
+          "rate": 63.31
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 80552,
+          "rate": 36.68
+        }
+      ]
+    },
+    {
+      "area": "040",
+      "name": "永和區",
+      "stem": "永和",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 34.910000000000004,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 79362,
+          "rate": 67.45
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 38286,
+          "rate": 32.54
+        }
+      ]
+    },
+    {
+      "area": "050",
+      "name": "新莊區",
+      "stem": "新莊",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.4299999999999997,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 108240,
+          "rate": 51.71
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 101046,
+          "rate": 48.28
+        }
+      ]
+    },
+    {
+      "area": "060",
+      "name": "新店區",
+      "stem": "新店",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 37.47,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 109759,
+          "rate": 68.73
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 49933,
+          "rate": 31.26
+        }
+      ]
+    },
+    {
+      "area": "070",
+      "name": "樹林區",
+      "stem": "樹林",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.25,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 49090,
+          "rate": 54.12
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 41600,
+          "rate": 45.87
+        }
+      ]
+    },
+    {
+      "area": "080",
+      "name": "鶯歌區",
+      "stem": "鶯歌",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 6.990000000000002,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 23419,
+          "rate": 53.49
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20360,
+          "rate": 46.5
+        }
+      ]
+    },
+    {
+      "area": "090",
+      "name": "三峽區",
+      "stem": "三峽",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 14.729999999999997,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 31822,
+          "rate": 57.36
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 23653,
+          "rate": 42.63
+        }
+      ]
+    },
+    {
+      "area": "100",
+      "name": "淡水區",
+      "stem": "淡水",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 20.65,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 51336,
+          "rate": 60.32
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 33763,
+          "rate": 39.67
+        }
+      ]
+    },
+    {
+      "area": "110",
+      "name": "汐止區",
+      "stem": "汐止",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 22.550000000000004,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 61139,
+          "rate": 61.27
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 38639,
+          "rate": 38.72
+        }
+      ]
+    },
+    {
+      "area": "120",
+      "name": "瑞芳區",
+      "stem": "瑞芳",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 24.990000000000002,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 13393,
+          "rate": 62.49
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8038,
+          "rate": 37.5
+        }
+      ]
+    },
+    {
+      "area": "130",
+      "name": "土城區",
+      "stem": "土城",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 12.29,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 66487,
+          "rate": 56.14
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 51932,
+          "rate": 43.85
+        }
+      ]
+    },
+    {
+      "area": "140",
+      "name": "蘆洲區",
+      "stem": "蘆洲",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 1.1300000000000026,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 48350,
+          "rate": 50.56
+        },
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 47271,
+          "rate": 49.43
+        }
+      ]
+    },
+    {
+      "area": "150",
+      "name": "五股區",
+      "stem": "五股",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 4.469999999999999,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 22276,
+          "rate": 52.23
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20372,
+          "rate": 47.76
+        }
+      ]
+    },
+    {
+      "area": "160",
+      "name": "泰山區",
+      "stem": "泰山",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.449999999999996,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20885,
+          "rate": 54.22
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 17627,
+          "rate": 45.77
+        }
+      ]
+    },
+    {
+      "area": "170",
+      "name": "林口區",
+      "stem": "林口",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 18.15,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 30150,
+          "rate": 59.07
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20883,
+          "rate": 40.92
+        }
+      ]
+    },
+    {
+      "area": "180",
+      "name": "深坑區",
+      "stem": "深坑",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 19.949999999999996,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 7720,
+          "rate": 59.97
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5153,
+          "rate": 40.02
+        }
+      ]
+    },
+    {
+      "area": "190",
+      "name": "石碇區",
+      "stem": "石碇",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 4.530000000000001,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2488,
+          "rate": 52.26
+        },
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2272,
+          "rate": 47.73
+        }
+      ]
+    },
+    {
+      "area": "200",
+      "name": "坪林區",
+      "stem": "坪林",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 10.910000000000004,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2255,
+          "rate": 55.45
+        },
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1811,
+          "rate": 44.54
+        }
+      ]
+    },
+    {
+      "area": "210",
+      "name": "三芝區",
+      "stem": "三芝",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 18.809999999999995,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 7191,
+          "rate": 59.4
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4915,
+          "rate": 40.59
+        }
+      ]
+    },
+    {
+      "area": "220",
+      "name": "石門區",
+      "stem": "石門",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 17.410000000000004,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4162,
+          "rate": 58.7
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2928,
+          "rate": 41.29
+        }
+      ]
+    },
+    {
+      "area": "230",
+      "name": "八里區",
+      "stem": "八里",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.009999999999998,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 10545,
+          "rate": 54
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8982,
+          "rate": 45.99
+        }
+      ]
+    },
+    {
+      "area": "240",
+      "name": "平溪區",
+      "stem": "平溪",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 6.57,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1616,
+          "rate": 53.28
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1417,
+          "rate": 46.71
+        }
+      ]
+    },
+    {
+      "area": "250",
+      "name": "雙溪區",
+      "stem": "雙溪",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 11.649999999999999,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3062,
+          "rate": 55.82
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2423,
+          "rate": 44.17
+        }
+      ]
+    },
+    {
+      "area": "260",
+      "name": "貢寮區",
+      "stem": "貢寮",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 8.43,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3698,
+          "rate": 54.21
+        },
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3123,
+          "rate": 45.78
+        }
+      ]
+    },
+    {
+      "area": "270",
+      "name": "金山區",
+      "stem": "金山",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 7.789999999999999,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6246,
+          "rate": 53.89
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5344,
+          "rate": 46.1
+        }
+      ]
+    },
+    {
+      "area": "280",
+      "name": "萬里區",
+      "stem": "萬里",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 14.11,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6547,
+          "rate": 57.05
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4928,
+          "rate": 42.94
+        }
+      ]
+    },
+    {
+      "area": "290",
+      "name": "烏來區",
+      "stem": "烏來",
+      "winner": "侯友宜",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 29.53000000000001,
+      "results": [
+        {
+          "name": "侯友宜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2572,
+          "rate": 64.76
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1399,
+          "rate": 35.23
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "侯友宜",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 1165130,
+        "rate": 57.15
+      },
+      {
+        "name": "蘇貞昌",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 873692,
+        "rate": 42.85
+      }
+    ],
+    "winner": "侯友宜"
+  }
+}

@@ -1,0 +1,1624 @@
+{
+  "election": "2005 台北縣長（16屆）",
+  "year": 2005,
+  "date": "2005-12-03",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "黃福卿",
+      "partyCode": "999",
+      "partyName": "無"
+    },
+    {
+      "name": "周錫瑋",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "陳誠鈞",
+      "partyCode": "999",
+      "partyName": "無"
+    },
+    {
+      "name": "陳俊傑",
+      "partyCode": "999",
+      "partyName": "無"
+    },
+    {
+      "name": "羅文嘉",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "黃茂全",
+      "partyCode": "999",
+      "partyName": "無"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "板橋市",
+      "stem": "板橋",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 4.579999999999998,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 140326,
+          "rate": 51.98
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 127959,
+          "rate": 47.4
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 727,
+          "rate": 0.27
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 502,
+          "rate": 0.19
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 250,
+          "rate": 0.09
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 219,
+          "rate": 0.08
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "中和市",
+      "stem": "中和",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 25.959999999999994,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 130778,
+          "rate": 62.66
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 76605,
+          "rate": 36.7
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 602,
+          "rate": 0.29
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 343,
+          "rate": 0.16
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 224,
+          "rate": 0.11
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 164,
+          "rate": 0.08
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "永和市",
+      "stem": "永和",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 35.66,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 78131,
+          "rate": 67.5
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 36854,
+          "rate": 31.84
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 232,
+          "rate": 0.2
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 198,
+          "rate": 0.17
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 193,
+          "rate": 0.17
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 137,
+          "rate": 0.12
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "土城市",
+      "stem": "土城",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 10.170000000000002,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 59702,
+          "rate": 54.77
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 48620,
+          "rate": 44.6
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 202,
+          "rate": 0.19
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 201,
+          "rate": 0.18
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 166,
+          "rate": 0.15
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 112,
+          "rate": 0.1
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "樹林市",
+      "stem": "樹林",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 0.8299999999999983,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 37253,
+          "rate": 49.94
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 36631,
+          "rate": 49.11
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 283,
+          "rate": 0.38
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 155,
+          "rate": 0.21
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 143,
+          "rate": 0.19
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 128,
+          "rate": 0.17
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "鶯歌鎮",
+      "stem": "鶯歌",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.020000000000003,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 19501,
+          "rate": 50.39
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18721,
+          "rate": 48.37
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 193,
+          "rate": 0.5
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 134,
+          "rate": 0.35
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 80,
+          "rate": 0.21
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 73,
+          "rate": 0.19
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "三峽鎮",
+      "stem": "三峽",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.049999999999997,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 21796,
+          "rate": 53.5
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18516,
+          "rate": 45.45
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 148,
+          "rate": 0.36
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 116,
+          "rate": 0.28
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 85,
+          "rate": 0.21
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 82,
+          "rate": 0.2
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "三重市",
+      "stem": "三重",
+      "winner": "羅文嘉",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.740000000000002,
+      "results": [
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 101568,
+          "rate": 53.43
+        },
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 86854,
+          "rate": 45.69
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 673,
+          "rate": 0.35
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 453,
+          "rate": 0.24
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 335,
+          "rate": 0.18
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 228,
+          "rate": 0.12
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "蘆洲市",
+      "stem": "蘆洲",
+      "winner": "羅文嘉",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 6.790000000000006,
+      "results": [
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 44077,
+          "rate": 52.95
+        },
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 38424,
+          "rate": 46.16
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 228,
+          "rate": 0.27
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 216,
+          "rate": 0.26
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 155,
+          "rate": 0.19
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 149,
+          "rate": 0.18
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "新莊市",
+      "stem": "新莊",
+      "winner": "羅文嘉",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 0.7399999999999949,
+      "results": [
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 88837,
+          "rate": 50.08
+        },
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 87528,
+          "rate": 49.34
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 379,
+          "rate": 0.21
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 306,
+          "rate": 0.17
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 174,
+          "rate": 0.1
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 164,
+          "rate": 0.09
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "泰山鄉",
+      "stem": "泰山",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 5.240000000000002,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17446,
+          "rate": 52.21
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 15698,
+          "rate": 46.97
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 110,
+          "rate": 0.33
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 63,
+          "rate": 0.19
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 56,
+          "rate": 0.17
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 45,
+          "rate": 0.13
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "五股鄉",
+      "stem": "五股",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 0.259999999999998,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17772,
+          "rate": 49.66
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 17680,
+          "rate": 49.4
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 96,
+          "rate": 0.27
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 94,
+          "rate": 0.26
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 79,
+          "rate": 0.22
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 65,
+          "rate": 0.18
+        }
+      ]
+    },
+    {
+      "area": "013",
+      "name": "林口鄉",
+      "stem": "林口",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 7.890000000000001,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 14002,
+          "rate": 53.36
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 11931,
+          "rate": 45.47
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 171,
+          "rate": 0.65
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 52,
+          "rate": 0.2
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 43,
+          "rate": 0.16
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 40,
+          "rate": 0.15
+        }
+      ]
+    },
+    {
+      "area": "014",
+      "name": "淡水鎮",
+      "stem": "淡水",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 12.370000000000005,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 32697,
+          "rate": 55.53
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 25411,
+          "rate": 43.16
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 303,
+          "rate": 0.51
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 210,
+          "rate": 0.36
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 163,
+          "rate": 0.28
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 98,
+          "rate": 0.17
+        }
+      ]
+    },
+    {
+      "area": "015",
+      "name": "八里鄉",
+      "stem": "八里",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 6.469999999999999,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 8020,
+          "rate": 52.73
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 7035,
+          "rate": 46.26
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 63,
+          "rate": 0.41
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 42,
+          "rate": 0.28
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 31,
+          "rate": 0.2
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 18,
+          "rate": 0.12
+        }
+      ]
+    },
+    {
+      "area": "016",
+      "name": "三芝鄉",
+      "stem": "三芝",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.780000000000001,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6613,
+          "rate": 56.96
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4781,
+          "rate": 41.18
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 71,
+          "rate": 0.61
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 55,
+          "rate": 0.47
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 55,
+          "rate": 0.47
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 34,
+          "rate": 0.29
+        }
+      ]
+    },
+    {
+      "area": "017",
+      "name": "石門鄉",
+      "stem": "石門",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.509999999999998,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3760,
+          "rate": 56.35
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2725,
+          "rate": 40.84
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 68,
+          "rate": 1.02
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 55,
+          "rate": 0.82
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 40,
+          "rate": 0.6
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 25,
+          "rate": 0.37
+        }
+      ]
+    },
+    {
+      "area": "018",
+      "name": "汐止市",
+      "stem": "汐止",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 18.6,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 48124,
+          "rate": 58.77
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 32897,
+          "rate": 40.17
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 299,
+          "rate": 0.37
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 282,
+          "rate": 0.34
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 151,
+          "rate": 0.18
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 132,
+          "rate": 0.16
+        }
+      ]
+    },
+    {
+      "area": "019",
+      "name": "金山鄉",
+      "stem": "金山",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 9.689999999999998,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6416,
+          "rate": 53.78
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5259,
+          "rate": 44.09
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 89,
+          "rate": 0.75
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 65,
+          "rate": 0.54
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 55,
+          "rate": 0.46
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 45,
+          "rate": 0.38
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "萬里鄉",
+      "stem": "萬里",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 16.11,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5888,
+          "rate": 56.93
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4222,
+          "rate": 40.82
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 92,
+          "rate": 0.89
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 57,
+          "rate": 0.55
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 45,
+          "rate": 0.44
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 38,
+          "rate": 0.37
+        }
+      ]
+    },
+    {
+      "area": "021",
+      "name": "瑞芳鎮",
+      "stem": "瑞芳",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 14.670000000000002,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 10743,
+          "rate": 56.53
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 7956,
+          "rate": 41.86
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 142,
+          "rate": 0.75
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 62,
+          "rate": 0.33
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 54,
+          "rate": 0.28
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 48,
+          "rate": 0.25
+        }
+      ]
+    },
+    {
+      "area": "022",
+      "name": "雙溪鄉",
+      "stem": "雙溪",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 5.18,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2782,
+          "rate": 51.65
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2503,
+          "rate": 46.47
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 50,
+          "rate": 0.93
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 20,
+          "rate": 0.37
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 17,
+          "rate": 0.32
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 14,
+          "rate": 0.26
+        }
+      ]
+    },
+    {
+      "area": "023",
+      "name": "貢寮鄉",
+      "stem": "貢寮",
+      "winner": "羅文嘉",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 13.93,
+      "results": [
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5173,
+          "rate": 55.89
+        },
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3883,
+          "rate": 41.96
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 113,
+          "rate": 1.22
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 36,
+          "rate": 0.39
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 26,
+          "rate": 0.28
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 24,
+          "rate": 0.26
+        }
+      ]
+    },
+    {
+      "area": "024",
+      "name": "平溪鄉",
+      "stem": "平溪",
+      "winner": "羅文嘉",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 0.38000000000000256,
+      "results": [
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2067,
+          "rate": 48.95
+        },
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2051,
+          "rate": 48.57
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 50,
+          "rate": 1.18
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 21,
+          "rate": 0.5
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 20,
+          "rate": 0.47
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 14,
+          "rate": 0.33
+        }
+      ]
+    },
+    {
+      "area": "025",
+      "name": "新店市",
+      "stem": "新店",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 37.60000000000001,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 96869,
+          "rate": 68.48
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 43681,
+          "rate": 30.88
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 325,
+          "rate": 0.23
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 235,
+          "rate": 0.17
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 186,
+          "rate": 0.13
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 150,
+          "rate": 0.11
+        }
+      ]
+    },
+    {
+      "area": "026",
+      "name": "深坑鄉",
+      "stem": "深坑",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 12.800000000000004,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6036,
+          "rate": 55.84
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4653,
+          "rate": 43.04
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 36,
+          "rate": 0.33
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 34,
+          "rate": 0.31
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 32,
+          "rate": 0.3
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 19,
+          "rate": 0.18
+        }
+      ]
+    },
+    {
+      "area": "027",
+      "name": "石碇鄉",
+      "stem": "石碇",
+      "winner": "羅文嘉",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 14.32,
+      "results": [
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2417,
+          "rate": 56.08
+        },
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1800,
+          "rate": 41.76
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 34,
+          "rate": 0.79
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 29,
+          "rate": 0.67
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 16,
+          "rate": 0.37
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 14,
+          "rate": 0.32
+        }
+      ]
+    },
+    {
+      "area": "028",
+      "name": "坪林鄉",
+      "stem": "坪林",
+      "winner": "羅文嘉",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 23.369999999999997,
+      "results": [
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2736,
+          "rate": 60.62
+        },
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1681,
+          "rate": 37.25
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 31,
+          "rate": 0.69
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 28,
+          "rate": 0.62
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 20,
+          "rate": 0.44
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 17,
+          "rate": 0.38
+        }
+      ]
+    },
+    {
+      "area": "029",
+      "name": "烏來鄉",
+      "stem": "烏來",
+      "winner": "周錫瑋",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 28.880000000000003,
+      "results": [
+        {
+          "name": "周錫瑋",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1863,
+          "rate": 63.82
+        },
+        {
+          "name": "羅文嘉",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1020,
+          "rate": 34.94
+        },
+        {
+          "name": "黃福卿",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 22,
+          "rate": 0.75
+        },
+        {
+          "name": "陳誠鈞",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 6,
+          "rate": 0.21
+        },
+        {
+          "name": "黃茂全",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 5,
+          "rate": 0.17
+        },
+        {
+          "name": "陳俊傑",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 3,
+          "rate": 0.1
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "周錫瑋",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 988739,
+        "rate": 54.87
+      },
+      {
+        "name": "羅文嘉",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 798233,
+        "rate": 44.3
+      },
+      {
+        "name": "黃福卿",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 5639,
+        "rate": 0.31
+      },
+      {
+        "name": "陳俊傑",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 4064,
+        "rate": 0.23
+      },
+      {
+        "name": "陳誠鈞",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 2812,
+        "rate": 0.16
+      },
+      {
+        "name": "黃茂全",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 2585,
+        "rate": 0.14
+      }
+    ],
+    "winner": "周錫瑋"
+  }
+}

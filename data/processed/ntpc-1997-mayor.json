@@ -1,0 +1,1624 @@
+{
+  "election": "1997 台北縣長（14屆）",
+  "year": 1997,
+  "date": "1997-11-29",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "謝深山",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "周荃",
+      "partyCode": "999",
+      "partyName": "無"
+    },
+    {
+      "name": "楊泰順",
+      "partyCode": "74",
+      "partyName": "新黨"
+    },
+    {
+      "name": "林志嘉",
+      "partyCode": "999",
+      "partyName": "無"
+    },
+    {
+      "name": "蘇貞昌",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "廖學廣",
+      "partyCode": "999",
+      "partyName": "無"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "板橋市",
+      "stem": "板橋",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.539999999999999,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 98583,
+          "rate": 45.13
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 82116,
+          "rate": 37.59
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 21706,
+          "rate": 9.94
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 7907,
+          "rate": 3.62
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 4470,
+          "rate": 2.05
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 3682,
+          "rate": 1.69
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "三重市",
+      "stem": "三重",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 17.599999999999998,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 78439,
+          "rate": 49.26
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 50415,
+          "rate": 31.66
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 19046,
+          "rate": 11.96
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 5951,
+          "rate": 3.74
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 3642,
+          "rate": 2.29
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 1747,
+          "rate": 1.1
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "中和市",
+      "stem": "中和",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 10.530000000000001,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 74821,
+          "rate": 44.61
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 57162,
+          "rate": 34.08
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 18479,
+          "rate": 11.02
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 6577,
+          "rate": 3.92
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 6092,
+          "rate": 3.63
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 4577,
+          "rate": 2.73
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "永和市",
+      "stem": "永和",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.29,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 44910,
+          "rate": 45.86
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 29937,
+          "rate": 30.57
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 11642,
+          "rate": 11.89
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 4680,
+          "rate": 4.78
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 4022,
+          "rate": 4.11
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 2744,
+          "rate": 2.8
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "新莊市",
+      "stem": "新莊",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 13.449999999999996,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 62848,
+          "rate": 47.08
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 44892,
+          "rate": 33.63
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 16580,
+          "rate": 12.42
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 4621,
+          "rate": 3.46
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 2821,
+          "rate": 2.11
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 1731,
+          "rate": 1.3
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "新店市",
+      "stem": "新店",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.980000000000004,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 50342,
+          "rate": 45.81
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 32789,
+          "rate": 29.83
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 11776,
+          "rate": 10.72
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 6751,
+          "rate": 6.14
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 4760,
+          "rate": 4.33
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 3484,
+          "rate": 3.17
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "樹林市",
+      "stem": "樹林",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 14.07,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 27752,
+          "rate": 48.57
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 19714,
+          "rate": 34.5
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 6324,
+          "rate": 11.07
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 1538,
+          "rate": 2.69
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 1121,
+          "rate": 1.96
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 690,
+          "rate": 1.21
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "鶯歌鎮",
+      "stem": "鶯歌",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 4.299999999999997,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 13365,
+          "rate": 44.86
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 12085,
+          "rate": 40.56
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 2698,
+          "rate": 9.06
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 693,
+          "rate": 2.33
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 648,
+          "rate": 2.17
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 305,
+          "rate": 1.02
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "三峽鎮",
+      "stem": "三峽",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 2.3499999999999943,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12952,
+          "rate": 42.66
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 12239,
+          "rate": 40.31
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 3242,
+          "rate": 10.68
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 837,
+          "rate": 2.76
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 630,
+          "rate": 2.08
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 461,
+          "rate": 1.52
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "淡水鎮",
+      "stem": "淡水",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.71,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20868,
+          "rate": 48.18
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 14065,
+          "rate": 32.47
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 4638,
+          "rate": 10.71
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 1793,
+          "rate": 4.14
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 990,
+          "rate": 2.29
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 959,
+          "rate": 2.21
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "汐止市",
+      "stem": "汐止",
+      "winner": "廖學廣",
+      "winnerParty": "無",
+      "winnerPartyCode": "999",
+      "margin": 6.219999999999999,
+      "results": [
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 20594,
+          "rate": 35.25
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 16957,
+          "rate": 29.03
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 14900,
+          "rate": 25.51
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 3528,
+          "rate": 6.04
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 1516,
+          "rate": 2.6
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 921,
+          "rate": 1.58
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "瑞芳鎮",
+      "stem": "瑞芳",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.9200000000000017,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 9432,
+          "rate": 43.34
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8797,
+          "rate": 40.42
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 1923,
+          "rate": 8.84
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 947,
+          "rate": 4.35
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 464,
+          "rate": 2.13
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 201,
+          "rate": 0.92
+        }
+      ]
+    },
+    {
+      "area": "013",
+      "name": "土城市",
+      "stem": "土城",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.409999999999997,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 35963,
+          "rate": 44.66
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 30000,
+          "rate": 37.25
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 7897,
+          "rate": 9.81
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 3118,
+          "rate": 3.87
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 1975,
+          "rate": 2.45
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 1574,
+          "rate": 1.95
+        }
+      ]
+    },
+    {
+      "area": "014",
+      "name": "蘆洲市",
+      "stem": "蘆洲",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 19.240000000000002,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 28674,
+          "rate": 50.32
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17711,
+          "rate": 31.08
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 6661,
+          "rate": 11.69
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 2058,
+          "rate": 3.61
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 1255,
+          "rate": 2.2
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 619,
+          "rate": 1.09
+        }
+      ]
+    },
+    {
+      "area": "015",
+      "name": "五股鄉",
+      "stem": "五股",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.25,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9466,
+          "rate": 37.11
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 7615,
+          "rate": 29.86
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 6948,
+          "rate": 27.24
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 696,
+          "rate": 2.73
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 448,
+          "rate": 1.76
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 333,
+          "rate": 1.31
+        }
+      ]
+    },
+    {
+      "area": "016",
+      "name": "泰山鄉",
+      "stem": "泰山",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 2.289999999999999,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9834,
+          "rate": 40.01
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 9269,
+          "rate": 37.72
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 3663,
+          "rate": 14.9
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 894,
+          "rate": 3.64
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 507,
+          "rate": 2.06
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 409,
+          "rate": 1.66
+        }
+      ]
+    },
+    {
+      "area": "017",
+      "name": "林口鄉",
+      "stem": "林口",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 6.769999999999996,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 7868,
+          "rate": 42.29
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6608,
+          "rate": 35.52
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 2712,
+          "rate": 14.58
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 641,
+          "rate": 3.45
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 389,
+          "rate": 2.09
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 388,
+          "rate": 2.09
+        }
+      ]
+    },
+    {
+      "area": "018",
+      "name": "深坑鄉",
+      "stem": "深坑",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.8300000000000054,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3238,
+          "rate": 40.77
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3013,
+          "rate": 37.94
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 675,
+          "rate": 8.5
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 555,
+          "rate": 6.99
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 235,
+          "rate": 2.96
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 226,
+          "rate": 2.85
+        }
+      ]
+    },
+    {
+      "area": "019",
+      "name": "石碇鄉",
+      "stem": "石碇",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.890000000000001,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1728,
+          "rate": 47.33
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1440,
+          "rate": 39.44
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 212,
+          "rate": 5.81
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 154,
+          "rate": 4.22
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 66,
+          "rate": 1.81
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 51,
+          "rate": 1.4
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "坪林鄉",
+      "stem": "坪林",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 19.669999999999995,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1405,
+          "rate": 55.05
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 903,
+          "rate": 35.38
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 116,
+          "rate": 4.55
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 86,
+          "rate": 3.37
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 26,
+          "rate": 1.02
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 16,
+          "rate": 0.63
+        }
+      ]
+    },
+    {
+      "area": "021",
+      "name": "三芝鄉",
+      "stem": "三芝",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 43.870000000000005,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6179,
+          "rate": 65.4
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2034,
+          "rate": 21.53
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 708,
+          "rate": 7.49
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 288,
+          "rate": 3.05
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 166,
+          "rate": 1.76
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 73,
+          "rate": 0.77
+        }
+      ]
+    },
+    {
+      "area": "022",
+      "name": "石門鄉",
+      "stem": "石門",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 26.01,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2756,
+          "rate": 57.13
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1501,
+          "rate": 31.12
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 320,
+          "rate": 6.63
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 124,
+          "rate": 2.57
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 100,
+          "rate": 2.07
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 23,
+          "rate": 0.48
+        }
+      ]
+    },
+    {
+      "area": "023",
+      "name": "八里鄉",
+      "stem": "八里",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 5.710000000000001,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4539,
+          "rate": 44.36
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3955,
+          "rate": 38.65
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 1042,
+          "rate": 10.18
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 353,
+          "rate": 3.45
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 210,
+          "rate": 2.05
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 133,
+          "rate": 1.3
+        }
+      ]
+    },
+    {
+      "area": "024",
+      "name": "平溪鄉",
+      "stem": "平溪",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 0.07000000000000028,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1230,
+          "rate": 40.96
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1228,
+          "rate": 40.89
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 283,
+          "rate": 9.42
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 199,
+          "rate": 6.63
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 33,
+          "rate": 1.1
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 30,
+          "rate": 1
+        }
+      ]
+    },
+    {
+      "area": "025",
+      "name": "雙溪鄉",
+      "stem": "雙溪",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 0.6400000000000006,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2466,
+          "rate": 45.24
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2431,
+          "rate": 44.6
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 333,
+          "rate": 6.11
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 147,
+          "rate": 2.7
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 56,
+          "rate": 1.03
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 18,
+          "rate": 0.33
+        }
+      ]
+    },
+    {
+      "area": "026",
+      "name": "貢寮鄉",
+      "stem": "貢寮",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 24.090000000000003,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3755,
+          "rate": 58.81
+        },
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2217,
+          "rate": 34.72
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 225,
+          "rate": 3.52
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 93,
+          "rate": 1.46
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 74,
+          "rate": 1.16
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 21,
+          "rate": 0.33
+        }
+      ]
+    },
+    {
+      "area": "027",
+      "name": "金山鄉",
+      "stem": "金山",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 0.9699999999999989,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3704,
+          "rate": 43.18
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3621,
+          "rate": 42.21
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 646,
+          "rate": 7.53
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 421,
+          "rate": 4.91
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 137,
+          "rate": 1.6
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 50,
+          "rate": 0.58
+        }
+      ]
+    },
+    {
+      "area": "028",
+      "name": "萬里鄉",
+      "stem": "萬里",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 10.990000000000002,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3933,
+          "rate": 47.75
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3028,
+          "rate": 36.76
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 540,
+          "rate": 6.56
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 463,
+          "rate": 5.62
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 175,
+          "rate": 2.12
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 98,
+          "rate": 1.19
+        }
+      ]
+    },
+    {
+      "area": "029",
+      "name": "烏來鄉",
+      "stem": "烏來",
+      "winner": "謝深山",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 26.11,
+      "results": [
+        {
+          "name": "謝深山",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 954,
+          "rate": 58.46
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 528,
+          "rate": 32.35
+        },
+        {
+          "name": "林志嘉",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 85,
+          "rate": 5.21
+        },
+        {
+          "name": "廖學廣",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 31,
+          "rate": 1.9
+        },
+        {
+          "name": "周荃",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 18,
+          "rate": 1.1
+        },
+        {
+          "name": "楊泰順",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 16,
+          "rate": 0.98
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "蘇貞昌",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 571658,
+        "rate": 40.67
+      },
+      {
+        "name": "謝深山",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 543516,
+        "rate": 38.67
+      },
+      {
+        "name": "林志嘉",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 154590,
+        "rate": 11
+      },
+      {
+        "name": "廖學廣",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 70619,
+        "rate": 5.02
+      },
+      {
+        "name": "楊泰順",
+        "partyCode": "74",
+        "partyName": "新黨",
+        "votes": 32902,
+        "rate": 2.34
+      },
+      {
+        "name": "周荃",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 32373,
+        "rate": 2.3
+      }
+    ],
+    "winner": "蘇貞昌"
+  }
+}

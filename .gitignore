@@ -1,0 +1,11 @@
+node_modules
+dist
+.DS_Store
+*.log
+.vite
+
+# Downloaded raw CEC / topojson — re-fetchable via scripts
+data/raw/
+
+# Claude Code local settings
+.claude/

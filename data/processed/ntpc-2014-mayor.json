@@ -1,0 +1,979 @@
+{
+  "election": "2014 新北市長（2屆）",
+  "year": 2014,
+  "date": "2014-11-29",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "游錫堃",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "李進順",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "朱立倫",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "010",
+      "name": "板橋區",
+      "stem": "板橋",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 5.149999999999999,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 144167,
+          "rate": 52
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 129902,
+          "rate": 46.85
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 3145,
+          "rate": 1.13
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "三重區",
+      "stem": "三重",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 13.299999999999997,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 113090,
+          "rate": 56.11
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 86287,
+          "rate": 42.81
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 2165,
+          "rate": 1.07
+        }
+      ]
+    },
+    {
+      "area": "030",
+      "name": "中和區",
+      "stem": "中和",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 14.120000000000005,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 118154,
+          "rate": 56.49
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 88615,
+          "rate": 42.37
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 2366,
+          "rate": 1.13
+        }
+      ]
+    },
+    {
+      "area": "040",
+      "name": "永和區",
+      "stem": "永和",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 24.480000000000004,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 66744,
+          "rate": 61.71
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 40267,
+          "rate": 37.23
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1146,
+          "rate": 1.05
+        }
+      ]
+    },
+    {
+      "area": "050",
+      "name": "新莊區",
+      "stem": "新莊",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 9.560000000000002,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 105464,
+          "rate": 54.24
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 86882,
+          "rate": 44.68
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 2085,
+          "rate": 1.07
+        }
+      ]
+    },
+    {
+      "area": "060",
+      "name": "新店區",
+      "stem": "新店",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 25.910000000000004,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 88865,
+          "rate": 62.42
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 51980,
+          "rate": 36.51
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1503,
+          "rate": 1.05
+        }
+      ]
+    },
+    {
+      "area": "070",
+      "name": "樹林區",
+      "stem": "樹林",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 6.530000000000001,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 45344,
+          "rate": 52.67
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 39725,
+          "rate": 46.14
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1021,
+          "rate": 1.18
+        }
+      ]
+    },
+    {
+      "area": "080",
+      "name": "鶯歌區",
+      "stem": "鶯歌",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 4.170000000000002,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 22038,
+          "rate": 51.36
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20249,
+          "rate": 47.19
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 621,
+          "rate": 1.44
+        }
+      ]
+    },
+    {
+      "area": "090",
+      "name": "三峽區",
+      "stem": "三峽",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 0.7199999999999989,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 24747,
+          "rate": 49.68
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 24389,
+          "rate": 48.96
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 669,
+          "rate": 1.34
+        }
+      ]
+    },
+    {
+      "area": "100",
+      "name": "淡水區",
+      "stem": "淡水",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.43,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 39764,
+          "rate": 53.51
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 33501,
+          "rate": 45.08
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1043,
+          "rate": 1.4
+        }
+      ]
+    },
+    {
+      "area": "110",
+      "name": "汐止區",
+      "stem": "汐止",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 6.800000000000004,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 47298,
+          "rate": 52.92
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 41225,
+          "rate": 46.12
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 849,
+          "rate": 0.94
+        }
+      ]
+    },
+    {
+      "area": "120",
+      "name": "瑞芳區",
+      "stem": "瑞芳",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 9.07,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 11902,
+          "rate": 53.56
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9888,
+          "rate": 44.49
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 431,
+          "rate": 1.93
+        }
+      ]
+    },
+    {
+      "area": "130",
+      "name": "土城區",
+      "stem": "土城",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 1.6599999999999966,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 56736,
+          "rate": 50.26
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 54863,
+          "rate": 48.6
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1282,
+          "rate": 1.13
+        }
+      ]
+    },
+    {
+      "area": "140",
+      "name": "蘆洲區",
+      "stem": "蘆洲",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 14.910000000000004,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 52799,
+          "rate": 56.89
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 38968,
+          "rate": 41.98
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1038,
+          "rate": 1.11
+        }
+      ]
+    },
+    {
+      "area": "150",
+      "name": "五股區",
+      "stem": "五股",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.510000000000005,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20336,
+          "rate": 53.17
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17466,
+          "rate": 45.66
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 445,
+          "rate": 1.16
+        }
+      ]
+    },
+    {
+      "area": "160",
+      "name": "泰山區",
+      "stem": "泰山",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 1.6700000000000017,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18668,
+          "rate": 50.29
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 18049,
+          "rate": 48.62
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 399,
+          "rate": 1.07
+        }
+      ]
+    },
+    {
+      "area": "170",
+      "name": "林口區",
+      "stem": "林口",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 6.359999999999999,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 21300,
+          "rate": 52.62
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18726,
+          "rate": 46.26
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 449,
+          "rate": 1.1
+        }
+      ]
+    },
+    {
+      "area": "180",
+      "name": "深坑區",
+      "stem": "深坑",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 6.950000000000003,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5999,
+          "rate": 52.78
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5210,
+          "rate": 45.83
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 157,
+          "rate": 1.38
+        }
+      ]
+    },
+    {
+      "area": "190",
+      "name": "石碇區",
+      "stem": "石碇",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 15.259999999999998,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2603,
+          "rate": 56.73
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1903,
+          "rate": 41.47
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 82,
+          "rate": 1.78
+        }
+      ]
+    },
+    {
+      "area": "200",
+      "name": "坪林區",
+      "stem": "坪林",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 17.83,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2137,
+          "rate": 58.16
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1482,
+          "rate": 40.33
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 55,
+          "rate": 1.49
+        }
+      ]
+    },
+    {
+      "area": "210",
+      "name": "三芝區",
+      "stem": "三芝",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 11.29,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6095,
+          "rate": 54.8
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4839,
+          "rate": 43.51
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 187,
+          "rate": 1.68
+        }
+      ]
+    },
+    {
+      "area": "220",
+      "name": "石門區",
+      "stem": "石門",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 12.340000000000003,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3726,
+          "rate": 55.2
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2893,
+          "rate": 42.86
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 130,
+          "rate": 1.92
+        }
+      ]
+    },
+    {
+      "area": "230",
+      "name": "八里區",
+      "stem": "八里",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 0.8599999999999994,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 8838,
+          "rate": 49.66
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8685,
+          "rate": 48.8
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 272,
+          "rate": 1.52
+        }
+      ]
+    },
+    {
+      "area": "240",
+      "name": "平溪區",
+      "stem": "平溪",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.8900000000000006,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1601,
+          "rate": 50.2
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1509,
+          "rate": 47.31
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 79,
+          "rate": 2.47
+        }
+      ]
+    },
+    {
+      "area": "250",
+      "name": "雙溪區",
+      "stem": "雙溪",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 5.300000000000004,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3079,
+          "rate": 51.81
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2764,
+          "rate": 46.51
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 99,
+          "rate": 1.66
+        }
+      ]
+    },
+    {
+      "area": "260",
+      "name": "貢寮區",
+      "stem": "貢寮",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 15.18,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4172,
+          "rate": 56.72
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3056,
+          "rate": 41.54
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 127,
+          "rate": 1.72
+        }
+      ]
+    },
+    {
+      "area": "270",
+      "name": "金山區",
+      "stem": "金山",
+      "winner": "游錫堃",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.209999999999994,
+      "results": [
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5839,
+          "rate": 52.91
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5044,
+          "rate": 45.7
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 152,
+          "rate": 1.37
+        }
+      ]
+    },
+    {
+      "area": "280",
+      "name": "萬里區",
+      "stem": "萬里",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.729999999999997,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5424,
+          "rate": 51.07
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5028,
+          "rate": 47.34
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 167,
+          "rate": 1.57
+        }
+      ]
+    },
+    {
+      "area": "290",
+      "name": "烏來區",
+      "stem": "烏來",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 19.599999999999994,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2248,
+          "rate": 59.23
+        },
+        {
+          "name": "游錫堃",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1504,
+          "rate": 39.63
+        },
+        {
+          "name": "李進順",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 43,
+          "rate": 1.13
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "朱立倫",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 959302,
+        "rate": 50.06
+      },
+      {
+        "name": "游錫堃",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 934774,
+        "rate": 48.78
+      },
+      {
+        "name": "李進順",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 22207,
+        "rate": 1.16
+      }
+    ],
+    "winner": "朱立倫"
+  }
+}

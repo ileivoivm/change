@@ -1,0 +1,764 @@
+{
+  "election": "2010 新北市長（1屆·首任）",
+  "year": 2010,
+  "date": "2010-11-27",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "朱立倫",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "蔡英文",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "石門區",
+      "stem": "石門",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 9.050000000000004,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3985,
+          "rate": 54.52
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3324,
+          "rate": 45.47
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "三芝區",
+      "stem": "三芝",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 9.25,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6688,
+          "rate": 54.62
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5555,
+          "rate": 45.37
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "淡水區",
+      "stem": "淡水",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 9.670000000000002,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 41479,
+          "rate": 54.83
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 34166,
+          "rate": 45.16
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "八里區",
+      "stem": "八里",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.1300000000000026,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 9377,
+          "rate": 51.06
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8987,
+          "rate": 48.93
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "林口區",
+      "stem": "林口",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 7.270000000000003,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 21775,
+          "rate": 53.63
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18820,
+          "rate": 46.36
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "五股區",
+      "stem": "五股",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 5.93,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 22269,
+          "rate": 52.96
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 19772,
+          "rate": 47.03
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "泰山區",
+      "stem": "泰山",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 0.4100000000000037,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20508,
+          "rate": 50.2
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20339,
+          "rate": 49.79
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "新莊區",
+      "stem": "新莊",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 5.890000000000001,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 113183,
+          "rate": 52.94
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 100606,
+          "rate": 47.05
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "蘆洲區",
+      "stem": "蘆洲",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 12.449999999999996,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 57702,
+          "rate": 56.22
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 44923,
+          "rate": 43.77
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "三重區",
+      "stem": "三重",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 10.61,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 122948,
+          "rate": 55.3
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 99364,
+          "rate": 44.69
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "板橋區",
+      "stem": "板橋",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 0.5700000000000003,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 156614,
+          "rate": 50.28
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 154813,
+          "rate": 49.71
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "中和區",
+      "stem": "中和",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 20.15,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 141845,
+          "rate": 60.07
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 94273,
+          "rate": 39.92
+        }
+      ]
+    },
+    {
+      "area": "013",
+      "name": "永和區",
+      "stem": "永和",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 31.190000000000005,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 83459,
+          "rate": 65.59
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 43777,
+          "rate": 34.4
+        }
+      ]
+    },
+    {
+      "area": "014",
+      "name": "樹林區",
+      "stem": "樹林",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 2.6300000000000026,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 46522,
+          "rate": 51.31
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 44134,
+          "rate": 48.68
+        }
+      ]
+    },
+    {
+      "area": "015",
+      "name": "鶯歌區",
+      "stem": "鶯歌",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 3.1700000000000017,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 23525,
+          "rate": 51.58
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 22081,
+          "rate": 48.41
+        }
+      ]
+    },
+    {
+      "area": "016",
+      "name": "土城區",
+      "stem": "土城",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.0700000000000003,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 64268,
+          "rate": 51.03
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 61662,
+          "rate": 48.96
+        }
+      ]
+    },
+    {
+      "area": "017",
+      "name": "三峽區",
+      "stem": "三峽",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.289999999999999,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 26574,
+          "rate": 51.64
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 24879,
+          "rate": 48.35
+        }
+      ]
+    },
+    {
+      "area": "018",
+      "name": "新店區",
+      "stem": "新店",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 31.449999999999996,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 107063,
+          "rate": 65.72
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 55823,
+          "rate": 34.27
+        }
+      ]
+    },
+    {
+      "area": "019",
+      "name": "深坑區",
+      "stem": "深坑",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 6.829999999999998,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6740,
+          "rate": 53.41
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5878,
+          "rate": 46.58
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "石碇區",
+      "stem": "石碇",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 19.009999999999998,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3093,
+          "rate": 59.5
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2105,
+          "rate": 40.49
+        }
+      ]
+    },
+    {
+      "area": "021",
+      "name": "坪林區",
+      "stem": "坪林",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 26.11,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2886,
+          "rate": 63.05
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1691,
+          "rate": 36.94
+        }
+      ]
+    },
+    {
+      "area": "022",
+      "name": "烏來區",
+      "stem": "烏來",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 27.79,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2209,
+          "rate": 63.89
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1248,
+          "rate": 36.1
+        }
+      ]
+    },
+    {
+      "area": "023",
+      "name": "平溪區",
+      "stem": "平溪",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.710000000000001,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1930,
+          "rate": 53.85
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1654,
+          "rate": 46.14
+        }
+      ]
+    },
+    {
+      "area": "024",
+      "name": "瑞芳區",
+      "stem": "瑞芳",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 7.390000000000001,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 12580,
+          "rate": 53.69
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 10847,
+          "rate": 46.3
+        }
+      ]
+    },
+    {
+      "area": "025",
+      "name": "雙溪區",
+      "stem": "雙溪",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 1.1700000000000017,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3053,
+          "rate": 50.58
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2982,
+          "rate": 49.41
+        }
+      ]
+    },
+    {
+      "area": "026",
+      "name": "貢寮區",
+      "stem": "貢寮",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 21.770000000000003,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5117,
+          "rate": 60.88
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3287,
+          "rate": 39.11
+        }
+      ]
+    },
+    {
+      "area": "027",
+      "name": "金山區",
+      "stem": "金山",
+      "winner": "蔡英文",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 5.770000000000003,
+      "results": [
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 6672,
+          "rate": 52.88
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5944,
+          "rate": 47.11
+        }
+      ]
+    },
+    {
+      "area": "028",
+      "name": "萬里區",
+      "stem": "萬里",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.6099999999999994,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6398,
+          "rate": 51.8
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5952,
+          "rate": 48.19
+        }
+      ]
+    },
+    {
+      "area": "029",
+      "name": "汐止區",
+      "stem": "汐止",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 13.43,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 57330,
+          "rate": 56.71
+        },
+        {
+          "name": "蔡英文",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 43758,
+          "rate": 43.28
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "朱立倫",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 1115536,
+        "rate": 52.61
+      },
+      {
+        "name": "蔡英文",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 1004900,
+        "rate": 47.39
+      }
+    ],
+    "winner": "朱立倫"
+  }
+}

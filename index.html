@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHANGE — 台灣選戰版圖</title>
+    <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #f3f1ea; }
+      canvas { display: block; }
+
+      #hud {
+        position: fixed; top: 16px; left: 16px;
+        font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+        color: #2a2a2a; font-size: 12px; line-height: 1.6;
+        background: rgba(255,255,255,0.7); backdrop-filter: blur(6px);
+        padding: 8px 12px; border-radius: 10px;
+        pointer-events: none;
+      }
+      #hud b { font-size: 13px; }
+
+      #camera-readout {
+        position: fixed; bottom: 16px; left: 16px;
+        font: 500 11px 'SF Mono', Menlo, Consolas, monospace;
+        color: #3a3a3a;
+        background: rgba(255,255,255,0.7); backdrop-filter: blur(6px);
+        padding: 8px 12px; border-radius: 10px;
+        pointer-events: none;
+        line-height: 1.7;
+      }
+      #camera-readout .row {
+        display: grid; grid-template-columns: 56px auto; gap: 8px;
+      }
+      #camera-readout .row span:first-child {
+        color: #888; font-weight: 400;
+      }
+      #camera-readout .row span:last-child {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* year timeline */
+      #timeline {
+        position: fixed; bottom: 18px; left: 50%;
+        transform: translateX(-50%);
+        display: flex; align-items: center;
+        gap: 2px;
+        background: rgba(255,255,255,0.82); backdrop-filter: blur(6px);
+        padding: 8px 14px; border-radius: 40px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+        font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+      }
+      #timeline .tick {
+        display: flex; flex-direction: column; align-items: center;
+        padding: 4px 12px;
+        cursor: pointer; user-select: none;
+        border-radius: 20px;
+        transition: background 150ms, color 150ms;
+        color: #555;
+      }
+      #timeline .tick:hover { background: rgba(0,0,0,0.06); }
+      #timeline .tick.active {
+        background: #2a2a2a; color: #fff;
+      }
+      #timeline .tick .year {
+        font-size: 13px; font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+      #timeline .tick .who {
+        font-size: 9px; opacity: 0.7; margin-top: 1px;
+      }
+      #timeline .arrow {
+        color: #999; font-size: 11px;
+        padding: 0 4px;
+      }
+
+      /* floating speech bubble anchored to hovered district */
+      #label {
+        position: fixed; left: 0; top: 0;
+        pointer-events: none;
+        font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+        transform: translate(-50%, -100%);
+        opacity: 0;
+        transition: opacity 120ms ease-out;
+      }
+      #label.visible { opacity: 1; }
+      #label .bubble {
+        background: #fff;
+        color: #2a2a2a;
+        padding: 9px 14px;
+        border-radius: 14px;
+        min-width: 180px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
+      }
+      #label .bubble .row {
+        display: flex; align-items: baseline; gap: 6px;
+        margin-bottom: 4px;
+      }
+      #label .bubble .tag {
+        font-size: 10px; font-weight: 500;
+        color: #999; letter-spacing: 0.5px;
+      }
+      #label .bubble .name {
+        font-size: 15px; font-weight: 700;
+      }
+      #label .bubble .winner {
+        font-size: 12px; font-weight: 600;
+        margin: 2px 0 7px;
+      }
+      #label .bubble .sub {
+        font-size: 11px; color: #888; font-weight: 500;
+      }
+      #label .bubble .cands {
+        display: flex; flex-direction: column; gap: 3px;
+      }
+      #label .bubble .cand {
+        display: grid;
+        grid-template-columns: 10px 1fr auto auto;
+        gap: 6px;
+        align-items: center;
+        font-size: 12px;
+      }
+      #label .bubble .cand .swatch {
+        width: 10px; height: 10px; border-radius: 2px;
+      }
+      #label .bubble .cand .cn { font-weight: 600; }
+      #label .bubble .cand .cp { color: #999; font-size: 10px; }
+      #label .bubble .cand .cr { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+      #label .pin {
+        width: 2px; height: 26px;
+        background: linear-gradient(to bottom, #2a2a2a 0%, #2a2a2a 70%, transparent 100%);
+        margin: 0 auto;
+      }
+      #label.context .bubble { background: #ededea; color: #6a6a6a; }
+      #label.context .pin { background: linear-gradient(to bottom, #888 0%, #888 70%, transparent 100%); }
+
+      /* control cluster */
+      #controls {
+        position: fixed; top: 16px; right: 16px;
+        display: flex; flex-direction: column; gap: 10px;
+        align-items: center;
+      }
+      #compass {
+        width: 64px; height: 64px;
+        background: rgba(255,255,255,0.85); backdrop-filter: blur(6px);
+        border-radius: 50%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        transition: transform 150ms ease-out, background 150ms;
+        user-select: none;
+        position: relative;
+      }
+      #compass:hover { background: rgba(255,255,255,1); transform: scale(1.05); }
+      #compass:active { transform: scale(0.96); }
+      #compass svg { display: block; }
+      #compass .label-n {
+        position: absolute;
+        top: 4px; left: 50%;
+        transform: translateX(-50%);
+        font: 600 10px -apple-system, sans-serif;
+        color: #c04040;
+        pointer-events: none;
+      }
+
+      .btn-group {
+        display: flex; flex-direction: column;
+        background: rgba(255,255,255,0.85); backdrop-filter: blur(6px);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      }
+      .btn-group .btn {
+        width: 42px; height: 42px;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; user-select: none;
+        transition: background 120ms;
+        color: #2a2a2a;
+      }
+      .btn-group .btn:hover { background: rgba(0,0,0,0.04); }
+      .btn-group .btn:active { background: rgba(0,0,0,0.08); }
+      .btn-group .btn + .btn { border-top: 1px solid rgba(0,0,0,0.06); }
+      .btn-group .btn svg { display: block; }
+      .btn-solo {
+        width: 42px; height: 42px;
+        background: rgba(255,255,255,0.85); backdrop-filter: blur(6px);
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; user-select: none;
+        color: #2a2a2a;
+      }
+      .btn-solo:hover { background: rgba(255,255,255,1); }
+      .btn-solo:active { transform: scale(0.96); }
+
+      #view-toggle {
+        font: 700 14px -apple-system, "Noto Sans TC", sans-serif;
+      }
+      #view-toggle.on {
+        background: #2a2a2a;
+        color: #fff;
+      }
+
+      /* Village list panel */
+      #village-panel {
+        position: fixed; top: 180px; left: 16px;
+        width: 260px; max-height: calc(100vh - 360px);
+        background: rgba(255,255,255,0.82); backdrop-filter: blur(6px);
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+        display: flex; flex-direction: column;
+        overflow: hidden;
+      }
+      #village-panel .header {
+        padding: 10px 14px;
+        font-size: 12px; font-weight: 600;
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      #village-panel .header .count {
+        color: #888; font-weight: 500;
+      }
+      #village-list {
+        overflow-y: auto;
+        padding: 4px 0;
+      }
+      .town-group {
+        border-bottom: 1px solid rgba(0,0,0,0.04);
+      }
+      .town-group:last-child { border-bottom: none; }
+      .town-head {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 6px 14px;
+        font-size: 11px; font-weight: 600;
+        color: #555;
+        cursor: pointer;
+        user-select: none;
+      }
+      .town-head:hover { background: rgba(0,0,0,0.03); }
+      .town-head .caret {
+        font-size: 9px; opacity: 0.5;
+        transition: transform 150ms;
+      }
+      .town-group.open .caret { transform: rotate(90deg); }
+      .town-group.highlight .town-head {
+        background: #2a2a2a; color: #fff;
+      }
+      .town-group.highlight .town-head .caret { color: #fff; }
+      .town-villages {
+        display: none;
+        padding-bottom: 4px;
+      }
+      .town-group.open .town-villages { display: block; }
+      .village-row {
+        display: grid;
+        grid-template-columns: 14px 1fr auto;
+        gap: 8px; align-items: center;
+        padding: 3px 14px 3px 22px;
+        font-size: 11px;
+        cursor: default;
+      }
+      .village-row:hover { background: rgba(0,0,0,0.04); }
+      .village-row .swatch {
+        width: 10px; height: 10px; border-radius: 2px;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+      .village-row .name { color: #222; }
+      .village-row .margin {
+        font-variant-numeric: tabular-nums;
+        color: #777; font-size: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hud">
+      <b>CHANGE · M4</b><br />
+      <span id="hud-stats">載入中…</span>
+    </div>
+
+    <div id="timeline"></div>
+
+    <div id="camera-readout">
+      <div class="row"><span>pos</span><span id="cam-pos">—</span></div>
+      <div class="row"><span>target</span><span id="cam-target">—</span></div>
+      <div class="row"><span>dist</span><span id="cam-dist">—</span></div>
+      <div class="row"><span>azimuth</span><span id="cam-az">—</span></div>
+      <div class="row"><span>pitch</span><span id="cam-pitch">—</span></div>
+    </div>
+
+    <div id="label">
+      <div class="bubble"><span class="tag"></span><span class="name"></span></div>
+      <div class="pin"></div>
+    </div>
+
+    <div id="controls">
+      <div id="compass" title="切換至正北朝南俯瞰">
+        <span class="label-n">N</span>
+        <svg width="44" height="44" viewBox="-22 -22 44 44" id="compass-svg">
+          <g id="compass-needle">
+            <polygon points="0,-16 4,0 0,14 -4,0" fill="#c04040" />
+            <polygon points="0,-16 4,0 0,0" fill="#e26060" />
+            <circle cx="0" cy="0" r="2.5" fill="#2a2a2a" />
+          </g>
+        </svg>
+      </div>
+
+      <div class="btn-group">
+        <div class="btn" id="zoom-in" title="放大">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="btn" id="zoom-out" title="縮小">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path d="M3 9h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <div class="btn-solo" id="home" title="回到初始視角">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 9.5L10 3l7 6.5V17a1 1 0 01-1 1h-3v-5H7v5H4a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="btn-solo" id="view-toggle" title="切換 區 / 里 級">
+        <span id="view-toggle-label">區</span>
+      </div>
+    </div>
+
+    <div id="village-panel">
+      <div class="header"><span>新北市 · 里級（2022）</span><span class="count" id="village-count">—</span></div>
+      <div id="village-list"></div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
