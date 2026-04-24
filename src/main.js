@@ -1446,14 +1446,30 @@ function tweenCamera(toPos, toTarget, duration = 700) {
   };
 }
 
+// Compass cycles the camera through 北 → 東 → 南 → 西 → 北 (clockwise).
+// Coord convention (from geo.js): north = -Z, east = +X. Each cardinal is
+// the camera POSITION (camera looks back toward target), so "北視角" places
+// the camera to the north of the target so you're looking south.
+const COMPASS_DIRS = [
+  { x:  0, z: -1 }, // 北 (camera at north, looking south — the default)
+  { x:  1, z:  0 }, // 東
+  { x:  0, z:  1 }, // 南
+  { x: -1, z:  0 }, // 西
+];
+let compassIdx = 0;
 compassEl.addEventListener('click', () => {
   const dist = 42;
   const pitch = Math.PI * 0.30;
   const y = dist * Math.sin(pitch);
   const planar = dist * Math.cos(pitch);
+  // Pivot around the current controls.target so the cycle works at any
+  // zoom / drill level — not just when centered at origin.
+  const t = controls.target.clone();
+  const dir = COMPASS_DIRS[compassIdx];
+  compassIdx = (compassIdx + 1) % COMPASS_DIRS.length;
   tweenCamera(
-    new THREE.Vector3(0, y, -planar),
-    new THREE.Vector3(0, 0, 0)
+    new THREE.Vector3(t.x + planar * dir.x, y, t.z + planar * dir.z),
+    t
   );
 });
 
