@@ -205,7 +205,10 @@ function shareHtml(ctx) {
 <meta name="twitter:description" content="${esc(desc)}">
 <meta name="twitter:image" content="${esc(ogImageUrl)}">
 
-<meta http-equiv="refresh" content="1; url=${esc(spaUrl)}">
+<!-- 故意不用 <meta http-equiv="refresh">：FB / LinkedIn / Slack 的
+     crawler 會跟著 meta-refresh 跳到 SPA 根頁，抓不到本頁的 OG tag。
+     人類瀏覽器會走下面的 <script> 被導到互動地圖，crawler 無 JS 會
+     停在這頁讀 OG，兩邊各得其所。-->
 <style>
   body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
     font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
