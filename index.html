@@ -54,6 +54,7 @@
         padding: 8px 14px; border-radius: 40px;
         box-shadow: 0 4px 16px rgba(0,0,0,0.10);
         font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+        z-index: 40;
       }
       #timeline .tick {
         display: flex; flex-direction: column; align-items: center;
@@ -65,7 +66,10 @@
       }
       #timeline .tick:hover { background: rgba(0,0,0,0.06); }
       #timeline .tick.active {
-        background: #2a2a2a; color: #fff;
+        /* Orange highlight so "currently-viewing year" reads as interactive
+           accent rather than muted black; matches the village-selection gold
+           family and contrasts with the neutral pill. */
+        background: #f08a24; color: #fff;
       }
       #timeline .tick .year {
         font-size: 13px; font-weight: 600;
@@ -77,6 +81,22 @@
       #timeline .arrow {
         color: #999; font-size: 11px;
         padding: 0 4px;
+      }
+
+      #timeline-hint {
+        position: fixed; bottom: 92px; left: 50%;
+        transform: translateX(-50%);
+        font: 11px/1.2 -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+        color: #2a2a2a;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(4px);
+        padding: 5px 12px; border-radius: 12px;
+        letter-spacing: 0.3px;
+        pointer-events: none;
+        white-space: nowrap;
+        /* 卡片面板 DOM 在後、預設堆疊在上；抬高 z-index 讓提示總是可見，
+           但仍低於 #label (50) 以免蓋掉 bubble 的 share button。 */
+        z-index: 40;
       }
 
       /* floating speech bubble anchored to hovered district */
@@ -166,6 +186,67 @@
       }
       #label .bubble .flip .dim { color: #aaa; font-size: 13px; }
 
+      /* 25-year history strip — single village's color sequence across 7 elections */
+      #label .bubble .history {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(0,0,0,0.08);
+      }
+      #label .bubble .history .hs-label {
+        display: flex; justify-content: space-between;
+        color: #aaa; font-size: 10px;
+        letter-spacing: 1px; margin-bottom: 4px;
+        font-variant-numeric: tabular-nums;
+      }
+      #label .bubble .history .hs-row {
+        display: flex; gap: 3px;
+        margin-bottom: 6px;
+      }
+      #label .bubble .history .hsq {
+        flex: 1; height: 16px;
+        border-radius: 2px;
+        background: #e0e0e0;
+        transition: transform 120ms, box-shadow 120ms;
+        cursor: default;
+        position: relative;
+      }
+      /* Strip only becomes interactive when the village is pinned (gold-glow).
+         Otherwise it's read-only so drive-by hover doesn't accidentally scrub
+         years. `#label.locked` is toggled by selectVillage / unselectVillage. */
+      #label.locked .bubble .history .hsq {
+        cursor: pointer;
+        pointer-events: auto; /* #label is pointer-events:none; opt in here */
+      }
+      #label.locked .bubble .history .hsq:hover {
+        transform: scaleY(1.2);
+        box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+      }
+      #label .bubble .history .hsq.no-data {
+        background: repeating-linear-gradient(
+          45deg, #ececec, #ececec 2px, #dcdcdc 2px, #dcdcdc 4px
+        );
+        cursor: not-allowed;
+      }
+      #label.locked .bubble .history .hsq.no-data:hover {
+        transform: none;
+        box-shadow: none;
+      }
+      #label .bubble .history .hsq.current {
+        outline: 2px solid #2a2a2a;
+        outline-offset: 1px;
+        transform: scaleY(1.15);
+      }
+      #label.locked .bubble .history .hsq.current:hover {
+        transform: scaleY(1.25);
+      }
+      #label .bubble .history .hs-meta {
+        color: #777; font-size: 12px;
+        font-variant-numeric: tabular-nums;
+      }
+      #label .bubble .history .hs-meta b {
+        color: #2a2a2a; font-weight: 700;
+      }
+
       #label .bubble .share-btn {
         display: block; width: 100%;
         margin-top: 12px; padding: 8px 12px;
@@ -175,8 +256,13 @@
         cursor: pointer; transition: background 160ms, color 160ms;
         pointer-events: auto; /* #label is pointer-events:none; opt in here */
       }
-      #label .bubble .share-btn:hover { background: #dcecf2; }
+      #label .bubble .share-btn:hover:not(.disabled) { background: #dcecf2; }
       #label .bubble .share-btn.copied { color: #2aa046; background: #e6f4ea; border-color: rgba(42,160,70,0.3); }
+      #label .bubble .share-btn.disabled {
+        color: #9aa3a8; background: #f3f4f5;
+        border-color: rgba(0,0,0,0.08);
+        cursor: not-allowed;
+      }
 
       #label .pin {
         width: 2px; height: 26px;
@@ -360,6 +446,13 @@
         #timeline .tick .year { font-size: 11px; }
         #timeline .tick .who { font-size: 8px; }
         #timeline .arrow { padding: 0 1px; font-size: 9px; }
+        #timeline-hint {
+          bottom: 76px;
+          font-size: 10px;
+          padding: 4px 9px;
+          max-width: calc(100vw - 40px);
+          white-space: normal; text-align: center;
+        }
 
         #controls { top: 10px; right: 10px; gap: 7px; }
         #compass { width: 46px; height: 46px; }
@@ -387,6 +480,9 @@
         #label .bubble .cand .cr { min-width: 42px; }
         #label .bubble .flip { font-size: 12px; margin-top: 7px; padding-top: 7px; }
         #label .bubble .flip .dim { font-size: 11px; }
+        #label .bubble .history { margin-top: 7px; padding-top: 7px; }
+        #label .bubble .history .hsq { height: 14px; }
+        #label .bubble .history .hs-meta { font-size: 11px; }
         #label .bubble .share-btn { font-size: 12px; padding: 7px 10px; margin-top: 9px; }
 
         .card-city .name { font-size: 22px; }
@@ -445,6 +541,7 @@
       <span id="hud-stats">載入中…</span>
     </div>
 
+    <div id="timeline-hint">里級資料自 2005 起 · 1997 / 2001 中選會未公開里級</div>
     <div id="timeline"></div>
 
     <div id="camera-readout">

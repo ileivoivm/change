@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { computeBounds, makeProjector, projectFeature, voxelize } from './geo.js';
-import { colorForDistrict, partyColor, NEUTRAL } from './palette.js';
+import { colorForDistrict, partyColor, NEUTRAL, PARTY_COLORS } from './palette.js';
 import ntpcGeo from '../data/processed/ntpc-districts.geo.json';
 import tpeGeo from '../data/processed/tpe-districts.geo.json';
 import restGeo from '../data/processed/tw-rest-districts.geo.json';
@@ -153,6 +153,87 @@ function rebuildVillageVoteMap(year) {
   return m;
 }
 villageVoteMap = rebuildVillageVoteMap(currentYear);
+
+// ─────────── village 25-year history ───────────
+// Key: "townStem/villageStem" → { years: {YYYY: {partyCode, margin}}, flips, dataYears, dominantPartyCode }
+// Built once at startup; currentYear highlighting is applied at render time.
+const villageHistoryMap = (() => {
+  const m = new Map();
+  for (const year of YEARS) {
+    const data = VILLAGE_ELECTIONS[year];
+    for (const v of (data?.villages || [])) {
+      const k = v.townName.slice(0, -1) + '/' + v.villageName.slice(0, -1);
+      let entry = m.get(k);
+      if (!entry) {
+        entry = { years: {}, townName: v.townName, villageName: v.villageName };
+        m.set(k, entry);
+      }
+      entry.years[year] = { partyCode: v.winnerPartyCode, margin: v.margin };
+    }
+  }
+  // Aggregate per-village stats
+  for (const entry of m.values()) {
+    const seq = YEARS.map(y => entry.years[y]?.partyCode).filter(Boolean);
+    let flips = 0;
+    for (let i = 1; i < seq.length; i++) if (seq[i] !== seq[i - 1]) flips++;
+    entry.flips = flips;
+    entry.dataYears = seq.length;
+    // Dominant party = mode (useful for 「永 X 鐵板」 label)
+    const tally = {};
+    for (const c of seq) tally[c] = (tally[c] || 0) + 1;
+    entry.dominantPartyCode = Object.entries(tally).sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+  }
+  return m;
+})();
+
+function renderVillageHistoryStrip(townName, villageName) {
+  const k = townName.slice(0, -1) + '/' + villageName.slice(0, -1);
+  const entry = villageHistoryMap.get(k);
+  // Only years with published village-level data (2005–2022). CEC 1997/2001 未公開里級，
+  // 若硬塞灰格會讓視覺 71% 失效資料，反而誤導——我們老實只畫有資料的 5 場。
+  const years = VILLAGE_YEARS; // [2005, 2010, 2014, 2018, 2022]
+  const spanLabel = `${years[0]} → ${years[years.length - 1]}`;
+
+  const squares = years.map(y => {
+    const data = entry?.years[y];
+    if (!data) {
+      return `<span class="hsq no-data" title="${y} · 本里無對應資料"></span>`;
+    }
+    const hex = '#' + partyColor(data.partyCode).toString(16).padStart(6, '0');
+    const cls = y === currentYear ? 'hsq current' : 'hsq';
+    const title = y === currentYear ? `${y}（目前）` : `切至 ${y}`;
+    return `<span class="${cls}" style="background:${hex}" data-year="${y}" title="${title}"></span>`;
+  }).join('');
+
+  // Meta line — identity label. Identity 字在前（粗體），factual 描述在後，三型平行。
+  // 永藍/永綠/永白 用台灣慣用語；其他政黨 fallback 到黨名。
+  const permanentLabel = (code) => {
+    if (code === '1') return '永藍里';
+    if (code === '16') return '永綠里';
+    if (code === '350') return '永白里';
+    const n = PARTY_COLORS[code]?.name || '單黨';
+    return `永 ${n} 里`;
+  };
+
+  let meta = `近 ${years.length} 場里長選舉`;
+  if (entry && entry.dataYears >= 2) {
+    if (entry.flips === 0) {
+      meta = `<b>${permanentLabel(entry.dominantPartyCode)}</b> · ${entry.dataYears} 場未翻轉`;
+    } else if (entry.flips === 1) {
+      meta = `<b>翻轉里</b> · 翻過 1 次`;
+    } else {
+      meta = `<b>搖擺里</b> · 翻過 ${entry.flips} 次`;
+    }
+  } else if (entry && entry.dataYears === 1) {
+    meta = `僅 ${Object.keys(entry.years)[0]} 一場里級資料`;
+  }
+
+  return `<div class="history">
+    <div class="hs-label"><span>${years[0]}</span><span>${years[years.length - 1]}</span></div>
+    <div class="hs-row">${squares}</div>
+    <div class="hs-meta">${meta}</div>
+  </div>`;
+}
 
 function makeMaterial({ color, isContext }) {
   return new THREE.MeshStandardMaterial({
@@ -537,6 +618,7 @@ function selectVillage(v) {
     setHover(vm);
     sticky = true;
     pulseMesh = vm;
+    labelEl.classList.add('locked');
   } else {
     // Fall back to the district mesh — the user still gets feedback: the
     // camera flies in, the panel card stays selected, and a synthetic bubble
@@ -568,6 +650,7 @@ function selectVillage(v) {
     setHover(ghost);
     sticky = true;
     pulseMesh = null;
+    labelEl.classList.add('locked');
   }
   selectedVillageKey = key;
   // On mobile, selecting a village via card pins the bubble and shifts the
@@ -588,6 +671,7 @@ function unselectVillage() {
   selectedVillageKey = null;
   sticky = false;
   pulseMesh = null;
+  labelEl.classList.remove('locked');
   if (drilledDistrict) {
     // Zoom back out to district view
     const mesh = districtMeshes.find(m => m.userData.townName === drilledDistrict);
@@ -730,9 +814,65 @@ const stopEvt = (e) => { e.stopPropagation(); };
 for (const ev of ['pointerdown', 'pointerup', 'click', 'dblclick']) {
   labelBubble.addEventListener(ev, (e) => {
     if (e.target.closest('.share-btn')) stopEvt(e);
+    // History strip squares are interactive too — prevent pointerdown from
+    // bubbling to the canvas (would otherwise feel like a drag / deselect).
+    if (e.target.closest('.hsq[data-year]')) stopEvt(e);
   });
 }
+// Shared year-jump helper used by both the strip hover/scrub and click paths.
+// Returns true if it actually fired (so the caller can stopPropagation only
+// when a real jump happened).
+function jumpBubbleToYear(y) {
+  if (!y || y === currentYear || !ELECTIONS[y]) return false;
+  // Preserve drill + pin: strip acts as a per-village scrubber, not a
+  // global year reset. setYear() re-assigns `userData.vote` on every
+  // village mesh for the new year, so we just re-render the same mesh
+  // to pick up the updated vote / strip highlight.
+  setYear(y, { preserveContext: true });
+  const mesh = pulseMesh || hovered;
+  if (mesh) {
+    // Ghost-pinned villages (those without a 1982 voxel polygon — e.g. 蘆洲
+    // 福安里, 永和 新里 — ~16 cases) are plain objects not in villageMeshes,
+    // so setYear's per-mesh vote refresh skips them. Re-pull their vote
+    // from the freshly-rebuilt villageVoteMap so the bubble shows the
+    // newly-selected year's candidates, not the year the ghost was born.
+    if (mesh.userData?.layer === 'village' && !mesh.userData.villageKey) {
+      const tn = mesh.userData.townName || '';
+      const vn = mesh.userData.villageName || '';
+      const key = tn.slice(0, -1) + '/' + vn.slice(0, -1);
+      mesh.userData.vote = villageVoteMap.get(key) || null;
+    }
+    renderBubble(mesh);
+  }
+  return true;
+}
+
+// Hover scrub: sliding across strip squares jumps years without a click.
+// Uses pointerover (bubbles) so event delegation via .closest() works, and
+// also fires on touch-drag across squares for the same scrubber feel on mobile.
+// IMPORTANT: only interactive when the village is pinned (gold-glow / sticky).
+// Drive-by hover over an unpinned bubble must NOT scrub years — users were
+// accidentally triggering year jumps just from mouse tracking near the strip.
+labelBubble.addEventListener('pointerover', (e) => {
+  if (!sticky) return;
+  const hsq = e.target.closest('.hsq[data-year]');
+  if (!hsq) return;
+  const y = Number(hsq.dataset.year);
+  jumpBubbleToYear(y);
+});
+
 labelBubble.addEventListener('click', async (e) => {
+  // Strip squares: click path kept as a fallback for taps that don't drag
+  // (hover-only wouldn't work on a single tap-no-drag touch). Same sticky
+  // gate — only the pinned / highlighted village allows year scrub.
+  const hsq = e.target.closest('.hsq[data-year]');
+  if (hsq) {
+    e.stopPropagation();
+    if (!sticky) return;
+    jumpBubbleToYear(Number(hsq.dataset.year));
+    return;
+  }
+
   const btn = e.target.closest('.share-btn');
   if (!btn) return;
   e.stopPropagation();
@@ -851,7 +991,8 @@ function renderBubble(mesh) {
     const tName = mesh.userData.townName;
     if (!v) {
       labelBubble.innerHTML = `<div class="row"><span class="tag">新北市 ${tName}</span><span class="name">${vName}</span></div>
-        <div class="sub">查無里級資料</div>`;
+        <div class="sub">${currentYear} 年無里級資料</div>
+        ${renderVillageHistoryStrip(tName, vName)}`;
       return;
     }
     const fmt = n => n.toLocaleString('en-US');
@@ -883,15 +1024,19 @@ function renderBubble(mesh) {
       </div>`;
     }
 
+    // Always render the share button so bubble height stays stable across
+    // year scrubbing (user report: "bubble 才不會乎大呼小"). Pre-rendered
+    // OG cards only exist for 2022, so older years show it disabled/greyed.
     const shareBlock = currentYear === 2022
       ? `<button class="share-btn" data-d="${tName.slice(0, -1)}" data-v="${vName.slice(0, -1)}">複製分享連結</button>`
-      : '';
+      : `<button class="share-btn disabled" disabled title="僅 2022 年提供預先產生的分享卡片">複製分享連結</button>`;
 
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
       <div class="winner" style="color:${winColor}">${v.winner} 勝 ${v.margin.toFixed(1)}%</div>
       <div class="cands">${rows}</div>
       ${flipBlock}
+      ${renderVillageHistoryStrip(tName, vName)}
       ${shareBlock}`;
     return;
   }
@@ -940,6 +1085,10 @@ function setHover(mesh) {
     document.body.style.cursor = 'pointer';
     renderBubble(mesh);
     labelEl.classList.toggle('context', mesh.userData.isContext);
+    // `locked` mirrors `sticky` — when the village is pinned (gold-glow),
+    // the strip becomes interactive (hover-scrub). Otherwise the strip is
+    // view-only to prevent drive-by hover from scrubbing years.
+    labelEl.classList.toggle('locked', sticky);
     labelEl.classList.add('visible');
   } else {
     document.body.style.cursor = '';
@@ -1091,10 +1240,20 @@ function renderPanel() {
     listEl.appendChild(card);
   }
 
+  // Re-apply drill / selection visual state BEFORE positioning so `.faded`
+  // hides non-drilled districts. Without this, setYear with preserveContext
+  // (strip-click year jump) rebuilds district cards into their grid slots
+  // and they visually overlap the village grid below the breadcrumb.
+  updateCardState();
   layoutCards();
 
   // Repopulate village cards if we're still drilled (e.g. year change while drilled)
-  if (drilledDistrict) renderVillagesFor(drilledDistrict.slice(0, -1));
+  if (drilledDistrict) {
+    renderVillagesFor(drilledDistrict.slice(0, -1));
+    // renderVillagesFor appends cards without .faded/.active — re-apply state so
+    // non-selected villages fade when a village is pinned (strip-jump case).
+    updateCardState();
+  }
 }
 
 // Create village cards for a given district stem, starting at the chip position
@@ -1193,18 +1352,40 @@ function layoutCards() {
   const mobile = W < 640;
   const sidePad = mobile ? 8 : 0;
 
+  // Reserve space for timeline (pill + hint + padding) at bottom — any card
+  // placed below this line is unclickable because the timeline covers it.
+  // Mobile timeline is tighter (~76+16 hint+tl), desktop 92+64+padding.
+  const TIMELINE_RESERVE = mobile ? 80 : 130;
+  const TOP_RESERVE = mobile ? 16 : 28;
+  const availH = H - TIMELINE_RESERVE - TOP_RESERVE;
+
   const cols = mobile ? 3 : 5;
   const gap = mobile ? 5 : 6;
   const tileW = mobile ? Math.floor((W - 2 * sidePad - (cols - 1) * gap) / cols) : 180;
-  const tileH = mobile ? 64 : 106;
-  const cityH = mobile ? 74 : 141;
-  const cityGap = mobile ? 8 : 10;
+  let tileH = mobile ? 64 : 106;
+  let cityH = mobile ? 74 : 141;
+  let cityGap = mobile ? 8 : 10;
   const rows = Math.ceil(districts.length / cols);
   const gridW = cols * tileW + (cols - 1) * gap;
-  const gridH = rows * tileH + (rows - 1) * gap;
-  const totalH = cityH + cityGap + gridH;
+  let gridH = rows * tileH + (rows - 1) * gap;
+  let totalH = cityH + cityGap + gridH;
+
+  // If total card stack exceeds the viewport's safe area, shrink tileH / cityH
+  // proportionally so the last row still lands above the timeline.
+  // 下限設在合理可讀範圍，避免完全壓扁。
+  if (totalH > availH) {
+    const scale = availH / totalH;
+    tileH = Math.max(48, Math.floor(tileH * scale));
+    cityH = Math.max(52, Math.floor(cityH * scale));
+    cityGap = Math.max(4, Math.floor(cityGap * scale));
+    gridH = rows * tileH + (rows - 1) * gap;
+    totalH = cityH + cityGap + gridH;
+  }
+
   const gridStartX = Math.round((W - gridW) / 2);
-  const gridStartY = Math.round((H - totalH) / 2);
+  // Clamp startY so the bottom of the stack never crosses into the timeline zone
+  const centeredY = Math.round((H - totalH) / 2);
+  const gridStartY = Math.max(TOP_RESERVE, Math.min(centeredY, H - TIMELINE_RESERVE - totalH));
 
   // Breadcrumb geometry (only used when drilled)
   const hasVillageChip = drilled && !!selectedVillageKey;
@@ -1274,14 +1455,35 @@ function layoutCards() {
   const villageList = document.getElementById('village-list');
   if (drilled && villageCards.length > 0) {
     const n = villageCards.length;
+    const vGap = mobile ? 4 : 5;
+    // Cap columns by available viewport width so the grid never spills
+    // off-screen (each column needs ~100px minimum to stay readable).
+    const vAvailW = W - 2 * sidePad - (mobile ? 0 : 32);
+    const MIN_COL_W = mobile ? 90 : 100;
+    const vColCapByWidth = Math.floor((vAvailW + vGap) / (MIN_COL_W + vGap));
+    const vColCapBase = mobile ? 3 : 14;
+    const vColCap = Math.min(vColCapBase, Math.max(3, vColCapByWidth));
     const vCols = mobile
       ? Math.min(3, Math.max(2, Math.ceil(Math.sqrt(n))))
-      : Math.min(10, Math.max(3, Math.ceil(Math.sqrt(n))));
-    const vGap = mobile ? 4 : 5;
-    const vTileW = mobile
+      : Math.min(vColCap, Math.max(3, Math.ceil(Math.sqrt(n))));
+    let vTileW = mobile
       ? Math.floor((W - 2 * sidePad - (vCols - 1) * vGap) / vCols)
-      : 125;
-    const vTileH = mobile ? 48 : 70;
+      : Math.min(125, Math.floor((vAvailW - (vCols - 1) * vGap) / vCols));
+    let vTileH = mobile ? 48 : 70;
+    const vRows = Math.ceil(n / vCols);
+
+    // Desktop: shrink vTileH so the grid fits between breadcrumb and timeline.
+    // Mobile uses scrollable #village-list (bounded by top/bottom) so no shrink.
+    if (!mobile) {
+      const breadcrumbBottom = bcY + bcH + 20;
+      const vAvailableH = H - breadcrumbBottom - TIMELINE_RESERVE;
+      const vGridH = vRows * vTileH + (vRows - 1) * vGap;
+      if (vGridH > vAvailableH) {
+        const scale = vAvailableH / vGridH;
+        vTileH = Math.max(40, Math.floor(vTileH * scale));
+      }
+    }
+
     const vGridW = vCols * vTileW + (vCols - 1) * vGap;
     const vStartX = Math.round((W - vGridW) / 2);
 
@@ -1292,7 +1494,7 @@ function layoutCards() {
 
     if (mobileScroll) {
       villageList.style.top = (bcY + bcH + 10) + 'px';
-      villageList.style.bottom = '64px'; // above timeline
+      villageList.style.bottom = (TIMELINE_RESERVE - 16) + 'px'; // above timeline + hint
     } else {
       villageList.style.top = '';
       villageList.style.bottom = '';
@@ -1375,11 +1577,17 @@ function updateTimelineActive() {
 const COLOR_TWEEN_MS = 600;
 const tmpColor = new THREE.Color();
 
-function setYear(newYear) {
+function setYear(newYear, { preserveContext = false } = {}) {
   if (!ELECTIONS[newYear] || newYear === currentYear) return;
-  // Full reset on year change — close any drill / selection, clear hover so
-  // we re-render the panel from scratch without stale card state.
-  if (drilledDistrict || selectedVillageKey || sticky) exitDrill(true);
+  // Default: full reset on year change — close any drill / selection, clear
+  // hover so we re-render the panel from scratch without stale card state.
+  // With `preserveContext: true` (used by in-bubble strip year-jump), we keep
+  // drill state, keep the pinned village, and let the caller re-render the
+  // bubble after meshes are updated. This makes the strip feel like a mini
+  // timeline scrubber for one village, rather than a hard context reset.
+  if (!preserveContext && (drilledDistrict || selectedVillageKey || sticky)) {
+    exitDrill(true);
+  }
   currentYear = newYear;
   electionByStem = rebuildElectionByStem(newYear);
   villageVoteMap = rebuildVillageVoteMap(newYear);
