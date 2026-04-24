@@ -3,6 +3,7 @@ dist
 .DS_Store
 *.log
 .vite
+.cache
 
 # Downloaded raw CEC / topojson — re-fetchable via scripts
 data/raw/

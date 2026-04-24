@@ -154,6 +154,17 @@
       }
       #label .bubble .flip .dim { color: #aaa; font-size: 13px; }
 
+      #label .bubble .share-btn {
+        display: block; width: 100%;
+        margin-top: 12px; padding: 8px 12px;
+        font: inherit; font-size: 13px; font-weight: 600;
+        color: #2a7a9a; background: #eef6f9;
+        border: 1px solid rgba(42,122,154,0.3); border-radius: 8px;
+        cursor: pointer; transition: background 160ms, color 160ms;
+      }
+      #label .bubble .share-btn:hover { background: #dcecf2; }
+      #label .bubble .share-btn.copied { color: #2aa046; background: #e6f4ea; border-color: rgba(42,160,70,0.3); }
+
       #label .pin {
         width: 2px; height: 26px;
         background: linear-gradient(to bottom, #2a2a2a 0%, #2a2a2a 70%, transparent 100%);

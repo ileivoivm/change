@@ -16,6 +16,7 @@
 - **相機控制**：右上角羅盤（一鍵正北俯瞰）、Zoom +/-、Home（回初始視角）
 - **相機讀數**：左下角即時顯示 pos / target / dist / azimuth / pitch，方便調整起始視角
 - **URL 分享**：`?y=2022&d=永和&v=安和` 直接定位任一年/區/里
+- **社群分享卡**：2022 每里都有預建 OG 圖 + HTML，`/share/2022/{區}/{里}/` 分享到 FB / Threads 會顯示翻盤所需票數的專屬縮圖
 
 ## 退出 drill 四種方式
 
@@ -48,6 +49,7 @@ scripts/
   extract-elections.mjs     — 抽歷屆 區級選舉結果
   extract-villages.mjs      — 抽里界 + 歷屆里級選舉結果
   extract-tw-outline.mjs    — 抽全台縣界
+  build-share.mjs           — 產生 1,032 個里的社群分享頁 + OG PNG (satori)
 data/
   raw/          — CEC 原始 CSV 與 topojson（downloaded）
   processed/    — 清洗後 JSON（import 進 Vite）
@@ -61,6 +63,15 @@ npm run dev
 ```
 
 開 `http://localhost:5173`。
+
+### 上線前建置
+
+```bash
+npm run build            # vite build → dist/，然後自動跑 build-share
+npm run build:share      # 只重建 share 頁（1,032 村里，約 5 分鐘）
+```
+
+GitHub Pages 透過 `.github/workflows/deploy.yml` 在 push 到 main 時自動部署 `dist/`。
 
 ## 里程碑
 

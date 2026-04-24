@@ -658,6 +658,25 @@ const labelEl = document.getElementById('label');
 const labelBubble = labelEl.querySelector('.bubble');
 const tmpVec = new THREE.Vector3();
 
+// Share button: copies pre-rendered /share/YYYY/{d}/{v}/ URL to clipboard so
+// FB/Threads can fetch OG metadata. Only exists on 2022 villages.
+labelBubble.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.share-btn');
+  if (!btn) return;
+  const d = btn.dataset.d, v = btn.dataset.v;
+  const origin = location.origin + import.meta.env.BASE_URL.replace(/\/$/, '');
+  const url = `${origin}/share/2022/${encodeURIComponent(d)}/${encodeURIComponent(v)}/`;
+  try {
+    await navigator.clipboard.writeText(url);
+    const orig = btn.textContent;
+    btn.textContent = '已複製 ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1600);
+  } catch {
+    prompt('複製這個連結分享：', url);
+  }
+});
+
 window.addEventListener('pointermove', (e) => {
   pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
   pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
@@ -762,11 +781,16 @@ function renderBubble(mesh) {
       </div>`;
     }
 
+    const shareBlock = currentYear === 2022
+      ? `<button class="share-btn" data-d="${tName.slice(0, -1)}" data-v="${vName.slice(0, -1)}">複製分享連結</button>`
+      : '';
+
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
       <div class="winner" style="color:${winColor}">${v.winner} 勝 ${v.margin.toFixed(1)}%</div>
       <div class="cands">${rows}</div>
-      ${flipBlock}`;
+      ${flipBlock}
+      ${shareBlock}`;
     return;
   }
 
