@@ -121,6 +121,7 @@ const villageMeshes = [];
 let villageGroup = null;
 const villageBorderLines = [];
 let drilledDistrict = null; // townName of currently drilled district (e.g. "永和市") or null
+let selectedVillageKey = null; // "townStem/villageStem" of the village shown as 3rd breadcrumb chip, or null
 let sticky = false; // when true, hover raycast won't override bubble (used for village selections from list)
 let hovered = null; // currently hovered mesh (district or village) — declared here to avoid TDZ for URL writes
 let pulseMesh = null; // mesh currently glowing (selected village or drilled-district announce)
@@ -428,7 +429,9 @@ function setViewMode(mode) {
 // ─────────── drill into a single district ───────────
 function drillInto(mesh) {
   if (!mesh || mesh.userData.layer !== 'ntpc') return;
-  if (currentYear !== 2022) setYear(2022);
+  // 1997/2001 CEC didn't publish village-level data — fall back to 2022
+  // only for those. Other years (2005+) drill in place.
+  if (!villageVotes.villages.length) setYear(2022);
   drilledDistrict = mesh.userData.townName;
   const stem = drilledDistrict.slice(0, -1);
 
@@ -464,6 +467,7 @@ function drillInto(mesh) {
 function exitDrill(flyHome = true) {
   sticky = false;
   pulseMesh = null;
+  selectedVillageKey = null;
   if (!drilledDistrict) {
     if (flyHome) tweenCamera(INITIAL_CAM_POS.clone(), INITIAL_TARGET.clone());
     setHover(null);
@@ -493,12 +497,7 @@ function drillByStem(stem) {
 }
 
 // Rebuild the left panel list (idempotent — safe to call after year change)
-function rebuildVillagePanel() {
-  const listEl = document.getElementById('village-list');
-  if (!listEl) return;
-  listEl.innerHTML = '';
-  buildVillagePanelInto(listEl);
-}
+function rebuildVillagePanel() { renderPanel(); }
 
 // Select a village (from panel): drill into its district, zoom closer, pin bubble
 function selectVillage(v) {
@@ -509,11 +508,29 @@ function selectVillage(v) {
   if (!drilledDistrict || drilledDistrict.slice(0, -1) !== townStem) {
     drillByStem(townStem);
   }
-  panZoomWithPitch(vm.userData.centroid, 15, 42);
+  panZoomWithPitch(vm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100);
   sticky = false;
   setHover(vm);
   sticky = true;
   pulseMesh = vm;
+  selectedVillageKey = key;
+  updateCardState();
+  layoutCards();
+  writeUrl();
+}
+
+function unselectVillage() {
+  if (!selectedVillageKey) return;
+  selectedVillageKey = null;
+  sticky = false;
+  pulseMesh = null;
+  if (drilledDistrict) {
+    // Zoom back out to district view
+    const mesh = districtMeshes.find(m => m.userData.townName === drilledDistrict);
+    if (mesh) panZoomWithPitch(mesh.userData.centroid, 14, 42);
+  }
+  updateCardState();
+  layoutCards();
   writeUrl();
 }
 
@@ -523,11 +540,13 @@ function panZoomTo(targetVec, distance = 20) {
   tweenCamera(newPos, targetVec.clone(), 800);
 }
 
-// Pan / zoom while also forcing a specific pitch (keeps current azimuth)
-function panZoomWithPitch(targetVec, distance, pitchDeg) {
+// Pan / zoom while forcing a specific pitch. Preserves current azimuth
+// unless `deltaAzimuthDeg` is passed — e.g. selectVillage passes a random
+// value in [-50, +50] for a small rotational transition between villages.
+function panZoomWithPitch(targetVec, distance, pitchDeg, deltaAzimuthDeg = 0) {
   const dx = camera.position.x - controls.target.x;
   const dz = camera.position.z - controls.target.z;
-  const azimuth = Math.atan2(dx, dz); // preserve heading
+  const azimuth = Math.atan2(dx, dz) + (deltaAzimuthDeg * Math.PI) / 180;
   const pitch = (pitchDeg * Math.PI) / 180;
   const y = distance * Math.sin(pitch);
   const planar = distance * Math.cos(pitch);
@@ -541,10 +560,10 @@ function panZoomWithPitch(targetVec, distance, pitchDeg) {
 
 // ─────────── URL sync (share links) ───────────
 // Format: ?y=YYYY&d=中和&v=安和
-// Year defaults to 2022, omitted when 2022
+// Year always written so 2022/2026/... are unambiguous in shared links.
 function writeUrl() {
   const params = new URLSearchParams();
-  if (currentYear !== 2022) params.set('y', String(currentYear));
+  params.set('y', String(currentYear));
   if (drilledDistrict) params.set('d', drilledDistrict.slice(0, -1));
   if (sticky && hovered?.userData?.layer === 'village') {
     params.set('v', hovered.userData.villageName.slice(0, -1));
@@ -576,18 +595,34 @@ function parseAndApplyUrl() {
 }
 
 function updatePanelDrill(stem) {
-  const groups = document.querySelectorAll('.town-group');
-  groups.forEach(g => {
-    const headText = g.querySelector('.town-head')?.textContent || '';
-    // match by towName prefix (e.g. "永和區")
-    const isTarget = stem && headText.startsWith(stem);
-    g.classList.toggle('open', !!isTarget);
-    g.classList.toggle('highlight', !!isTarget);
-  });
-  if (stem) {
-    // scroll the target into view
-    const active = document.querySelector('.town-group.highlight');
-    if (active) active.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Capture previously-drilled chip before we flip classes, then let
+  // layoutCards set its new destination (grid slot or banner if switching).
+  const oldChip = document.querySelector('.card-district.active');
+
+  updateCardState();
+  layoutCards();
+
+  // Fade old villages toward wherever the old chip is now headed
+  clearVillages(oldChip);
+
+  // Spawn villages for the newly drilled district
+  if (drilledDistrict) renderVillagesFor(drilledDistrict.slice(0, -1));
+}
+
+// Sync card classes to drill / village selection state.
+//   district: drilled gets .active, the rest get .faded when drilled
+//   village:  selected gets .active, the rest get .faded when a village is selected
+function updateCardState() {
+  const drilledStem = drilledDistrict ? drilledDistrict.slice(0, -1) : null;
+  for (const c of document.querySelectorAll('.card-district')) {
+    const isDrilled = drilledStem && c.dataset.stem === drilledStem;
+    c.classList.toggle('active', !!isDrilled);
+    c.classList.toggle('faded', !!drilledStem && !isDrilled);
+  }
+  for (const c of document.querySelectorAll('.card-village:not(.clearing)')) {
+    const isSelected = selectedVillageKey && c.dataset.villageKey === selectedVillageKey;
+    c.classList.toggle('active', !!isSelected);
+    c.classList.toggle('faded', !!selectedVillageKey && !isSelected);
   }
 }
 
@@ -653,16 +688,25 @@ function handleCanvasClick(cx, cy) {
     const hit = raycaster.intersectObjects(targets, false)[0];
     if (hit) drillInto(hit.object);
   } else {
-    // drilled: click on empty space exits; click on a visible village unsticks bubble
+    // drilled: single-click a village to highlight + pin; empty click only
+    // unselects. Never exits drill (use 新北市 / Home / ESC for that).
     const targets = villageMeshes.filter(m => m.visible);
     const hit = raycaster.intersectObjects(targets, false)[0];
-    if (!hit) exitDrill();
-    else { sticky = false; pulseMesh = null; } // let hover take over
+    if (!hit) {
+      if (selectedVillageKey) unselectVillage();
+    } else {
+      const v = hit.object.userData.vote;
+      if (v) selectVillage(v);
+      else { sticky = false; pulseMesh = null; }
+    }
   }
 }
 
 window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && drilledDistrict) exitDrill();
+  if (e.key === 'Escape') {
+    if (selectedVillageKey) unselectVillage();
+    else if (drilledDistrict) exitDrill();
+  }
 });
 
 // Double-click on a village → pin bubble + glow + URL update
@@ -689,20 +733,40 @@ function renderBubble(mesh) {
         <div class="sub">查無里級資料</div>`;
       return;
     }
+    const fmt = n => n.toLocaleString('en-US');
     const rows = v.results.map(r => {
       const hex = '#' + partyColor(r.partyCode).toString(16).padStart(6, '0');
       return `<div class="cand">
         <span class="swatch" style="background:${hex}"></span>
         <span class="cn">${r.name}</span>
         <span class="cp">${r.partyName}</span>
+        <span class="cv">${fmt(r.votes)}</span>
         <span class="cr">${r.rate.toFixed(1)}%</span>
       </div>`;
     }).join('');
     const winColor = '#' + partyColor(v.winnerPartyCode).toString(16).padStart(6, '0');
+
+    // Flip math for the runner-up: swing = votes that must change sides
+    // (gap closes at 2× leverage); mobilize = new votes all flowing to loser.
+    let flipBlock = '';
+    if (v.results.length >= 2 && v.results[0].votes > v.results[1].votes) {
+      const w = v.results[0], l = v.results[1];
+      const gap = w.votes - l.votes;
+      const swing = Math.ceil((gap + 1) / 2);
+      const mobilize = gap + 1;
+      const loserColor = '#' + partyColor(l.partyCode).toString(16).padStart(6, '0');
+      flipBlock = `<div class="flip">
+        <div class="flip-head" style="color:${loserColor}">${l.name}（${l.partyName}）翻盤需</div>
+        <div class="flip-row"><b>${fmt(swing)}</b> 票改投 <span class="dim">（1 票 = 2 差距）</span></div>
+        <div class="flip-row">或爭取 <b>${fmt(mobilize)}</b> 張新票 <span class="dim">（全流向落後方）</span></div>
+      </div>`;
+    }
+
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
       <div class="winner" style="color:${winColor}">${v.winner} 勝 ${v.margin.toFixed(1)}%</div>
-      <div class="cands">${rows}</div>`;
+      <div class="cands">${rows}</div>
+      ${flipBlock}`;
     return;
   }
 
@@ -779,76 +843,264 @@ function updateLabelPosition() {
 }
 
 // ─────────── village list panel ───────────
+// ─────────── flat card panel ───────────
+function abbrParty(name) {
+  const m = {
+    '中國國民黨': 'KMT', '民主進步黨': 'DPP', '台灣民眾黨': 'TPP',
+    '新黨': 'NP', '親民黨': 'PFP', '台灣團結聯盟': 'TSU',
+    '時代力量': 'NPP', '無黨籍及未經政黨推薦': 'IND', '無黨': 'IND',
+  };
+  return m[name] || name?.slice(0, 3) || '';
+}
+function hexToCss(n) { return '#' + n.toString(16).padStart(6, '0'); }
+function textColorFor(n) {
+  const r = (n >> 16) & 0xff, g = (n >> 8) & 0xff, b = n & 0xff;
+  // perceptual brightness (0-255)
+  const y = 0.299 * r + 0.587 * g + 0.114 * b;
+  return y < 150 ? '#ffffff' : '#1a1a1a';
+}
+
 function buildVillagePanel() {
-  const panel = document.getElementById('village-panel');
+  renderPanel();
+}
+
+function renderPanel() {
+  const listEl = document.getElementById('village-list');
+  if (!listEl) return;
+  listEl.innerHTML = '';  // also clears any village cards
+
+  const data = ELECTIONS[currentYear];
+  if (!data) return;
+
+  // ── city tile ──
+  const overall = data.overall?.results?.[0];
+  const cityCard = document.createElement('div');
+  cityCard.className = 'card card-city';
+  const cityHex = overall ? colorForDistrict(data.overall.results) : NEUTRAL;
+  cityCard.style.background = hexToCss(cityHex);
+  cityCard.style.color = textColorFor(cityHex);
+  const meta = overall
+    ? `${overall.name.slice(0, 1)} ${overall.rate.toFixed(0)}% ${abbrParty(overall.partyName)}`
+    : '無資料';
+  cityCard.innerHTML = `
+    <div class="name">新北市</div>
+    <div class="meta">${data.year} · ${meta}</div>`;
+  cityCard.title = '回到全局視角';
+  cityCard.addEventListener('click', () => { sticky = false; exitDrill(true); });
+  listEl.appendChild(cityCard);
+
+  // ── district tiles ──
+  const districts = data.districts.slice().sort((a, b) => a.area.localeCompare(b.area));
+
+  const villageCountByStem = new Map();
+  const src = villageVotes.villages.length ? villageVotes.villages : v2022.villages;
+  for (const v of src) {
+    const s = v.townName.slice(0, -1);
+    villageCountByStem.set(s, (villageCountByStem.get(s) || 0) + 1);
+  }
+
+  for (const d of districts) {
+    const card = document.createElement('div');
+    card.className = 'card card-district';
+    card.dataset.stem = d.stem;
+    const hex = colorForDistrict(d.results);
+    card.style.background = hexToCss(hex);
+    card.style.color = textColorFor(hex);
+    const count = villageCountByStem.get(d.stem) ?? '';
+    const metaText = count ? `${count}里 ${d.margin.toFixed(1)}%` : `${d.margin.toFixed(1)}%`;
+    card.innerHTML = `
+      <div class="name">${d.name}</div>
+      <div class="meta">${metaText}</div>`;
+    card.title = `${d.winner} ${d.results[0]?.rate.toFixed(1)}%`;
+    card.addEventListener('click', () => drillByStem(d.stem));
+    if (drilledDistrict && drilledDistrict.slice(0, -1) === d.stem) card.classList.add('active');
+    listEl.appendChild(card);
+  }
+
+  layoutCards();
+
+  // Repopulate village cards if we're still drilled (e.g. year change while drilled)
+  if (drilledDistrict) renderVillagesFor(drilledDistrict.slice(0, -1));
+}
+
+// Create village cards for a given district stem, starting at the chip position
+// (so they "emerge" from the breadcrumb) and animating into a grid below.
+function renderVillagesFor(stem) {
+  const villages = villageVotes.villages.filter(v => v.townName.slice(0, -1) === stem);
+  if (!villages.length) return;
+
   const listEl = document.getElementById('village-list');
   if (!listEl) return;
 
-  // Click panel header "新北市 · ..." → back to home (one-time listener)
-  const headerEl = panel?.querySelector('.header');
-  if (headerEl) {
-    headerEl.style.cursor = 'pointer';
-    headerEl.title = '回到全局視角';
-    headerEl.addEventListener('click', () => {
-      sticky = false;
-      exitDrill(true);
+  const chip = document.querySelector(`.card-district[data-stem="${stem}"]`);
+  if (!chip) return;
+  const cl = parseFloat(chip.style.left);
+  const ct = parseFloat(chip.style.top);
+  const cw = parseFloat(chip.style.width);
+  const ch = parseFloat(chip.style.height);
+
+  for (const v of villages) {
+    const vCard = document.createElement('div');
+    vCard.className = 'card card-village';
+    vCard.dataset.villageKey = `${v.townName.slice(0, -1)}/${v.villageName.slice(0, -1)}`;
+    const hex = colorForDistrict(v.results);
+    vCard.style.background = hexToCss(hex);
+    vCard.style.color = textColorFor(hex);
+    vCard.innerHTML = `
+      <div class="name">${v.villageName}</div>
+      <div class="meta">${v.margin.toFixed(0)}%</div>`;
+    vCard.title = `${v.winner} ${v.results[0]?.rate.toFixed(1)}% vs ${v.results[1]?.name ?? ''} ${v.results[1]?.rate.toFixed(1) ?? ''}%`;
+    vCard.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (vCard.dataset.villageKey === selectedVillageKey) unselectVillage();
+      else selectVillage(v);
     });
+
+    // Start at chip position, invisible — next frame we move them out
+    vCard.style.left = cl + 'px';
+    vCard.style.top = ct + 'px';
+    vCard.style.width = cw + 'px';
+    vCard.style.height = ch + 'px';
+    vCard.style.opacity = '0';
+    listEl.appendChild(vCard);
   }
 
-  buildVillagePanelInto(listEl);
-}
-
-function buildVillagePanelInto(listEl) {
-  const countEl = document.getElementById('village-count');
-  if (villageVotes.villages.length === 0) {
-    if (countEl) countEl.textContent = '無里級資料';
-    listEl.innerHTML = `<div style="padding:14px 14px; font-size:11px; color:#888;">
-      ${currentYear} 年無里級資料<br/>（僅有鄉鎮市區層級）
-    </div>`;
-    return;
-  }
-
-  const byTown = new Map();
-  for (const v of villageVotes.villages) {
-    if (!byTown.has(v.townName)) byTown.set(v.townName, []);
-    byTown.get(v.townName).push(v);
-  }
-  if (countEl) countEl.textContent = `${villageVotes.villages.length} 里`;
-
-  for (const [town, villages] of byTown) {
-    const stem = town.slice(0, -1);
-    const group = document.createElement('div');
-    group.className = 'town-group';
-    group.dataset.stem = stem;
-
-    const head = document.createElement('div');
-    head.className = 'town-head';
-    head.innerHTML = `<span>${town} <span style="opacity:.5">· ${villages.length}</span></span><span class="caret">▸</span>`;
-    head.addEventListener('click', () => drillByStem(stem));
-    group.appendChild(head);
-
-    const list = document.createElement('div');
-    list.className = 'town-villages';
-    for (const v of villages) {
-      const row = document.createElement('div');
-      row.className = 'village-row';
-      const hex = '#' + colorForDistrict(v.results).toString(16).padStart(6, '0');
-      const winColor = v.winnerPartyCode === '1' ? '#2060b0'
-        : v.winnerPartyCode === '16' ? '#2aa046' : '#888';
-      row.innerHTML = `<span class="swatch" style="background:${hex}"></span>
-        <span class="name">${v.villageName}</span>
-        <span class="margin" style="color:${winColor}">${v.margin.toFixed(0)}%</span>`;
-      row.title = `${v.winner} ${v.results[0]?.rate.toFixed(1)}% vs ${v.results[1]?.name} ${v.results[1]?.rate.toFixed(1)}%`;
-      row.addEventListener('click', (e) => {
-        e.stopPropagation();
-        selectVillage(v);
-      });
-      list.appendChild(row);
+  requestAnimationFrame(() => {
+    for (const c of document.querySelectorAll('.card-village:not(.clearing)')) {
+      c.classList.add('tween');
+      c.style.opacity = '';
     }
-    group.appendChild(list);
-    listEl.appendChild(group);
-  }
+    layoutCards();
+  });
 }
+
+// Fade villages back into the given target (or wherever active now is),
+// then remove from DOM. Marked `.clearing` so concurrent render/layout
+// passes ignore them — otherwise stale fade-out cards pollute the new
+// village grid count and positions.
+function clearVillages(targetEl) {
+  const vs = Array.from(document.querySelectorAll('.card-village:not(.clearing)'));
+  if (!vs.length) return;
+
+  const t = targetEl || document.querySelector('.card-district.active');
+  for (const v of vs) {
+    v.classList.add('clearing');
+    if (t) {
+      v.style.left = t.style.left;
+      v.style.top = t.style.top;
+      v.style.width = t.style.width;
+      v.style.height = t.style.height;
+    }
+    v.style.opacity = '0';
+    v.style.pointerEvents = 'none';
+  }
+  setTimeout(() => { for (const v of vs) v.remove(); }, 440);
+}
+
+// Position city + district cards.
+//  - Default: Metro-style centered grid
+//  - Drilled: city + selected district as a [新北市][區名] breadcrumb at top,
+//             other districts stay in grid positions (faded, invisible)
+function layoutCards() {
+  const W = window.innerWidth, H = window.innerHeight;
+  const city = document.querySelector('.card-city');
+  const districts = Array.from(document.querySelectorAll('.card-district'));
+  if (!city || districts.length === 0) return;
+
+  const drilled = !!drilledDistrict;
+  const drilledStem = drilled ? drilledDistrict.slice(0, -1) : null;
+
+  const cols = 5;
+  const tileW = 180, tileH = 106, gap = 6;
+  const cityH = 141, cityGap = 10;
+  const rows = Math.ceil(districts.length / cols);
+  const gridW = cols * tileW + (cols - 1) * gap;
+  const gridH = rows * tileH + (rows - 1) * gap;
+  const totalH = cityH + cityGap + gridH;
+  const gridStartX = Math.round((W - gridW) / 2);
+  const gridStartY = Math.round((H - totalH) / 2);
+
+  // Breadcrumb geometry (only used when drilled)
+  const bcCityW = 240, bcChipW = 192, bcH = 77, bcGap = 10;
+  const hasVillageChip = drilled && !!selectedVillageKey;
+  const bcTotalW = bcCityW + bcGap + bcChipW + (hasVillageChip ? bcGap + bcChipW : 0);
+  const bcStartX = Math.round((W - bcTotalW) / 2);
+  const bcY = 32;
+  const bcVillageX = bcStartX + bcCityW + bcGap + bcChipW + bcGap;
+
+  if (drilled) {
+    city.classList.add('compact');
+    city.style.left = bcStartX + 'px';
+    city.style.top = bcY + 'px';
+    city.style.width = bcCityW + 'px';
+    city.style.height = bcH + 'px';
+  } else {
+    city.classList.remove('compact');
+    city.style.left = gridStartX + 'px';
+    city.style.top = gridStartY + 'px';
+    city.style.width = gridW + 'px';
+    city.style.height = cityH + 'px';
+  }
+
+  for (let i = 0; i < districts.length; i++) {
+    const card = districts[i];
+    const c = i % cols, r = Math.floor(i / cols);
+    const gridX = gridStartX + c * (tileW + gap);
+    const gridY = gridStartY + cityH + cityGap + r * (tileH + gap);
+
+    if (drilled && card.dataset.stem === drilledStem) {
+      // Selected district becomes breadcrumb chip right of city
+      card.classList.add('compact');
+      card.style.left = (bcStartX + bcCityW + bcGap) + 'px';
+      card.style.top = bcY + 'px';
+      card.style.width = bcChipW + 'px';
+      card.style.height = bcH + 'px';
+    } else {
+      card.classList.remove('compact');
+      card.style.left = gridX + 'px';
+      card.style.top = gridY + 'px';
+      card.style.width = tileW + 'px';
+      card.style.height = tileH + 'px';
+    }
+  }
+
+  // Village grid — centered below breadcrumb when drilled.
+  // Selected village card leaves the grid to become the 3rd breadcrumb chip.
+  const villageCards = Array.from(document.querySelectorAll('.card-village:not(.clearing)'));
+  if (drilled && villageCards.length > 0) {
+    const n = villageCards.length;
+    const vCols = Math.min(10, Math.max(3, Math.ceil(Math.sqrt(n))));
+    const vTileW = 125, vTileH = 70, vGap = 5;
+    const vGridW = vCols * vTileW + (vCols - 1) * vGap;
+    const vStartX = Math.round((W - vGridW) / 2);
+    const vStartY = bcY + bcH + 20;
+    for (let i = 0; i < n; i++) {
+      const card = villageCards[i];
+      if (selectedVillageKey && card.dataset.villageKey === selectedVillageKey) {
+        card.classList.add('compact');
+        card.style.left = bcVillageX + 'px';
+        card.style.top = bcY + 'px';
+        card.style.width = bcChipW + 'px';
+        card.style.height = bcH + 'px';
+      } else {
+        card.classList.remove('compact');
+        const c = i % vCols, r = Math.floor(i / vCols);
+        card.style.left = (vStartX + c * (vTileW + vGap)) + 'px';
+        card.style.top = (vStartY + r * (vTileH + vGap)) + 'px';
+        card.style.width = vTileW + 'px';
+        card.style.height = vTileH + 'px';
+      }
+    }
+  }
+
+  // Enable transitions after first placement (no-op on subsequent calls).
+  requestAnimationFrame(() => {
+    city.classList.add('tween');
+    for (const c of districts) c.classList.add('tween');
+  });
+}
+
+window.addEventListener('resize', layoutCards);
 
 // ─────────── view toggle ───────────
 function wireViewToggle() {
@@ -897,6 +1149,9 @@ const tmpColor = new THREE.Color();
 
 function setYear(newYear) {
   if (!ELECTIONS[newYear] || newYear === currentYear) return;
+  // Full reset on year change — close any drill / selection, clear hover so
+  // we re-render the panel from scratch without stale card state.
+  if (drilledDistrict || selectedVillageKey || sticky) exitDrill(true);
   currentYear = newYear;
   electionByStem = rebuildElectionByStem(newYear);
   villageVoteMap = rebuildVillageVoteMap(newYear);

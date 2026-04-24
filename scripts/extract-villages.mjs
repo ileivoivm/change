@@ -106,12 +106,17 @@ function extractVillageVotes({ dir, year, date, title, countyName }) {
     villageInfo[k].townName = townByArea[villageInfo[k].area];
   }
 
-  // Tickets per village
+  // Tickets per village. r[5] is the polling-station code: the village
+  // aggregate row uses '0' (pre-2022) or '0000' (2022); non-zero codes are
+  // individual 投開票所 rows that would otherwise overwrite each other
+  // (only the last one wins) and leak a single station's margin as the
+  // whole village's. Keep only the aggregate.
   const tickets = {};
   for (const r of elctks) {
     if (r[0] !== code.prv || r[1] !== code.city) continue;
     if (r[3] === '000' || r[4] === '0000') continue;
     if (r[4].startsWith('0A') || r[4].startsWith('0B')) continue;
+    if (parseInt(r[5], 10) !== 0) continue;
     const fullKey = `${r[3]}-${r[4]}`;
     const cand = r[6], votes = parseInt(r[7], 10), rate = parseFloat(r[8]);
     if (!tickets[fullKey]) tickets[fullKey] = {};
