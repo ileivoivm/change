@@ -187,23 +187,30 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
 - 底部時間軸 UI：7 個節點 + 當選者/黨派縮寫，點擊跳年 → 材質 color lerp（600ms easeOutCubic）
 - HUD 標題、hover bubble 跟著年份切換
 
-### ☐ M3 — 里級下鑽
-- [ ] 載入新北里界 GeoJSON
-- [ ] voxel 化約 1,032 個里
-- [ ] 效能調校（InstancedMesh）
+### ☐ M9 — 六都擴張
 
-### ☐ M4 — 歷史時間軸
-- [ ] 爬 1994~2022 歷屆台北縣長 / 新北市長選舉
-- [ ] 里界跨年度對齊邏輯
-- [ ] 年份 slider + 平滑轉場
+拍板決策（2026-04）：
 
-### ☐ M5 — 擴張到全台
-- [ ] 其他直轄市與縣市
-- [ ] 中央與地方切換視圖
+| 決策 | 選擇 |
+|---|---|
+| 範圍 | **六都**（台北、新北、桃園、台中、台南、高雄）|
+| 合併前資料 | **先跳過**（台中/台南/高雄縣+市分開那段不呈現，2010 起看合併後）|
+| 首頁形式 | **先 A（2D Metro 卡片 MVP）→ 後 C（voxel 全台 backdrop + 卡片浮層）** |
+| 路由 | `?city=tpe\|ntpc\|tyc\|txg\|tnn\|khh` |
+| 展開順序 | 台北 → 新北 → 桃園 → 台中 → 台南 → 高雄 |
 
-### ☐ M6 — 開票日即時
+- [ ] **Stage 0**：六都代碼表 + 資料來源盤點（不動 code）
+- [ ] **Stage 1**：首頁 MVP（A 方案，2D Metro 卡片）+ `?city=` 路由 + 現有新北頁左上加「← 六都」breadcrumb
+- [ ] **Stage 2**：資料管線通用化 — `extract-elections` / `extract-villages` 支援任意縣市；`src/main.js` 抽 city config（範圍、中心、歷屆年份）
+- [ ] **Stage 3**：依序打亮六都（從台北 MVP 開始，一個一個來）
+- [ ] **Stage 4**：首頁升級成 C 方案（voxel backdrop + 卡片浮層）
+- [ ] 並排比較模式（永和 vs 中和）候選
+
+### ☐ M10 — 開票日即時
 - [ ] 研究當年中選會即時 endpoint
 - [ ] 即時 polling + 動畫刷新
+
+（舊 ☐ M3 里級下鑽 / M4 歷史時間軸 已合併到上方的 M5 / M6，checkbox 清理於 2026-04。）
 
 ---
 
