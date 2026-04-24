@@ -660,9 +660,18 @@ const tmpVec = new THREE.Vector3();
 
 // Share button: copies pre-rendered /share/YYYY/{d}/{v}/ URL to clipboard so
 // FB/Threads can fetch OG metadata. Only exists on 2022 villages.
+// Events stop propagation so the underlying canvas doesn't also receive the
+// pointer (which would trigger OrbitControls / drill handling).
+const stopEvt = (e) => { e.stopPropagation(); };
+for (const ev of ['pointerdown', 'pointerup', 'click', 'dblclick']) {
+  labelBubble.addEventListener(ev, (e) => {
+    if (e.target.closest('.share-btn')) stopEvt(e);
+  });
+}
 labelBubble.addEventListener('click', async (e) => {
   const btn = e.target.closest('.share-btn');
   if (!btn) return;
+  e.stopPropagation();
   const d = btn.dataset.d, v = btn.dataset.v;
   const origin = location.origin + import.meta.env.BASE_URL.replace(/\/$/, '');
   const url = `${origin}/share/2022/${encodeURIComponent(d)}/${encodeURIComponent(v)}/`;
@@ -861,9 +870,17 @@ function updateLabelPosition() {
   tmpVec.copy(hovered.userData.centroid);
   tmpVec.y += hovered.position.y + 0.3;
   tmpVec.project(camera);
-  const x = (tmpVec.x * 0.5 + 0.5) * window.innerWidth;
+  const W = window.innerWidth;
+  const x = (tmpVec.x * 0.5 + 0.5) * W;
   const y = (-tmpVec.y * 0.5 + 0.5) * window.innerHeight;
-  labelEl.style.transform = `translate(${x}px, ${y}px) translate(-50%, -100%)`;
+  // Clamp X so the bubble (centered on x via translate -50%) stays inside the
+  // viewport — matters on narrow phones where the bubble would otherwise fall
+  // off screen when the anchored voxel is near an edge.
+  const margin = 12;
+  const bw = labelBubble.offsetWidth;
+  const half = bw / 2;
+  const cx = Math.max(half + margin, Math.min(W - half - margin, x));
+  labelEl.style.transform = `translate(${cx}px, ${y}px) translate(-50%, -100%)`;
 }
 
 // ─────────── village list panel ───────────
@@ -1034,9 +1051,15 @@ function layoutCards() {
   const drilled = !!drilledDistrict;
   const drilledStem = drilled ? drilledDistrict.slice(0, -1) : null;
 
-  const cols = 5;
-  const tileW = 180, tileH = 106, gap = 6;
-  const cityH = 141, cityGap = 10;
+  const mobile = W < 640;
+  const sidePad = mobile ? 8 : 0;
+
+  const cols = mobile ? 3 : 5;
+  const gap = mobile ? 5 : 6;
+  const tileW = mobile ? Math.floor((W - 2 * sidePad - (cols - 1) * gap) / cols) : 180;
+  const tileH = mobile ? 64 : 106;
+  const cityH = mobile ? 74 : 141;
+  const cityGap = mobile ? 8 : 10;
   const rows = Math.ceil(districts.length / cols);
   const gridW = cols * tileW + (cols - 1) * gap;
   const gridH = rows * tileH + (rows - 1) * gap;
@@ -1045,11 +1068,18 @@ function layoutCards() {
   const gridStartY = Math.round((H - totalH) / 2);
 
   // Breadcrumb geometry (only used when drilled)
-  const bcCityW = 240, bcChipW = 192, bcH = 77, bcGap = 10;
   const hasVillageChip = drilled && !!selectedVillageKey;
+  const bcH = mobile ? 46 : 77;
+  const bcGap = mobile ? 6 : 10;
+  const bcY = mobile ? 12 : 32;
+  const bcCityW = mobile
+    ? Math.max(66, Math.floor((W - 2 * sidePad - bcGap * (hasVillageChip ? 2 : 1)) * 0.28))
+    : 240;
+  const bcChipW = mobile
+    ? Math.floor((W - 2 * sidePad - bcCityW - bcGap * (hasVillageChip ? 2 : 1)) / (hasVillageChip ? 2 : 1))
+    : 192;
   const bcTotalW = bcCityW + bcGap + bcChipW + (hasVillageChip ? bcGap + bcChipW : 0);
   const bcStartX = Math.round((W - bcTotalW) / 2);
-  const bcY = 32;
   const bcVillageX = bcStartX + bcCityW + bcGap + bcChipW + bcGap;
 
   if (drilled) {
@@ -1093,11 +1123,17 @@ function layoutCards() {
   const villageCards = Array.from(document.querySelectorAll('.card-village:not(.clearing)'));
   if (drilled && villageCards.length > 0) {
     const n = villageCards.length;
-    const vCols = Math.min(10, Math.max(3, Math.ceil(Math.sqrt(n))));
-    const vTileW = 125, vTileH = 70, vGap = 5;
+    const vCols = mobile
+      ? Math.min(3, Math.max(2, Math.ceil(Math.sqrt(n))))
+      : Math.min(10, Math.max(3, Math.ceil(Math.sqrt(n))));
+    const vGap = mobile ? 4 : 5;
+    const vTileW = mobile
+      ? Math.floor((W - 2 * sidePad - (vCols - 1) * vGap) / vCols)
+      : 125;
+    const vTileH = mobile ? 48 : 70;
     const vGridW = vCols * vTileW + (vCols - 1) * vGap;
     const vStartX = Math.round((W - vGridW) / 2);
-    const vStartY = bcY + bcH + 20;
+    const vStartY = bcY + bcH + (mobile ? 10 : 20);
     for (let i = 0; i < n; i++) {
       const card = villageCards[i];
       if (selectedVillageKey && card.dataset.villageKey === selectedVillageKey) {

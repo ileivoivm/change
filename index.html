@@ -161,6 +161,7 @@
         color: #2a7a9a; background: #eef6f9;
         border: 1px solid rgba(42,122,154,0.3); border-radius: 8px;
         cursor: pointer; transition: background 160ms, color 160ms;
+        pointer-events: auto; /* #label is pointer-events:none; opt in here */
       }
       #label .bubble .share-btn:hover { background: #dcecf2; }
       #label .bubble .share-btn.copied { color: #2aa046; background: #e6f4ea; border-color: rgba(42,160,70,0.3); }
@@ -307,6 +308,67 @@
       .card-village.active {
         outline: 3px solid rgba(255,255,255,0.9);
         outline-offset: -3px;
+      }
+
+      /* ─── Mobile ─── (layoutCards picks smaller tile dims; CSS scales fonts
+         and collapses dev-only overlays to free screen area) */
+      @media (max-width: 640px) {
+        #hud, #camera-readout { display: none; }
+
+        #timeline {
+          bottom: 12px;
+          padding: 5px 8px;
+          gap: 1px;
+          max-width: calc(100vw - 16px);
+        }
+        #timeline .tick { padding: 3px 7px; border-radius: 14px; }
+        #timeline .tick .year { font-size: 11px; }
+        #timeline .tick .who { font-size: 8px; }
+        #timeline .arrow { padding: 0 1px; font-size: 9px; }
+
+        #controls { top: 10px; right: 10px; gap: 7px; }
+        #compass { width: 46px; height: 46px; }
+        #compass svg { width: 32px; height: 32px; }
+        #compass .label-n { font-size: 8px; top: 2px; }
+        .btn-group .btn, .btn-solo { width: 34px; height: 34px; }
+        .btn-solo svg, .btn-group .btn svg { width: 15px; height: 15px; }
+
+        #label .bubble {
+          min-width: 0;
+          max-width: calc(100vw - 24px);
+          padding: 10px 14px;
+          border-radius: 12px;
+        }
+        #label .bubble .name { font-size: 16px; }
+        #label .bubble .tag { font-size: 11px; }
+        #label .bubble .winner { font-size: 13px; margin: 2px 0 6px; }
+        #label .bubble .cand {
+          grid-template-columns: 11px 1fr auto auto;
+          gap: 7px;
+          font-size: 13px;
+        }
+        #label .bubble .cand .cp { display: none; } /* party shown via swatch */
+        #label .bubble .cand .cv { font-size: 12px; min-width: 46px; }
+        #label .bubble .cand .cr { min-width: 42px; }
+        #label .bubble .flip { font-size: 12px; margin-top: 7px; padding-top: 7px; }
+        #label .bubble .flip .dim { font-size: 11px; }
+        #label .bubble .share-btn { font-size: 12px; padding: 7px 10px; margin-top: 9px; }
+
+        .card-city .name { font-size: 22px; }
+        .card-city .meta { font-size: 11px; }
+        .card.card-city { padding: 10px 13px; }
+
+        .card.compact { padding: 6px 11px; }
+        .card.compact .name { font-size: 14px; }
+        .card.compact .meta { font-size: 11px; }
+
+        .card-district { padding: 7px 9px; }
+        .card-district .name { font-size: 13px; }
+        .card-district .meta { font-size: 11px; }
+
+        .card-village { padding: 6px 8px; }
+        .card-village .name { font-size: 12px; }
+        .card-village .meta { font-size: 10px; }
       }
     </style>
   </head>
