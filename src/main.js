@@ -446,10 +446,10 @@ function drillInto(mesh) {
   // 1997/2001 CEC didn't publish village-level data — fall back to 2022
   // only for those. Other years (2005+) drill in place.
   if (!villageVotes.villages.length) setYear(2022);
-  // Entering drill: desktop expands village grid immediately; mobile stays
-  // collapsed so the map is reachable for pan/zoom (same rationale as
-  // top-level default — village grid would otherwise eat the viewport).
-  cardsCollapsed = isMobile();
+  // Preserve current collapse state on drill. If the user already has the
+  // cards expanded (tapped 新北市 chip on mobile), drilling a district
+  // should show its village grid — not silently re-collapse and hide it.
+  // If they're in map-view (cards collapsed), stay that way.
   drilledDistrict = mesh.userData.townName;
   const stem = drilledDistrict.slice(0, -1);
 
@@ -486,10 +486,9 @@ function exitDrill(flyHome = true) {
   sticky = false;
   pulseMesh = null;
   selectedVillageKey = null;
-  // Leaving drill returns to a fresh top-level view — desktop shows the
-  // district grid; mobile stays collapsed (map-first) with 新北市 chip
-  // as the expand trigger.
-  cardsCollapsed = isMobile();
+  // Preserve collapse state across drill exit — if user was exploring the
+  // district grid before drilling, return to that view; if they were in
+  // map-view with breadcrumb only, stay there.
   if (!drilledDistrict) {
     if (flyHome) tweenCamera(INITIAL_CAM_POS.clone(), INITIAL_TARGET.clone());
     setHover(null);
