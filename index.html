@@ -386,12 +386,14 @@
         .btn-solo svg, .btn-group .btn svg { width: 15px; height: 15px; }
 
         /* On mobile the timeline pill spans ~100vw - 16px and sits at
-           bottom:12px with ~36px height (top edge ≈ bottom 48px). The
-           github button goes ABOVE it with a ≥14px gap so they never
-           touch. Size matches timeline height (~36px circle). */
+           bottom:12px with ~36px height (top edge ≈ bottom 48px). Place the
+           github button just above (6px gap) and at left:8px so its left
+           edge aligns with the pill's left edge (pill has 8px margin from
+           viewport). Reads as "paired with timeline" instead of floating
+           orphan above-left. */
         #github-link {
           width: 36px; height: 36px;
-          bottom: 62px; left: 12px;
+          bottom: 54px; left: 8px;
           font-size: 11px;
         }
 
