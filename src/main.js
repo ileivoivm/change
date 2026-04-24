@@ -1065,14 +1065,26 @@ function renderPanel() {
       <div class="meta">${metaText}</div>`;
     card.title = `${d.winner} ${d.results[0]?.rate.toFixed(1)}%`;
     card.addEventListener('click', () => {
-      // When already drilled into this district, the chip is the breadcrumb
-      // — tapping it toggles the village-grid collapse (gives the viewer the
-      // map back to rotate/zoom, especially on mobile where the list covers
-      // the canvas). Otherwise, drill in normally.
-      if (drilledDistrict && drilledDistrict.slice(0, -1) === d.stem) {
-        toggleCardsCollapsed();
-      } else {
+      // Not drilled / drilled into a different district → drill in.
+      if (!drilledDistrict || drilledDistrict.slice(0, -1) !== d.stem) {
         drillByStem(d.stem);
+        return;
+      }
+      // Already drilled into this district: the chip is the 2nd breadcrumb.
+      //  - If a village is selected (3-level [市][區][里] state), tapping
+      //    the 區 chip drops back to 2-level [市][區] — dismiss the pinned
+      //    bubble and re-expand the village grid on mobile so the viewer
+      //    clearly sees the "went up one level" result (user report:
+      //    "點選三重區卡片，要順間回到[新北][三重] 二階的狀態").
+      //  - No village selected → toggle grid visibility (rotation mode).
+      if (selectedVillageKey) {
+        unselectVillage();
+        if (isMobile() && cardsCollapsed) {
+          cardsCollapsed = false;
+          layoutCards();
+        }
+      } else {
+        toggleCardsCollapsed();
       }
     });
     if (drilledDistrict && drilledDistrict.slice(0, -1) === d.stem) card.classList.add('active');
