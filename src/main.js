@@ -877,8 +877,13 @@ labelBubble.addEventListener('click', async (e) => {
   if (!btn) return;
   e.stopPropagation();
   const d = btn.dataset.d, v = btn.dataset.v;
-  const origin = location.origin + import.meta.env.BASE_URL.replace(/\/$/, '');
-  const url = `${origin}/share/2022/${encodeURIComponent(d)}/${encodeURIComponent(v)}/`;
+  // Always use the canonical production URL so social-platform crawlers
+  // (FB, Threads, LINE) can fetch the share page even when the user
+  // copies the link from a dev / localhost session.
+  const shareBase = import.meta.env.DEV
+    ? 'https://ileivoivm.github.io/change'
+    : location.origin + import.meta.env.BASE_URL.replace(/\/$/, '');
+  const url = `${shareBase}/share/2022/${encodeURIComponent(d)}/${encodeURIComponent(v)}/`;
   try {
     await navigator.clipboard.writeText(url);
     const orig = btn.textContent;
