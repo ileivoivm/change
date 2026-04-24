@@ -126,10 +126,16 @@ let sticky = false; // when true, hover raycast won't override bubble (used for 
 let hovered = null; // currently hovered mesh (district or village) — declared here to avoid TDZ for URL writes
 let pulseMesh = null; // mesh currently glowing (selected village or drilled-district announce)
 let drillFlashUntil = 0; // perf-time until which the just-drilled district shimmers
-// When true (toggled by Space / empty-canvas click / 新北市 tap at top level),
-// district grid fades out and city card collapses to a top breadcrumb — frees
-// the viewport for free exploration.
-let cardsCollapsed = false;
+// When true (toggled by Space / empty-canvas click / 新北市 tap at top level,
+// or drilled district chip tap), the active grid fades out and only the
+// breadcrumb chips remain — frees the viewport for 3D exploration.
+//
+// Mobile starts collapsed: on narrow screens the 3-col × 10-row district
+// grid fills the whole viewport, leaving no canvas pixels to grab for
+// OrbitControls rotation. Showing the map first (with 新北市 chip as
+// a one-tap expand) matches the user's initial-version experience.
+const isMobile = () => window.innerWidth < 640;
+let cardsCollapsed = isMobile();
 function toggleCardsCollapsed() {
   cardsCollapsed = !cardsCollapsed;
   layoutCards();
@@ -440,9 +446,10 @@ function drillInto(mesh) {
   // 1997/2001 CEC didn't publish village-level data — fall back to 2022
   // only for those. Other years (2005+) drill in place.
   if (!villageVotes.villages.length) setYear(2022);
-  // Entering drill always starts expanded — prior top-level collapse (Space)
-  // shouldn't silently hide the village grid on arrival.
-  cardsCollapsed = false;
+  // Entering drill: desktop expands village grid immediately; mobile stays
+  // collapsed so the map is reachable for pan/zoom (same rationale as
+  // top-level default — village grid would otherwise eat the viewport).
+  cardsCollapsed = isMobile();
   drilledDistrict = mesh.userData.townName;
   const stem = drilledDistrict.slice(0, -1);
 
@@ -479,9 +486,10 @@ function exitDrill(flyHome = true) {
   sticky = false;
   pulseMesh = null;
   selectedVillageKey = null;
-  // Leaving drill returns to a fresh top-level view — don't carry over a
-  // drilled-state "collapse village list" toggle onto the district grid.
-  cardsCollapsed = false;
+  // Leaving drill returns to a fresh top-level view — desktop shows the
+  // district grid; mobile stays collapsed (map-first) with 新北市 chip
+  // as the expand trigger.
+  cardsCollapsed = isMobile();
   if (!drilledDistrict) {
     if (flyHome) tweenCamera(INITIAL_CAM_POS.clone(), INITIAL_TARGET.clone());
     setHover(null);
@@ -1200,7 +1208,7 @@ function layoutCards() {
     city.style.top = bcY + 'px';
     city.style.width = bcCityW + 'px';
     city.style.height = bcH + 'px';
-  } else if (collapsed) {
+  } else if (cardsCollapsed) {
     // City-only breadcrumb centered at top. Reuse the drilled breadcrumb
     // city width so the tween between states matches geometry.
     city.classList.add('compact');
