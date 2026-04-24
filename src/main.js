@@ -570,6 +570,14 @@ function selectVillage(v) {
     pulseMesh = null;
   }
   selectedVillageKey = key;
+  // On mobile, selecting a village via card pins the bubble and shifts the
+  // focus from "browse cards" to "read result + explore map". Collapse the
+  // village grid so the canvas is free to rotate/pan — otherwise the grid
+  // still covers the middle of the screen and the user can't rotate even
+  // though the bubble is showing. Tap the district breadcrumb chip to
+  // re-expand the grid. (Matches user report: "透過卡片從區點到里，進到
+  // 對話框，鏡頭不能轉".)
+  if (isMobile()) cardsCollapsed = true;
   updateCardState();
   layoutCards();
   writeUrl();
