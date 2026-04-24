@@ -126,6 +126,14 @@ let sticky = false; // when true, hover raycast won't override bubble (used for 
 let hovered = null; // currently hovered mesh (district or village) — declared here to avoid TDZ for URL writes
 let pulseMesh = null; // mesh currently glowing (selected village or drilled-district announce)
 let drillFlashUntil = 0; // perf-time until which the just-drilled district shimmers
+// When true (toggled by Space / empty-canvas click / 新北市 tap at top level),
+// district grid fades out and city card collapses to a top breadcrumb — frees
+// the viewport for free exploration.
+let cardsCollapsed = false;
+function toggleCardsCollapsed() {
+  cardsCollapsed = !cardsCollapsed;
+  layoutCards();
+}
 // Match geo features to vote data via stem + stem keys
 let villageVoteMap = new Map();
 function rebuildVillageVoteMap(year) {
@@ -499,20 +507,55 @@ function drillByStem(stem) {
 // Rebuild the left panel list (idempotent — safe to call after year change)
 function rebuildVillagePanel() { renderPanel(); }
 
-// Select a village (from panel): drill into its district, zoom closer, pin bubble
+// Select a village (from panel): drill into its district, zoom closer, pin bubble.
+// ~16 villages (e.g. 蘆洲 福安里, 保佑里) exist in post-1982 vote data but have
+// no 1982 geo polygon, so there's no voxel mesh. We still want the panel click
+// to feel alive — drill into the district, pin the bubble, select the card.
 function selectVillage(v) {
   const key = v.townName.slice(0, -1) + '/' + v.villageName.slice(0, -1);
   const vm = villageMeshes.find(m => m.userData.villageKey === key);
-  if (!vm) return;
   const townStem = v.townName.slice(0, -1);
   if (!drilledDistrict || drilledDistrict.slice(0, -1) !== townStem) {
     drillByStem(townStem);
   }
-  panZoomWithPitch(vm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100);
-  sticky = false;
-  setHover(vm);
-  sticky = true;
-  pulseMesh = vm;
+  if (vm) {
+    panZoomWithPitch(vm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100);
+    sticky = false;
+    setHover(vm);
+    sticky = true;
+    pulseMesh = vm;
+  } else {
+    // Fall back to the district mesh — the user still gets feedback: the
+    // camera flies in, the panel card stays selected, and a synthetic bubble
+    // is pinned above the district centroid so the viewer sees vote numbers
+    // (or a "no data" note) even though there's no voxel to glow.
+    const dm = districtMeshes.find(
+      m => m.userData.layer === 'ntpc' && m.userData.townName.slice(0, -1) === townStem
+    );
+    if (dm) panZoomWithPitch(dm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100);
+    // A duck-typed stub that satisfies setHover / renderBubble /
+    // updateLabelPosition — no Three.js mesh, just the fields they read.
+    const ghostCentroid = dm
+      ? dm.userData.centroid.clone()
+      : new THREE.Vector3();
+    const ghost = {
+      userData: {
+        layer: 'village',
+        townName: v.townName,
+        villageName: v.villageName,
+        vote: v && v.results ? v : null,
+        isContext: false,
+        baseY: 0,
+        centroid: ghostCentroid,
+      },
+      position: { y: 0 },
+      material: { emissive: { setHex() {} }, emissiveIntensity: 0 },
+    };
+    sticky = false;
+    setHover(ghost);
+    sticky = true;
+    pulseMesh = null;
+  }
   selectedVillageKey = key;
   updateCardState();
   layoutCards();
@@ -689,7 +732,11 @@ labelBubble.addEventListener('click', async (e) => {
 window.addEventListener('pointermove', (e) => {
   pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
   pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
-  pointerInside = true;
+  // Only treat the pointer as "inside the map" when it's actually over the
+  // canvas — if it's over a panel card (pointer-events: auto) the raycast
+  // would otherwise pick the voxel *under* the card, showing a wrong bubble
+  // and letting card clicks feel like they fell through to the map.
+  pointerInside = e.target === renderer.domElement;
 });
 window.addEventListener('pointerleave', () => { pointerInside = false; });
 
@@ -711,14 +758,21 @@ function handleCanvasClick(cx, cy) {
   const p = { x: (cx / window.innerWidth) * 2 - 1, y: -(cy / window.innerHeight) * 2 + 1 };
   raycaster.setFromCamera(p, camera);
   if (!drilledDistrict) {
-    // district mode: click an NTPC district to drill
+    // district mode: click an NTPC district to drill; empty canvas toggles
+    // the card overlay (same as Space / 新北市 tap).
     const targets = districtMeshes.filter(m => m.userData.layer === 'ntpc' && m.visible);
     const hit = raycaster.intersectObjects(targets, false)[0];
     if (hit) drillInto(hit.object);
+    else toggleCardsCollapsed();
   } else {
     // drilled: single-click a village to highlight + pin; empty click only
     // unselects. Never exits drill (use 新北市 / Home / ESC for that).
-    const targets = villageMeshes.filter(m => m.visible);
+    // Filter by both visibility AND drilled stem — same belt-and-braces as
+    // updateHover — so a click never resolves to a different district's village.
+    const stem = drilledDistrict.slice(0, -1);
+    const targets = villageMeshes.filter(
+      (m) => m.visible && m.userData.townName.slice(0, -1) === stem
+    );
     const hit = raycaster.intersectObjects(targets, false)[0];
     if (!hit) {
       if (selectedVillageKey) unselectVillage();
@@ -734,6 +788,19 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     if (selectedVillageKey) unselectVillage();
     else if (drilledDistrict) exitDrill();
+    else if (cardsCollapsed) { cardsCollapsed = false; layoutCards(); }
+  }
+  // Space toggles the cards overlay at the top level so viewers can freely
+  // explore the 3D map. No-op when drilled (cards there are the breadcrumb
+  // + village grid, both still useful in drill view). Same behavior is
+  // wired to 新北市 tap and empty-canvas click.
+  if (e.key === ' ' || e.code === 'Space') {
+    // Don't hijack Space if user is typing in an input
+    const tag = (e.target && e.target.tagName) || '';
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(tag)) return;
+    if (drilledDistrict) return;
+    e.preventDefault();
+    toggleCardsCollapsed();
   }
 });
 
@@ -741,7 +808,13 @@ window.addEventListener('keydown', (e) => {
 renderer.domElement.addEventListener('dblclick', (e) => {
   const p = { x: (e.clientX / window.innerWidth) * 2 - 1, y: -(e.clientY / window.innerHeight) * 2 + 1 };
   raycaster.setFromCamera(p, camera);
-  const hits = raycaster.intersectObjects(villageMeshes.filter(m => m.visible), false);
+  // Same scoping rule: when drilled, only the drilled district's villages
+  // can resolve. Prevents dblclick on a far-away village from derailing drill.
+  const stem = drilledDistrict ? drilledDistrict.slice(0, -1) : null;
+  const pool = stem
+    ? villageMeshes.filter((m) => m.visible && m.userData.townName.slice(0, -1) === stem)
+    : villageMeshes.filter((m) => m.visible);
+  const hits = raycaster.intersectObjects(pool, false);
   if (hits.length === 0) return;
   const vm = hits[0].object;
   const v = vm.userData.vote;
@@ -858,9 +931,24 @@ function updateHover() {
   if (sticky) return;
   if (!pointerInside) { setHover(null); return; }
   raycaster.setFromCamera(pointer, camera);
-  const targets = viewMode === 'village'
-    ? [...districtMeshes.filter(m => m.userData.layer !== 'ntpc'), ...villageMeshes]
-    : districtMeshes;
+  let targets;
+  if (drilledDistrict) {
+    // Drilled into a district: ONLY villages inside it are hoverable. We filter
+    // explicitly by townName (not just visible) because an earlier report had
+    // bubbles firing for other districts' villages even after drill hid them.
+    // Explicit name match is a belt-and-braces guarantee — no other district's
+    // village mesh, no TPE/rest context, can trigger the bubble.
+    const stem = drilledDistrict.slice(0, -1);
+    targets = villageMeshes.filter(
+      (m) => m.visible && m.userData.townName.slice(0, -1) === stem
+    );
+  } else if (viewMode === 'village') {
+    // Village mode via toggle (not drilled): all visible villages + gray
+    // context districts are fair game.
+    targets = [...districtMeshes.filter(m => m.userData.layer !== 'ntpc'), ...villageMeshes];
+  } else {
+    targets = districtMeshes;
+  }
   const hits = raycaster.intersectObjects(targets, false);
   setHover(hits.length > 0 ? hits[0].object : null);
 }
@@ -920,14 +1008,17 @@ function renderPanel() {
   const cityHex = overall ? colorForDistrict(data.overall.results) : NEUTRAL;
   cityCard.style.background = hexToCss(cityHex);
   cityCard.style.color = textColorFor(cityHex);
-  const meta = overall
-    ? `${overall.name.slice(0, 1)} ${overall.rate.toFixed(0)}% ${abbrParty(overall.partyName)}`
-    : '無資料';
   cityCard.innerHTML = `
     <div class="name">新北市</div>
-    <div class="meta">${data.year} · ${meta}</div>`;
-  cityCard.title = '回到全局視角';
-  cityCard.addEventListener('click', () => { sticky = false; exitDrill(true); });
+    <div class="meta">${data.year}</div>`;
+  cityCard.title = '回到全局視角 / 收合卡片';
+  cityCard.addEventListener('click', () => {
+    sticky = false;
+    // At top level the city card is redundant with Space / empty-canvas click:
+    // all three toggle the card overlay. When drilled, it still exits back.
+    if (drilledDistrict) exitDrill(true);
+    else toggleCardsCollapsed();
+  });
   listEl.appendChild(cityCard);
 
   // ── district tiles ──
@@ -1050,6 +1141,10 @@ function layoutCards() {
 
   const drilled = !!drilledDistrict;
   const drilledStem = drilled ? drilledDistrict.slice(0, -1) : null;
+  // Collapsed state only applies at top level; drilling always shows breadcrumb.
+  const collapsed = cardsCollapsed && !drilled;
+  document.body.classList.toggle('drilled', drilled);
+  document.body.classList.toggle('cards-collapsed', collapsed);
 
   const mobile = W < 640;
   const sidePad = mobile ? 8 : 0;
@@ -1088,6 +1183,14 @@ function layoutCards() {
     city.style.top = bcY + 'px';
     city.style.width = bcCityW + 'px';
     city.style.height = bcH + 'px';
+  } else if (collapsed) {
+    // City-only breadcrumb centered at top. Reuse the drilled breadcrumb
+    // city width so the tween between states matches geometry.
+    city.classList.add('compact');
+    city.style.left = Math.round((W - bcCityW) / 2) + 'px';
+    city.style.top = bcY + 'px';
+    city.style.width = bcCityW + 'px';
+    city.style.height = bcH + 'px';
   } else {
     city.classList.remove('compact');
     city.style.left = gridStartX + 'px';
@@ -1120,7 +1223,11 @@ function layoutCards() {
 
   // Village grid — centered below breadcrumb when drilled.
   // Selected village card leaves the grid to become the 3rd breadcrumb chip.
+  // On mobile, the grid goes inside a scrollable #village-list so districts
+  // with many villages (e.g. 板橋 126 里) remain fully reachable; cards are
+  // then absolute-positioned relative to that container instead of window.
   const villageCards = Array.from(document.querySelectorAll('.card-village:not(.clearing)'));
+  const villageList = document.getElementById('village-list');
   if (drilled && villageCards.length > 0) {
     const n = villageCards.length;
     const vCols = mobile
@@ -1133,10 +1240,24 @@ function layoutCards() {
     const vTileH = mobile ? 48 : 70;
     const vGridW = vCols * vTileW + (vCols - 1) * vGap;
     const vStartX = Math.round((W - vGridW) / 2);
-    const vStartY = bcY + bcH + (mobile ? 10 : 20);
+
+    // Scroll mode (mobile): vStartY is relative to the scroll container's
+    // top. Desktop uses window-relative coords via position:fixed.
+    const mobileScroll = mobile;
+    const vStartY = mobileScroll ? 8 : bcY + bcH + 20;
+
+    if (mobileScroll) {
+      villageList.style.top = (bcY + bcH + 10) + 'px';
+      villageList.style.bottom = '64px'; // above timeline
+    } else {
+      villageList.style.top = '';
+      villageList.style.bottom = '';
+    }
+
     for (let i = 0; i < n; i++) {
       const card = villageCards[i];
       if (selectedVillageKey && card.dataset.villageKey === selectedVillageKey) {
+        // Breadcrumb chip — always window-fixed (kept outside scroll area).
         card.classList.add('compact');
         card.style.left = bcVillageX + 'px';
         card.style.top = bcY + 'px';
@@ -1151,6 +1272,9 @@ function layoutCards() {
         card.style.height = vTileH + 'px';
       }
     }
+  } else {
+    villageList.style.top = '';
+    villageList.style.bottom = '';
   }
 
   // Enable transitions after first placement (no-op on subsequent calls).

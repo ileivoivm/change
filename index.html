@@ -8,6 +8,9 @@
       html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #f3f1ea; }
       canvas { display: block; }
 
+      /* #hud and #camera-readout are dev-only panels — hidden in production
+         so the viewport is clean. Re-enable with display:block if debugging. */
+      #hud, #camera-readout { display: none; }
       #hud {
         position: fixed; top: 16px; left: 16px;
         font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
@@ -302,6 +305,13 @@
         pointer-events: none;
       }
 
+      /* Collapsed state (Space toggles) — hide district tiles so viewers can
+         freely pan/zoom the voxel map. City card stays as a top breadcrumb. */
+      body.cards-collapsed .card-district {
+        opacity: 0;
+        pointer-events: none;
+      }
+
       .card-village { padding: 10px 13px; }
       .card-village .name { font-size: 18px; font-weight: 600; }
       .card-village .meta { font-size: 14px; }
@@ -369,6 +379,31 @@
         .card-village { padding: 6px 8px; }
         .card-village .name { font-size: 12px; }
         .card-village .meta { font-size: 10px; }
+
+        /* Drilled view on mobile: village grid gets its own scrollable
+           overlay between breadcrumb and timeline. Without this, districts
+           with many villages (e.g. 板橋 126) overflow below the timeline and
+           are unreachable on phones. */
+        body.drilled #village-list {
+          position: fixed;
+          left: 0; right: 0;
+          /* top / bottom set by layoutCards to match bc + timeline heights */
+          overflow-y: auto;
+          overflow-x: hidden;
+          -webkit-overflow-scrolling: touch;
+          pointer-events: auto;
+          touch-action: pan-y;
+        }
+        /* Grid cards become absolute (relative to the scroll container);
+           breadcrumb chips keep position:fixed via the .compact class. */
+        body.drilled #village-list .card-village:not(.compact) {
+          position: absolute;
+        }
+        body.drilled #village-list::-webkit-scrollbar { width: 4px; }
+        body.drilled #village-list::-webkit-scrollbar-thumb {
+          background: rgba(0,0,0,0.22);
+          border-radius: 2px;
+        }
       }
     </style>
   </head>

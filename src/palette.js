@@ -1,12 +1,21 @@
-// Party-colored palette with gradient interpolation for close races.
-// Policy:
-//   margin (winner over runner-up) >= MARGIN_THRESHOLD → pure winner color
-//   margin <  MARGIN_THRESHOLD                         → lerp loser → winner proportional to margin
+// Party-colored palette with saturation gradient for close races.
 //
-// So margin=0 gives the midpoint (close race, ambiguous),
-// and margin=20 gives the pure party tone.
+// Design:
+//   A square's color is ALWAYS the winning party's hue — never the runner-up's.
+//   Margin is encoded as saturation via a linear ramp:
+//     margin = 0     → pale / desaturated winner color  (still clearly that party)
+//     margin = 10%   → roughly midway
+//     margin ≥ 20%   → fully saturated party color
+//
+//   Previous design lerped loser→winner by margin/20, which meant a 1.3%
+//   KMT win landed at ~6.5% of the way from DPP green to KMT blue — i.e.
+//   nearly pure loser color. That was misleading and is the bug this fixes.
 
 const MARGIN_THRESHOLD = 20;
+
+// Close-race anchor: mixed with 75% off-white. Fixed value chosen so the
+// pale tint is still recognizably party-colored against the scene beige.
+const CLOSE_WHITE_MIX = 0.75;
 
 // Party codes as defined by CEC / kiang/db.cec.gov.tw
 // 1 = 中國國民黨 (KMT, blue)
@@ -54,17 +63,29 @@ export function partyName(code) {
   return (PARTY_COLORS[code] || PARTY_COLORS.DEFAULT).name;
 }
 
+// Pale (low-saturation) version of a party color — keeps the hue readable
+// but drops intensity so close races sit near a shared "almost neutral" zone.
+function paleVersion(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  const w = 220; // off-white anchor
+  return rgbToHex({
+    r: r * (1 - CLOSE_WHITE_MIX) + w * CLOSE_WHITE_MIX,
+    g: g * (1 - CLOSE_WHITE_MIX) + w * CLOSE_WHITE_MIX,
+    b: b * (1 - CLOSE_WHITE_MIX) + w * CLOSE_WHITE_MIX,
+  });
+}
+
 // Given a district's sorted results (descending by votes), return a color.
+// Color is always keyed to the winner's party; margin drives saturation.
 export function colorForDistrict(results) {
   if (!results || results.length === 0) return 0xb8b2a6;
   const winner = results[0];
   const runnerUp = results[1];
   const winnerHex = partyColor(winner.partyCode);
   if (!runnerUp) return winnerHex;
-  const loserHex = partyColor(runnerUp.partyCode);
   const margin = winner.rate - runnerUp.rate; // always >= 0
   const t = Math.min(margin / MARGIN_THRESHOLD, 1);
-  return lerpColor(loserHex, winnerHex, t);
+  return lerpColor(paleVersion(winnerHex), winnerHex, t);
 }
 
 // Fallback neutral (unknown district) palette for graceful degradation.

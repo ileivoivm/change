@@ -89,7 +89,7 @@
 - [x] 資料源：[kiang/db.cec.gov.tw](https://github.com/kiang/db.cec.gov.tw) voteData/2022-111年地方公職人員選舉/C1/prv（CEC 原始格式 elbase/elctks/elcand/elpaty）
 - [x] 前處理腳本 `scripts/extract-election-2022.mjs` → `data/processed/ntpc-2022-mayor.json`
 - [x] 區名對齊：GeoJSON 用 1982 台北縣名（鄉/鎮/市），選舉資料用 2022 新北區名 → 以前兩字 stem 匹配
-- [x] 配色政策：margin ≥ ±20% 為純政黨色，否則依 margin/20 線性內插（勝方色 ← 敗方色）
+- [x] 配色政策：色相永遠是**勝方政黨色**（絕不用敗方色），margin 驅動飽和度。margin=0 → 淡化的勝方色；margin ≥ 20% → 純勝方色；中間以 sqrt 曲線使 1% 小勝也能明顯看到勝方色傾向
 - [x] 政黨色：KMT #2060b0、DPP #2aa046、TPP #3bb5c4、時代力量 #e6a61f、無黨 #aa9478
 - [x] Bubble 顯示候選人、政黨、得票率與 winner margin
 
@@ -169,3 +169,4 @@
 - **逐步驗證**：每完成一個里程碑，先 demo 給用戶看過再往下
 - **美學迭代**：視覺不要求一次到位，會隨開發反覆調整
 - **預覽一律用 MCP Chrome**：驗證畫面時使用 `mcp__Claude_in_Chrome__*` 工具（導航 → 截圖 → 讀 console），**不要**使用 Launch preview 面板
+- **回覆收尾語**：每次回答完問題、收尾一輪工作時，最後一句用中文寫「**已完成**」作為明確結束訊號
