@@ -6,7 +6,11 @@
     <title>CHANGE — 台灣選戰版圖</title>
     <style>
       html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #f3f1ea; }
-      canvas { display: block; }
+      /* touch-action: none is REQUIRED for Three.js OrbitControls to capture
+         touch gestures on mobile. Without it the browser handles pan/zoom
+         defaults (nothing useful with body overflow:hidden) and the user
+         can't rotate the camera — they'd "only see cards, can't rotate". */
+      canvas { display: block; touch-action: none; }
 
       /* #hud and #camera-readout are dev-only panels — hidden in production
          so the viewport is clean. Re-enable with display:block if debugging. */
@@ -83,6 +87,11 @@
         transform: translate(-50%, -100%);
         opacity: 0;
         transition: opacity 120ms ease-out;
+        /* Must sit above #village-panel / #village-list (z-index:auto, same
+           DOM layer but later in source order) so the bubble — and its
+           pointer-events:auto share button — is hit-testable on mobile when
+           drilled. Without this the list overlay eats share-btn taps. */
+        z-index: 50;
       }
       #label.visible { opacity: 1; }
       #label .bubble {
@@ -305,9 +314,20 @@
         pointer-events: none;
       }
 
-      /* Collapsed state (Space toggles) — hide district tiles so viewers can
-         freely pan/zoom the voxel map. City card stays as a top breadcrumb. */
-      body.cards-collapsed .card-district {
+      /* Collapsed state (Space toggles) — hide district tiles at TOP LEVEL
+         so viewers can freely pan/zoom the voxel map. City card stays as a
+         top breadcrumb. The :not(.drilled) guard preserves the breadcrumb
+         district chip when collapsing while drilled. */
+      body.cards-collapsed:not(.drilled) .card-district {
+        opacity: 0;
+        pointer-events: none;
+      }
+      /* Same idea while drilled: hide the village grid so the map is free to
+         rotate / zoom. Mobile needs this especially — without it the list
+         overlay covers the canvas (see @media block below). Triggered by
+         tapping the drilled district breadcrumb chip (see main.js).
+         .compact (breadcrumb chip) stays visible. */
+      body.cards-collapsed.drilled .card-village:not(.compact) {
         opacity: 0;
         pointer-events: none;
       }
@@ -393,6 +413,13 @@
           -webkit-overflow-scrolling: touch;
           pointer-events: auto;
           touch-action: pan-y;
+        }
+        /* Collapsed + drilled: let taps fall through to the canvas so users
+           can rotate/zoom the map. Tapping the drilled district chip toggles
+           this state (see main.js breadcrumb handler). */
+        body.cards-collapsed.drilled #village-list {
+          pointer-events: none;
+          touch-action: none;
         }
         /* Grid cards become absolute (relative to the scroll container);
            breadcrumb chips keep position:fixed via the .compact class. */

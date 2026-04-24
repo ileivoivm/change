@@ -440,6 +440,9 @@ function drillInto(mesh) {
   // 1997/2001 CEC didn't publish village-level data — fall back to 2022
   // only for those. Other years (2005+) drill in place.
   if (!villageVotes.villages.length) setYear(2022);
+  // Entering drill always starts expanded — prior top-level collapse (Space)
+  // shouldn't silently hide the village grid on arrival.
+  cardsCollapsed = false;
   drilledDistrict = mesh.userData.townName;
   const stem = drilledDistrict.slice(0, -1);
 
@@ -476,6 +479,9 @@ function exitDrill(flyHome = true) {
   sticky = false;
   pulseMesh = null;
   selectedVillageKey = null;
+  // Leaving drill returns to a fresh top-level view — don't carry over a
+  // drilled-state "collapse village list" toggle onto the district grid.
+  cardsCollapsed = false;
   if (!drilledDistrict) {
     if (flyHome) tweenCamera(INITIAL_CAM_POS.clone(), INITIAL_TARGET.clone());
     setHover(null);
@@ -790,15 +796,14 @@ window.addEventListener('keydown', (e) => {
     else if (drilledDistrict) exitDrill();
     else if (cardsCollapsed) { cardsCollapsed = false; layoutCards(); }
   }
-  // Space toggles the cards overlay at the top level so viewers can freely
-  // explore the 3D map. No-op when drilled (cards there are the breadcrumb
-  // + village grid, both still useful in drill view). Same behavior is
-  // wired to 新北市 tap and empty-canvas click.
+  // Space toggles the active cards overlay so viewers can freely explore
+  // the 3D map: district grid at top level, village grid when drilled.
+  // Same behavior is wired to 新北市 tap (top level), drilled district chip
+  // tap (drilled), and empty-canvas click.
   if (e.key === ' ' || e.code === 'Space') {
     // Don't hijack Space if user is typing in an input
     const tag = (e.target && e.target.tagName) || '';
     if (/^(INPUT|TEXTAREA|SELECT)$/.test(tag)) return;
-    if (drilledDistrict) return;
     e.preventDefault();
     toggleCardsCollapsed();
   }
@@ -1044,7 +1049,17 @@ function renderPanel() {
       <div class="name">${d.name}</div>
       <div class="meta">${metaText}</div>`;
     card.title = `${d.winner} ${d.results[0]?.rate.toFixed(1)}%`;
-    card.addEventListener('click', () => drillByStem(d.stem));
+    card.addEventListener('click', () => {
+      // When already drilled into this district, the chip is the breadcrumb
+      // — tapping it toggles the village-grid collapse (gives the viewer the
+      // map back to rotate/zoom, especially on mobile where the list covers
+      // the canvas). Otherwise, drill in normally.
+      if (drilledDistrict && drilledDistrict.slice(0, -1) === d.stem) {
+        toggleCardsCollapsed();
+      } else {
+        drillByStem(d.stem);
+      }
+    });
     if (drilledDistrict && drilledDistrict.slice(0, -1) === d.stem) card.classList.add('active');
     listEl.appendChild(card);
   }
@@ -1141,10 +1156,12 @@ function layoutCards() {
 
   const drilled = !!drilledDistrict;
   const drilledStem = drilled ? drilledDistrict.slice(0, -1) : null;
-  // Collapsed state only applies at top level; drilling always shows breadcrumb.
-  const collapsed = cardsCollapsed && !drilled;
+  // Collapsed applies in both modes:
+  //  - top level: hide district grid (Space / empty-canvas / 新北市 tap)
+  //  - drilled:   hide village grid (drilled district chip tap)
+  // CSS picks the right thing to hide based on `drilled` + `cards-collapsed`.
   document.body.classList.toggle('drilled', drilled);
-  document.body.classList.toggle('cards-collapsed', collapsed);
+  document.body.classList.toggle('cards-collapsed', cardsCollapsed);
 
   const mobile = W < 640;
   const sidePad = mobile ? 8 : 0;
