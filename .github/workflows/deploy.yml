@@ -33,7 +33,24 @@ jobs:
           path: .cache
           key: noto-sans-tc-medium
 
-      - run: npm run build
+      - name: Build SPA (vite)
+        run: npx vite build
+
+      # Cache the 1,032 OG PNGs + share HTMLs. They only depend on the data
+      # JSON + palette + generator script — most pushes (SPA / style edits)
+      # are cache hits, saving ~5 minutes of regeneration.
+      - name: Cache share pages + OG PNGs
+        id: share-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            dist/og
+            dist/share
+          key: share-${{ hashFiles('data/processed/ntpc-2022-villages.json', 'src/palette.js', 'scripts/build-share.mjs') }}
+
+      - name: Build share pages
+        if: steps.share-cache.outputs.cache-hit != 'true'
+        run: npm run build:share
         env:
           SITE_BASE: https://ileivoivm.github.io/change
 
