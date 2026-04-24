@@ -93,6 +93,51 @@
 - [x] 政黨色：KMT #2060b0、DPP #2aa046、TPP #3bb5c4、時代力量 #e6a61f、無黨 #aa9478
 - [x] Bubble 顯示候選人、政黨、得票率與 winner margin
 
+### ✅ M8 — 手機互動修復（卡片 vs OrbitControls 交互）
+
+手機版從「可以轉鏡頭」→「不能轉」的退化來自幾個相依的改動，踩坑順序：
+
+1. **`a66c843` 加手機 RWA**：原本桌面 5 欄 × 180px 卡片在手機上會溢出畫面，使用者手指能從卡片間的空白抓到 canvas → 可以轉。改成 3 欄填滿寬度後，卡片覆蓋整個 viewport，`pointerdown` 全被 `pointer-events:auto` 的 `.card` 吃掉 → OrbitControls 收不到事件 → 轉不了
+2. **`84e83b2` drilled mobile scroll overlay**：為了讓 126 個里不超出螢幕加了 `body.drilled #village-list { pointer-events: auto; touch-action: pan-y }`，drilled 狀態下中段螢幕完全被吃
+3. **分享按鈕穿透**：`#label` 沒設 z-index，手機上被 `#village-list`（DOM 順序較後）蓋掉，連 `pointer-events:auto` 的 share-btn 也點不到
+
+#### 修復策略（四層）
+
+**Layer 1：canvas 必備 `touch-action: none`**
+Three.js OrbitControls 在行動裝置上靠這個屬性搶下觸控手勢；沒設的話瀏覽器預設會用系統手勢吞掉 pointer event。
+
+**Layer 2：`cardsCollapsed` 從「top-level 專用」升級成通用 UI 狀態**
+原本只在頂層 Space 切換。現在 top-level / drilled 兩種模式都用同一個 state，CSS 用 `body.cards-collapsed:not(.drilled)` vs `body.cards-collapsed.drilled` 決定要隱藏哪一層卡片（區格 or 里格）。`.compact` breadcrumb chip 永遠不被隱藏。
+
+**Layer 3：手機預設 collapsed，觸發點分兩層**
+- `let cardsCollapsed = isMobile()` — 行動裝置開啟時就收合，使用者看到地圖先
+- `selectVillage` 在手機上強制 `cardsCollapsed = true` — 走卡片點進里、bubble 釘住後，自動把里格收起、讓地圖重新可轉（走 map voxel 點進來時，因為原本就 collapsed 所以沒事，這邊補齊）
+- `drillInto` / `exitDrill` **不動** `cardsCollapsed` — 保留使用者當前偏好，避免「點 新北市 展開區卡 → 點區 → 里格被默默關掉」的 bug
+
+**Layer 4：Breadcrumb chip 三種語義**
+`[新北市] [三重區] [中興里]` 三階，chip 點擊行為分層：
+
+| chip | 沒 drill | drilled + 沒選里（2 階） | drilled + 有選里（3 階） |
+|---|---|---|---|
+| 新北市 | `toggleCardsCollapsed` | `exitDrill` 回頂層 | `exitDrill` 回頂層 |
+| 區 | `drillByStem` 進該區 | `toggleCardsCollapsed` 切換里格（旋轉模式） | `unselectVillage` + 手機上重展里格（回 2 階）|
+
+關鍵點：區 chip 在 3 階狀態要「順間回到 2 階」（unstick bubble + 重顯里格），不是單純 toggle collapse 否則 bubble 還掛著使用者以為沒反應。
+
+**Layer 5：`#label { z-index: 50 }`**
+Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的 `pointer-events:none`（collapsed 時）+ bubble `z-index:50`（always）兩個獨立機制合流確保 share-btn 在任何狀態下都能點。
+
+#### 測試路徑（手機上要全過）
+
+1. 開站 → 看到地圖 + 頂部「新北市」chip → 可旋轉 ✓
+2. 點「新北市」→ 29 區格展開
+3. 點某區（例 三重）→ drill，里格展開
+4. 點某里（例 中興）→ bubble 釘住 + 里格自動收起 + 地圖可旋轉 ✓
+5. 點「三重區」chip → bubble 收掉 + 里格重展（回 2 階）
+6. 再點「三重區」chip → 收合里格（旋轉模式）
+7. 點「新北市」chip → 回頂層
+8. 2022 里 bubble 的「複製分享連結」按鈕可點 ✓
+
 ### ✅ M7 — 視覺強化 + 歷屆里級 + URL 分享
 - **選中發光**：`pulseMesh` + sin 波 emissive（金色 0xffc966）+ Y 抬升；drill 進入時 1.1s 短暫 flash 全區 villages
 - **里級 1997–2022**：`scripts/extract-villages.mjs` 擴充為多年份；2005 起 CEC 有里級（2005=1014、2010~2022=1032），1997/2001 CEC 未公開里級（面板顯示「無里級資料」）
