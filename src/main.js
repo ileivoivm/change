@@ -665,6 +665,18 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && drilledDistrict) exitDrill();
 });
 
+// Double-click on a village → pin bubble + glow + URL update
+renderer.domElement.addEventListener('dblclick', (e) => {
+  const p = { x: (e.clientX / window.innerWidth) * 2 - 1, y: -(e.clientY / window.innerHeight) * 2 + 1 };
+  raycaster.setFromCamera(p, camera);
+  const hits = raycaster.intersectObjects(villageMeshes.filter(m => m.visible), false);
+  if (hits.length === 0) return;
+  const vm = hits[0].object;
+  const v = vm.userData.vote;
+  if (!v) return;
+  selectVillage(v);
+});
+
 function renderBubble(mesh) {
   const { townName, isContext, election } = mesh.userData;
 
@@ -979,12 +991,19 @@ function tweenCamera(toPos, toTarget, duration = 700) {
   const fromPos = camera.position.clone();
   const fromTarget = controls.target.clone();
   const start = performance.now();
+  // Disable OrbitControls during tween — its internal spherical state would
+  // otherwise override our manual camera.position sets when we change pitch.
+  controls.enabled = false;
   camTween = (now) => {
     const t = Math.min(1, (now - start) / duration);
     const k = 1 - Math.pow(1 - t, 3);
     camera.position.lerpVectors(fromPos, toPos, k);
     controls.target.lerpVectors(fromTarget, toTarget, k);
-    if (t >= 1) camTween = null;
+    camera.lookAt(controls.target);
+    if (t >= 1) {
+      camTween = null;
+      controls.enabled = true;
+    }
   };
 }
 
