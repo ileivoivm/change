@@ -253,14 +253,17 @@
         color: #fff;
       }
 
-      /* GitHub repo link — bottom-left corner, same aesthetic as #controls */
+      /* GitHub repo link — circular pill sized to match #timeline height
+         (desktop ~47px, mobile ~36px). Desktop sits at same bottom as the
+         timeline (centered vertically with it); mobile sits above the
+         timeline with a clear gap so they never overlap. */
       #github-link {
         position: fixed;
-        bottom: 16px; left: 16px;
-        width: 42px; height: 42px;
-        background: rgba(255,255,255,0.85); backdrop-filter: blur(6px);
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        bottom: 18px; left: 18px;
+        width: 47px; height: 47px;
+        background: rgba(255,255,255,0.82); backdrop-filter: blur(6px);
+        border-radius: 50%;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.10);
         display: flex; align-items: center; justify-content: center;
         color: #2a2a2a;
         font: 700 13px -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
@@ -382,13 +385,14 @@
         .btn-group .btn, .btn-solo { width: 34px; height: 34px; }
         .btn-solo svg, .btn-group .btn svg { width: 15px; height: 15px; }
 
-        /* GitHub link shrinks to match controls on mobile; placed above the
-           timeline pill rather than at the very bottom to avoid overlap. */
+        /* On mobile the timeline pill spans ~100vw - 16px and sits at
+           bottom:12px with ~36px height (top edge ≈ bottom 48px). The
+           github button goes ABOVE it with a ≥14px gap so they never
+           touch. Size matches timeline height (~36px circle). */
         #github-link {
-          width: 34px; height: 34px;
-          bottom: 58px; left: 10px;
+          width: 36px; height: 36px;
+          bottom: 62px; left: 12px;
           font-size: 11px;
-          border-radius: 10px;
         }
 
         #label .bubble {
