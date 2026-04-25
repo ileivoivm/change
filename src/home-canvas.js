@@ -1,31 +1,25 @@
-// home-canvas.js — Taiwan outline map rendered with Three.js for the home screen.
-// Style: clean 2D editorial outline (à la Benesse/ANDO gallery access maps).
-// Uses tw-outline.geo.json (outer ring of each county/city polygon).
-//
-// Render layers:
-//   1. Filled polygon mesh  — slightly lighter than page background, creates
-//      the "island as white form" effect the reference maps use.
-//   2. Outline LineSegments — muted olive-green, thin & crisp.
+// home-canvas.js — Taiwan voxel backdrop for the home screen.
+// Pre-computed voxel positions (tw-home-voxels.json) are rendered with the
+// same Three.js style as the city pages: BoxGeometry + InstancedMesh +
+// ambient/directional lighting. Static single-frame render (no animation loop).
 
 import * as THREE from 'three';
-import twOutline from '../data/processed/tw-outline.geo.json';
+import voxelData from '../data/processed/tw-home-voxels.json';
 
 // ── Visual constants ───────────────────────────────────────────────────────────
-const FILL_COLOR    = 0xe8e2d8;  // slightly lighter than page bg #ede7da
-const OUTLINE_COLOR = 0x5a7868;  // muted forest-green — complement to rose accent
-const FILL_OPACITY  = 0.80;
-const LINE_OPACITY  = 0.70;
+const VOXEL_H     = 0.55;           // voxel height (flat-ish for backdrop feel)
+const VOXEL_COLOR = 0xc9c3b8;       // warm neutral gray — same family as page bg
+const AMB_COLOR   = 0xfff8ee;       // warm ambient light
+const DIR_COLOR   = 0xfffcf0;       // slightly warm directional light
+const DIR_POS     = [22, 60, 18];   // light from upper-right front
 
-// Canvas aspect (width / height). Wider than the raw island (0.47) to give
-// breathing room for Penghu/Matsu/Kinmen and left/right margins.
-export const TW_ASPECT = 0.72;
+// Canvas aspect: slightly wider than portrait to give the angled 3D view room
+export const TW_ASPECT = 0.65;
 
 export function initHomeCanvas(canvasEl) {
   if (!canvasEl) return null;
 
   // ── Canvas size ──────────────────────────────────────────────────────────────
-  // Desktop: portrait, full-viewport-height on the right side.
-  // Mobile:  landscape island, full-viewport-width centered as watermark.
   const dpr = Math.min(window.devicePixelRatio, 2);
   const isMobile = window.innerWidth < 640;
   let cssW, cssH;
@@ -45,91 +39,42 @@ export function initHomeCanvas(canvasEl) {
   // ── Renderer ────────────────────────────────────────────────────────────────
   const renderer = new THREE.WebGLRenderer({ canvas: canvasEl, alpha: true, antialias: true });
   renderer.setPixelRatio(dpr);
-  renderer.setSize(cssW, cssH, false);   // false = don't touch CSS dimensions
-  renderer.setClearColor(0x000000, 0);   // fully transparent
+  renderer.setSize(cssW, cssH, false);
+  renderer.setClearColor(0x000000, 0);
+  renderer.shadowMap.enabled = false;
 
-  // ── Orthographic camera: looking along -Z, Y = north ───────────────────────
-  const worldH = 60;
-  const worldW = worldH * (cssW / cssH);  // match actual canvas aspect
-  const camera = new THREE.OrthographicCamera(
-    -worldW / 2,  worldW / 2,
-     worldH / 2, -worldH / 2,
-    0.1, 100
-  );
-  camera.position.z = 50;
-
+  // ── Scene ───────────────────────────────────────────────────────────────────
   const scene = new THREE.Scene();
 
-  // ── Projection: lon/lat → world XY (Y-up, north = +Y) ─────────────────────
-  // Hard-coded on Taiwan's main island so Kinmen/Matsu (far west) don't shift
-  // the center and shrink the main body. Offshore islands still render in their
-  // correct relative positions.
-  const cLon = 121.0;   // main island center longitude
-  const cLat = 23.65;   // main island center latitude
-  const kLat = 111;
-  const kLon = 111 * Math.cos(cLat * Math.PI / 180);
-  // Scale: fit ~3.5° lat (main island height ≈ 389 km) in 88% of world height
-  const scale = (worldH * 0.88) / (3.5 * kLat);
+  // Lighting — same warm two-light rig as city pages
+  scene.add(new THREE.AmbientLight(AMB_COLOR, 0.85));
+  const dirLight = new THREE.DirectionalLight(DIR_COLOR, 1.1);
+  dirLight.position.set(...DIR_POS);
+  scene.add(dirLight);
 
-  function proj(lon, lat) {
-    return [
-      (lon - cLon) * kLon * scale,
-      (lat - cLat) * kLat * scale,   // +Y = north
-    ];
-  }
+  // ── Camera: perspective, elevated south-east view ───────────────────────────
+  // Taiwan in our projection spans roughly X: ±14, Z: -25 to +26
+  const aspect = cssW / cssH;
+  const camera = new THREE.PerspectiveCamera(38, aspect, 0.1, 500);
+  // Position: elevated, slightly south-east of center so the island "floats"
+  camera.position.set(14, 50, 62);
+  camera.lookAt(2, 0, 2);
 
-  // ── Layer 1: filled polygons (island form) ──────────────────────────────────
-  const fillMat = new THREE.MeshBasicMaterial({
-    color: FILL_COLOR,
-    transparent: true,
-    opacity: FILL_OPACITY,
-    side: THREE.DoubleSide,
+  // ── InstancedMesh ────────────────────────────────────────────────────────────
+  const { cell, cells } = voxelData;
+  const geo = new THREE.BoxGeometry(cell * 0.93, VOXEL_H, cell * 0.93);
+  const mat = new THREE.MeshLambertMaterial({ color: VOXEL_COLOR });
+  const mesh = new THREE.InstancedMesh(geo, mat, cells.length);
+
+  const m4 = new THREE.Matrix4();
+  cells.forEach(([x, z], i) => {
+    m4.makeTranslation(x, VOXEL_H / 2, z);
+    mesh.setMatrixAt(i, m4);
   });
-  for (const f of twOutline.features) {
-    const coords = f.geometry.coordinates;
-    if (coords.length < 3) continue;
+  mesh.instanceMatrix.needsUpdate = true;
+  scene.add(mesh);
 
-    const shape = new THREE.Shape();
-    const [x0, y0] = proj(coords[0][0], coords[0][1]);
-    shape.moveTo(x0, y0);
-    for (let i = 1; i < coords.length; i++) {
-      const [xi, yi] = proj(coords[i][0], coords[i][1]);
-      shape.lineTo(xi, yi);
-    }
-    shape.closePath();
-
-    const geom = new THREE.ShapeGeometry(shape);
-    geom.translate(0, 0, -0.5); // slightly behind the outline
-    scene.add(new THREE.Mesh(geom, fillMat));
-  }
-
-  // ── Layer 2: outlines (county rings as LineSegments) ───────────────────────
-  const lineVerts = [];
-  for (const f of twOutline.features) {
-    const coords = f.geometry.coordinates;
-    for (let i = 0; i < coords.length - 1; i++) {
-      const [x0, y0] = proj(coords[i][0],     coords[i][1]);
-      const [x1, y1] = proj(coords[i + 1][0], coords[i + 1][1]);
-      lineVerts.push(x0, y0, 0,  x1, y1, 0);
-    }
-    // close the ring
-    const last  = coords[coords.length - 1];
-    const first = coords[0];
-    const [xl, yl] = proj(last[0],  last[1]);
-    const [xf, yf] = proj(first[0], first[1]);
-    lineVerts.push(xl, yl, 0,  xf, yf, 0);
-  }
-  const lineGeom = new THREE.BufferGeometry();
-  lineGeom.setAttribute('position', new THREE.Float32BufferAttribute(lineVerts, 3));
-  const lineMat = new THREE.LineBasicMaterial({
-    color: OUTLINE_COLOR,
-    transparent: true,
-    opacity: LINE_OPACITY,
-  });
-  scene.add(new THREE.LineSegments(lineGeom, lineMat));
-
-  // ── Render (static — no animation loop needed) ─────────────────────────────
+  // ── Render (static) ─────────────────────────────────────────────────────────
   renderer.render(scene, camera);
-
   return renderer;
 }

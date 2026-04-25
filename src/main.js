@@ -140,8 +140,8 @@ let viewMode = 'district'; // 'district' | 'village'
 
 // ─────────── scene ───────────
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xf3f1ea);
-scene.fog = new THREE.Fog(0xf3f1ea, 120, 720); // halved — visible at long range
+scene.background = new THREE.Color(0xede7da);
+scene.fog = new THREE.Fog(0xede7da, 120, 720);
 
 const camera = new THREE.PerspectiveCamera(
   40,
