@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CHANGE — 台灣選戰版圖</title>
+    <!-- Cormorant Garamond: high-contrast editorial serif — thin hairlines
+         contrast beautifully with Chinese sans-serif, matching Ref 1 feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
       html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #f3f1ea; }
       /* touch-action: none is REQUIRED for Three.js OrbitControls to capture
@@ -570,11 +575,14 @@
         margin-bottom: 6px;
         font-family: "Helvetica Neue", Arial, sans-serif;
       }
-      /* Layer 2: display word — ultra-bold, the visual anchor */
+      /* Layer 2: display word — elegant high-contrast serif anchor.
+         Cormorant Garamond's thin hairlines create the same refinement
+         as Ref 1's "Every Now and Then" lettering. */
       #home-title {
-        font-size: 80px; font-weight: 900; letter-spacing: -3px;
-        color: #1a1a1a; margin: 0; line-height: 0.9;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 88px; font-weight: 500; letter-spacing: 1px;
+        color: #1a1a1a; margin: 0; line-height: 0.88;
+        font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+        font-style: italic;
       }
       /* Layer 3: data annotation — smallest, most muted */
       #home-desc {
@@ -716,7 +724,7 @@
 
       @media (max-width: 640px) {
         #home-inner { padding-top: 36px; }
-        #home-title { font-size: 56px; letter-spacing: -2px; }
+        #home-title { font-size: 60px; letter-spacing: 0px; }
         #home-title-sub { font-size: 9px; letter-spacing: 2.5px; }
         #home-desc { font-size: 10px; }
         #home-rule { margin: 18px 0 12px; }
