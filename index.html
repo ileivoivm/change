@@ -549,22 +549,43 @@
       #home-screen[hidden] { display: none !important; }
       #home-inner {
         width: 100%; max-width: 960px;
-        padding-top: 72px;
+        padding-top: 64px;
       }
+      /* ── Header: 3-layer typographic hierarchy ──
+         Layer 1 (小型大寫 label): 台灣選戰版圖 — index/category
+         Layer 2 (display title):  CHANGE — dominant anchor
+         Layer 3 (annotation):     spec line — data caption
+         Inspired by Ref 1's "ARCHIVE → Every Now and Then → Fig.N"
+         and Ref 2's bilingual precision labelling */
       #home-title-row {
-        display: flex; align-items: baseline; gap: 14px;
-        margin-bottom: 6px;
+        display: block;
+        margin-bottom: 0;
       }
-      #home-title {
-        font-size: 52px; font-weight: 800; letter-spacing: -1px;
-        color: #1a1a1a; margin: 0; line-height: 1;
-      }
+      /* Layer 1: category label, spaced small caps */
       #home-title-sub {
-        font-size: 22px; font-weight: 400; color: #888;
+        display: block;
+        font-size: 10px; font-weight: 500;
+        letter-spacing: 3.5px; text-transform: uppercase;
+        color: rgba(0,0,0,0.40);
+        margin-bottom: 6px;
+        font-family: "Helvetica Neue", Arial, sans-serif;
       }
+      /* Layer 2: display word — ultra-bold, the visual anchor */
+      #home-title {
+        font-size: 80px; font-weight: 900; letter-spacing: -3px;
+        color: #1a1a1a; margin: 0; line-height: 0.9;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      /* Layer 3: data annotation — smallest, most muted */
       #home-desc {
-        font-size: 15px; color: #666; margin: 0 0 44px;
+        font-size: 10px; color: rgba(0,0,0,0.38);
+        margin: 10px 0 0; letter-spacing: 0.4px;
         line-height: 1.6;
+      }
+      /* Thin rule separates header from grid — Ref 2's section divider */
+      #home-rule {
+        border: none; border-top: 1px solid rgba(0,0,0,0.10);
+        margin: 24px 0 16px;
       }
       #city-grid {
         display: grid;
@@ -694,10 +715,11 @@
       #city-back-btn svg { display: block; }
 
       @media (max-width: 640px) {
-        #home-inner { padding-top: 44px; }
-        #home-title { font-size: 36px; }
-        #home-title-sub { font-size: 15px; }
-        #home-desc { font-size: 13px; margin-bottom: 28px; }
+        #home-inner { padding-top: 36px; }
+        #home-title { font-size: 56px; letter-spacing: -2px; }
+        #home-title-sub { font-size: 9px; letter-spacing: 2.5px; }
+        #home-desc { font-size: 10px; }
+        #home-rule { margin: 18px 0 12px; }
         #city-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
         .city-card-name { font-size: 26px; letter-spacing: -0.5px; }
         .city-card-body { padding: 14px 14px 16px; }
@@ -811,10 +833,11 @@
     <div id="home-screen" hidden>
       <div id="home-inner">
         <div id="home-title-row">
-          <h1 id="home-title">CHANGE</h1>
           <span id="home-title-sub">台灣選戰版圖</span>
+          <h1 id="home-title">CHANGE</h1>
         </div>
-        <p id="home-desc">六都市長選舉 voxel 地圖 · 里級下鑽 · 1994 → 2022</p>
+        <p id="home-desc">六都市長選舉 · voxel 地圖 · 里級下鑽 · 1994 → 2022</p>
+        <hr id="home-rule">
 
         <div id="city-grid">
 
