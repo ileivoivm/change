@@ -132,6 +132,15 @@ const VILLAGE_CELL = 0.20;
 const VOXEL_HEIGHT = 0.9;
 const CONTEXT_HEIGHT = 0.25;
 const WORLD_SIZE = CITY_CONFIG.worldSize;
+
+// ─────────── share tower config ───────────
+// TALLY_WORKER_URL → small C fills in after T0 deploys (Cloudflare Worker endpoint)
+const TALLY_WORKER_URL = null;
+const TOWER_VILLAGE_THRESHOLD = 10;
+const TOWER_DISTRICT_THRESHOLD = 50;
+const TOWER_SCALE = 0.8; // h = log(count - threshold + 1) * TOWER_SCALE
+const TOWER_NEAR = 40;   // camera dist below → show village towers
+const TOWER_FAR  = 60;   // camera dist above → show district towers
 let viewMode = 'district'; // 'district' | 'village'
 
 // ─────────── scene ───────────
@@ -326,6 +335,17 @@ function renderVillageHistoryStrip(townName, villageName) {
     <div class="hs-meta">${meta}</div>
   </div>`;
 }
+
+// ─────────── share counts + tower state ───────────
+let shareCounts = {};            // key "{city}-{townName}-{villageName}" → {shares,views}
+let districtShareCounts = new Map(); // distStem → aggregate total
+// Filled by rebuildTowers() to enable raycasting → data lookups
+const villageOrder   = []; // [{ townName, villageName, centroid, count }]
+const districtOrder  = []; // [{ stem, centroid, count }]
+let villageTowerShaft  = null;
+let villageTowerTop    = null;
+let districtTowerShaft = null;
+let districtTowerTop   = null;
 
 function makeMaterial({ color, isContext }) {
   return new THREE.MeshStandardMaterial({
@@ -603,6 +623,7 @@ function bootstrap() {
 
   buildBorders();
   villageGroup = buildVillageLayer(projector);
+  scene.add(towerGroup);
   refreshHud(mainCount, contextCount, restCount);
 }
 
@@ -873,6 +894,182 @@ function parseAndApplyUrl() {
   if (d) setTimeout(() => drillByStem(d), 50);
 }
 
+// ─────────── tally + share tracking (T1 / T2) ───────────
+const TALLY_DEDUP_MS = 30 * 60 * 1000; // 30 minutes
+
+function isDedupActive(dedupKey) {
+  try {
+    const t = sessionStorage.getItem('tally:' + dedupKey);
+    return t ? Date.now() - Number(t) < TALLY_DEDUP_MS : false;
+  } catch { return false; }
+}
+function markDedup(dedupKey) {
+  try { sessionStorage.setItem('tally:' + dedupKey, String(Date.now())); } catch {}
+}
+
+async function postTally(townName, villageName, event) {
+  if (!TALLY_WORKER_URL) return;
+  const key = `${CITY_CONFIG.key}-${townName}-${villageName}`;
+  const dedupKey = key + ':' + event;
+  if (isDedupActive(dedupKey)) return;
+  markDedup(dedupKey);
+  try {
+    await fetch(`${TALLY_WORKER_URL}/tally`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ city: CITY_CONFIG.key, district: townName, village: villageName, event }),
+    });
+  } catch {} // network failure is silent
+}
+
+async function fetchShareCounts() {
+  if (!TALLY_WORKER_URL) return;
+  try {
+    const r = await fetch(`${TALLY_WORKER_URL}/counts?city=${CITY_CONFIG.key}`);
+    if (!r.ok) return;
+    const data = await r.json();
+    shareCounts = data;
+    window.shareCounts = data; // debug: console.table(window.shareCounts)
+    districtShareCounts = new Map();
+    for (const [key, v] of Object.entries(data)) {
+      // key: "{city}-{townName}-{villageName}", e.g. "ntpc-板橋區-留侯里"
+      const parts = key.split('-');
+      if (parts.length < 3) continue;
+      const townName = parts[1];
+      const stem = townName.slice(0, -1);
+      districtShareCounts.set(stem, (districtShareCounts.get(stem) || 0) + (v.shares || 0) + (v.views || 0));
+    }
+    rebuildTowers();
+  } catch {}
+}
+
+function getTotalForVillage(townName, villageName) {
+  const key = `${CITY_CONFIG.key}-${townName}-${villageName}`;
+  const v = shareCounts[key];
+  return v ? (v.shares || 0) + (v.views || 0) : 0;
+}
+
+// ─────────── tower rendering (T3) ───────────
+const _shaftGeo = new THREE.CylinderGeometry(0.05, 0.05, 1, 8);
+const _topGeo   = new THREE.SphereGeometry(0.15, 8, 8);
+const _towerMat = new THREE.MeshStandardMaterial({
+  color: 0xfff5d6, emissive: 0xfff5d6, emissiveIntensity: 0.7,
+  roughness: 0.3, metalness: 0.2,
+});
+const towerGroup = new THREE.Group();
+
+function towerH(count, threshold) {
+  return count >= threshold ? Math.log(count - threshold + 1) * TOWER_SCALE : 0;
+}
+
+function buildTowerIM(records, threshold) {
+  // records: [{ centroid, count, ... }] — only entries where count >= threshold
+  const n = records.length;
+  if (n === 0) return { shaft: null, top: null };
+  const shaft = new THREE.InstancedMesh(_shaftGeo, _towerMat, n);
+  const top   = new THREE.InstancedMesh(_topGeo,   _towerMat, n);
+  shaft.frustumCulled = false;
+  top.frustumCulled   = false;
+  const m4 = new THREE.Matrix4();
+  records.forEach(({ centroid, count }, i) => {
+    const h = towerH(count, threshold);
+    // Shaft: scale Y by h so the unit cylinder becomes h tall; center at h/2 above voxel top
+    m4.makeScale(1, h, 1);
+    m4.setPosition(centroid.x, VOXEL_HEIGHT + h / 2, centroid.z);
+    shaft.setMatrixAt(i, m4);
+    // Top sphere: sits at tip of shaft
+    m4.makeTranslation(centroid.x, VOXEL_HEIGHT + h + 0.15, centroid.z);
+    top.setMatrixAt(i, m4);
+  });
+  shaft.instanceMatrix.needsUpdate = true;
+  top.instanceMatrix.needsUpdate   = true;
+  return { shaft, top };
+}
+
+function rebuildTowers() {
+  // Remove old tower meshes
+  while (towerGroup.children.length) towerGroup.remove(towerGroup.children[0]);
+  villageOrder.length  = 0;
+  districtOrder.length = 0;
+  villageTowerShaft  = null; villageTowerTop    = null;
+  districtTowerShaft = null; districtTowerTop   = null;
+
+  // Village towers
+  const vRecs = villageMeshes
+    .map(m => ({
+      townName:    m.userData.townName,
+      villageName: m.userData.villageName,
+      centroid:    m.userData.centroid,
+      count:       getTotalForVillage(m.userData.townName, m.userData.villageName),
+    }))
+    .filter(r => r.count >= TOWER_VILLAGE_THRESHOLD);
+  if (vRecs.length > 0) {
+    const { shaft, top } = buildTowerIM(vRecs, TOWER_VILLAGE_THRESHOLD);
+    villageTowerShaft = shaft; villageTowerTop = top;
+    towerGroup.add(shaft); towerGroup.add(top);
+    villageOrder.push(...vRecs);
+  }
+
+  // District towers (main city only)
+  const dRecs = districtMeshes
+    .filter(m => m.userData.layer === CITY_CONFIG.key)
+    .map(m => ({
+      stem:     m.userData.townName.slice(0, -1),
+      centroid: m.userData.centroid,
+      count:    districtShareCounts.get(m.userData.townName.slice(0, -1)) || 0,
+    }))
+    .filter(r => r.count >= TOWER_DISTRICT_THRESHOLD);
+  if (dRecs.length > 0) {
+    const { shaft, top } = buildTowerIM(dRecs, TOWER_DISTRICT_THRESHOLD);
+    districtTowerShaft = shaft; districtTowerTop = top;
+    towerGroup.add(shaft); towerGroup.add(top);
+    districtOrder.push(...dRecs);
+  }
+
+  updateTowerLOD();
+}
+
+function updateTowerLOD() {
+  const dist = camera.position.distanceTo(controls.target);
+  const showVillage  = dist < TOWER_FAR;
+  const showDistrict = dist > TOWER_NEAR;
+  if (villageTowerShaft)  { villageTowerShaft.visible  = showVillage;  villageTowerTop.visible   = showVillage; }
+  if (districtTowerShaft) { districtTowerShaft.visible = showDistrict; districtTowerTop.visible  = showDistrict; }
+}
+
+function checkTowerHit() {
+  const targets = [];
+  if (villageTowerShaft?.visible)  { targets.push(villageTowerShaft,  villageTowerTop); }
+  if (districtTowerShaft?.visible) { targets.push(districtTowerShaft, districtTowerTop); }
+  if (!targets.length) return null;
+  const hits = raycaster.intersectObjects(targets, false);
+  if (!hits.length) return null;
+  const { object, instanceId } = hits[0];
+  if ((object === villageTowerShaft || object === villageTowerTop) && instanceId < villageOrder.length) {
+    return { isVillage: true, ...villageOrder[instanceId] };
+  }
+  if ((object === districtTowerShaft || object === districtTowerTop) && instanceId < districtOrder.length) {
+    return { isVillage: false, ...districtOrder[instanceId] };
+  }
+  return null;
+}
+
+function makeTowerGhost(hit) {
+  const h = towerH(hit.count, hit.isVillage ? TOWER_VILLAGE_THRESHOLD : TOWER_DISTRICT_THRESHOLD);
+  const tipY = VOXEL_HEIGHT + h + 0.15;
+  return {
+    userData: {
+      layer: 'tower', isTower: true, isContext: false, baseY: 0,
+      centroid: new THREE.Vector3(hit.centroid.x, tipY, hit.centroid.z),
+      townName:    hit.isVillage ? hit.townName    : hit.stem,
+      villageName: hit.isVillage ? hit.villageName : '',
+      count: hit.count,
+    },
+    position: { y: 0 },
+    material: { emissive: { setHex() {} }, emissiveIntensity: 0 },
+  };
+}
+
 function updatePanelDrill(stem) {
   // Capture previously-drilled chip before we flip classes, then let
   // layoutCards set its new destination (grid slot or banner if switching).
@@ -940,6 +1137,16 @@ if (!_cityParam) {
     buildVillagePanel();
     wireViewToggle();
     parseAndApplyUrl();
+    // T1: view tracking — if arriving from a share link, record a view event
+    if (new URLSearchParams(location.search).get('ref') === 'share') {
+      setTimeout(() => {
+        if (hovered?.userData?.layer === 'village') {
+          postTally(hovered.userData.townName, hovered.userData.villageName, 'view');
+        }
+      }, 700);
+    }
+    // T2: load share counts → builds towers when Worker responds
+    fetchShareCounts();
     // Update timeline hint dynamically based on which years have village data
     const missingVillageYears = YEARS.filter(y => !VILLAGE_YEARS.includes(y));
     const hintEl = document.getElementById('timeline-hint');
@@ -1034,24 +1241,45 @@ labelBubble.addEventListener('click', async (e) => {
   }
 
   const btn = e.target.closest('.share-btn');
-  if (!btn) return;
+  if (!btn || btn.disabled) return;
   e.stopPropagation();
-  const d = btn.dataset.d, v = btn.dataset.v;
-  // Always use the canonical production URL so social-platform crawlers
-  // (FB, Threads, LINE) can fetch the share page even when the user
-  // copies the link from a dev / localhost session.
+
+  const townName    = btn.dataset.town;
+  const villageName = btn.dataset.village;
+  if (!townName || !villageName) return;
+
+  // Build canonical share URL: app URL + ref=share for view tracking
   const shareBase = import.meta.env.DEV
     ? 'https://ileivoivm.github.io/change'
     : location.origin + import.meta.env.BASE_URL.replace(/\/$/, '');
-  const url = `${shareBase}/share/2022/${encodeURIComponent(d)}/${encodeURIComponent(v)}/`;
-  try {
-    await navigator.clipboard.writeText(url);
-    const orig = btn.textContent;
-    btn.textContent = '已複製 ✓';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1600);
-  } catch {
-    prompt('複製這個連結分享：', url);
+  const sp = new URLSearchParams({
+    city: CITY_CONFIG.key,
+    y:    String(currentYear),
+    d:    townName.slice(0, -1),
+    v:    villageName.slice(0, -1),
+    ref:  'share',
+  });
+  const url = `${shareBase}/?${sp}`;
+
+  // Fire tally (non-blocking; silently fails if Worker not yet deployed)
+  postTally(townName, villageName, 'share');
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ url, title: `${CITY_CONFIG.nameZh} ${townName} ${villageName} 選舉結果` });
+    } catch (err) {
+      if (err.name !== 'AbortError') console.warn(err);
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(url);
+      const orig = btn.textContent;
+      btn.textContent = '已複製 ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1600);
+    } catch {
+      prompt('複製連結分享：', url);
+    }
   }
 });
 
@@ -1084,6 +1312,18 @@ function handleCanvasClick(cx, cy) {
   const p = { x: (cx / window.innerWidth) * 2 - 1, y: -(cy / window.innerHeight) * 2 + 1 };
   raycaster.setFromCamera(p, camera);
   if (!drilledDistrict) {
+    // T4: tower click → fly to village/district
+    const towerHit = checkTowerHit();
+    if (towerHit) {
+      if (towerHit.isVillage) {
+        const voteData = villageVoteMap.get(towerHit.townName.slice(0, -1) + '/' + towerHit.villageName.slice(0, -1));
+        if (voteData) selectVillage(voteData);
+        else drillByStem(towerHit.townName.slice(0, -1));
+      } else {
+        drillByStem(towerHit.stem);
+      }
+      return;
+    }
     // district mode: click an NTPC district to drill; empty canvas toggles
     // the card overlay (same as Space / 新北市 tap).
     const targets = districtMeshes.filter(m => m.userData.layer === CITY_CONFIG.key && m.visible);
@@ -1150,6 +1390,18 @@ renderer.domElement.addEventListener('dblclick', (e) => {
 function renderBubble(mesh) {
   const { townName, isContext, election } = mesh.userData;
 
+  // Tower tooltip (T4)
+  if (mesh.userData.isTower) {
+    const fmt = n => n.toLocaleString('en-US');
+    const label = mesh.userData.villageName
+      ? `${mesh.userData.townName} ${mesh.userData.villageName}`
+      : `${mesh.userData.townName}（${CITY_CONFIG.nameZh}）`;
+    labelBubble.innerHTML = `
+      <div class="row"><span class="name">${label}</span></div>
+      <div class="sub">已被分享 ${fmt(mesh.userData.count)} 次</div>`;
+    return;
+  }
+
   if (mesh.userData.layer === 'village') {
     const v = mesh.userData.vote;
     const vName = mesh.userData.villageName;
@@ -1189,12 +1441,9 @@ function renderBubble(mesh) {
       </div>`;
     }
 
-    // Always render the share button so bubble height stays stable across
-    // year scrubbing (user report: "bubble 才不會乎大呼小"). Pre-rendered
-    // OG cards only exist for 2022, so older years show it disabled/greyed.
-    const shareBlock = currentYear === 2022
-      ? `<button class="share-btn" data-d="${tName.slice(0, -1)}" data-v="${vName.slice(0, -1)}">複製分享連結</button>`
-      : `<button class="share-btn disabled" disabled title="僅 2022 年提供預先產生的分享卡片">複製分享連結</button>`;
+    // Share button: always active — uses navigator.share() on mobile, clipboard on desktop.
+    // data-town/data-village carry full names (with suffix) for the tally key.
+    const shareBlock = `<button class="share-btn" data-town="${tName}" data-village="${vName}">分享</button>`;
 
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
@@ -1267,6 +1516,16 @@ function updateHover() {
   if (sticky) return;
   if (!pointerInside) { setHover(null); return; }
   raycaster.setFromCamera(pointer, camera);
+
+  // T4: tower hover — only in district view (not drilled)
+  if (!drilledDistrict && viewMode !== 'village') {
+    const towerHit = checkTowerHit();
+    if (towerHit) {
+      setHover(makeTowerGhost(towerHit));
+      return;
+    }
+  }
+
   let targets;
   if (drilledDistrict) {
     // Drilled into a district: ONLY villages inside it are hoverable. We filter
@@ -1965,6 +2224,7 @@ window.addEventListener('resize', () => {
   updateCameraReadout();
   tickColorTween(now);
   tickPulse(now);
+  updateTowerLOD();
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
 })();
