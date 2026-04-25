@@ -635,36 +635,17 @@
       }
       #home-footer a { color: rgba(0,0,0,0.45); }
 
-      /* ─── Taiwan hero map image ─── */
-      /* Strategy: fill the full viewport height so top / bottom / right edges
-         all bleed off-screen (no visible rectangle boundary). Only the left
-         edge needs a mask gradient to fade in seamlessly. */
-      #home-map-img {
+      /* ─── Taiwan outline canvas (Three.js) ─── */
+      /* JS (home-canvas.js) sets pixel dimensions and CSS width/height.
+         We only set the anchor position and z-order here. */
+      #home-canvas {
         position: absolute;
         right: 0;
         top: 0;
-        height: 100vh;   /* fills viewport height → no top/bottom boundary */
-        width: auto;
         pointer-events: none;
         user-select: none;
-        z-index: -1;
+        z-index: 0;        /* above #home-inner's z-index:-1 bg but behind text */
         display: block;
-        /* Left-edge fade: start at 38% so the image only becomes visible to
-           the right of the 54vw text column. Fully opaque by 58%. */
-        -webkit-mask-image: linear-gradient(to right,
-          transparent 0%,
-          transparent 38%,
-          rgba(0,0,0,0.15) 44%,
-          rgba(0,0,0,0.55) 50%,
-          black 58%
-        );
-        mask-image: linear-gradient(to right,
-          transparent 0%,
-          transparent 38%,
-          rgba(0,0,0,0.15) 44%,
-          rgba(0,0,0,0.55) 50%,
-          black 58%
-        );
       }
 
       /* ─── ← 六都 back button (shown on city pages) ─── */
@@ -703,33 +684,16 @@
         .city-row-name { font-size: 19px; }
         .city-row-winner { font-size: 9px; }
         #city-back-btn { top: 10px; left: 10px; font-size: 12px; padding: 5px 11px; }
-        /* Mobile: island centered, larger scale, bleeds off bottom.
-           Top fades in (slow — gives text breathing room), bottom fades out.
-           opacity: 0.7 prevents full-opacity voxel blocks from drowning text. */
-        #home-map-img {
-          position: absolute;
-          bottom: -5%;
+        /* Mobile: canvas centered, fills width, fades in from top.
+           JS sizes it to fill full viewport width × TW_ASPECT height.
+           We override position to center it over the text like a watermark. */
+        #home-canvas {
+          top: auto;
+          bottom: 0;
+          right: auto;
           left: 50%;
           transform: translateX(-50%);
-          width: 150%;
-          height: auto;
-          opacity: 0.7;
-          -webkit-mask-image: linear-gradient(to bottom,
-            transparent 0%,
-            rgba(0,0,0,0.20) 15%,
-            rgba(0,0,0,0.60) 30%,
-            black 50%,
-            black 80%,
-            transparent 100%
-          );
-          mask-image: linear-gradient(to bottom,
-            transparent 0%,
-            rgba(0,0,0,0.20) 15%,
-            rgba(0,0,0,0.60) 30%,
-            black 50%,
-            black 80%,
-            transparent 100%
-          );
+          opacity: 0.55;
         }
       }
     </style>
@@ -867,9 +831,9 @@
         </p>
         <!-- Taiwan voxel map hero — desktop: absolute right bg; mobile: in-flow below footer -->
       </div>
-      <!-- Taiwan voxel map: direct child of #home-screen so position:absolute
-           is relative to the viewport-filling fixed container, not #home-inner -->
-      <img id="home-map-img" src="taiwan.png" alt="台灣 voxel 地圖" aria-hidden="true">
+      <!-- Taiwan outline canvas: Three.js renders county rings in editorial
+           outline style. Sized + positioned by home-canvas.js initHomeCanvas(). -->
+      <canvas id="home-canvas" aria-hidden="true"></canvas>
     </div>
 
     <script type="module" src="/src/main.js"></script>

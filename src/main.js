@@ -5,6 +5,7 @@ import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { computeBounds, makeProjector, projectFeature, voxelize } from './geo.js';
 import { colorForDistrict, candidateColor, partyColor, NEUTRAL, PARTY_COLORS } from './palette.js';
+import { initHomeCanvas } from './home-canvas.js';
 import ntpcGeo from '../data/processed/ntpc-districts.geo.json';
 import tpeGeo  from '../data/processed/tpe-districts.geo.json';
 import tycGeo  from '../data/processed/tyc-districts.geo.json';
@@ -958,6 +959,8 @@ if (!_cityParam) {
   document.getElementById('controls').style.display = 'none';
   document.getElementById('label').style.display = 'none';
   document.getElementById('village-panel').style.display = 'none';
+  // Render the Three.js Taiwan outline canvas
+  initHomeCanvas(document.getElementById('home-canvas'));
 } else {
   // City page: hide home screen, show back button, init scene
   document.getElementById('city-back-btn').style.display = 'flex';
