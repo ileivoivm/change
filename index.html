@@ -627,6 +627,47 @@
       }
       #home-footer a { color: #aaa; }
 
+      /* ─── Taiwan hero map image ─── */
+      /* Desktop: absolutely positioned within #home-screen (the nearest
+         position:fixed containing block). z-index:-1 renders it behind all
+         block-level card content. mask-image fades all four edges so the
+         PNG background rectangle blends invisibly into the page. */
+      #home-map-img {
+        position: absolute;
+        right: 2vw;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 80vh;
+        max-height: 700px;
+        min-height: 300px;
+        width: auto;
+        pointer-events: none;
+        user-select: none;
+        z-index: -1;
+        display: block;
+        /* Radial gradient mask: island core stays opaque,
+           all four edges fade to transparent → no visible rectangle */
+        -webkit-mask-image: radial-gradient(
+          ellipse 80% 88% at 58% 50%,
+          black 35%,
+          rgba(0,0,0,0.6) 55%,
+          transparent 78%
+        );
+        mask-image: radial-gradient(
+          ellipse 80% 88% at 58% 50%,
+          black 35%,
+          rgba(0,0,0,0.6) 55%,
+          transparent 78%
+        );
+      }
+      /* Medium desktop: slightly smaller to avoid dominating narrow viewports */
+      @media (max-width: 1024px) and (min-width: 641px) {
+        #home-map-img {
+          height: 60vh;
+          right: 0vw;
+        }
+      }
+
       /* ─── ← 六都 back button (shown on city pages) ─── */
       #city-back-btn {
         position: fixed; top: 16px; left: 16px;
@@ -657,6 +698,16 @@
         .city-card-meta { font-size: 12px; }
         .city-card-winner { font-size: 13px; margin-top: 10px; }
         #city-back-btn { top: 10px; left: 10px; font-size: 12px; padding: 5px 11px; }
+        /* Mobile: take image out of absolute flow → in-document below footer,
+           centered, not too large so it doesn't push content off screen */
+        #home-map-img {
+          position: static;
+          width: 62%;
+          max-width: 240px;
+          height: auto;
+          transform: none;
+          margin: 20px auto 4px;
+        }
       }
     </style>
   </head>
@@ -787,7 +838,7 @@
           </a>
 
           <!-- 台中市 -->
-          <div class="city-card unavailable">
+          <a class="city-card" href="?city=txg">
             <div class="city-card-bar" style="background:#2060b0"></div>
             <div class="city-card-body">
               <div class="city-card-name">台中市</div>
@@ -797,8 +848,7 @@
                 盧秀燕 62.7%（2022）
               </div>
             </div>
-            <div class="city-card-badge">即將推出</div>
-          </div>
+          </a>
 
           <!-- 台南市 -->
           <div class="city-card unavailable">
@@ -835,6 +885,8 @@
           地理資料：<a href="https://github.com/g0v/twgeojson" target="_blank" rel="noopener">g0v/twgeojson</a> ·
           <a href="https://github.com/ileivoivm/change" target="_blank" rel="noopener">GitHub</a>
         </p>
+        <!-- Taiwan voxel map hero — desktop: absolute right bg; mobile: in-flow below footer -->
+        <img id="home-map-img" src="taiwan.png" alt="台灣 voxel 地圖" aria-hidden="true">
       </div>
     </div>
 

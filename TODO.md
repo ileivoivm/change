@@ -8,8 +8,8 @@
 
 | 代號 | 說明 |
 |---|---|
-| **小A** | 先開的 session，負責台北市選舉資料、高雄補選、Stage 1 首頁 MVP |
-| **小B** | 後開的 session（peaceful-heyrovsky worktree），負責 Stage 0 桃園/台中/台南/codebook |
+| **小A** | 驗證用 session — 負責測試、截圖回報、確認功能正確 |
+| **小B** | 執行用 session（peaceful-heyrovsky worktree）— 負責所有實作與推送 |
 
 ---
 
@@ -17,8 +17,20 @@
 
 | Session | 日期 | 工作內容 |
 |---|---|---|
-| 小A | 2026-04-25 | ✅ Stage 1 完成。下一步待認領 |
-| 小B | 2026-04-25 | ✅ Stage 3 桃園市完成。下一步待認領 |
+| 小B | 2026-04-25 | Stage 3 台中市（進行中） |
+
+---
+
+## 驗證清單（小A 負責逐項確認）
+
+| 項目 | 預期 | 驗證狀態 |
+|---|---|---|
+| Stage 1 首頁 | 6 卡、台北/新北/桃園可點、其餘灰、← 六都、舊連結兼容 | ✅ 小A 驗證通過 2026-04-25 |
+| Stage 2 extract-elections | 31 場選舉 JSON 全存在且資料正確（含 khh-2020 補選）| ✅ 小A 驗證通過 2026-04-25（31/31 pass，winner/party/區數全對）|
+| Stage 2 extract-villages | 六都里界 + 歷屆里票 JSON 正確 | ✅ 小A 驗證通過 2026-04-25（34/34 村 JSON 存在，tpe/ntpc/tyc 里級正確）|
+| Stage 2 main.js city config | `?city=` 路由正確、CITY_CONFIGS 完整 | ✅ 小A 驗證通過 2026-04-25（tpe/ntpc/tyc 路由正確，home 無 param 顯示首頁）|
+| Stage 3 台北市 | 12 區彩色、8 屆時間軸、里級、勝者正確 | ✅ 小A 驗證通過 2026-04-25（1994 DPP ✓、2022 KMT ✓、里鑽正常、no console error）|
+| Stage 3 桃園市 | 13 區彩色、7 屆時間軸、里級、勝者正確 | ✅ 小A 驗證通過 2026-04-25（13 區全彩、7 屆年份正確、桃園區里 82 格鑽入正常）|
 
 ---
 
@@ -50,13 +62,17 @@
 
 - [x] 台北市 ✅ 小B（12 區彩色 voxel、8 屆 1994-2022、里級全年份、村數/得票率標籤、動態 hint 文字）
 - [x] 桃園市 ✅ 小B（13 區、7 屆 1997-2022 含縣長時期、里級 2005+、bootstrap 通用化）
-- [ ] 台中市（29 區，2010 合併後）
+- [x] 台中市（進行中 小B）
 - [ ] 台南市（37 區，2010 合併後）
 - [ ] 高雄市（38 區，2010 合併後）
 
 ### Stage 4：首頁升級
 
 - [ ] voxel 全台 backdrop + 卡片浮層（C 方案）
+
+### UI 修復
+
+- [ ] **Bubble 超出底部自動 pan**：點擊里 → bubble 釘住後，偵測 `getBoundingClientRect().bottom > window.innerHeight`，計算偏移，用 tween 平移 OrbitControls target，讓 bubble 完整顯示。測試案例：`?city=tpe&y=2022&d=大同&v=延平`
 
 ### 其他待辦
 
