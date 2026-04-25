@@ -945,10 +945,10 @@ if (!_cityParam) {
     const hintEl = document.getElementById('timeline-hint');
     if (hintEl) {
       if (missingVillageYears.length === 0) {
-        hintEl.textContent = `所有 ${YEARS.length} 屆均有里級資料 · 低於 0.1% 候選人不顯示`;
+        hintEl.textContent = `所有 ${YEARS.length} 屆均有里級資料 · 低於 1% 候選人不顯示`;
       } else {
         const firstVillageYear = Math.min(...VILLAGE_YEARS);
-        hintEl.textContent = `里級資料自 ${firstVillageYear} 起 · ${missingVillageYears.join(' / ')} 中選會未公開里級 · 低於 0.1% 候選人不顯示`;
+        hintEl.textContent = `里級資料自 ${firstVillageYear} 起 · ${missingVillageYears.join(' / ')} 中選會未公開里級 · 低於 1% 候選人不顯示`;
       }
     }
   } catch (err) {
@@ -1161,7 +1161,7 @@ function renderBubble(mesh) {
       return;
     }
     const fmt = n => n.toLocaleString('en-US');
-    const rows = v.results.filter(r => r.rate >= 0.1).map(r => {
+    const rows = v.results.filter(r => r.rate >= 1).map(r => {
       const hex = '#' + candidateColor(r).toString(16).padStart(6, '0');
       return `<div class="cand">
         <span class="swatch" style="background:${hex}"></span>
@@ -1222,7 +1222,7 @@ function renderBubble(mesh) {
       <div class="sub">查無 2022 選舉資料</div>`;
     return;
   }
-  const rows = election.results.filter(r => r.rate >= 0.1).map(r => {
+  const rows = election.results.filter(r => r.rate >= 1).map(r => {
     const hex = '#' + candidateColor(r).toString(16).padStart(6, '0');
     return `<div class="cand">
       <span class="swatch" style="background:${hex}"></span>
