@@ -538,139 +538,102 @@
           border-radius: 2px;
         }
       }
-      /* ─── Home screen ─── */
+      /* ─── Home screen: left-aligned asymmetric layout ─── */
       #home-screen {
         position: fixed; inset: 0;
-        /* Background matches taiwan.png's background pixel (#c5bdb1) exactly
-           so the image blends seamlessly — no visible rectangular boundary */
         background: #c5bdb1;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow-y: auto; overflow-x: hidden;
         z-index: 200;
         font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
-        display: flex; align-items: flex-start; justify-content: center;
-        padding: 0 16px 48px;
+        /* Block layout — text lives left, map bleeds right */
+        display: block;
+        padding: 0;
       }
       #home-screen[hidden] { display: none !important; }
+
+      /* Text column: occupies left ~50% of viewport */
       #home-inner {
-        width: 100%; max-width: 960px;
-        padding-top: 64px;
+        position: relative; z-index: 1;
+        padding: 7vh 0 8vh 7vw;
+        max-width: 54vw;
+        box-sizing: border-box;
+        min-height: 100vh;
+        display: flex; flex-direction: column;
       }
-      /* ── Header: 3-layer typographic hierarchy ──
-         Layer 1 (小型大寫 label): 台灣選戰版圖 — index/category
-         Layer 2 (display title):  CHANGE — dominant anchor
-         Layer 3 (annotation):     spec line — data caption
-         Inspired by Ref 1's "ARCHIVE → Every Now and Then → Fig.N"
-         and Ref 2's bilingual precision labelling */
-      #home-title-row {
-        display: block;
-        margin-bottom: 0;
-      }
-      /* Layer 1: category label, spaced small caps */
+
+      /* ── Layer 1: small-caps category label in blue accent ── */
+      #home-title-row { margin-bottom: 0; }
       #home-title-sub {
         display: block;
         font-size: 10px; font-weight: 500;
         letter-spacing: 3.5px; text-transform: uppercase;
-        color: rgba(0,0,0,0.40);
-        margin-bottom: 6px;
+        color: #3a5a9b; /* single blue accent — mirrors Ref 1's ARCHIVE */
+        margin-bottom: 8px;
         font-family: "Helvetica Neue", Arial, sans-serif;
       }
-      /* Layer 2: display word — elegant high-contrast serif anchor.
-         Cormorant Garamond's thin hairlines create the same refinement
-         as Ref 1's "Every Now and Then" lettering. */
+
+      /* ── Layer 2: Cormorant Garamond fluid display title ── */
       #home-title {
-        font-size: 88px; font-weight: 500; letter-spacing: 1px;
+        font-size: clamp(56px, 9.5vw, 148px);
+        font-weight: 500; letter-spacing: 1px;
         color: #1a1a1a; margin: 0; line-height: 0.88;
-        font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+        font-family: 'Cormorant Garamond', Georgia, serif;
         font-style: italic;
       }
-      /* Layer 3: data annotation — smallest, most muted */
+
+      /* ── Layer 3: data annotation ── */
       #home-desc {
         font-size: 10px; color: rgba(0,0,0,0.38);
-        margin: 10px 0 0; letter-spacing: 0.4px;
-        line-height: 1.6;
+        margin: 10px 0 0; letter-spacing: 0.4px; line-height: 1.6;
       }
-      /* Thin rule separates header from grid — Ref 2's section divider */
+
+      /* Blue accent rule — the spine, like Ref 1's vertical axis */
       #home-rule {
-        border: none; border-top: 1px solid rgba(0,0,0,0.10);
-        margin: 24px 0 16px;
+        border: none; border-top: 1px solid #3a5a9b;
+        opacity: 0.35; margin: 22px 0 0;
       }
-      #city-grid {
+
+      /* ── City index: pure typography list, zero containers ── */
+      #city-index { flex: 1; }
+
+      .city-row {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        margin-top: 12px;
+        grid-template-columns: 42px 1fr auto;
+        align-items: baseline;
+        gap: 12px;
+        padding: 13px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.07);
+        text-decoration: none; color: inherit;
+        transition: opacity 150ms;
       }
-      .city-card {
-        /* Near-transparent frosted glass — content floats on the map,
-           white rectangle no longer dominates */
-        background: rgba(255,255,255,0.22);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        border-radius: 2px;
-        overflow: hidden;
-        border: 1px solid rgba(255,255,255,0.55);
-        box-shadow: none;
-        display: flex; flex-direction: column;
-        text-decoration: none;
-        color: inherit;
-        transition: background 180ms, border-color 180ms;
-        position: relative;
-      }
-      a.city-card:hover {
-        background: rgba(255,255,255,0.42);
-        border-color: rgba(255,255,255,0.85);
-      }
-      a.city-card:active { background: rgba(255,255,255,0.12); }
-      .city-card.unavailable {
-        cursor: default;
-        opacity: 0.35;
-        pointer-events: none;
-      }
-      .city-card-bar { display: none; }
-      .city-card-body {
-        padding: 20px 20px 22px;
-        display: flex; flex-direction: column;
-        flex: 1;
-      }
-      /* Top label: category index — like Ref 2's small-caps section header */
-      .city-card-code {
-        display: block;
+      .city-row:hover { opacity: 0.5; }
+
+      .city-row-code {
         font-size: 9px; font-weight: 500;
-        letter-spacing: 2.2px; text-transform: uppercase;
-        color: rgba(0,0,0,0.40);
-        margin-bottom: 10px;
+        letter-spacing: 2px; text-transform: uppercase;
+        color: #3a5a9b; /* blue accent consistent with label */
         font-family: "Helvetica Neue", Arial, sans-serif;
+        padding-top: 3px;
       }
-      /* City name: ultra-light + large — Ref 1 scale drama */
-      .city-card-name {
-        font-size: 36px; font-weight: 200; line-height: 1;
-        letter-spacing: -1px; color: rgba(0,0,0,0.85);
-        margin-bottom: 12px;
+      .city-row-name {
+        font-size: 22px; font-weight: 300;
+        letter-spacing: -0.2px; color: rgba(0,0,0,0.88);
       }
-      /* Meta: very small, tracked, low-contrast — pure data annotation */
-      .city-card-meta {
-        font-size: 10px; color: rgba(0,0,0,0.42);
-        line-height: 1.8; letter-spacing: 0.3px;
+      .city-row-winner {
+        font-size: 10px; color: rgba(0,0,0,0.38);
+        letter-spacing: 0.2px;
+        display: flex; align-items: center; gap: 5px;
+        white-space: nowrap;
       }
-      /* Winner: no border-top, just spacing — remove last box-thinking remnant */
-      .city-card-winner {
-        margin-top: 16px;
-        display: flex; align-items: center; gap: 6px;
-        font-size: 11px; color: rgba(0,0,0,0.65); font-weight: 400;
-        letter-spacing: 0.1px;
+      .city-row-winner .pdot {
+        width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
       }
-      .city-card-winner .pdot {
-        width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-        opacity: 0.85;
-      }
-      .city-card-badge { display: none; }
+
       #home-footer {
-        margin-top: 40px;
-        font-size: 12px; color: #000;
-        text-align: center;
+        margin-top: 32px; padding-bottom: 4px;
+        font-size: 10px; color: rgba(0,0,0,0.38); letter-spacing: 0.2px;
       }
-      #home-footer a { color: #000; }
+      #home-footer a { color: rgba(0,0,0,0.45); }
 
       /* ─── Taiwan hero map image ─── */
       /* Strategy: fill the full viewport height so top / bottom / right edges
@@ -686,20 +649,21 @@
         user-select: none;
         z-index: -1;
         display: block;
-        /* Left-edge fade: ease-in curve over 28% so the transition is soft */
+        /* Left-edge fade: start at 38% so the image only becomes visible to
+           the right of the 54vw text column. Fully opaque by 58%. */
         -webkit-mask-image: linear-gradient(to right,
           transparent 0%,
-          rgba(0,0,0,0.08) 6%,
-          rgba(0,0,0,0.30) 12%,
-          rgba(0,0,0,0.65) 20%,
-          black 28%
+          transparent 38%,
+          rgba(0,0,0,0.15) 44%,
+          rgba(0,0,0,0.55) 50%,
+          black 58%
         );
         mask-image: linear-gradient(to right,
           transparent 0%,
-          rgba(0,0,0,0.08) 6%,
-          rgba(0,0,0,0.30) 12%,
-          rgba(0,0,0,0.65) 20%,
-          black 28%
+          transparent 38%,
+          rgba(0,0,0,0.15) 44%,
+          rgba(0,0,0,0.55) 50%,
+          black 58%
         );
       }
 
@@ -723,19 +687,25 @@
       #city-back-btn svg { display: block; }
 
       @media (max-width: 640px) {
-        #home-inner { padding-top: 36px; }
+        /* Mobile: collapse text column to full width; map bleeds behind content */
+        #home-inner {
+          padding-top: 36px;
+          max-width: 100%;
+          padding-right: 7vw;
+        }
         #home-title { font-size: 60px; letter-spacing: 0px; }
         #home-title-sub { font-size: 9px; letter-spacing: 2.5px; }
         #home-desc { font-size: 10px; }
         #home-rule { margin: 18px 0 12px; }
-        #city-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
-        .city-card-name { font-size: 26px; letter-spacing: -0.5px; }
-        .city-card-body { padding: 14px 14px 16px; }
-        .city-card-meta { font-size: 10px; }
-        .city-card-winner { font-size: 11px; margin-top: 12px; }
+        /* City index rows: tighter on mobile */
+        .city-row { padding: 11px 0; gap: 9px; grid-template-columns: 36px 1fr auto; }
+        .city-row-code { font-size: 8px; letter-spacing: 1.5px; }
+        .city-row-name { font-size: 19px; }
+        .city-row-winner { font-size: 9px; }
         #city-back-btn { top: 10px; left: 10px; font-size: 12px; padding: 5px 11px; }
         /* Mobile: island centered, larger scale, bleeds off bottom.
-           Top fades in, bottom fades out so no hard rectangle boundary. */
+           Top fades in (slow — gives text breathing room), bottom fades out.
+           opacity: 0.7 prevents full-opacity voxel blocks from drowning text. */
         #home-map-img {
           position: absolute;
           bottom: -5%;
@@ -743,18 +713,21 @@
           transform: translateX(-50%);
           width: 150%;
           height: auto;
+          opacity: 0.7;
           -webkit-mask-image: linear-gradient(to bottom,
             transparent 0%,
-            rgba(0,0,0,0.35) 10%,
-            black 25%,
-            black 75%,
+            rgba(0,0,0,0.20) 15%,
+            rgba(0,0,0,0.60) 30%,
+            black 50%,
+            black 80%,
             transparent 100%
           );
           mask-image: linear-gradient(to bottom,
             transparent 0%,
-            rgba(0,0,0,0.35) 10%,
-            black 25%,
-            black 75%,
+            rgba(0,0,0,0.20) 15%,
+            rgba(0,0,0,0.60) 30%,
+            black 50%,
+            black 80%,
             transparent 100%
           );
         }
@@ -847,81 +820,45 @@
         <p id="home-desc">六都市長選舉 · voxel 地圖 · 里級下鑽 · 1994 → 2022</p>
         <hr id="home-rule">
 
-        <div id="city-grid">
+        <div id="city-index">
 
-          <a class="city-card" href="?city=tpe">
-            <div class="city-card-body">
-              <span class="city-card-code">TPE · 直轄市</span>
-              <div class="city-card-name">台北市</div>
-              <div class="city-card-meta">12 區 · 8 屆選舉 · 1994 – 2022</div>
-              <div class="city-card-winner">
-                <span class="pdot" style="background:#2060b0"></span>
-                蔣萬安 42.3%（2022）
-              </div>
-            </div>
+          <a class="city-row" href="?city=tpe">
+            <span class="city-row-code">TPE</span>
+            <span class="city-row-name">台北市</span>
+            <span class="city-row-winner"><span class="pdot" style="background:#2060b0"></span>蔣萬安 42.3%</span>
           </a>
 
-          <a class="city-card" href="?city=ntpc">
-            <div class="city-card-body">
-              <span class="city-card-code">NTPC · 直轄市</span>
-              <div class="city-card-name">新北市</div>
-              <div class="city-card-meta">29 區 · 1,032 里 · 7 屆選舉 · 1997 – 2022</div>
-              <div class="city-card-winner">
-                <span class="pdot" style="background:#2060b0"></span>
-                侯友宜 62.4%（2022）
-              </div>
-            </div>
+          <a class="city-row" href="?city=ntpc">
+            <span class="city-row-code">NTPC</span>
+            <span class="city-row-name">新北市</span>
+            <span class="city-row-winner"><span class="pdot" style="background:#2060b0"></span>侯友宜 62.4%</span>
           </a>
 
-          <a class="city-card" href="?city=tyc">
-            <div class="city-card-body">
-              <span class="city-card-code">TYC · 直轄市</span>
-              <div class="city-card-name">桃園市</div>
-              <div class="city-card-meta">13 區 · 7 屆選舉 · 1997 – 2022</div>
-              <div class="city-card-winner">
-                <span class="pdot" style="background:#2060b0"></span>
-                張善政 54.8%（2022）
-              </div>
-            </div>
+          <a class="city-row" href="?city=tyc">
+            <span class="city-row-code">TYC</span>
+            <span class="city-row-name">桃園市</span>
+            <span class="city-row-winner"><span class="pdot" style="background:#2060b0"></span>張善政 54.8%</span>
           </a>
 
-          <a class="city-card" href="?city=txg">
-            <div class="city-card-body">
-              <span class="city-card-code">TXG · 直轄市</span>
-              <div class="city-card-name">台中市</div>
-              <div class="city-card-meta">29 區 · 4 屆選舉 · 2010 – 2022</div>
-              <div class="city-card-winner">
-                <span class="pdot" style="background:#2060b0"></span>
-                盧秀燕 62.7%（2022）
-              </div>
-            </div>
+          <a class="city-row" href="?city=txg">
+            <span class="city-row-code">TXG</span>
+            <span class="city-row-name">台中市</span>
+            <span class="city-row-winner"><span class="pdot" style="background:#2060b0"></span>盧秀燕 62.7%</span>
           </a>
 
-          <a class="city-card" href="?city=tnn">
-            <div class="city-card-body">
-              <span class="city-card-code">TNN · 直轄市</span>
-              <div class="city-card-name">台南市</div>
-              <div class="city-card-meta">37 區 · 4 屆選舉 · 2010 – 2022</div>
-              <div class="city-card-winner">
-                <span class="pdot" style="background:#2aa046"></span>
-                黃偉哲 60.9%（2022）
-              </div>
-            </div>
+          <a class="city-row" href="?city=tnn">
+            <span class="city-row-code">TNN</span>
+            <span class="city-row-name">台南市</span>
+            <span class="city-row-winner"><span class="pdot" style="background:#2aa046"></span>黃偉哲 60.9%</span>
           </a>
 
-          <a class="city-card" href="?city=khh">
-            <div class="city-card-body">
-              <span class="city-card-code">KHH · 直轄市</span>
-              <div class="city-card-name">高雄市</div>
-              <div class="city-card-meta">38 區 · 4 屆選舉 · 2010 – 2022</div>
-              <div class="city-card-winner">
-                <span class="pdot" style="background:#2aa046"></span>
-                陳其邁 70.0%（2022）
-              </div>
-            </div>
+          <a class="city-row" href="?city=khh">
+            <span class="city-row-code">KHH</span>
+            <span class="city-row-name">高雄市</span>
+            <span class="city-row-winner"><span class="pdot" style="background:#2aa046"></span>陳其邁 70.0%</span>
           </a>
 
-        </div><!-- #city-grid -->
+        </div><!-- #city-index -->
 
         <p id="home-footer">
           選舉資料：<a href="https://github.com/kiang/db.cec.gov.tw" target="_blank" rel="noopener">kiang/db.cec.gov.tw</a> ·
@@ -929,8 +866,10 @@
           <a href="https://github.com/ileivoivm/change" target="_blank" rel="noopener">GitHub</a>
         </p>
         <!-- Taiwan voxel map hero — desktop: absolute right bg; mobile: in-flow below footer -->
-        <img id="home-map-img" src="taiwan.png" alt="台灣 voxel 地圖" aria-hidden="true">
       </div>
+      <!-- Taiwan voxel map: direct child of #home-screen so position:absolute
+           is relative to the viewport-filling fixed container, not #home-inner -->
+      <img id="home-map-img" src="taiwan.png" alt="台灣 voxel 地圖" aria-hidden="true">
     </div>
 
     <script type="module" src="/src/main.js"></script>
