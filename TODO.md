@@ -74,7 +74,7 @@
 
 ### UI 修復
 
-- [ ] **Bubble 超出底部自動 pan**：點擊里 → bubble 釘住後，偵測 `getBoundingClientRect().bottom > window.innerHeight`，計算偏移，用 tween 平移 OrbitControls target，讓 bubble 完整顯示。測試案例：`?city=tpe&y=2022&d=大同&v=延平`
+- [x] **Bubble 超出底部自動 pan** ✅ 小B（autoPanForBubble + tweenCamera 350ms，+20px padding）
 
 ### 其他待辦
 
