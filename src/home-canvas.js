@@ -11,10 +11,10 @@ import * as THREE from 'three';
 import twOutline from '../data/processed/tw-outline.geo.json';
 
 // ── Visual constants ───────────────────────────────────────────────────────────
-const FILL_COLOR    = 0xd9d3ca;  // slightly lighter than page bg #c5bdb1
-const OUTLINE_COLOR = 0x4e7860;  // muted forest-green (matches reference hue)
-const FILL_OPACITY  = 0.82;
-const LINE_OPACITY  = 0.80;
+const FILL_COLOR    = 0xe8e2d8;  // slightly lighter than page bg #ede7da
+const OUTLINE_COLOR = 0x5a7868;  // muted forest-green — complement to rose accent
+const FILL_OPACITY  = 0.80;
+const LINE_OPACITY  = 0.70;
 
 // Canvas aspect (width / height). Wider than the raw island (0.47) to give
 // breathing room for Penghu/Matsu/Kinmen and left/right margins.
