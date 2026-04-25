@@ -1,0 +1,1241 @@
+{
+  "election": "2020 高雄市長補選（3屆）",
+  "year": 2020,
+  "date": "2020-08-15",
+  "source": "CEC db.cec.gov.tw BEL/C1 themeId=4f9c64c708b10bbee8ff568fcc3529b8",
+  "candidates": [
+    {
+      "name": "陳其邁",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "吳益政",
+      "partyCode": "350",
+      "partyName": "台灣民眾黨"
+    },
+    {
+      "name": "李眉蓁",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "010",
+      "name": "鹽埕區",
+      "stem": "鹽埕",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 47.72,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 7113,
+          "rate": 71.73
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 423,
+          "rate": 4.27
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2381,
+          "rate": 24.01
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "鼓山區",
+      "stem": "鼓山",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 39.24,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 31799,
+          "rate": 67.51
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 1990,
+          "rate": 4.22
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 13315,
+          "rate": 28.27
+        }
+      ]
+    },
+    {
+      "area": "030",
+      "name": "左營區",
+      "stem": "左營",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 28.98,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 39352,
+          "rate": 62.35
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 2701,
+          "rate": 4.28
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 21062,
+          "rate": 33.37
+        }
+      ]
+    },
+    {
+      "area": "040",
+      "name": "楠梓區",
+      "stem": "楠梓",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 42.04,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 42700,
+          "rate": 69.12
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 2344,
+          "rate": 3.79
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 16730,
+          "rate": 27.08
+        }
+      ]
+    },
+    {
+      "area": "050",
+      "name": "三民區",
+      "stem": "三民",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 47.77,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 85121,
+          "rate": 71.74
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 5091,
+          "rate": 4.29
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 28434,
+          "rate": 23.97
+        }
+      ]
+    },
+    {
+      "area": "060",
+      "name": "新興區",
+      "stem": "新興",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 40.16,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12833,
+          "rate": 66.95
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 1200,
+          "rate": 6.26
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5135,
+          "rate": 26.79
+        }
+      ]
+    },
+    {
+      "area": "070",
+      "name": "前金區",
+      "stem": "前金",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 39.72,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 6954,
+          "rate": 66.67
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 665,
+          "rate": 6.38
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2811,
+          "rate": 26.95
+        }
+      ]
+    },
+    {
+      "area": "080",
+      "name": "苓雅區",
+      "stem": "苓雅",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 39.32,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 41222,
+          "rate": 66.65
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 3722,
+          "rate": 6.02
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 16903,
+          "rate": 27.33
+        }
+      ]
+    },
+    {
+      "area": "090",
+      "name": "前鎮區",
+      "stem": "前鎮",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 45.37,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 48346,
+          "rate": 70.64
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 2803,
+          "rate": 4.1
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17295,
+          "rate": 25.27
+        }
+      ]
+    },
+    {
+      "area": "100",
+      "name": "旗津區",
+      "stem": "旗津",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 55.58,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 7642,
+          "rate": 76.49
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 260,
+          "rate": 2.6
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2089,
+          "rate": 20.91
+        }
+      ]
+    },
+    {
+      "area": "110",
+      "name": "小港區",
+      "stem": "小港",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 49.62,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 38358,
+          "rate": 72.96
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 1947,
+          "rate": 3.7
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 12269,
+          "rate": 23.34
+        }
+      ]
+    },
+    {
+      "area": "120",
+      "name": "鳳山區",
+      "stem": "鳳山",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 40.52,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 82698,
+          "rate": 68.19
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 5015,
+          "rate": 4.14
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 33561,
+          "rate": 27.67
+        }
+      ]
+    },
+    {
+      "area": "130",
+      "name": "林園區",
+      "stem": "林園",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 55.37,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18143,
+          "rate": 75.89
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 858,
+          "rate": 3.59
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4905,
+          "rate": 20.52
+        }
+      ]
+    },
+    {
+      "area": "140",
+      "name": "大寮區",
+      "stem": "大寮",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 49.4,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 28357,
+          "rate": 73.04
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 1289,
+          "rate": 3.32
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 9180,
+          "rate": 23.64
+        }
+      ]
+    },
+    {
+      "area": "150",
+      "name": "大樹區",
+      "stem": "大樹",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 54.25,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 11738,
+          "rate": 75.66
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 456,
+          "rate": 2.94
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3321,
+          "rate": 21.41
+        }
+      ]
+    },
+    {
+      "area": "160",
+      "name": "大社區",
+      "stem": "大社",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 55.32,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9702,
+          "rate": 75.93
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 442,
+          "rate": 3.46
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2634,
+          "rate": 20.61
+        }
+      ]
+    },
+    {
+      "area": "170",
+      "name": "仁武區",
+      "stem": "仁武",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 53.23,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 23305,
+          "rate": 74.74
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 1170,
+          "rate": 3.75
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6708,
+          "rate": 21.51
+        }
+      ]
+    },
+    {
+      "area": "180",
+      "name": "鳥松區",
+      "stem": "鳥松",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 47.3,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12005,
+          "rate": 71.62
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 681,
+          "rate": 4.06
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4076,
+          "rate": 24.32
+        }
+      ]
+    },
+    {
+      "area": "190",
+      "name": "岡山區",
+      "stem": "岡山",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 40.52,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 22854,
+          "rate": 68.45
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 1209,
+          "rate": 3.62
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 9327,
+          "rate": 27.93
+        }
+      ]
+    },
+    {
+      "area": "200",
+      "name": "橋頭區",
+      "stem": "橋頭",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 58.68,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12372,
+          "rate": 77.32
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 647,
+          "rate": 4.04
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2982,
+          "rate": 18.64
+        }
+      ]
+    },
+    {
+      "area": "210",
+      "name": "燕巢區",
+      "stem": "燕巢",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 50.36,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 7834,
+          "rate": 73.68
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 319,
+          "rate": 3
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2480,
+          "rate": 23.32
+        }
+      ]
+    },
+    {
+      "area": "220",
+      "name": "田寮區",
+      "stem": "田寮",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 54.22,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1961,
+          "rate": 75.95
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 60,
+          "rate": 2.32
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 561,
+          "rate": 21.73
+        }
+      ]
+    },
+    {
+      "area": "230",
+      "name": "阿蓮區",
+      "stem": "阿蓮",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 58.25,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 7611,
+          "rate": 77.69
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 281,
+          "rate": 2.87
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1905,
+          "rate": 19.44
+        }
+      ]
+    },
+    {
+      "area": "240",
+      "name": "路竹區",
+      "stem": "路竹",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 48.57,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12465,
+          "rate": 71.96
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 806,
+          "rate": 4.65
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4052,
+          "rate": 23.39
+        }
+      ]
+    },
+    {
+      "area": "250",
+      "name": "湖內區",
+      "stem": "湖內",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 55.54,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 7409,
+          "rate": 76.19
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 307,
+          "rate": 3.16
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2008,
+          "rate": 20.65
+        }
+      ]
+    },
+    {
+      "area": "260",
+      "name": "茄萣區",
+      "stem": "茄萣",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 52.87,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 7419,
+          "rate": 75.29
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 226,
+          "rate": 2.29
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2209,
+          "rate": 22.42
+        }
+      ]
+    },
+    {
+      "area": "270",
+      "name": "永安區",
+      "stem": "永安",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 48.23,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3420,
+          "rate": 72.37
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 165,
+          "rate": 3.49
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1141,
+          "rate": 24.14
+        }
+      ]
+    },
+    {
+      "area": "280",
+      "name": "彌陀區",
+      "stem": "彌陀",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 41.41,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4655,
+          "rate": 69.16
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 208,
+          "rate": 3.09
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1868,
+          "rate": 27.75
+        }
+      ]
+    },
+    {
+      "area": "290",
+      "name": "梓官區",
+      "stem": "梓官",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 55.33,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 10444,
+          "rate": 76.02
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 452,
+          "rate": 3.29
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2842,
+          "rate": 20.69
+        }
+      ]
+    },
+    {
+      "area": "300",
+      "name": "旗山區",
+      "stem": "旗山",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 43.07,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8798,
+          "rate": 69.67
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 472,
+          "rate": 3.74
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3359,
+          "rate": 26.6
+        }
+      ]
+    },
+    {
+      "area": "310",
+      "name": "美濃區",
+      "stem": "美濃",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 20.71,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 7895,
+          "rate": 59.02
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 356,
+          "rate": 2.66
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5125,
+          "rate": 38.31
+        }
+      ]
+    },
+    {
+      "area": "320",
+      "name": "六龜區",
+      "stem": "六龜",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 35.3,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2319,
+          "rate": 66.5
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 80,
+          "rate": 2.29
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1088,
+          "rate": 31.2
+        }
+      ]
+    },
+    {
+      "area": "330",
+      "name": "甲仙區",
+      "stem": "甲仙",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 18.33,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1077,
+          "rate": 58.22
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 35,
+          "rate": 1.89
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 738,
+          "rate": 39.89
+        }
+      ]
+    },
+    {
+      "area": "340",
+      "name": "杉林區",
+      "stem": "杉林",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 28.34,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2219,
+          "rate": 63.09
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 76,
+          "rate": 2.16
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1222,
+          "rate": 34.75
+        }
+      ]
+    },
+    {
+      "area": "350",
+      "name": "內門區",
+      "stem": "內門",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 37.59,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3077,
+          "rate": 67.24
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 142,
+          "rate": 3.1
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1357,
+          "rate": 29.65
+        }
+      ]
+    },
+    {
+      "area": "360",
+      "name": "茂林區",
+      "stem": "茂林",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": -55.58,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 104,
+          "rate": 19.33
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 31,
+          "rate": 5.76
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 403,
+          "rate": 74.91
+        }
+      ]
+    },
+    {
+      "area": "370",
+      "name": "桃源區",
+      "stem": "桃源",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": -40.84,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 245,
+          "rate": 28.42
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 20,
+          "rate": 2.32
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 597,
+          "rate": 69.26
+        }
+      ]
+    },
+    {
+      "area": "380",
+      "name": "那瑪夏區",
+      "stem": "那瑪",
+      "winner": "陳其邁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": -25.54,
+      "results": [
+        {
+          "name": "陳其邁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 238,
+          "rate": 36.39
+        },
+        {
+          "name": "吳益政",
+          "partyCode": "350",
+          "partyName": "台灣民眾黨",
+          "votes": 11,
+          "rate": 1.68
+        },
+        {
+          "name": "李眉蓁",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 405,
+          "rate": 61.93
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,467 @@
+{
+  "election": "1997 桃園縣長",
+  "year": 1997,
+  "date": "1997-11-29",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "呂秀蓮",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "陳根德",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "徐運德",
+      "partyCode": "9",
+      "partyName": "社會改革黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "桃園市",
+      "stem": "桃園",
+      "winner": "呂秀蓮",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 25.37,
+      "results": [
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 72873,
+          "rate": 62.37
+        },
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 43235,
+          "rate": 37
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 740,
+          "rate": 0.63
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "中壢市",
+      "stem": "中壢",
+      "winner": "呂秀蓮",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 11.11,
+      "results": [
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 71798,
+          "rate": 55.04
+        },
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 57312,
+          "rate": 43.93
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 1339,
+          "rate": 1.03
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "大溪鎮",
+      "stem": "大溪",
+      "winner": "呂秀蓮",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 9.91,
+      "results": [
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 19903,
+          "rate": 54.64
+        },
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 16291,
+          "rate": 44.73
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 230,
+          "rate": 0.63
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "楊梅鎮",
+      "stem": "楊梅",
+      "winner": "呂秀蓮",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 23.33,
+      "results": [
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 29395,
+          "rate": 61.1
+        },
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 18171,
+          "rate": 37.77
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 540,
+          "rate": 1.12
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "蘆竹鄉",
+      "stem": "蘆竹",
+      "winner": "呂秀蓮",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 24.51,
+      "results": [
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20606,
+          "rate": 61.98
+        },
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 12458,
+          "rate": 37.47
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 181,
+          "rate": 0.54
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "大園鄉",
+      "stem": "大園",
+      "winner": "陳根德",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 7.58,
+      "results": [
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17934,
+          "rate": 53.61
+        },
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 15399,
+          "rate": 46.03
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 120,
+          "rate": 0.36
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "龜山鄉",
+      "stem": "龜山",
+      "winner": "呂秀蓮",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 2.6,
+      "results": [
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 21303,
+          "rate": 50.97
+        },
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20216,
+          "rate": 48.37
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 274,
+          "rate": 0.66
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "八德市",
+      "stem": "八德",
+      "winner": "陳根德",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.28,
+      "results": [
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 32051,
+          "rate": 50.76
+        },
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 30610,
+          "rate": 48.48
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 477,
+          "rate": 0.76
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "龍潭鄉",
+      "stem": "龍潭",
+      "winner": "呂秀蓮",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 1.8,
+      "results": [
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 19770,
+          "rate": 50.3
+        },
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 19066,
+          "rate": 48.5
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 472,
+          "rate": 1.2
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "平鎮市",
+      "stem": "平鎮",
+      "winner": "呂秀蓮",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 11.16,
+      "results": [
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 40261,
+          "rate": 55.03
+        },
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 32092,
+          "rate": 43.87
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 803,
+          "rate": 1.1
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "新屋鄉",
+      "stem": "新屋",
+      "winner": "呂秀蓮",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 30.3,
+      "results": [
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 15256,
+          "rate": 64.54
+        },
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 8093,
+          "rate": 34.24
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 289,
+          "rate": 1.22
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "觀音鄉",
+      "stem": "觀音",
+      "winner": "呂秀蓮",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 40.3,
+      "results": [
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 16699,
+          "rate": 69.86
+        },
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 7066,
+          "rate": 29.56
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 137,
+          "rate": 0.57
+        }
+      ]
+    },
+    {
+      "area": "013",
+      "name": "復興鄉",
+      "stem": "復興",
+      "winner": "陳根德",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 29.69,
+      "results": [
+        {
+          "name": "陳根德",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3008,
+          "rate": 64.66
+        },
+        {
+          "name": "呂秀蓮",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1627,
+          "rate": 34.97
+        },
+        {
+          "name": "徐運德",
+          "partyCode": "9",
+          "partyName": "社會改革黨",
+          "votes": 17,
+          "rate": 0.37
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "呂秀蓮",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 375500,
+        "rate": 56.2
+      },
+      {
+        "name": "陳根德",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 286993,
+        "rate": 42.96
+      },
+      {
+        "name": "徐運德",
+        "partyCode": "9",
+        "partyName": "社會改革黨",
+        "votes": 5619,
+        "rate": 0.84
+      }
+    ],
+    "winner": "呂秀蓮"
+  }
+}

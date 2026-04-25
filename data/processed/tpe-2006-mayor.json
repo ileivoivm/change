@@ -1,0 +1,723 @@
+{
+  "election": "2006 台北市長（4屆直轄）",
+  "year": 2006,
+  "date": "2006-12-09",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "李敖",
+      "partyCode": "999",
+      "partyName": "無"
+    },
+    {
+      "name": "周玉蔻",
+      "partyCode": "95",
+      "partyName": "台灣團結聯盟"
+    },
+    {
+      "name": "謝長廷",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "宋楚瑜",
+      "partyCode": "999",
+      "partyName": "無"
+    },
+    {
+      "name": "郝龍斌",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "柯賜海",
+      "partyCode": "999",
+      "partyName": "無"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "北投區",
+      "stem": "北投",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 4.1,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 61093,
+          "rate": 49.51
+        },
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 56034,
+          "rate": 45.41
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 4722,
+          "rate": 3.83
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 734,
+          "rate": 0.59
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 463,
+          "rate": 0.38
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 337,
+          "rate": 0.27
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "士林區",
+      "stem": "士林",
+      "winner": "謝長廷",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 1.82,
+      "results": [
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 70610,
+          "rate": 48.6
+        },
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 67961,
+          "rate": 46.78
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 5029,
+          "rate": 3.46
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 822,
+          "rate": 0.57
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 471,
+          "rate": 0.32
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 385,
+          "rate": 0.27
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "內湖區",
+      "stem": "內湖",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 17.98,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 70189,
+          "rate": 56.35
+        },
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 47791,
+          "rate": 38.37
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 5257,
+          "rate": 4.22
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 690,
+          "rate": 0.55
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 342,
+          "rate": 0.27
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 279,
+          "rate": 0.22
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "南港區",
+      "stem": "南港",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 13.62,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 29887,
+          "rate": 54.13
+        },
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 22365,
+          "rate": 40.51
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 2275,
+          "rate": 4.12
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 337,
+          "rate": 0.61
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 207,
+          "rate": 0.37
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 138,
+          "rate": 0.25
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "松山區",
+      "stem": "松山",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 18.8,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 57334,
+          "rate": 56.93
+        },
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 38405,
+          "rate": 38.13
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 3941,
+          "rate": 3.91
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 553,
+          "rate": 0.55
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 260,
+          "rate": 0.26
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 225,
+          "rate": 0.22
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "信義區",
+      "stem": "信義",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 21.25,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 66485,
+          "rate": 57.87
+        },
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 42068,
+          "rate": 36.62
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 4997,
+          "rate": 4.35
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 746,
+          "rate": 0.65
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 299,
+          "rate": 0.26
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 290,
+          "rate": 0.25
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "中山區",
+      "stem": "中山",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.81,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 52794,
+          "rate": 49.31
+        },
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 48711,
+          "rate": 45.5
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 4362,
+          "rate": 4.07
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 637,
+          "rate": 0.6
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 303,
+          "rate": 0.28
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 250,
+          "rate": 0.23
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "大同區",
+      "stem": "大同",
+      "winner": "謝長廷",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 17.08,
+      "results": [
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 35652,
+          "rate": 56.27
+        },
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 24832,
+          "rate": 39.19
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 2185,
+          "rate": 3.45
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 314,
+          "rate": 0.5
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 207,
+          "rate": 0.33
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 174,
+          "rate": 0.27
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "中正區",
+      "stem": "中正",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 20.59,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 42997,
+          "rate": 57.45
+        },
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 27589,
+          "rate": 36.86
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 3374,
+          "rate": 4.51
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 473,
+          "rate": 0.63
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 215,
+          "rate": 0.29
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 200,
+          "rate": 0.27
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "萬華區",
+      "stem": "萬華",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 1.49,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 47822,
+          "rate": 47.94
+        },
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 46339,
+          "rate": 46.45
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 4424,
+          "rate": 4.44
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 563,
+          "rate": 0.56
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 324,
+          "rate": 0.32
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 279,
+          "rate": 0.28
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "大安區",
+      "stem": "大安",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 25.82,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 90382,
+          "rate": 60.06
+        },
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 51527,
+          "rate": 34.24
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 6767,
+          "rate": 4.5
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 1028,
+          "rate": 0.68
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 394,
+          "rate": 0.26
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 376,
+          "rate": 0.25
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "文山區",
+      "stem": "文山",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 32.81,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 80309,
+          "rate": 63.45
+        },
+        {
+          "name": "謝長廷",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 38778,
+          "rate": 30.64
+        },
+        {
+          "name": "宋楚瑜",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 5948,
+          "rate": 4.7
+        },
+        {
+          "name": "李敖",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 898,
+          "rate": 0.71
+        },
+        {
+          "name": "柯賜海",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 357,
+          "rate": 0.28
+        },
+        {
+          "name": "周玉蔻",
+          "partyCode": "95",
+          "partyName": "台灣團結聯盟",
+          "votes": 284,
+          "rate": 0.22
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "郝龍斌",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 692085,
+        "rate": 53.81
+      },
+      {
+        "name": "謝長廷",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 525869,
+        "rate": 40.89
+      },
+      {
+        "name": "宋楚瑜",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 53281,
+        "rate": 4.14
+      },
+      {
+        "name": "李敖",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 7795,
+        "rate": 0.61
+      },
+      {
+        "name": "柯賜海",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 3687,
+        "rate": 0.29
+      },
+      {
+        "name": "周玉蔻",
+        "partyCode": "95",
+        "partyName": "台灣團結聯盟",
+        "votes": 3372,
+        "rate": 0.26
+      }
+    ],
+    "winner": "郝龍斌"
+  }
+}

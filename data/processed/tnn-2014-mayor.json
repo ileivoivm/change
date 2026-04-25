@@ -1,0 +1,964 @@
+{
+  "election": "2014 台南市長（2屆）",
+  "year": 2014,
+  "date": "2014-11-29",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "賴清德",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "黃秀霜",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "010",
+      "name": "新營區",
+      "stem": "新營",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 31.35,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 25313,
+          "rate": 65.67
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 13232,
+          "rate": 34.32
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "鹽水區",
+      "stem": "鹽水",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 53.21,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 11340,
+          "rate": 76.6
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3464,
+          "rate": 23.39
+        }
+      ]
+    },
+    {
+      "area": "030",
+      "name": "白河區",
+      "stem": "白河",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 46.23,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12116,
+          "rate": 73.11
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4455,
+          "rate": 26.88
+        }
+      ]
+    },
+    {
+      "area": "040",
+      "name": "柳營區",
+      "stem": "柳營",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 49.09,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9736,
+          "rate": 74.54
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3324,
+          "rate": 25.45
+        }
+      ]
+    },
+    {
+      "area": "050",
+      "name": "後壁區",
+      "stem": "後壁",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 51.15,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 10967,
+          "rate": 75.57
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3545,
+          "rate": 24.42
+        }
+      ]
+    },
+    {
+      "area": "060",
+      "name": "東山區",
+      "stem": "東山",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 40.45,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8136,
+          "rate": 70.22
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3449,
+          "rate": 29.77
+        }
+      ]
+    },
+    {
+      "area": "070",
+      "name": "麻豆區",
+      "stem": "麻豆",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 62.15,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20339,
+          "rate": 81.07
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4749,
+          "rate": 18.92
+        }
+      ]
+    },
+    {
+      "area": "080",
+      "name": "下營區",
+      "stem": "下營",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 48.55,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 10455,
+          "rate": 74.27
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3622,
+          "rate": 25.72
+        }
+      ]
+    },
+    {
+      "area": "090",
+      "name": "六甲區",
+      "stem": "六甲",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 48.93,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9734,
+          "rate": 74.46
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3338,
+          "rate": 25.53
+        }
+      ]
+    },
+    {
+      "area": "100",
+      "name": "官田區",
+      "stem": "官田",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 56.27,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9802,
+          "rate": 78.13
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2743,
+          "rate": 21.86
+        }
+      ]
+    },
+    {
+      "area": "110",
+      "name": "大內區",
+      "stem": "大內",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 46.79,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4642,
+          "rate": 73.39
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1683,
+          "rate": 26.6
+        }
+      ]
+    },
+    {
+      "area": "120",
+      "name": "佳里區",
+      "stem": "佳里",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 51.49,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 24253,
+          "rate": 75.74
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 7765,
+          "rate": 24.25
+        }
+      ]
+    },
+    {
+      "area": "130",
+      "name": "學甲區",
+      "stem": "學甲",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 58.39,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 11606,
+          "rate": 79.19
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3049,
+          "rate": 20.8
+        }
+      ]
+    },
+    {
+      "area": "140",
+      "name": "西港區",
+      "stem": "西港",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 58.07,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 11604,
+          "rate": 79.03
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3079,
+          "rate": 20.96
+        }
+      ]
+    },
+    {
+      "area": "150",
+      "name": "七股區",
+      "stem": "七股",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 57.97,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 11323,
+          "rate": 78.98
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3012,
+          "rate": 21.01
+        }
+      ]
+    },
+    {
+      "area": "160",
+      "name": "將軍區",
+      "stem": "將軍",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 55.05,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9380,
+          "rate": 77.52
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2719,
+          "rate": 22.47
+        }
+      ]
+    },
+    {
+      "area": "170",
+      "name": "北門區",
+      "stem": "北門",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 54.47,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5299,
+          "rate": 77.23
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1562,
+          "rate": 22.76
+        }
+      ]
+    },
+    {
+      "area": "180",
+      "name": "新化區",
+      "stem": "新化",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 43.71,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 17129,
+          "rate": 71.85
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6710,
+          "rate": 28.14
+        }
+      ]
+    },
+    {
+      "area": "190",
+      "name": "善化區",
+      "stem": "善化",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 53.91,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18670,
+          "rate": 76.95
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5592,
+          "rate": 23.04
+        }
+      ]
+    },
+    {
+      "area": "200",
+      "name": "新市區",
+      "stem": "新市",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 56.45,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 14733,
+          "rate": 78.22
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4101,
+          "rate": 21.77
+        }
+      ]
+    },
+    {
+      "area": "210",
+      "name": "安定區",
+      "stem": "安定",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 54.03,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 13491,
+          "rate": 77.01
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4026,
+          "rate": 22.98
+        }
+      ]
+    },
+    {
+      "area": "220",
+      "name": "山上區",
+      "stem": "山上",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 48.75,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3248,
+          "rate": 74.37
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1119,
+          "rate": 25.62
+        }
+      ]
+    },
+    {
+      "area": "230",
+      "name": "玉井區",
+      "stem": "玉井",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 22.43,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4942,
+          "rate": 61.21
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3131,
+          "rate": 38.78
+        }
+      ]
+    },
+    {
+      "area": "240",
+      "name": "楠西區",
+      "stem": "楠西",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 13.31,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3194,
+          "rate": 56.65
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2444,
+          "rate": 43.34
+        }
+      ]
+    },
+    {
+      "area": "250",
+      "name": "南化區",
+      "stem": "南化",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 26.57,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3420,
+          "rate": 63.28
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1984,
+          "rate": 36.71
+        }
+      ]
+    },
+    {
+      "area": "260",
+      "name": "左鎮區",
+      "stem": "左鎮",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 45.49,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2301,
+          "rate": 72.74
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 862,
+          "rate": 27.25
+        }
+      ]
+    },
+    {
+      "area": "270",
+      "name": "仁德區",
+      "stem": "仁德",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 45.31,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 29487,
+          "rate": 72.65
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 11099,
+          "rate": 27.34
+        }
+      ]
+    },
+    {
+      "area": "280",
+      "name": "歸仁區",
+      "stem": "歸仁",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 53.53,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 28215,
+          "rate": 76.76
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 8541,
+          "rate": 23.23
+        }
+      ]
+    },
+    {
+      "area": "290",
+      "name": "關廟區",
+      "stem": "關廟",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 51.03,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 16318,
+          "rate": 75.51
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5290,
+          "rate": 24.48
+        }
+      ]
+    },
+    {
+      "area": "300",
+      "name": "龍崎區",
+      "stem": "龍崎",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 42.15,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2197,
+          "rate": 71.07
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 894,
+          "rate": 28.92
+        }
+      ]
+    },
+    {
+      "area": "310",
+      "name": "永康區",
+      "stem": "永康",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 44.43,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 79247,
+          "rate": 72.21
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 30486,
+          "rate": 27.78
+        }
+      ]
+    },
+    {
+      "area": "320",
+      "name": "東區",
+      "stem": "東區",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 31.47,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 57110,
+          "rate": 65.73
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 29767,
+          "rate": 34.26
+        }
+      ]
+    },
+    {
+      "area": "330",
+      "name": "南區",
+      "stem": "南區",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 44.21,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 47996,
+          "rate": 72.1
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 18568,
+          "rate": 27.89
+        }
+      ]
+    },
+    {
+      "area": "340",
+      "name": "北區",
+      "stem": "北區",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 36.19,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 43622,
+          "rate": 68.09
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20434,
+          "rate": 31.9
+        }
+      ]
+    },
+    {
+      "area": "350",
+      "name": "安南區",
+      "stem": "安南",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 55.27,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 76283,
+          "rate": 77.63
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 21974,
+          "rate": 22.36
+        }
+      ]
+    },
+    {
+      "area": "360",
+      "name": "安平區",
+      "stem": "安平",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 41.27,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18077,
+          "rate": 70.63
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 7515,
+          "rate": 29.36
+        }
+      ]
+    },
+    {
+      "area": "370",
+      "name": "中西區",
+      "stem": "中西",
+      "winner": "賴清德",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 39.47,
+      "results": [
+        {
+          "name": "賴清德",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 25832,
+          "rate": 69.73
+        },
+        {
+          "name": "黃秀霜",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 11209,
+          "rate": 30.26
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "賴清德",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 711557,
+        "rate": 72.9
+      },
+      {
+        "name": "黃秀霜",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 264536,
+        "rate": 27.1
+      }
+    ],
+    "winner": "賴清德"
+  }
+}

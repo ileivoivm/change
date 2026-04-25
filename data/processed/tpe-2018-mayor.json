@@ -1,0 +1,627 @@
+{
+  "election": "2018 台北市長（7屆）",
+  "year": 2018,
+  "date": "2018-11-24",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "吳蕚洋",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "丁守中",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "姚文智",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "柯文哲",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "李錫錕",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    }
+  ],
+  "districts": [
+    {
+      "area": "010",
+      "name": "松山區",
+      "stem": "松山",
+      "winner": "丁守中",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.78,
+      "results": [
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 46353,
+          "rate": 43.4
+        },
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 42315,
+          "rate": 39.62
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 17285,
+          "rate": 16.18
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 425,
+          "rate": 0.39
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 417,
+          "rate": 0.39
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "信義區",
+      "stem": "信義",
+      "winner": "丁守中",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 5.06,
+      "results": [
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 53812,
+          "rate": 44
+        },
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 47620,
+          "rate": 38.94
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 19849,
+          "rate": 16.23
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 509,
+          "rate": 0.41
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 500,
+          "rate": 0.4
+        }
+      ]
+    },
+    {
+      "area": "030",
+      "name": "大安區",
+      "stem": "大安",
+      "winner": "丁守中",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 7.19,
+      "results": [
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 72311,
+          "rate": 45.72
+        },
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 60940,
+          "rate": 38.53
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 23646,
+          "rate": 14.95
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 658,
+          "rate": 0.41
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 582,
+          "rate": 0.36
+        }
+      ]
+    },
+    {
+      "area": "040",
+      "name": "中山區",
+      "stem": "中山",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 3.16,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 50582,
+          "rate": 41.54
+        },
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 46732,
+          "rate": 38.38
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 23476,
+          "rate": 19.28
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 490,
+          "rate": 0.4
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 476,
+          "rate": 0.39
+        }
+      ]
+    },
+    {
+      "area": "050",
+      "name": "中正區",
+      "stem": "中正",
+      "winner": "丁守中",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 0.18,
+      "results": [
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 33896,
+          "rate": 41.83
+        },
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 33748,
+          "rate": 41.65
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12631,
+          "rate": 15.58
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 377,
+          "rate": 0.46
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 372,
+          "rate": 0.45
+        }
+      ]
+    },
+    {
+      "area": "060",
+      "name": "大同區",
+      "stem": "大同",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 15.62,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 31660,
+          "rate": 45.29
+        },
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20745,
+          "rate": 29.67
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 16895,
+          "rate": 24.16
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 339,
+          "rate": 0.48
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 266,
+          "rate": 0.38
+        }
+      ]
+    },
+    {
+      "area": "070",
+      "name": "萬華區",
+      "stem": "萬華",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 4.66,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 43379,
+          "rate": 41.63
+        },
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 38520,
+          "rate": 36.97
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 21397,
+          "rate": 20.53
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 465,
+          "rate": 0.44
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 426,
+          "rate": 0.4
+        }
+      ]
+    },
+    {
+      "area": "080",
+      "name": "文山區",
+      "stem": "文山",
+      "winner": "丁守中",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.31,
+      "results": [
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 68549,
+          "rate": 47.13
+        },
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 56463,
+          "rate": 38.82
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18989,
+          "rate": 13.05
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 710,
+          "rate": 0.48
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 710,
+          "rate": 0.48
+        }
+      ]
+    },
+    {
+      "area": "090",
+      "name": "南港區",
+      "stem": "南港",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 4.2,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 29071,
+          "rate": 43.53
+        },
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 26271,
+          "rate": 39.33
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 10829,
+          "rate": 16.21
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 324,
+          "rate": 0.48
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 287,
+          "rate": 0.42
+        }
+      ]
+    },
+    {
+      "area": "100",
+      "name": "內湖區",
+      "stem": "內湖",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 2.69,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 65589,
+          "rate": 43.7
+        },
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 61546,
+          "rate": 41.01
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 21747,
+          "rate": 14.49
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 639,
+          "rate": 0.42
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 549,
+          "rate": 0.36
+        }
+      ]
+    },
+    {
+      "area": "110",
+      "name": "士林區",
+      "stem": "士林",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 4.75,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 63216,
+          "rate": 41.2
+        },
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 55938,
+          "rate": 36.45
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 33108,
+          "rate": 21.57
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 653,
+          "rate": 0.42
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 521,
+          "rate": 0.33
+        }
+      ]
+    },
+    {
+      "area": "120",
+      "name": "北投區",
+      "stem": "北投",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 2.72,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 56080,
+          "rate": 41.82
+        },
+        {
+          "name": "丁守中",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 52423,
+          "rate": 39.1
+        },
+        {
+          "name": "姚文智",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 24490,
+          "rate": 18.26
+        },
+        {
+          "name": "李錫錕",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 577,
+          "rate": 0.43
+        },
+        {
+          "name": "吳蕚洋",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 497,
+          "rate": 0.37
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "柯文哲",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 580663,
+        "rate": 41.07
+      },
+      {
+        "name": "丁守中",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 577096,
+        "rate": 40.82
+      },
+      {
+        "name": "姚文智",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 244342,
+        "rate": 17.28
+      },
+      {
+        "name": "李錫錕",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 6158,
+        "rate": 0.44
+      },
+      {
+        "name": "吳蕚洋",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 5611,
+        "rate": 0.4
+      }
+    ],
+    "winner": "柯文哲"
+  }
+}

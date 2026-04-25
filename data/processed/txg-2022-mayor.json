@@ -1,0 +1,979 @@
+{
+  "election": "2022 台中市長（4屆）",
+  "year": 2022,
+  "date": "2022-11-26",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "陳美妃",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "蔡其昌",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "盧秀燕",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "010",
+      "name": "中區",
+      "stem": "中區",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 12.88,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4205,
+          "rate": 55.61
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3231,
+          "rate": 42.73
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 126,
+          "rate": 1.67
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "東區",
+      "stem": "東區",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.99,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 21589,
+          "rate": 57.14
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 15545,
+          "rate": 41.15
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 647,
+          "rate": 1.71
+        }
+      ]
+    },
+    {
+      "area": "030",
+      "name": "南區",
+      "stem": "南區",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 22.25,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 36298,
+          "rate": 60.18
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 22877,
+          "rate": 37.93
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1139,
+          "rate": 1.89
+        }
+      ]
+    },
+    {
+      "area": "040",
+      "name": "西區",
+      "stem": "西區",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 18.14,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 30741,
+          "rate": 58.25
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 21167,
+          "rate": 40.11
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 864,
+          "rate": 1.64
+        }
+      ]
+    },
+    {
+      "area": "050",
+      "name": "北區",
+      "stem": "北區",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 24.12,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 41492,
+          "rate": 61.21
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 25143,
+          "rate": 37.09
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1147,
+          "rate": 1.69
+        }
+      ]
+    },
+    {
+      "area": "060",
+      "name": "西屯區",
+      "stem": "西屯",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 25.66,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 63173,
+          "rate": 61.99
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 37021,
+          "rate": 36.33
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1708,
+          "rate": 1.68
+        }
+      ]
+    },
+    {
+      "area": "070",
+      "name": "南屯區",
+      "stem": "南屯",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 21.69,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 47655,
+          "rate": 59.94
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 30409,
+          "rate": 38.25
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1441,
+          "rate": 1.81
+        }
+      ]
+    },
+    {
+      "area": "080",
+      "name": "北屯區",
+      "stem": "北屯",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 27.62,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 83304,
+          "rate": 63.04
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 46812,
+          "rate": 35.42
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 2034,
+          "rate": 1.54
+        }
+      ]
+    },
+    {
+      "area": "090",
+      "name": "豐原區",
+      "stem": "豐原",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.93,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 46807,
+          "rate": 57.07
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 33736,
+          "rate": 41.14
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1469,
+          "rate": 1.79
+        }
+      ]
+    },
+    {
+      "area": "100",
+      "name": "東勢區",
+      "stem": "東勢",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 35.29,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17671,
+          "rate": 66.83
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8341,
+          "rate": 31.54
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 430,
+          "rate": 1.63
+        }
+      ]
+    },
+    {
+      "area": "110",
+      "name": "大甲區",
+      "stem": "大甲",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.49,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20730,
+          "rate": 53.59
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 17446,
+          "rate": 45.1
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 506,
+          "rate": 1.31
+        }
+      ]
+    },
+    {
+      "area": "120",
+      "name": "清水區",
+      "stem": "清水",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 0.36,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 23021,
+          "rate": 49.42
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 22854,
+          "rate": 49.06
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 708,
+          "rate": 1.52
+        }
+      ]
+    },
+    {
+      "area": "130",
+      "name": "沙鹿區",
+      "stem": "沙鹿",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.15,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 26653,
+          "rate": 56.72
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 19535,
+          "rate": 41.57
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 805,
+          "rate": 1.71
+        }
+      ]
+    },
+    {
+      "area": "140",
+      "name": "梧棲區",
+      "stem": "梧棲",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.98,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 15009,
+          "rate": 50.65
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 14124,
+          "rate": 47.67
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 498,
+          "rate": 1.68
+        }
+      ]
+    },
+    {
+      "area": "150",
+      "name": "后里區",
+      "stem": "后里",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 23.52,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17009,
+          "rate": 60.85
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 10435,
+          "rate": 37.33
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 507,
+          "rate": 1.81
+        }
+      ]
+    },
+    {
+      "area": "160",
+      "name": "神岡區",
+      "stem": "神岡",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 12.43,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 18155,
+          "rate": 55.39
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 14081,
+          "rate": 42.96
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 539,
+          "rate": 1.64
+        }
+      ]
+    },
+    {
+      "area": "170",
+      "name": "潭子區",
+      "stem": "潭子",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 21.89,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 31328,
+          "rate": 60.14
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 19925,
+          "rate": 38.25
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 840,
+          "rate": 1.61
+        }
+      ]
+    },
+    {
+      "area": "180",
+      "name": "大雅區",
+      "stem": "大雅",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 25.89,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 27697,
+          "rate": 61.98
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 16129,
+          "rate": 36.09
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 859,
+          "rate": 1.92
+        }
+      ]
+    },
+    {
+      "area": "190",
+      "name": "新社區",
+      "stem": "新社",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 27.71,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 8277,
+          "rate": 63.04
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4638,
+          "rate": 35.33
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 214,
+          "rate": 1.63
+        }
+      ]
+    },
+    {
+      "area": "200",
+      "name": "石岡區",
+      "stem": "石岡",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 31.42,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5192,
+          "rate": 64.88
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2678,
+          "rate": 33.46
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 133,
+          "rate": 1.66
+        }
+      ]
+    },
+    {
+      "area": "210",
+      "name": "外埔區",
+      "stem": "外埔",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 19.41,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 10098,
+          "rate": 59.04
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 6779,
+          "rate": 39.63
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 227,
+          "rate": 1.33
+        }
+      ]
+    },
+    {
+      "area": "220",
+      "name": "大安區",
+      "stem": "大安",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 9.08,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5583,
+          "rate": 53.84
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4641,
+          "rate": 44.76
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 145,
+          "rate": 1.4
+        }
+      ]
+    },
+    {
+      "area": "230",
+      "name": "烏日區",
+      "stem": "烏日",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 20.97,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 22739,
+          "rate": 59.58
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 14738,
+          "rate": 38.61
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 691,
+          "rate": 1.81
+        }
+      ]
+    },
+    {
+      "area": "240",
+      "name": "大肚區",
+      "stem": "大肚",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 22.57,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17621,
+          "rate": 60.34
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 11030,
+          "rate": 37.77
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 551,
+          "rate": 1.89
+        }
+      ]
+    },
+    {
+      "area": "250",
+      "name": "龍井區",
+      "stem": "龍井",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.56,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 21260,
+          "rate": 56.82
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 15437,
+          "rate": 41.26
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 721,
+          "rate": 1.93
+        }
+      ]
+    },
+    {
+      "area": "260",
+      "name": "霧峰區",
+      "stem": "霧峰",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 24.11,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20770,
+          "rate": 61.2
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12589,
+          "rate": 37.09
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 579,
+          "rate": 1.71
+        }
+      ]
+    },
+    {
+      "area": "270",
+      "name": "太平區",
+      "stem": "太平",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 21.74,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 52324,
+          "rate": 59.95
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 33350,
+          "rate": 38.21
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1609,
+          "rate": 1.84
+        }
+      ]
+    },
+    {
+      "area": "280",
+      "name": "大里區",
+      "stem": "大里",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 20.1,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 57743,
+          "rate": 59.07
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 38099,
+          "rate": 38.97
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1917,
+          "rate": 1.96
+        }
+      ]
+    },
+    {
+      "area": "290",
+      "name": "和平區",
+      "stem": "和平",
+      "winner": "盧秀燕",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 54.43,
+      "results": [
+        {
+          "name": "盧秀燕",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4963,
+          "rate": 76.55
+        },
+        {
+          "name": "蔡其昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1434,
+          "rate": 22.12
+        },
+        {
+          "name": "陳美妃",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 86,
+          "rate": 1.33
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "盧秀燕",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 799107,
+        "rate": 59.35
+      },
+      {
+        "name": "蔡其昌",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 524224,
+        "rate": 38.93
+      },
+      {
+        "name": "陳美妃",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 23140,
+        "rate": 1.72
+      }
+    ],
+    "winner": "盧秀燕"
+  }
+}

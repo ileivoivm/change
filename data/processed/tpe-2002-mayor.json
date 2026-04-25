@@ -1,0 +1,339 @@
+{
+  "election": "2002 台北市長（3屆直轄）",
+  "year": 2002,
+  "date": "2002-12-07",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "李應元",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "馬英九",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "北投區",
+      "stem": "北投",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 21.26,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 78845,
+          "rate": 60.63
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 51208,
+          "rate": 39.37
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "士林區",
+      "stem": "士林",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.2,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 87652,
+          "rate": 57.6
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 64514,
+          "rate": 42.4
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "內湖區",
+      "stem": "內湖",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 33.08,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 85306,
+          "rate": 66.54
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 42894,
+          "rate": 33.46
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "南港區",
+      "stem": "南港",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 31.48,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 38996,
+          "rate": 65.74
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20325,
+          "rate": 34.26
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "松山區",
+      "stem": "松山",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 30.02,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 67464,
+          "rate": 65.01
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 36314,
+          "rate": 34.99
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "信義區",
+      "stem": "信義",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 36.62,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 85411,
+          "rate": 68.31
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 39616,
+          "rate": 31.69
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "中山區",
+      "stem": "中山",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 19.66,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 66996,
+          "rate": 59.83
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 44982,
+          "rate": 40.17
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "大同區",
+      "stem": "大同",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.7,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 34733,
+          "rate": 51.35
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 32912,
+          "rate": 48.65
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "中正區",
+      "stem": "中正",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 33.88,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 53950,
+          "rate": 66.94
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 26645,
+          "rate": 33.06
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "萬華區",
+      "stem": "萬華",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 19.76,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 65395,
+          "rate": 59.88
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 43813,
+          "rate": 40.12
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "大安區",
+      "stem": "大安",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 37.84,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 110839,
+          "rate": 68.92
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 49977,
+          "rate": 31.08
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "文山區",
+      "stem": "文山",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 46.5,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 97515,
+          "rate": 73.25
+        },
+        {
+          "name": "李應元",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 35611,
+          "rate": 26.75
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "馬英九",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 873102,
+        "rate": 64.11
+      },
+      {
+        "name": "李應元",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 488811,
+        "rate": 35.89
+      }
+    ],
+    "winner": "馬英九"
+  }
+}

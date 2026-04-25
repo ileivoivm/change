@@ -1,0 +1,627 @@
+{
+  "election": "2010 台北市長（5屆）",
+  "year": 2010,
+  "date": "2010-11-27",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "吳炎成",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "郝龍斌",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "蕭淑華",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "吳武明",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "蘇貞昌",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "北投區",
+      "stem": "北投",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.15,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 70665,
+          "rate": 50.8
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 67663,
+          "rate": 48.65
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 347,
+          "rate": 0.24
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 211,
+          "rate": 0.15
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 194,
+          "rate": 0.13
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "士林區",
+      "stem": "士林",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 2.37,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 82316,
+          "rate": 50.92
+        },
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 78487,
+          "rate": 48.55
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 398,
+          "rate": 0.24
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 269,
+          "rate": 0.16
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 159,
+          "rate": 0.09
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "內湖區",
+      "stem": "內湖",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 16.99,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 84049,
+          "rate": 58.23
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 59527,
+          "rate": 41.24
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 340,
+          "rate": 0.23
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 228,
+          "rate": 0.15
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 175,
+          "rate": 0.12
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "南港區",
+      "stem": "南港",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 10.58,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 35121,
+          "rate": 54.97
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 28360,
+          "rate": 44.39
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 167,
+          "rate": 0.26
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 131,
+          "rate": 0.2
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 103,
+          "rate": 0.16
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "松山區",
+      "stem": "松山",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 18.5,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 65555,
+          "rate": 58.99
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 44992,
+          "rate": 40.49
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 264,
+          "rate": 0.23
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 161,
+          "rate": 0.14
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 141,
+          "rate": 0.12
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "信義區",
+      "stem": "信義",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 19.59,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 74794,
+          "rate": 59.49
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 50172,
+          "rate": 39.9
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 378,
+          "rate": 0.3
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 196,
+          "rate": 0.15
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 185,
+          "rate": 0.14
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "中山區",
+      "stem": "中山",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 4.72,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 62829,
+          "rate": 52.12
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 57142,
+          "rate": 47.4
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 258,
+          "rate": 0.21
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 168,
+          "rate": 0.13
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 143,
+          "rate": 0.11
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "大同區",
+      "stem": "大同",
+      "winner": "蘇貞昌",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 15.73,
+      "results": [
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 40541,
+          "rate": 57.62
+        },
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 29470,
+          "rate": 41.89
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 153,
+          "rate": 0.21
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 105,
+          "rate": 0.14
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 79,
+          "rate": 0.11
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "中正區",
+      "stem": "中正",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 18.98,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 49145,
+          "rate": 59.18
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 33385,
+          "rate": 40.2
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 242,
+          "rate": 0.29
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 136,
+          "rate": 0.16
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 127,
+          "rate": 0.15
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "萬華區",
+      "stem": "萬華",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 0.04,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 54350,
+          "rate": 49.74
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 54303,
+          "rate": 49.7
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 244,
+          "rate": 0.22
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 186,
+          "rate": 0.17
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 173,
+          "rate": 0.15
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "大安區",
+      "stem": "大安",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 24.53,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 100832,
+          "rate": 62.01
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 60956,
+          "rate": 37.48
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 430,
+          "rate": 0.26
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 218,
+          "rate": 0.13
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 159,
+          "rate": 0.09
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "文山區",
+      "stem": "文山",
+      "winner": "郝龍斌",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 30.8,
+      "results": [
+        {
+          "name": "郝龍斌",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 92568,
+          "rate": 65.09
+        },
+        {
+          "name": "蘇貞昌",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 48772,
+          "rate": 34.29
+        },
+        {
+          "name": "吳武明",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 451,
+          "rate": 0.31
+        },
+        {
+          "name": "蕭淑華",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 229,
+          "rate": 0.16
+        },
+        {
+          "name": "吳炎成",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 194,
+          "rate": 0.13
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "郝龍斌",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 797865,
+        "rate": 55.65
+      },
+      {
+        "name": "蘇貞昌",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 628129,
+        "rate": 43.81
+      },
+      {
+        "name": "吳武明",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 3672,
+        "rate": 0.26
+      },
+      {
+        "name": "蕭淑華",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 2238,
+        "rate": 0.16
+      },
+      {
+        "name": "吳炎成",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 1832,
+        "rate": 0.13
+      }
+    ],
+    "winner": "郝龍斌"
+  }
+}

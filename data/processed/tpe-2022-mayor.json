@@ -1,0 +1,1299 @@
+{
+  "election": "2022 台北市長（8屆）",
+  "year": 2022,
+  "date": "2022-11-26",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "張家豪",
+      "partyCode": "306",
+      "partyName": "台灣動物保護黨"
+    },
+    {
+      "name": "王文娟",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "鄭匡宇",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "黃聖峰",
+      "partyCode": "355",
+      "partyName": "台澎黨"
+    },
+    {
+      "name": "童文薰",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "蔣萬安",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "蘇煥智",
+      "partyCode": "356",
+      "partyName": "台灣維新"
+    },
+    {
+      "name": "黃珊珊",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "施奉先",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "唐新民",
+      "partyCode": "203",
+      "partyName": "共和黨"
+    },
+    {
+      "name": "謝立康",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "陳時中",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "010",
+      "name": "松山區",
+      "stem": "松山",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 14.62,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 47295,
+          "rate": 45.51
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 32098,
+          "rate": 30.89
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 23938,
+          "rate": 23.04
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 158,
+          "rate": 0.15
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 151,
+          "rate": 0.15
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 144,
+          "rate": 0.14
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 48,
+          "rate": 0.05
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 25,
+          "rate": 0.02
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 19,
+          "rate": 0.02
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 18,
+          "rate": 0.02
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 16,
+          "rate": 0.02
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 9,
+          "rate": 0.01
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "信義區",
+      "stem": "信義",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.39,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 52032,
+          "rate": 45.51
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 34433,
+          "rate": 30.12
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 27202,
+          "rate": 23.79
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 181,
+          "rate": 0.16
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 177,
+          "rate": 0.15
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 129,
+          "rate": 0.11
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 57,
+          "rate": 0.05
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 37,
+          "rate": 0.03
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 23,
+          "rate": 0.02
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 20,
+          "rate": 0.02
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 19,
+          "rate": 0.02
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 15,
+          "rate": 0.01
+        }
+      ]
+    },
+    {
+      "area": "030",
+      "name": "大安區",
+      "stem": "大安",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 16.19,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 69266,
+          "rate": 46.19
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 44992,
+          "rate": 30
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 34803,
+          "rate": 23.21
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 253,
+          "rate": 0.17
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 253,
+          "rate": 0.17
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 228,
+          "rate": 0.15
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 40,
+          "rate": 0.03
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 31,
+          "rate": 0.02
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 30,
+          "rate": 0.02
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 26,
+          "rate": 0.02
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 21,
+          "rate": 0.01
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 9,
+          "rate": 0.01
+        }
+      ]
+    },
+    {
+      "area": "040",
+      "name": "中山區",
+      "stem": "中山",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.51,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 50224,
+          "rate": 42.78
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 40233,
+          "rate": 34.27
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 26244,
+          "rate": 22.35
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 216,
+          "rate": 0.18
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 181,
+          "rate": 0.15
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 161,
+          "rate": 0.14
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 29,
+          "rate": 0.02
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 28,
+          "rate": 0.02
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 27,
+          "rate": 0.02
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 21,
+          "rate": 0.02
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 20,
+          "rate": 0.02
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 18,
+          "rate": 0.02
+        }
+      ]
+    },
+    {
+      "area": "050",
+      "name": "中正區",
+      "stem": "中正",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 13,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 33503,
+          "rate": 43.38
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 23459,
+          "rate": 30.38
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 19746,
+          "rate": 25.57
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 154,
+          "rate": 0.2
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 149,
+          "rate": 0.19
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 117,
+          "rate": 0.15
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 25,
+          "rate": 0.03
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 23,
+          "rate": 0.03
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 17,
+          "rate": 0.02
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 13,
+          "rate": 0.02
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 12,
+          "rate": 0.02
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 12,
+          "rate": 0.02
+        }
+      ]
+    },
+    {
+      "area": "060",
+      "name": "大同區",
+      "stem": "大同",
+      "winner": "陳時中",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.33,
+      "results": [
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 26530,
+          "rate": 40.28
+        },
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 21700,
+          "rate": 32.95
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 17263,
+          "rate": 26.21
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 110,
+          "rate": 0.17
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 102,
+          "rate": 0.15
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 85,
+          "rate": 0.13
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 16,
+          "rate": 0.02
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 16,
+          "rate": 0.02
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 14,
+          "rate": 0.02
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 13,
+          "rate": 0.02
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 10,
+          "rate": 0.02
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 4,
+          "rate": 0.01
+        }
+      ]
+    },
+    {
+      "area": "070",
+      "name": "萬華區",
+      "stem": "萬華",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 6.05,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 39140,
+          "rate": 39.98
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 33214,
+          "rate": 33.93
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 24849,
+          "rate": 25.38
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 197,
+          "rate": 0.2
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 184,
+          "rate": 0.19
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 125,
+          "rate": 0.13
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 41,
+          "rate": 0.04
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 40,
+          "rate": 0.04
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 40,
+          "rate": 0.04
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 23,
+          "rate": 0.02
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 20,
+          "rate": 0.02
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 20,
+          "rate": 0.02
+        }
+      ]
+    },
+    {
+      "area": "080",
+      "name": "文山區",
+      "stem": "文山",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 22.9,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 69020,
+          "rate": 48.47
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 36413,
+          "rate": 25.57
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 35893,
+          "rate": 25.2
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 379,
+          "rate": 0.27
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 250,
+          "rate": 0.18
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 234,
+          "rate": 0.16
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 48,
+          "rate": 0.03
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 43,
+          "rate": 0.03
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 42,
+          "rate": 0.03
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 34,
+          "rate": 0.02
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 33,
+          "rate": 0.02
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 21,
+          "rate": 0.01
+        }
+      ]
+    },
+    {
+      "area": "090",
+      "name": "南港區",
+      "stem": "南港",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 10.46,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 25261,
+          "rate": 40.37
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18716,
+          "rate": 29.91
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 18246,
+          "rate": 29.16
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 97,
+          "rate": 0.16
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 81,
+          "rate": 0.13
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 69,
+          "rate": 0.11
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 27,
+          "rate": 0.04
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 27,
+          "rate": 0.04
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 19,
+          "rate": 0.03
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 18,
+          "rate": 0.03
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 10,
+          "rate": 0.02
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 9,
+          "rate": 0.01
+        }
+      ]
+    },
+    {
+      "area": "100",
+      "name": "內湖區",
+      "stem": "內湖",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 11,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 60842,
+          "rate": 40.87
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 44466,
+          "rate": 29.87
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 42726,
+          "rate": 28.7
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 202,
+          "rate": 0.14
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 201,
+          "rate": 0.14
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 171,
+          "rate": 0.11
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 112,
+          "rate": 0.08
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 41,
+          "rate": 0.03
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 28,
+          "rate": 0.02
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 26,
+          "rate": 0.02
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 24,
+          "rate": 0.02
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 19,
+          "rate": 0.01
+        }
+      ]
+    },
+    {
+      "area": "110",
+      "name": "士林區",
+      "stem": "士林",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 0.3,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 55874,
+          "rate": 37.64
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 55435,
+          "rate": 37.34
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 35999,
+          "rate": 24.25
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 441,
+          "rate": 0.3
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 253,
+          "rate": 0.17
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 211,
+          "rate": 0.14
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 72,
+          "rate": 0.05
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 41,
+          "rate": 0.03
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 36,
+          "rate": 0.02
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 35,
+          "rate": 0.02
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 34,
+          "rate": 0.02
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 28,
+          "rate": 0.02
+        }
+      ]
+    },
+    {
+      "area": "120",
+      "name": "北投區",
+      "stem": "北投",
+      "winner": "蔣萬安",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.88,
+      "results": [
+        {
+          "name": "蔣萬安",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 51433,
+          "rate": 38.95
+        },
+        {
+          "name": "陳時中",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 46309,
+          "rate": 35.07
+        },
+        {
+          "name": "黃珊珊",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 33492,
+          "rate": 25.36
+        },
+        {
+          "name": "張家豪",
+          "partyCode": "306",
+          "partyName": "台灣動物保護黨",
+          "votes": 218,
+          "rate": 0.17
+        },
+        {
+          "name": "童文薰",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 204,
+          "rate": 0.15
+        },
+        {
+          "name": "蘇煥智",
+          "partyCode": "356",
+          "partyName": "台灣維新",
+          "votes": 177,
+          "rate": 0.13
+        },
+        {
+          "name": "王文娟",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 56,
+          "rate": 0.04
+        },
+        {
+          "name": "鄭匡宇",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 49,
+          "rate": 0.04
+        },
+        {
+          "name": "黃聖峰",
+          "partyCode": "355",
+          "partyName": "台澎黨",
+          "votes": 35,
+          "rate": 0.03
+        },
+        {
+          "name": "唐新民",
+          "partyCode": "203",
+          "partyName": "共和黨",
+          "votes": 34,
+          "rate": 0.03
+        },
+        {
+          "name": "施奉先",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 33,
+          "rate": 0.02
+        },
+        {
+          "name": "謝立康",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 20,
+          "rate": 0.02
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "蔣萬安",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 575590,
+        "rate": 42.29
+      },
+      {
+        "name": "陳時中",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 434558,
+        "rate": 31.93
+      },
+      {
+        "name": "黃珊珊",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 342141,
+        "rate": 25.14
+      },
+      {
+        "name": "童文薰",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 2425,
+        "rate": 0.18
+      },
+      {
+        "name": "張家豪",
+        "partyCode": "306",
+        "partyName": "台灣動物保護黨",
+        "votes": 2367,
+        "rate": 0.17
+      },
+      {
+        "name": "蘇煥智",
+        "partyCode": "356",
+        "partyName": "台灣維新",
+        "votes": 1851,
+        "rate": 0.14
+      },
+      {
+        "name": "王文娟",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 451,
+        "rate": 0.03
+      },
+      {
+        "name": "鄭匡宇",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 386,
+        "rate": 0.03
+      },
+      {
+        "name": "施奉先",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 383,
+        "rate": 0.03
+      },
+      {
+        "name": "唐新民",
+        "partyCode": "203",
+        "partyName": "共和黨",
+        "votes": 316,
+        "rate": 0.02
+      },
+      {
+        "name": "黃聖峰",
+        "partyCode": "355",
+        "partyName": "台澎黨",
+        "votes": 256,
+        "rate": 0.02
+      },
+      {
+        "name": "謝立康",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 227,
+        "rate": 0.02
+      }
+    ],
+    "winner": "蔣萬安"
+  }
+}
