@@ -17,7 +17,7 @@
 
 | Session | 日期 | 工作內容 |
 |---|---|---|
-| 小B | 2026-04-25 | Stage 3 台中市（進行中） |
+| — | — | （無，待認領）|
 
 ---
 
@@ -31,6 +31,8 @@
 | Stage 2 main.js city config | `?city=` 路由正確、CITY_CONFIGS 完整 | ✅ 小A 驗證通過 2026-04-25（tpe/ntpc/tyc 路由正確，home 無 param 顯示首頁）|
 | Stage 3 台北市 | 12 區彩色、8 屆時間軸、里級、勝者正確 | ✅ 小A 驗證通過 2026-04-25（1994 DPP ✓、2022 KMT ✓、里鑽正常、no console error）|
 | Stage 3 桃園市 | 13 區彩色、7 屆時間軸、里級、勝者正確 | ✅ 小A 驗證通過 2026-04-25（13 區全彩、7 屆年份正確、桃園區里 82 格鑽入正常）|
+| Stage 3 台中市 | 29 區彩色、4 屆時間軸、里級、勝者正確 | ⏳ 待驗證 |
+| 首頁背景圖 | taiwan.png 無縫融合，桌機右側全高、手機 footer 下方 | ✅ 小A 驗證通過 2026-04-25（桌機左邊漸層淡入、mobile static 置中）|
 
 ---
 
@@ -62,7 +64,7 @@
 
 - [x] 台北市 ✅ 小B（12 區彩色 voxel、8 屆 1994-2022、里級全年份、村數/得票率標籤、動態 hint 文字）
 - [x] 桃園市 ✅ 小B（13 區、7 屆 1997-2022 含縣長時期、里級 2005+、bootstrap 通用化）
-- [x] 台中市（進行中 小B）
+- [x] 台中市 ✅ 小B（29 區、4 屆 2010-2022、txg-districts.geo.json、stem slice 0,2 修正）
 - [ ] 台南市（37 區，2010 合併後）
 - [ ] 高雄市（38 區，2010 合併後）
 
@@ -72,7 +74,7 @@
 
 ### UI 修復
 
-- [ ] **Bubble 超出底部自動 pan**：點擊里 → bubble 釘住後，偵測 `getBoundingClientRect().bottom > window.innerHeight`，計算偏移，用 tween 平移 OrbitControls target，讓 bubble 完整顯示。測試案例：`?city=tpe&y=2022&d=大同&v=延平`
+- [x] **Bubble 超出底部自動 pan** ✅ 小B（autoPanForBubble + tweenCamera 350ms，+20px padding）
 
 ### 其他待辦
 
@@ -110,3 +112,7 @@
 | 2026-04-25 | 小B | Stage 3 台北市：?city=tpe 完整渲染（12 區 voxel、8 屆時間軸、里級全年份、新北 context 層）|
 | 2026-04-25 | 小B | 修復首頁崩潰：補提交 index.html（#home-screen 漏 commit 導致 production TypeError）|
 | 2026-04-25 | 小B | Stage 3 桃園市：?city=tyc 完整渲染（13 區、7 屆 1997-2022、bootstrap 通用化、per-city 資料 map）|
+| 2026-04-25 | 小B | palette：降低 CLOSE_WHITE_MIX 0.75→0.55，修正低 margin 顏色幾乎不可見 |
+| 2026-04-25 | 小B | palette/main：柯文哲特例改 #3bb5c4、黃珊珊加 TPP 特例、candidateColor helper |
+| 2026-04-25 | 小B | Stage 3 台中市：?city=txg 完整渲染（29 區、4 屆 2010-2022、stem slice 0,2 修正）|
+| 2026-04-25 | 小A | 首頁背景圖：taiwan.png 無縫融合（#c5bdb1 底色+100vh 全高+左側漸層遮罩）、手機 static 置中 |
