@@ -777,10 +777,6 @@ function selectVillage(v) {
 }
 
 function autoPanForBubble() {
-  const rect = labelEl.getBoundingClientRect();
-  const overflow = rect.bottom - window.innerHeight + 20;
-  if (overflow <= 0) return;
-
   const dist = camera.position.distanceTo(controls.target);
   const worldH = 2 * dist * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
   const worldPerPx = worldH / window.innerHeight;
@@ -791,7 +787,11 @@ function autoPanForBubble() {
     .addScaledVector(viewDir, -camera.up.dot(viewDir))
     .normalize();
 
-  const delta = screenUp.clone().multiplyScalar(-overflow * worldPerPx);
+  // Shift selected village to upper 1/4 of viewport so bubble content has
+  // room to expand downward. Moving camera in -screenUp direction shifts the
+  // scene upward on screen, placing the village above centre.
+  const shiftPx = window.innerHeight * 0.25;
+  const delta = screenUp.clone().multiplyScalar(-shiftPx * worldPerPx);
   tweenCamera(camera.position.clone().add(delta), controls.target.clone().add(delta), 350);
 }
 
