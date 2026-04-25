@@ -18,7 +18,7 @@
 | Session | 日期 | 工作內容 |
 |---|---|---|
 | 小A | 2026-04-25 | ✅ Stage 1 完成。下一步待認領 |
-| 小B | 2026-04-25 | ✅ Stage 2-1+2-2 完成：extract-elections + extract-villages 通用化 |
+| 小B | 2026-04-25 | ✅ Stage 2-3 完成。下一步待認領 |
 
 ---
 
@@ -44,7 +44,7 @@
 
 - [x] `extract-elections.mjs` ✅ 小B（--city tpe/ntpc/tyc/txg/tnn/khh/all，30場選舉全通過）
 - [x] `extract-villages.mjs` ✅ 小B（--city flag，六都邊界+里票全通過）
-- [ ] `src/main.js` 抽 city config（範圍、中心、歷屆年份）
+- [x] `src/main.js` 抽 city config ✅ 小B（CITY_CONFIGS + CITY_CONFIG，?city= 路由，ntpc 向下兼容）
 
 ### Stage 3：依序打亮六都
 
@@ -90,3 +90,4 @@
 | 2026-04-25 | 小A | Stage 1：首頁 Metro 卡片、`?city=` 路由、`← 六都` chip、舊連結向下兼容 |
 | 2026-04-25 | 小B | Stage 2-1：extract-elections.mjs 通用化（--city flag，六都30場選舉全通過） |
 | 2026-04-25 | 小B | Stage 2-2：extract-villages.mjs 通用化（--city flag，六都邊界+歷屆里票全通過） |
+| 2026-04-25 | 小B | Stage 2-3：src/main.js 抽 city config（CITY_CONFIGS export、CITY_CONFIG 路由、build 驗證通過）|
