@@ -6,11 +6,13 @@ import ntpcGeo from '../data/processed/ntpc-districts.geo.json';
 import tpeGeo  from '../data/processed/tpe-districts.geo.json';
 import tycGeo  from '../data/processed/tyc-districts.geo.json';
 import txgGeo  from '../data/processed/txg-districts.geo.json';
+import tnnGeo  from '../data/processed/tnn-districts.geo.json';
 import restGeo from '../data/processed/tw-rest-districts.geo.json';
 import ntpcVillageGeo from '../data/processed/ntpc-villages.geo.json';
 import tpeVillageGeo  from '../data/processed/tpe-villages.geo.json';
 import tycVillageGeo  from '../data/processed/tyc-villages.geo.json';
 import txgVillageGeo  from '../data/processed/txg-villages.geo.json';
+import tnnVillageGeo  from '../data/processed/tnn-villages.geo.json';
 import v1997 from '../data/processed/ntpc-1997-villages.json';
 import v2001 from '../data/processed/ntpc-2001-villages.json';
 import v2005 from '../data/processed/ntpc-2005-villages.json';
@@ -37,6 +39,10 @@ import xv2010 from '../data/processed/txg-2010-villages.json';
 import xv2014 from '../data/processed/txg-2014-villages.json';
 import xv2018 from '../data/processed/txg-2018-villages.json';
 import xv2022 from '../data/processed/txg-2022-villages.json';
+import nv2010 from '../data/processed/tnn-2010-villages.json';
+import nv2014 from '../data/processed/tnn-2014-villages.json';
+import nv2018 from '../data/processed/tnn-2018-villages.json';
+import nv2022 from '../data/processed/tnn-2022-villages.json';
 
 // ─────────── city routing (determined early so all constants can use it) ───────────
 // ?city=ntpc / ?city=tpe / etc.  → which city's data to show
@@ -52,6 +58,7 @@ const ALL_VILLAGE_ELECTIONS = {
   tpe:  { 1994: tv1994, 1998: tv1998, 2002: tv2002, 2006: tv2006, 2010: tv2010, 2014: tv2014, 2018: tv2018, 2022: tv2022 },
   tyc:  { 1997: yv1997, 2001: yv2001, 2005: yv2005, 2009: yv2009, 2014: yv2014, 2018: yv2018, 2022: yv2022 },
   txg:  { 2010: xv2010, 2014: xv2014, 2018: xv2018, 2022: xv2022 },
+  tnn:  { 2010: nv2010, 2014: nv2014, 2018: nv2018, 2022: nv2022 },
 };
 const VILLAGE_ELECTIONS = ALL_VILLAGE_ELECTIONS[CITY_CONFIG.key] || ALL_VILLAGE_ELECTIONS.ntpc;
 // Which years actually have village-level data (non-empty)
@@ -85,6 +92,10 @@ import xe2010 from '../data/processed/txg-2010-mayor.json';
 import xe2014 from '../data/processed/txg-2014-mayor.json';
 import xe2018 from '../data/processed/txg-2018-mayor.json';
 import xe2022 from '../data/processed/txg-2022-mayor.json';
+import ne2010 from '../data/processed/tnn-2010-mayor.json';
+import ne2014 from '../data/processed/tnn-2014-mayor.json';
+import ne2018 from '../data/processed/tnn-2018-mayor.json';
+import ne2022 from '../data/processed/tnn-2022-mayor.json';
 import { CITY_CONFIGS } from './city-configs.js';
 
 const ALL_ELECTIONS = {
@@ -92,13 +103,14 @@ const ALL_ELECTIONS = {
   tpe:  { 1994: te1994, 1998: te1998, 2002: te2002, 2006: te2006, 2010: te2010, 2014: te2014, 2018: te2018, 2022: te2022 },
   tyc:  { 1997: ye1997, 2001: ye2001, 2005: ye2005, 2009: ye2009, 2014: ye2014, 2018: ye2018, 2022: ye2022 },
   txg:  { 2010: xe2010, 2014: xe2014, 2018: xe2018, 2022: xe2022 },
+  tnn:  { 2010: ne2010, 2014: ne2014, 2018: ne2018, 2022: ne2022 },
 };
 const ELECTIONS = ALL_ELECTIONS[CITY_CONFIG.key] || ALL_ELECTIONS.ntpc;
-const ALL_VILLAGE_GEO = { ntpc: ntpcVillageGeo, tpe: tpeVillageGeo, tyc: tycVillageGeo, txg: txgVillageGeo };
+const ALL_VILLAGE_GEO = { ntpc: ntpcVillageGeo, tpe: tpeVillageGeo, tyc: tycVillageGeo, txg: txgVillageGeo, tnn: tnnVillageGeo };
 const villageGeo = ALL_VILLAGE_GEO[CITY_CONFIG.key] || ntpcVillageGeo;
-const ALL_DISTRICT_GEO = { ntpc: ntpcGeo, tpe: tpeGeo, tyc: tycGeo, txg: txgGeo };
+const ALL_DISTRICT_GEO = { ntpc: ntpcGeo, tpe: tpeGeo, tyc: tycGeo, txg: txgGeo, tnn: tnnGeo };
 // Fallback village list (for district card counts when current year has no village data)
-const ALL_FALLBACK_VILLAGES = { ntpc: v2022.villages, tpe: tv2022.villages, tyc: yv2022.villages, txg: xv2022.villages };
+const ALL_FALLBACK_VILLAGES = { ntpc: v2022.villages, tpe: tv2022.villages, tyc: yv2022.villages, txg: xv2022.villages, tnn: nv2022.villages };
 const fallbackVillages = ALL_FALLBACK_VILLAGES[CITY_CONFIG.key] || v2022.villages;
 const YEARS = CITY_CONFIG.years;
 let currentYear = CITY_CONFIG.defaultYear;
