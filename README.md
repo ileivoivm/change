@@ -2,9 +2,7 @@
 
 🌐 **線上版**：<https://ileivoivm.github.io/change/>
 
-以 Three.js 打造的 Minecraft voxel 風格互動地圖，呈現台灣六都市長 / 縣長選舉 1994→2022 的歷屆版圖變化。
-
-現已支援六都（台北 / 新北 / 桃園 / 台中）逐城市切換；首頁以 Metro 卡片呈現各城市入口，背景以 voxel 台灣島底圖烘托氣氛。外圍以灰色方塊展示全台其他縣市作為地理 context，黑色海岸線勾勒島嶼輪廓。
+以 Three.js 打造的 Minecraft voxel 風格互動地圖，呈現台灣六都市長 / 縣長選舉 1994→2022 的歷屆版圖變化。首頁以 Metro 卡片切換六都，進入城市後可逐層下鑽到區→里，每格方塊以勝方黨色 + margin 飽和度編碼選舉結果。外圍灰色方塊顯示全台其他縣市作為地理 context，黑色海岸線勾勒島嶼輪廓。
 
 ## 歡迎參與
 
@@ -16,119 +14,199 @@
 
 本專案尊重並遵守中華民國（台灣）法律，包含但不限於《選舉罷免法》、《個人資料保護法》、《著作權法》。所有選舉資料皆取自中選會公開資料，不蒐集、不推斷任何個人投票行為。
 
-## 功能
+---
 
-- **三層導航**：全景 → 點區 drill 到區 → 點里放大 + 釘住票數氣泡，頂部以 `[新北市][永和區][安和里]` breadcrumb 呈現當前位置
-- **時間軸**：1997 / 2001 / 2005 / 2010 / 2014 / 2018 / 2022 七場市長選舉（台北縣長 14~16 屆 + 新北市長 1~4 屆）
-- **里級歷史資料**：2005 起有里級細部（1997 / 2001 CEC 未公開里級）
-- **17 年里身分條**：氣泡底部 5 格色塊顯示 2005–2022 同一里的政黨脈絡，加上「永藍里 / 永綠里 / 翻轉里 / 搖擺里」身分標籤
-- **hover 滑動切年**：游標劃過身分條的色塊即時跳到該年，氣泡作用為該里的 mini 時間軸
-- **即時色彩過渡**：切換年份，每個方塊顏色平滑 tween 到當年結果
-- **選區配色邏輯**：色相永遠是勝方政黨色（絕不用敗方色）；margin ≥ 20% 為純勝方色，margin=0 時為淡化的勝方色，中間線性內插飽和度
-- **卡片 Metro 佈局**：頂部新北市卡 + 下方 29 區 5 欄格（桌機）或 3 欄自適應（手機）；drill 後收斂成 breadcrumb 條 + 下方里格
-- **空白鍵隱藏卡片**：全景視角按 Space（或點「新北市」/ 空地）把卡片收起，露出完整 voxel 地圖自由探索；drilled 狀態再按一次會把里格也收起便於旋轉視角
-- **手機 RWA**：行動裝置預設收合卡片讓使用者先看到地圖，點進里後自動收起里格保留 OrbitControls 手勢空間
-- **選中發光**：點里自動高亮，金色呼吸 glow + pinned bubble
-- **相機控制**：右上角羅盤（一鍵正北俯瞰）、Zoom +/-、Home（回初始視角）
-- **相機讀數**（桌機）：左下角即時顯示 pos / target / dist / azimuth / pitch，方便調整起始視角
-- **URL 分享**：`?y=2022&d=永和&v=安和` 直接定位任一年/區/里
-- **社群分享卡**：2022 每里都有預建 OG 圖 + HTML，`/share/2022/{區}/{里}/` 分享到 FB / Threads 會顯示翻盤所需票數的專屬縮圖；氣泡內「複製分享連結」按鈕在 2022 以外年份以灰色呈現（不可點），確保氣泡高度在年份切換時不變
+## 目前支援的六都
 
-## 退出 drill 四種方式
+| 城市 | 選區數 | 選舉場次 | 年份範圍 | 2022 得票最高者 |
+|---|---|---|---|---|
+| 台北市 | 12 區 | 8 屆 | 1994–2022 | 蔣萬安 42.3% |
+| 新北市 | 29 區 | 7 屆 | 1997–2022 | 侯友宜 62.4% |
+| 桃園市 | 13 區 | 7 屆 | 1997–2022 | 張善政 54.8% |
+| 台中市 | 29 區 | 4 屆 | 2010–2022 | 盧秀燕 62.7% |
+| 台南市 | 37 區 | 4 屆 | 2010–2022 | 黃偉哲 60.9% |
+| 高雄市 | 38 區 | 4 屆 | 2010–2022 | 陳其邁 70.0% |
 
-1. 點地圖空地
-2. ESC
-3. Home 按鈕
-4. 點上方「新北市」breadcrumb chip
+台中 / 台南 / 高雄 採 2010 年縣市合併後邊界，合併前另分縣市的資料不收入。
 
-## Drill 狀態下的互動範圍
+---
 
-點進某區（例如永和）後，滑鼠 / 點擊只會對該區的里作用；其他新北市區、台北市、全台灰底、海邊都不會觸發 bubble。沒有 1982 里界但有 2022 票數的里（如 蘆洲福安里、永和新里）從卡片點進去仍會顯示票數 bubble，錨定在該區中心。
+## 功能特色
+
+### 導航與互動
+
+- **三層下鑽導航**：首頁 Metro 卡片 → 城市（區級 voxel）→ 點區 drill → 點里放大 + 釘住票數氣泡
+- **Breadcrumb 狀態機**：頂部 `[台北市][大同區][延平里]` 三階 chip，每階點擊行為不同（回上層 / 切換旋轉模式 / 退回二階）
+- **退出 drill 四種方式**：點空地 · ESC · Home 按鈕 · 點第一階 chip
+- **相機控制**：右上角羅盤（一鍵正北俯瞰）、Zoom +/−、Home（回初始視角）
+- **URL 分享**：`?city=tpe&y=2022&d=大同&v=延平` 直接定位任一城市 / 年份 / 區 / 里
+
+### 里級票數氣泡
+
+- 顯示候選人、政黨、票數、得票率（**得票率低於 1% 的候選人自動隱藏**）
+- 翻盤所需票數試算（改投票數 vs 新動員票數）
+- 勝者 / 落後方以政黨色標示
+- 點選里後，攝影機自動上移使氣泡有更多顯示空間
+
+### 歷史 stripe 時間條
+
+- 氣泡底部以色塊呈現同一里在有資料的各屆選舉中的政黨歸屬
+- 游標劃過色塊即時跳至該年；click 永久切年
+- 自動計算並標示里的政治身分：**永藍里 · 永綠里 · 永白里 · 翻轉里 · 搖擺里**
+
+### 選區配色邏輯
+
+- 色相永遠是勝方政黨色（絕不混入敗方色）
+- margin ≥ 20% → 純勝方色；margin ≈ 0 → 淡化（飽和度低）的勝方色；中間線性內插
+- 特例：柯文哲（2014/2018 無黨籍）、黃珊珊（2022 無黨籍）視覺上映射至民眾黨藍綠色
+
+### 其他
+
+- **即時色彩過渡**：切換時間軸年份，所有方塊顏色平滑 tween
+- **選中發光**：金色呼吸 glow + drill 進入時全區短暫閃爍
+- **手機 RWA**：行動裝置預設收合卡片，先看地圖；點里後自動收起里格保留 OrbitControls 手勢空間
+- **社群分享卡**：2022 每里預建 OG PNG (1200×630) + HTML，`/share/2022/{區}/{里}/` 分享到 FB / Threads 顯示專屬縮圖
+
+---
 
 ## 資料來源
 
-本專案所有選舉資料與地理資料皆來自**公開、可查證、可重製**的來源，特此註明並致謝：
+所有選舉資料與地理資料皆來自**公開、可查證、可重製**的來源：
 
-- **選舉結果**：[kiang/db.cec.gov.tw](https://github.com/kiang/db.cec.gov.tw) — 由 [Finjon Kiang](https://github.com/kiang) 維護的中選會原始資料映射庫（elbase / elctks / elcand / elpaty CSV）。原始資料出自 [中央選舉委員會選舉及公民投票資料庫](https://db.cec.gov.tw/)。
-- **行政區界**：[g0v/twgeojson](https://github.com/g0v/twgeojson) — g0v 零時政府社群整理的 twTown1982 + twVillage1982 topojson，底圖出自內政部公開資料。
-- **里界參考年份**：採 1982 版界線，與 2022 投票結果對齊率約 98%（16 里因行政調整無對應，面板會標示）。
+- **選舉結果**：[kiang/db.cec.gov.tw](https://github.com/kiang/db.cec.gov.tw) — Finjon Kiang 維護的中選會原始資料映射庫（elbase / elctks / elcand / elpaty CSV）；原始出自[中央選舉委員會選舉及公民投票資料庫](https://db.cec.gov.tw/)
+- **行政區界**：[g0v/twgeojson](https://github.com/g0v/twgeojson) — g0v 整理的 twTown1982 + twVillage1982 topojson；底圖出自內政部公開資料
+- **里界年份**：採 1982 版界線，與 2022 資料對齊率約 98%（少數里因行政調整無法對應，面板會標示）
 
-**資料準確性免責**：本專案盡力確保資料清洗過程無誤，但最終結果僅供視覺探索與研究參考；**正式選舉資訊請以中選會公告為準**。若發現數字或區里對應有誤，歡迎開 Issue 回報。
+**準確性免責**：本專案盡力確保資料清洗正確，但僅供視覺探索與研究參考；**正式選舉資訊請以中選會公告為準**。
+
+---
 
 ## 技術棧
 
-- Three.js + `InstancedMesh`（全台 ~43,000 方塊一次繪製）
-- Vite（dev server + JSON import）
-- 原生 HTML / CSS（無框架）
-- Node scripts 做資料清洗（CEC → JSON）
+| 層次 | 工具 |
+|---|---|
+| 3D 渲染 | Three.js + `InstancedMesh`（全台 ~43,000 方塊一次繪製） |
+| 建置工具 | Vite（dev server + JSON static import） |
+| 前端 | 原生 HTML / CSS（無框架） |
+| 分享卡生成 | satori + @resvg/resvg-js（server-side SVG → PNG） |
+| 地圖解析 | topojson-client（twTown / twVillage topo → GeoJSON） |
+| 資料清洗 | Node.js ESM scripts（CEC CSV → processed JSON） |
 
-## 架構
+---
+
+## 檔案結構
 
 ```
-src/
-  main.js       — scene / interaction
-  geo.js        — lon/lat 投影 + polygon voxelization
-  palette.js    — 政黨配色 + 梯度 lerp
-scripts/
-  extract-ntpc.mjs          — 抽 台北縣 / 台北市 / 其他縣市區界
-  extract-elections.mjs     — 抽歷屆 區級選舉結果
-  extract-villages.mjs      — 抽里界 + 歷屆里級選舉結果
-  extract-tw-outline.mjs    — 抽全台縣界
-  build-share.mjs           — 產生 1,032 個里的社群分享頁 + OG PNG (satori)
-data/
-  raw/          — CEC 原始 CSV 與 topojson（downloaded）
-  processed/    — 清洗後 JSON（import 進 Vite）
+CHANGE/
+├── index.html              # 首頁 Metro 卡片 + SPA 入口
+├── src/
+│   ├── main.js             # Three.js 場景、互動、導航狀態機
+│   ├── geo.js              # lon/lat 投影 + polygon voxelization
+│   ├── palette.js          # 政黨配色、margin 飽和度 lerp、candidateColor
+│   └── city-configs.js     # 六都設定（年份、相機、worldSize、geo 對照）
+├── scripts/
+│   ├── extract-elections.mjs      # 區級市長選舉結果（支援 --city all|tpe|tyc|…）
+│   ├── extract-villages.mjs       # 里界 GeoJSON + 里級投票結果（--city flag）
+│   ├── extract-ntpc.mjs           # 新北 / 台北區界（twTown topojson → GeoJSON）
+│   ├── extract-tpe-elections.mjs  # 台北市 1994–2022 選舉（特殊格式）
+│   ├── extract-khh-2020-byeelection.mjs  # 高雄 2020 補選
+│   ├── extract-tw-outline.mjs     # 全台縣界輪廓（LineString GeoJSON）
+│   └── build-share.mjs            # 預建 2022 里分享頁 + OG PNG（~5 分鐘）
+├── data/
+│   ├── raw/                # CEC 原始 CSV + twTown / twVillage / twCounty topojson
+│   └── processed/          # 清洗後 JSON / GeoJSON（Vite static import）
+│       ├── {city}-districts.geo.json       # 區界（ntpc / tpe / tyc / txg / tnn / khh）
+│       ├── {city}-villages.geo.json        # 里界（同上六都）
+│       ├── {city}-{year}-mayor.json        # 區級市長結果
+│       └── {city}-{year}-villages.json     # 里級投票結果
+└── public/
+    └── taiwan.png          # 首頁背景島形圖
 ```
+
+---
 
 ## 開發
 
 ```bash
 npm install
-npm run dev
+npm run dev      # 啟動 http://localhost:5173
 ```
 
-開 `http://localhost:5173`。
-
-### 上線前建置
+### 生產建置
 
 ```bash
-npm run build            # vite build → dist/，然後自動跑 build-share
-npm run build:share      # 只重建 share 頁（1,032 里 OG PNG + HTML，約 5–6 分鐘）
+npm run build          # vite build → dist/，再自動執行 build-share（約 5–6 分鐘）
+npm run build:share    # 只重建 1,032 里的分享頁 + OG PNG
+npm run preview        # 預覽 dist/
 ```
 
-GitHub Pages 透過 `.github/workflows/deploy.yml` 在 push 到 main 時自動部署 `dist/`。
+GitHub Pages 透過 `.github/workflows/deploy.yml` 在 push 到 `main` 時自動部署 `dist/`。
+
+---
+
+## 資料管線
+
+### 新增 / 更新選舉資料
+
+```bash
+# 區級市長選舉（全六都）
+node scripts/extract-elections.mjs --city all
+
+# 只跑單一城市
+node scripts/extract-elections.mjs --city tpe
+
+# 里級投票（里界 GeoJSON + 各年里票）
+node scripts/extract-villages.mjs --city all
+```
+
+輸出至 `data/processed/`，然後需重新 `npm run build`。
+
+### 新增城市
+
+1. 在 `data/raw/` 放入對應 CEC CSV
+2. 在 `src/city-configs.js` 新增城市設定（年份、相機、geoCountyNames）
+3. 跑 extract-elections + extract-villages
+4. 在 `src/main.js` 補 import 與 `ALL_ELECTIONS` / `ALL_VILLAGE_ELECTIONS` / `ALL_DISTRICT_GEO` / `ALL_VILLAGE_GEO` / `ALL_FALLBACK_VILLAGES`
+5. 在 `index.html` 把對應卡片改為 `<a href="?city={key}">`
+
+---
 
 ## 里程碑
 
-- ✅ M1–M2 Vite + Three.js 骨架、新北區級 voxel
-- ✅ M3 hover 浮動標籤 + 羅盤
-- ✅ M4 2022 新北市長選舉配色
-- ✅ 全台灰格 + 黑色海岸線
+- ✅ M1–M2 Vite + Three.js 骨架、區級 voxel 渲染（新北 29 區）
+- ✅ M3 hover 氣泡 + 羅盤 + 全台灰格海岸線
+- ✅ M4 2022 新北選舉配色
 - ✅ M5 歷史時間軸（1997–2022）
-- ✅ M6 里級下鑽 + 三層卡片導航
-- ✅ 點區飛入 + breadcrumb chip 狀態機
+- ✅ M6 里級下鑽 + 三層卡片導航 + breadcrumb 狀態機
 - ✅ M7 選中發光 + 里級歷屆資料 + URL 分享
-- ✅ M8 手機 RWA 互動修復（卡片 vs OrbitControls 交互）
-- ✅ 17 年身分條（永藍/永綠/翻轉/搖擺里）+ hover 滑動切年
+- ✅ M8 手機 RWA 互動修復
+- ✅ M9 六都擴張（台北 / 新北 / 桃園 / 台中 / 台南 / 高雄 全部上線）
+- ✅ 17 年里身分條（永藍 / 永綠 / 翻轉 / 搖擺）+ hover 切年
 - ✅ 1,032 里社群分享卡（預建 OG PNG + HTML）
+- ✅ 候選人過濾（得票率 < 1% 不顯示）+ bubble 自動偏移
 
 下一步候選：
 
-- 開票日即時連中選會 JSON endpoint
-- 擴張到其他縣市（台北、桃園、台中、台南、高雄…）
-- 並排比較模式（永和 vs 中和）
+- 開票日即時連中選會 JSON endpoint（M10）
+- 並排比較模式（例如永和 vs 中和）
+- Stage 4：首頁 voxel 全台底圖 + 卡片浮層（C 方案）
+
+---
 
 ## 備註
 
-- 2009 無台北縣長選舉資料（因即將升格新北市，周錫瑋延任至 2010-12-24）
-- 里界採 1982 版，與 2022 資料對齊率約 98%（有 16 里因行政調整無法對應）
-- CEC 1997 / 2001 的里級資料未公開，這兩年選到里模式會顯示灰色 + 提示
+- 2009 無台北縣長選舉（因即將升格，周錫瑋延任至 2010-12-24）
+- 里界採 1982 版，與 2022 資料對齊率約 98%（有數里因行政調整無法對應，面板標示）
+- CEC 1997 / 2001 里級資料未公開；這兩年切到里模式會顯示「無里級資料」提示
+- 高雄縣 2010 前的「三民鄉」已更名為那瑪夏區，資料對應以合併後邊界為準
+
+---
 
 ## 授權
 
 本專案程式碼以 [MIT License](LICENSE) 釋出 — 歡迎自由使用、修改、散佈，包含商業用途，只需保留原始授權聲明。
 
-引用的第三方資料各自遵循原始授權：CEC 資料屬政府公開資料、g0v 圖資依原始採用的 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) / 內政部開放授權。使用時請一併註明來源。
+引用的第三方資料各自遵循原始授權：CEC 資料屬政府公開資料；g0v 圖資依 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) / 內政部開放授權。使用時請一併註明來源。
 
 ## 行為準則
 

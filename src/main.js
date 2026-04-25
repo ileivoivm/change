@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { LineSegments2 } from 'three/addons/lines/LineSegments2.js';
+import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js';
+import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { computeBounds, makeProjector, projectFeature, voxelize } from './geo.js';
 import { colorForDistrict, candidateColor, partyColor, NEUTRAL, PARTY_COLORS } from './palette.js';
 import ntpcGeo from '../data/processed/ntpc-districts.geo.json';
@@ -211,7 +214,10 @@ const layerData = []; // per-layer data preserved for border pass
 // Village layer (里級) — lives in its own THREE.Group, toggled by viewMode.
 const villageMeshes = [];
 let villageGroup = null;
-const villageBorderLines = [];
+const villageBorderMap = new Map(); // townStem → LineSegments2 (one per district)
+const villageLineMats = [];          // all LineMaterials — need resolution update on resize
+let districtLineMat = null;          // LineMaterial for district borders — needs resolution update
+let districtBorderLine = null; // LineSegments2 — hidden while drilled into a district
 let drilledDistrict = null; // townName of currently drilled district (e.g. "永和市") or null
 let selectedVillageKey = null; // "townStem/villageStem" of the village shown as 3rd breadcrumb chip, or null
 let sticky = false; // when true, hover raycast won't override bubble (used for village selections from list)
@@ -347,8 +353,16 @@ function buildLayer(features, projector, opts) {
   const perFeature = [];
   features.forEach((f) => {
     const polys = projectFeature(f, projector);
-    const raw = voxelize(polys, VOXEL_CELL);
-    if (raw.length === 0) return;
+    let raw = voxelize(polys, VOXEL_CELL);
+    if (raw.length === 0) {
+      // Fallback for tiny districts (e.g. 中區/東區/南區 in txg) whose polygon
+      // is smaller than one VOXEL_CELL.  Place a single centroid cell so the
+      // mesh exists and drillByStem / card-clicks work correctly.
+      let sx = 0, sz = 0, count = 0;
+      for (const poly of polys) for (const [px, pz] of poly.outer) { sx += px; sz += pz; count++; }
+      if (count === 0) return; // truly empty geometry — skip
+      raw = [[sx / count, sz / count]];
+    }
     const cells = raw.map(([x, z]) => ({
       x, z,
       ix: Math.round(x / VOXEL_CELL - 0.5),
@@ -448,23 +462,24 @@ function buildBorders() {
     }
   }
 
-  function addLines(positions, color, opts = {}) {
-    if (positions.length === 0) return;
-    const geom = new THREE.BufferGeometry();
-    geom.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    const mat = new THREE.LineBasicMaterial({
-      color,
+  // White district borders: use LineSegments2 for linewidth > 1 support
+  if (white.length > 0) {
+    const geo = new LineSegmentsGeometry();
+    geo.setPositions(white);
+    districtLineMat = new LineMaterial({
+      color: 0xffffff,
       transparent: true,
-      opacity: opts.opacity ?? 0.85,
-      fog: opts.fog !== false,
+      opacity: 0.85,
+      linewidth: 1.3,  // px — 1.3× vs village gray lines (1px)
       depthWrite: false,
+      fog: true,
     });
-    const lines = new THREE.LineSegments(geom, mat);
-    lines.renderOrder = opts.renderOrder ?? 2;
-    scene.add(lines);
+    districtLineMat.resolution.set(window.innerWidth, window.innerHeight);
+    districtBorderLine = new LineSegments2(geo, districtLineMat);
+    districtBorderLine.renderOrder = 2;
+    scene.add(districtBorderLine);
   }
-  addLines(white, 0xffffff, { opacity: 0.85 });
-  addLines(black, 0x1a1a1a, { opacity: 0.9, renderOrder: 3, fog: false });
+  // Black coastline removed — no outer border drawn
 }
 
 function buildVillageLayer(projector) {
@@ -517,47 +532,57 @@ function buildVillageLayer(projector) {
     villageMeshes.push(mesh);
   }
 
-  // Borders (village-level): white between different villages, black on void
+  // Per-district village borders: one LineSegments2 per district.
+  // Only the drilled district's lines are shown; others stay hidden.
   const half = VILLAGE_CELL / 2;
   const topY = VOXEL_HEIGHT + 0.01;
-  const white = [], black = [];
   const neighbors = [
     { dx: 0, dz: -1, a: [-half, -half], b: [ half, -half] },
     { dx: 0, dz:  1, a: [-half,  half], b: [ half,  half] },
     { dx: -1, dz: 0, a: [-half, -half], b: [-half,  half] },
     { dx:  1, dz: 0, a: [ half, -half], b: [ half,  half] },
   ];
-  for (const { cells, key } of perVillage) {
-    for (const { ix, iz, x, z } of cells) {
-      for (const n of neighbors) {
-        const nb = owner.get(`${ix + n.dx},${iz + n.dz}`);
-        if (nb === key) continue;
-        if (!nb) {
-          black.push(x + n.a[0], 0.05, z + n.a[1], x + n.b[0], 0.05, z + n.b[1]);
-        } else {
+
+  // Group villages by town stem
+  const perVillageByTown = new Map();
+  for (const { feature: f, cells, key } of perVillage) {
+    const townStem = f.properties.TOWNNAME.slice(0, -1);
+    if (!perVillageByTown.has(townStem)) perVillageByTown.set(townStem, []);
+    perVillageByTown.get(townStem).push({ cells, key });
+  }
+
+  for (const [townStem, villages] of perVillageByTown) {
+    const white = [];
+    for (const { cells, key } of villages) {
+      for (const { ix, iz, x, z } of cells) {
+        for (const n of neighbors) {
+          const nb = owner.get(`${ix + n.dx},${iz + n.dz}`);
+          if (nb === key) continue;               // same village → skip
+          if (!nb) continue;                       // void edge → skip (no coast lines)
+          if (nb.split('/')[0] !== townStem) continue; // different district → skip
           white.push(x + n.a[0], topY, z + n.a[1], x + n.b[0], topY, z + n.b[1]);
         }
       }
     }
-  }
-  function pushLines(arr, color, opts = {}) {
-    if (arr.length === 0) return;
-    const geom = new THREE.BufferGeometry();
-    geom.setAttribute('position', new THREE.Float32BufferAttribute(arr, 3));
-    const mat = new THREE.LineBasicMaterial({
-      color,
+    if (white.length === 0) continue;
+    const geo = new LineSegmentsGeometry();
+    geo.setPositions(white);
+    const mat = new LineMaterial({
+      color: 0xffffff,
       transparent: true,
-      opacity: opts.opacity ?? 0.85,
-      fog: opts.fog !== false,
+      opacity: 0.85,
+      linewidth: 1.3,
       depthWrite: false,
+      fog: true,
     });
-    const lines = new THREE.LineSegments(geom, mat);
-    lines.renderOrder = opts.renderOrder ?? 2;
+    mat.resolution.set(window.innerWidth, window.innerHeight);
+    villageLineMats.push(mat);
+    const lines = new LineSegments2(geo, mat);
+    lines.renderOrder = 2;
+    lines.visible = false; // hidden by default; shown only when this district is drilled
     group.add(lines);
-    villageBorderLines.push(lines);
+    villageBorderMap.set(townStem, lines);
   }
-  pushLines(white, 0xffffff, { opacity: 0.7 });
-  pushLines(black, 0x1a1a1a, { opacity: 0.9, renderOrder: 3, fog: false });
 
   group.visible = false;
   scene.add(group);
@@ -620,10 +645,12 @@ function setViewMode(mode) {
     ntpcDistrictMeshes.forEach(m => m.visible = false);
     if (villageGroup) villageGroup.visible = true;
     villageMeshes.forEach(m => m.visible = true);
-    villageBorderLines.forEach(l => l.visible = true);
+    villageBorderMap.forEach(lines => { lines.visible = false; }); // hide in full-city village view
+    if (districtBorderLine) districtBorderLine.visible = false;
   } else {
     ntpcDistrictMeshes.forEach(m => m.visible = true);
     if (villageGroup) villageGroup.visible = false;
+    if (districtBorderLine) districtBorderLine.visible = true;
   }
   document.getElementById('view-toggle')?.classList.toggle('on', mode === 'village');
   const lbl = document.getElementById('view-toggle-label');
@@ -653,8 +680,9 @@ function drillInto(mesh) {
     v.visible = match;
     if (match) matched++;
   }
-  // Hide village borders during drill (voxel cube edges give enough structure at zoom)
-  villageBorderLines.forEach(l => l.visible = false);
+  // Show only this district's village borders
+  villageBorderMap.forEach((lines, ts) => { lines.visible = ts === stem; });
+  if (districtBorderLine) districtBorderLine.visible = false; // hide district lines while in village view
 
   // Camera: keep angle, pan + zoom toward district centroid
   panZoomTo(mesh.userData.centroid, 14);
@@ -688,7 +716,8 @@ function exitDrill(flyHome = true) {
   districtMeshes.filter(isMainCityMesh).forEach(m => m.visible = true);
   if (villageGroup) villageGroup.visible = false;
   villageMeshes.forEach(m => m.visible = true);
-  villageBorderLines.forEach(l => l.visible = true);
+  villageBorderMap.forEach(lines => { lines.visible = false; }); // reset all village borders
+  if (districtBorderLine) districtBorderLine.visible = true; // restore district lines on exit
   viewMode = 'district';
   document.getElementById('view-toggle')?.classList.remove('on');
   const lbl = document.getElementById('view-toggle-label');
@@ -1007,24 +1036,9 @@ function jumpBubbleToYear(y) {
   return true;
 }
 
-// Hover scrub: sliding across strip squares jumps years without a click.
-// Uses pointerover (bubbles) so event delegation via .closest() works, and
-// also fires on touch-drag across squares for the same scrubber feel on mobile.
-// IMPORTANT: only interactive when the village is pinned (gold-glow / sticky).
-// Drive-by hover over an unpinned bubble must NOT scrub years — users were
-// accidentally triggering year jumps just from mouse tracking near the strip.
-labelBubble.addEventListener('pointerover', (e) => {
-  if (!sticky) return;
-  const hsq = e.target.closest('.hsq[data-year]');
-  if (!hsq) return;
-  const y = Number(hsq.dataset.year);
-  jumpBubbleToYear(y);
-});
-
 labelBubble.addEventListener('click', async (e) => {
-  // Strip squares: click path kept as a fallback for taps that don't drag
-  // (hover-only wouldn't work on a single tap-no-drag touch). Same sticky
-  // gate — only the pinned / highlighted village allows year scrub.
+  // Strip squares: click to jump year. Same sticky gate — only the pinned
+  // / highlighted village allows year scrub.
   const hsq = e.target.closest('.hsq[data-year]');
   if (hsq) {
     e.stopPropagation();
@@ -1381,9 +1395,12 @@ function renderPanel() {
       <div class="meta">${metaText}</div>`;
     card.title = `${d.winner} ${d.results[0]?.rate.toFixed(1)}%`;
     card.addEventListener('click', () => {
+      // drillStem: use d.name.slice(0,-1) so 2-char names ("中區"→"中") are
+      // consistent with writeUrl / drillByStem which both use slice(0,-1).
+      const drillStem = d.name.slice(0, -1);
       // Not drilled / drilled into a different district → drill in.
-      if (!drilledDistrict || drilledDistrict.slice(0, -1) !== d.stem) {
-        drillByStem(d.stem);
+      if (!drilledDistrict || drilledDistrict.slice(0, -1) !== drillStem) {
+        drillByStem(drillStem);
         return;
       }
       // Already drilled into this district: the chip is the 2nd breadcrumb.
@@ -1403,7 +1420,7 @@ function renderPanel() {
         toggleCardsCollapsed();
       }
     });
-    if (drilledDistrict && drilledDistrict.slice(0, -1) === d.stem) card.classList.add('active');
+    if (drilledDistrict && drilledDistrict.slice(0, -1) === d.name.slice(0, -1)) card.classList.add('active');
     listEl.appendChild(card);
   }
 
@@ -1953,6 +1970,8 @@ window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  if (districtLineMat) districtLineMat.resolution.set(window.innerWidth, window.innerHeight);
+  villageLineMats.forEach(m => m.resolution.set(window.innerWidth, window.innerHeight));
 });
 
 (function tick() {
