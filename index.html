@@ -536,7 +536,9 @@
       /* ─── Home screen ─── */
       #home-screen {
         position: fixed; inset: 0;
-        background: #f3f1ea;
+        /* Background matches taiwan.png's background pixel (#c5bdb1) exactly
+           so the image blends seamlessly — no visible rectangular boundary */
+        background: #c5bdb1;
         overflow-y: auto;
         z-index: 200;
         font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
@@ -628,44 +630,34 @@
       #home-footer a { color: #aaa; }
 
       /* ─── Taiwan hero map image ─── */
-      /* Desktop: absolutely positioned within #home-screen (the nearest
-         position:fixed containing block). z-index:-1 renders it behind all
-         block-level card content. mask-image fades all four edges so the
-         PNG background rectangle blends invisibly into the page. */
+      /* Strategy: fill the full viewport height so top / bottom / right edges
+         all bleed off-screen (no visible rectangle boundary). Only the left
+         edge needs a mask gradient to fade in seamlessly. */
       #home-map-img {
         position: absolute;
-        right: 2vw;
-        top: 50%;
-        transform: translateY(-50%);
-        height: 80vh;
-        max-height: 700px;
-        min-height: 300px;
+        right: 0;
+        top: 0;
+        height: 100vh;   /* fills viewport height → no top/bottom boundary */
         width: auto;
         pointer-events: none;
         user-select: none;
         z-index: -1;
         display: block;
-        /* Radial gradient mask: island core stays opaque,
-           all four edges fade to transparent → no visible rectangle */
-        -webkit-mask-image: radial-gradient(
-          ellipse 80% 88% at 58% 50%,
-          black 35%,
-          rgba(0,0,0,0.6) 55%,
-          transparent 78%
+        /* Left-edge fade: ease-in curve over 28% so the transition is soft */
+        -webkit-mask-image: linear-gradient(to right,
+          transparent 0%,
+          rgba(0,0,0,0.08) 6%,
+          rgba(0,0,0,0.30) 12%,
+          rgba(0,0,0,0.65) 20%,
+          black 28%
         );
-        mask-image: radial-gradient(
-          ellipse 80% 88% at 58% 50%,
-          black 35%,
-          rgba(0,0,0,0.6) 55%,
-          transparent 78%
+        mask-image: linear-gradient(to right,
+          transparent 0%,
+          rgba(0,0,0,0.08) 6%,
+          rgba(0,0,0,0.30) 12%,
+          rgba(0,0,0,0.65) 20%,
+          black 28%
         );
-      }
-      /* Medium desktop: slightly smaller to avoid dominating narrow viewports */
-      @media (max-width: 1024px) and (min-width: 641px) {
-        #home-map-img {
-          height: 60vh;
-          right: 0vw;
-        }
       }
 
       /* ─── ← 六都 back button (shown on city pages) ─── */
@@ -707,6 +699,9 @@
           height: auto;
           transform: none;
           margin: 20px auto 4px;
+          /* Reset desktop mask; use radial fade so corners blend into bg */
+          -webkit-mask-image: radial-gradient(ellipse 78% 82% at center, black 40%, transparent 72%);
+          mask-image: radial-gradient(ellipse 78% 82% at center, black 40%, transparent 72%);
         }
       }
     </style>

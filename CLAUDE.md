@@ -209,10 +209,23 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
   - URL 路由：`?city=ntpc` → ntpc 場景；無 city param → 首頁；舊 `?y=&d=&v=` 向下兼容
   - `#city-back-btn`「← 六都」chip 固定在城市頁左上角，點擊回首頁
   - `writeUrl()` 現在永遠包含 `city=ntpc`，確保分享連結帶 city param
-- [ ] **Stage 2**：資料管線通用化 — `extract-elections` / `extract-villages` 支援任意縣市；`src/main.js` 抽 city config（範圍、中心、歷屆年份）
-- [ ] **Stage 3**：依序打亮六都（從台北 MVP 開始，一個一個來）
+- [x] **Stage 2**：資料管線通用化 ✅（2026-04-25 小B）
+  - `extract-elections.mjs`：`--city` flag，六都 31 場選舉全通過
+  - `extract-villages.mjs`：`--city` flag，六都邊界 + 歷屆里票全通過
+  - `src/main.js`：CITY_CONFIGS + CITY_CONFIG，`?city=` 路由，ntpc 向下兼容
+- [x] **Stage 3-1 台北市** ✅（2026-04-25 小B）：12 區彩色 voxel、8 屆 1994-2022、里級全年份
+- [x] **Stage 3-2 桃園市** ✅（2026-04-25 小B）：13 區、7 屆 1997-2022 含縣長時期、里級 2005+
+- [x] **Stage 3-3 台中市** ✅（2026-04-25 小B）：29 區（txg-districts.geo.json）、4 屆 2010-2022、stem slice(0,2) 修正 2 字地名
+- [ ] **Stage 3-4 台南市**（37 區，2010 合併後）
+- [ ] **Stage 3-5 高雄市**（38 區，2010 合併後）
+- [x] **首頁背景圖** ✅（2026-04-25 小A）：`public/taiwan.png` voxel 台灣島；`#home-screen` 背景改 `#c5bdb1` 精確匹配圖片底色；桌機 `position:absolute; right:0; top:0; height:100vh` 全高貼右；左邊 28% 漸層遮罩淡入；手機 `position:static` 置中顯示於 footer 下方
 - [ ] **Stage 4**：首頁升級成 C 方案（voxel backdrop + 卡片浮層）
 - [ ] 並排比較模式（永和 vs 中和）候選
+
+### 調色盤修正（2026-04-25 小B）
+- `CLOSE_WHITE_MIX` 0.75→0.55：低 margin 顏色不再幾乎不可見
+- 柯文哲特例 → TPP 青藍 `#3bb5c4`；黃珊珊加入 TPP 特例
+- `candidateColor(name, partyCode)` helper：候選人名稱優先查特例表，再 fallback partyCode
 
 ### ☐ M10 — 開票日即時
 - [ ] 研究當年中選會即時 endpoint
