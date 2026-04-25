@@ -748,6 +748,27 @@ function selectVillage(v) {
   updateCardState();
   layoutCards();
   writeUrl();
+  // After DOM settles, pan camera if bubble bottom exceeds viewport.
+  requestAnimationFrame(() => autoPanForBubble());
+}
+
+function autoPanForBubble() {
+  const rect = labelEl.getBoundingClientRect();
+  const overflow = rect.bottom - window.innerHeight + 20;
+  if (overflow <= 0) return;
+
+  const dist = camera.position.distanceTo(controls.target);
+  const worldH = 2 * dist * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const worldPerPx = worldH / window.innerHeight;
+
+  const viewDir = new THREE.Vector3().subVectors(controls.target, camera.position).normalize();
+  const screenUp = new THREE.Vector3()
+    .copy(camera.up)
+    .addScaledVector(viewDir, -camera.up.dot(viewDir))
+    .normalize();
+
+  const delta = screenUp.clone().multiplyScalar(-overflow * worldPerPx);
+  tweenCamera(camera.position.clone().add(delta), controls.target.clone().add(delta), 350);
 }
 
 function unselectVillage() {
