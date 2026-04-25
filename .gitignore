@@ -10,3 +10,7 @@ data/raw/
 
 # Claude Code local settings
 .claude/
+
+# Session-specific collaboration notes (no sensitive info, but kept local)
+TODO.md
+SHARE_TOWER_TODO.md
