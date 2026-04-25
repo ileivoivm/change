@@ -1,0 +1,467 @@
+{
+  "election": "2009 桃園縣長",
+  "year": 2009,
+  "date": "2009-12-05",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "吳富彤",
+      "partyCode": "121",
+      "partyName": "客家黨"
+    },
+    {
+      "name": "鄭文燦",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "吳志揚",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "桃園市",
+      "stem": "桃園",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 1.61,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 71127,
+          "rate": 50.03
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 68844,
+          "rate": 48.42
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 2181,
+          "rate": 1.53
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "龜山鄉",
+      "stem": "龜山",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.6,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 25133,
+          "rate": 50.86
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 23357,
+          "rate": 47.26
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 926,
+          "rate": 1.87
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "八德市",
+      "stem": "八德",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.14,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 35330,
+          "rate": 53.32
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 29935,
+          "rate": 45.18
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 990,
+          "rate": 1.49
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "蘆竹鄉",
+      "stem": "蘆竹",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 6.3,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 26662,
+          "rate": 52.48
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 23465,
+          "rate": 46.18
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 677,
+          "rate": 1.33
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "大園鄉",
+      "stem": "大園",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 8.82,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18844,
+          "rate": 53.15
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 15717,
+          "rate": 44.33
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 892,
+          "rate": 2.51
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "大溪鎮",
+      "stem": "大溪",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 4.04,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20669,
+          "rate": 51.18
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 19035,
+          "rate": 47.14
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 674,
+          "rate": 1.66
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "復興鄉",
+      "stem": "復興",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 53.59,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3382,
+          "rate": 75.89
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 994,
+          "rate": 22.3
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 80,
+          "rate": 1.79
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "中壢市",
+      "stem": "中壢",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 18.81,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 83840,
+          "rate": 58.33
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 56816,
+          "rate": 39.52
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 3073,
+          "rate": 2.13
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "平鎮市",
+      "stem": "平鎮",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 13.7,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 41885,
+          "rate": 55.64
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 31575,
+          "rate": 41.94
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 1816,
+          "rate": 2.41
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "楊梅鎮",
+      "stem": "楊梅",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 12.98,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 30627,
+          "rate": 55.14
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 23419,
+          "rate": 42.16
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 1498,
+          "rate": 2.69
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "龍潭鄉",
+      "stem": "龍潭",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 19.34,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 25860,
+          "rate": 57.91
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 17223,
+          "rate": 38.57
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 1570,
+          "rate": 3.51
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "新屋鄉",
+      "stem": "新屋",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 13.11,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 13275,
+          "rate": 55
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 10110,
+          "rate": 41.89
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 747,
+          "rate": 3.09
+        }
+      ]
+    },
+    {
+      "area": "013",
+      "name": "觀音鄉",
+      "stem": "觀音",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 16.39,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 15065,
+          "rate": 56.9
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 10726,
+          "rate": 40.51
+        },
+        {
+          "name": "吳富彤",
+          "partyCode": "121",
+          "partyName": "客家黨",
+          "votes": 683,
+          "rate": 2.57
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "吳志揚",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 396237,
+        "rate": 52.22
+      },
+      {
+        "name": "鄭文燦",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 346678,
+        "rate": 45.69
+      },
+      {
+        "name": "吳富彤",
+        "partyCode": "121",
+        "partyName": "客家黨",
+        "votes": 15807,
+        "rate": 2.08
+      }
+    ],
+    "winner": "吳志揚"
+  }
+}

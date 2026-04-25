@@ -1,0 +1,435 @@
+{
+  "election": "1998 台北市長（2屆直轄）",
+  "year": 1998,
+  "date": "1998-12-05",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "馬英九",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "陳水扁",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "王建煊",
+      "partyCode": "74",
+      "partyName": "新黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "松山區",
+      "stem": "松山",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 6.9,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 60243,
+          "rate": 51.78
+        },
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 52219,
+          "rate": 44.88
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 3889,
+          "rate": 3.34
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "信義區",
+      "stem": "信義",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 13,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 77136,
+          "rate": 54.81
+        },
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 58844,
+          "rate": 41.81
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 4756,
+          "rate": 3.38
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "大安區",
+      "stem": "大安",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 15.76,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 99843,
+          "rate": 56.07
+        },
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 71774,
+          "rate": 40.31
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 6458,
+          "rate": 3.63
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "中山區",
+      "stem": "中山",
+      "winner": "陳水扁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 2.68,
+      "results": [
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 61309,
+          "rate": 50.04
+        },
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 58026,
+          "rate": 47.36
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 3181,
+          "rate": 2.6
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "中正區",
+      "stem": "中正",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 11.51,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 49864,
+          "rate": 54.11
+        },
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 39251,
+          "rate": 42.6
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 3034,
+          "rate": 3.29
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "大同區",
+      "stem": "大同",
+      "winner": "陳水扁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 19.73,
+      "results": [
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 45789,
+          "rate": 59
+        },
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 30476,
+          "rate": 39.27
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 1344,
+          "rate": 1.73
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "萬華區",
+      "stem": "萬華",
+      "winner": "陳水扁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 1.67,
+      "results": [
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 61288,
+          "rate": 49.68
+        },
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 59224,
+          "rate": 48.01
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 2855,
+          "rate": 2.31
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "文山區",
+      "stem": "文山",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 23.5,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 82917,
+          "rate": 59.89
+        },
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 50386,
+          "rate": 36.39
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 5150,
+          "rate": 3.72
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "南港區",
+      "stem": "南港",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 4.55,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 32651,
+          "rate": 50.84
+        },
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 29728,
+          "rate": 46.29
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 1847,
+          "rate": 2.88
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "內湖區",
+      "stem": "內湖",
+      "winner": "馬英九",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.82,
+      "results": [
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 70336,
+          "rate": 52.74
+        },
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 58580,
+          "rate": 43.92
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 4457,
+          "rate": 3.34
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "士林區",
+      "stem": "士林",
+      "winner": "陳水扁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 6.75,
+      "results": [
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 89017,
+          "rate": 52.19
+        },
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 77499,
+          "rate": 45.44
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 4039,
+          "rate": 2.37
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "北投區",
+      "stem": "北投",
+      "winner": "陳水扁",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 1.22,
+      "results": [
+        {
+          "name": "陳水扁",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 69887,
+          "rate": 49.39
+        },
+        {
+          "name": "馬英九",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 68162,
+          "rate": 48.17
+        },
+        {
+          "name": "王建煊",
+          "partyCode": "74",
+          "partyName": "新黨",
+          "votes": 3442,
+          "rate": 2.43
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "馬英九",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 766377,
+        "rate": 51.13
+      },
+      {
+        "name": "陳水扁",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 688072,
+        "rate": 45.91
+      },
+      {
+        "name": "王建煊",
+        "partyCode": "74",
+        "partyName": "新黨",
+        "votes": 44452,
+        "rate": 2.97
+      }
+    ],
+    "winner": "馬英九"
+  }
+}

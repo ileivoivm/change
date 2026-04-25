@@ -1,0 +1,1267 @@
+{
+  "election": "2010 高雄市長（1屆合併）",
+  "year": 2010,
+  "date": "2010-11-27",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "楊秋興",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "黃昭順",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "陳菊",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "桃源區",
+      "stem": "桃源",
+      "winner": "黃昭順",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.55,
+      "results": [
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1184,
+          "rate": 41.82
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1112,
+          "rate": 39.27
+        },
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 535,
+          "rate": 18.89
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "那瑪夏區",
+      "stem": "那瑪",
+      "winner": "黃昭順",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 19.82,
+      "results": [
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 873,
+          "rate": 47.26
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 507,
+          "rate": 27.44
+        },
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 467,
+          "rate": 25.28
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "甲仙區",
+      "stem": "甲仙",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 10.88,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1788,
+          "rate": 41.93
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1324,
+          "rate": 31.05
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1152,
+          "rate": 27.01
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "六龜區",
+      "stem": "六龜",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 26.8,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4649,
+          "rate": 53.54
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 2322,
+          "rate": 26.74
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1712,
+          "rate": 19.71
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "杉林區",
+      "stem": "杉林",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 17.79,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3541,
+          "rate": 48.83
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 2251,
+          "rate": 31.04
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1459,
+          "rate": 20.12
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "內門區",
+      "stem": "內門",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 30.51,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5703,
+          "rate": 54.25
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 2496,
+          "rate": 23.74
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2313,
+          "rate": 22
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "旗山區",
+      "stem": "旗山",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 26.83,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12638,
+          "rate": 54.37
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 6401,
+          "rate": 27.54
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4203,
+          "rate": 18.08
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "美濃區",
+      "stem": "美濃",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 15.9,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 11937,
+          "rate": 47.93
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 7978,
+          "rate": 32.03
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4988,
+          "rate": 20.02
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "茂林區",
+      "stem": "茂林",
+      "winner": "楊秋興",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 8,
+      "results": [
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 520,
+          "rate": 43.77
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 425,
+          "rate": 35.77
+        },
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 243,
+          "rate": 20.45
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "茄萣區",
+      "stem": "茄萣",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 24.03,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 10200,
+          "rate": 53.8
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 5645,
+          "rate": 29.77
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3112,
+          "rate": 16.41
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "湖內區",
+      "stem": "湖內",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 21.87,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9113,
+          "rate": 53.13
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 5362,
+          "rate": 31.26
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2677,
+          "rate": 15.6
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "路竹區",
+      "stem": "路竹",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 18.28,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 15753,
+          "rate": 49.76
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 9967,
+          "rate": 31.48
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5933,
+          "rate": 18.74
+        }
+      ]
+    },
+    {
+      "area": "013",
+      "name": "阿蓮區",
+      "stem": "阿蓮",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 21.27,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9408,
+          "rate": 53.7
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 5683,
+          "rate": 32.43
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2428,
+          "rate": 13.85
+        }
+      ]
+    },
+    {
+      "area": "014",
+      "name": "田寮區",
+      "stem": "田寮",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 34.01,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 3434,
+          "rate": 59.53
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1472,
+          "rate": 25.52
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 862,
+          "rate": 14.94
+        }
+      ]
+    },
+    {
+      "area": "015",
+      "name": "永安區",
+      "stem": "永安",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 16.51,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4274,
+          "rate": 48.63
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 2823,
+          "rate": 32.12
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1691,
+          "rate": 19.24
+        }
+      ]
+    },
+    {
+      "area": "016",
+      "name": "岡山區",
+      "stem": "岡山",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 9.82,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 25274,
+          "rate": 45.55
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 19826,
+          "rate": 35.73
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 10385,
+          "rate": 18.71
+        }
+      ]
+    },
+    {
+      "area": "017",
+      "name": "燕巢區",
+      "stem": "燕巢",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 15.52,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9357,
+          "rate": 49.76
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 6438,
+          "rate": 34.24
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3007,
+          "rate": 15.99
+        }
+      ]
+    },
+    {
+      "area": "018",
+      "name": "彌陀區",
+      "stem": "彌陀",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 9.06,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 6336,
+          "rate": 47.71
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 5134,
+          "rate": 38.65
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 1810,
+          "rate": 13.62
+        }
+      ]
+    },
+    {
+      "area": "019",
+      "name": "梓官區",
+      "stem": "梓官",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 30.44,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 13231,
+          "rate": 57.87
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 6272,
+          "rate": 27.43
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3358,
+          "rate": 14.68
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "橋頭區",
+      "stem": "橋頭",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 27.47,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12984,
+          "rate": 56.19
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 6637,
+          "rate": 28.72
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3483,
+          "rate": 15.07
+        }
+      ]
+    },
+    {
+      "area": "021",
+      "name": "楠梓區",
+      "stem": "楠梓",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 25.89,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 48170,
+          "rate": 52.35
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 24348,
+          "rate": 26.46
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 19491,
+          "rate": 21.18
+        }
+      ]
+    },
+    {
+      "area": "022",
+      "name": "左營區",
+      "stem": "左營",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 15.45,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 44281,
+          "rate": 45.76
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 29330,
+          "rate": 30.31
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 23136,
+          "rate": 23.91
+        }
+      ]
+    },
+    {
+      "area": "023",
+      "name": "大社區",
+      "stem": "大社",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 28.59,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 11264,
+          "rate": 56.62
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 5577,
+          "rate": 28.03
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3052,
+          "rate": 15.34
+        }
+      ]
+    },
+    {
+      "area": "024",
+      "name": "仁武區",
+      "stem": "仁武",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 26.59,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 22661,
+          "rate": 56.03
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 11907,
+          "rate": 29.44
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5874,
+          "rate": 14.52
+        }
+      ]
+    },
+    {
+      "area": "025",
+      "name": "鳥松區",
+      "stem": "鳥松",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 20.77,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 12529,
+          "rate": 51.24
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 7451,
+          "rate": 30.47
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4471,
+          "rate": 18.28
+        }
+      ]
+    },
+    {
+      "area": "026",
+      "name": "大樹區",
+      "stem": "大樹",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 28.14,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 14722,
+          "rate": 55.86
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 7306,
+          "rate": 27.72
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4325,
+          "rate": 16.41
+        }
+      ]
+    },
+    {
+      "area": "027",
+      "name": "鼓山區",
+      "stem": "鼓山",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 26.85,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 36998,
+          "rate": 51.97
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 17883,
+          "rate": 25.12
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 16298,
+          "rate": 22.89
+        }
+      ]
+    },
+    {
+      "area": "028",
+      "name": "鹽埕區",
+      "stem": "鹽埕",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 36.82,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 9508,
+          "rate": 58.73
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3547,
+          "rate": 21.91
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 3132,
+          "rate": 19.34
+        }
+      ]
+    },
+    {
+      "area": "029",
+      "name": "旗津區",
+      "stem": "旗津",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 49.21,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 11660,
+          "rate": 66.29
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 3004,
+          "rate": 17.08
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 2923,
+          "rate": 16.62
+        }
+      ]
+    },
+    {
+      "area": "030",
+      "name": "三民區",
+      "stem": "三民",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 32.03,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 107543,
+          "rate": 56
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 46045,
+          "rate": 23.97
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 38444,
+          "rate": 20.01
+        }
+      ]
+    },
+    {
+      "area": "031",
+      "name": "前金區",
+      "stem": "前金",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 28.96,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8707,
+          "rate": 52.89
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 3940,
+          "rate": 23.93
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3813,
+          "rate": 23.16
+        }
+      ]
+    },
+    {
+      "area": "032",
+      "name": "新興區",
+      "stem": "新興",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 29.75,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 16625,
+          "rate": 53.49
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 7379,
+          "rate": 23.74
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 7075,
+          "rate": 22.76
+        }
+      ]
+    },
+    {
+      "area": "033",
+      "name": "苓雅區",
+      "stem": "苓雅",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 25.92,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 53978,
+          "rate": 51.88
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 27005,
+          "rate": 25.96
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 23042,
+          "rate": 22.15
+        }
+      ]
+    },
+    {
+      "area": "034",
+      "name": "鳳山區",
+      "stem": "鳳山",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 12.64,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 87699,
+          "rate": 46.96
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 64089,
+          "rate": 34.32
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 34929,
+          "rate": 18.7
+        }
+      ]
+    },
+    {
+      "area": "035",
+      "name": "前鎮區",
+      "stem": "前鎮",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 35.14,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 64535,
+          "rate": 57.34
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 24986,
+          "rate": 22.2
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 23010,
+          "rate": 20.44
+        }
+      ]
+    },
+    {
+      "area": "036",
+      "name": "小港區",
+      "stem": "小港",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 37.35,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 51094,
+          "rate": 58.5
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 18473,
+          "rate": 21.15
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 17760,
+          "rate": 20.33
+        }
+      ]
+    },
+    {
+      "area": "037",
+      "name": "大寮區",
+      "stem": "大寮",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 26.11,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 33336,
+          "rate": 53.74
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 17142,
+          "rate": 27.63
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 11548,
+          "rate": 18.61
+        }
+      ]
+    },
+    {
+      "area": "038",
+      "name": "林園區",
+      "stem": "林園",
+      "winner": "陳菊",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 43.17,
+      "results": [
+        {
+          "name": "陳菊",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 24914,
+          "rate": 62.16
+        },
+        {
+          "name": "黃昭順",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 7614,
+          "rate": 18.99
+        },
+        {
+          "name": "楊秋興",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 7547,
+          "rate": 18.83
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "陳菊",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 821089,
+        "rate": 52.8
+      },
+      {
+        "name": "楊秋興",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 414950,
+        "rate": 26.68
+      },
+      {
+        "name": "黃昭順",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 319171,
+        "rate": 20.52
+      }
+    ],
+    "winner": "陳菊"
+  }
+}

@@ -1,0 +1,467 @@
+{
+  "election": "2014 桃園市長（1屆）",
+  "year": 2014,
+  "date": "2014-11-29",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "鄭文燦",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "吳志揚",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "許睿智",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    }
+  ],
+  "districts": [
+    {
+      "area": "010",
+      "name": "桃園區",
+      "stem": "桃園",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 13.52,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 102208,
+          "rate": 56.25
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 77643,
+          "rate": 42.73
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1839,
+          "rate": 1.01
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "中壢區",
+      "stem": "中壢",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 7.78,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 97143,
+          "rate": 53.36
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 82983,
+          "rate": 45.58
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1909,
+          "rate": 1.04
+        }
+      ]
+    },
+    {
+      "area": "030",
+      "name": "大溪區",
+      "stem": "大溪",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 11.46,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 24850,
+          "rate": 55.25
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 19697,
+          "rate": 43.79
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 428,
+          "rate": 0.95
+        }
+      ]
+    },
+    {
+      "area": "040",
+      "name": "楊梅區",
+      "stem": "楊梅",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 7.74,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 39034,
+          "rate": 53.32
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 33370,
+          "rate": 45.58
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 799,
+          "rate": 1.09
+        }
+      ]
+    },
+    {
+      "area": "050",
+      "name": "蘆竹區",
+      "stem": "蘆竹",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 15.83,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 37787,
+          "rate": 57.42
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 27369,
+          "rate": 41.59
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 648,
+          "rate": 0.98
+        }
+      ]
+    },
+    {
+      "area": "060",
+      "name": "大園區",
+      "stem": "大園",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 14.29,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 23920,
+          "rate": 56.59
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17881,
+          "rate": 42.3
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 464,
+          "rate": 1.09
+        }
+      ]
+    },
+    {
+      "area": "070",
+      "name": "龜山區",
+      "stem": "龜山",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 8.42,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 34208,
+          "rate": 53.75
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 28853,
+          "rate": 45.33
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 580,
+          "rate": 0.91
+        }
+      ]
+    },
+    {
+      "area": "080",
+      "name": "八德區",
+      "stem": "八德",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 2.12,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 44497,
+          "rate": 50.55
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 42636,
+          "rate": 48.43
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 891,
+          "rate": 1.01
+        }
+      ]
+    },
+    {
+      "area": "090",
+      "name": "龍潭區",
+      "stem": "龍潭",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 9.21,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 29754,
+          "rate": 54.13
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 24694,
+          "rate": 44.92
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 514,
+          "rate": 0.93
+        }
+      ]
+    },
+    {
+      "area": "100",
+      "name": "平鎮區",
+      "stem": "平鎮",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.75,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 51530,
+          "rate": 50.85
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 48744,
+          "rate": 48.1
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1049,
+          "rate": 1.03
+        }
+      ]
+    },
+    {
+      "area": "110",
+      "name": "新屋區",
+      "stem": "新屋",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 8.48,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 14810,
+          "rate": 53.63
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 12469,
+          "rate": 45.15
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 332,
+          "rate": 1.2
+        }
+      ]
+    },
+    {
+      "area": "120",
+      "name": "觀音區",
+      "stem": "觀音",
+      "winner": "鄭文燦",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 11.88,
+      "results": [
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18641,
+          "rate": 55.31
+        },
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 14639,
+          "rate": 43.43
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 422,
+          "rate": 1.25
+        }
+      ]
+    },
+    {
+      "area": "130",
+      "name": "復興區",
+      "stem": "復興",
+      "winner": "吳志揚",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 44.49,
+      "results": [
+        {
+          "name": "吳志揚",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4485,
+          "rate": 71.7
+        },
+        {
+          "name": "鄭文燦",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1702,
+          "rate": 27.21
+        },
+        {
+          "name": "許睿智",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 68,
+          "rate": 1.08
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "鄭文燦",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 492414,
+        "rate": 51
+      },
+      {
+        "name": "吳志揚",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 463133,
+        "rate": 47.97
+      },
+      {
+        "name": "許睿智",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 9943,
+        "rate": 1.03
+      }
+    ],
+    "winner": "鄭文燦"
+  }
+}

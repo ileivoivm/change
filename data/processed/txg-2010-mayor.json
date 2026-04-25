@@ -1,0 +1,764 @@
+{
+  "election": "2010 台中市長（1屆合併）",
+  "year": 2010,
+  "date": "2010-11-27",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "蘇嘉全",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "胡志強",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "大甲區",
+      "stem": "大甲",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 1.85,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 22797,
+          "rate": 50.92
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 21969,
+          "rate": 49.07
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "大安區",
+      "stem": "大安",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 3.69,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 6790,
+          "rate": 51.84
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 6307,
+          "rate": 48.15
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "外埔區",
+      "stem": "外埔",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 7.15,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 10370,
+          "rate": 53.57
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8987,
+          "rate": 46.42
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "清水區",
+      "stem": "清水",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 4.47,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 26316,
+          "rate": 52.23
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 24064,
+          "rate": 47.76
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "梧棲區",
+      "stem": "梧棲",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 2.91,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 15906,
+          "rate": 51.45
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 15009,
+          "rate": 48.54
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "沙鹿區",
+      "stem": "沙鹿",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.23,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 23675,
+          "rate": 51.61
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 22193,
+          "rate": 48.38
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "龍井區",
+      "stem": "龍井",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 1.57,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20940,
+          "rate": 50.78
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20292,
+          "rate": 49.21
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "大肚區",
+      "stem": "大肚",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.27,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 16783,
+          "rate": 51.63
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 15723,
+          "rate": 48.36
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "烏日區",
+      "stem": "烏日",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 3.17,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20063,
+          "rate": 51.58
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 18827,
+          "rate": 48.41
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "后里區",
+      "stem": "后里",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 3.57,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 16244,
+          "rate": 51.78
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 15123,
+          "rate": 48.21
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "豐原區",
+      "stem": "豐原",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.97,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 48945,
+          "rate": 53.98
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 41722,
+          "rate": 46.01
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "神岡區",
+      "stem": "神岡",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 15.45,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20891,
+          "rate": 57.72
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 15297,
+          "rate": 42.27
+        }
+      ]
+    },
+    {
+      "area": "013",
+      "name": "大雅區",
+      "stem": "大雅",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 3.77,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 24382,
+          "rate": 51.88
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 22614,
+          "rate": 48.11
+        }
+      ]
+    },
+    {
+      "area": "014",
+      "name": "潭子區",
+      "stem": "潭子",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 1.35,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 27451,
+          "rate": 50.67
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 26718,
+          "rate": 49.32
+        }
+      ]
+    },
+    {
+      "area": "015",
+      "name": "西屯區",
+      "stem": "西屯",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 12.93,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 58681,
+          "rate": 56.46
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 45251,
+          "rate": 43.53
+        }
+      ]
+    },
+    {
+      "area": "016",
+      "name": "南屯區",
+      "stem": "南屯",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 8.69,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 41399,
+          "rate": 54.34
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 34774,
+          "rate": 45.65
+        }
+      ]
+    },
+    {
+      "area": "017",
+      "name": "北屯區",
+      "stem": "北屯",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 9.63,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 70004,
+          "rate": 54.81
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 57704,
+          "rate": 45.18
+        }
+      ]
+    },
+    {
+      "area": "018",
+      "name": "北區",
+      "stem": "北區",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 10.95,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 42606,
+          "rate": 55.47
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 34193,
+          "rate": 44.52
+        }
+      ]
+    },
+    {
+      "area": "019",
+      "name": "中區",
+      "stem": "中區",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 3.95,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 5281,
+          "rate": 51.97
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4879,
+          "rate": 48.02
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "西區",
+      "stem": "西區",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 5.91,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 31588,
+          "rate": 52.95
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 28064,
+          "rate": 47.04
+        }
+      ]
+    },
+    {
+      "area": "021",
+      "name": "東區",
+      "stem": "東區",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 5.05,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 21569,
+          "rate": 52.52
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 19492,
+          "rate": 47.47
+        }
+      ]
+    },
+    {
+      "area": "022",
+      "name": "南區",
+      "stem": "南區",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 4.25,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 30888,
+          "rate": 52.12
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 28374,
+          "rate": 47.87
+        }
+      ]
+    },
+    {
+      "area": "023",
+      "name": "太平區",
+      "stem": "太平",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 1.21,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 46614,
+          "rate": 50.6
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 45504,
+          "rate": 49.39
+        }
+      ]
+    },
+    {
+      "area": "024",
+      "name": "大里區",
+      "stem": "大里",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 2.27,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 53209,
+          "rate": 51.13
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 50848,
+          "rate": 48.86
+        }
+      ]
+    },
+    {
+      "area": "025",
+      "name": "霧峰區",
+      "stem": "霧峰",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 2.03,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 19486,
+          "rate": 51.01
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 18711,
+          "rate": 48.98
+        }
+      ]
+    },
+    {
+      "area": "026",
+      "name": "東勢區",
+      "stem": "東勢",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 0.93,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 15982,
+          "rate": 50.46
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 15690,
+          "rate": 49.53
+        }
+      ]
+    },
+    {
+      "area": "027",
+      "name": "石岡區",
+      "stem": "石岡",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 5.61,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 5028,
+          "rate": 52.8
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 4494,
+          "rate": 47.19
+        }
+      ]
+    },
+    {
+      "area": "028",
+      "name": "新社區",
+      "stem": "新社",
+      "winner": "蘇嘉全",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 7.07,
+      "results": [
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 8346,
+          "rate": 53.53
+        },
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 7244,
+          "rate": 46.46
+        }
+      ]
+    },
+    {
+      "area": "029",
+      "name": "和平區",
+      "stem": "和平",
+      "winner": "胡志強",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 33.63,
+      "results": [
+        {
+          "name": "胡志強",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 4237,
+          "rate": 66.81
+        },
+        {
+          "name": "蘇嘉全",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 2104,
+          "rate": 33.18
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "胡志強",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 730284,
+        "rate": 51.12
+      },
+      {
+        "name": "蘇嘉全",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 698358,
+        "rate": 48.88
+      }
+    ],
+    "winner": "胡志強"
+  }
+}

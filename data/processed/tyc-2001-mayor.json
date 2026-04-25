@@ -1,0 +1,467 @@
+{
+  "election": "2001 桃園縣長",
+  "year": 2001,
+  "date": "2001-12-01",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "彭紹瑾",
+      "partyCode": "16",
+      "partyName": "民主進步黨"
+    },
+    {
+      "name": "朱立倫",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "莊志忠",
+      "partyCode": "999",
+      "partyName": "無"
+    }
+  ],
+  "districts": [
+    {
+      "area": "001",
+      "name": "桃園市",
+      "stem": "桃園",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 14.75,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 85060,
+          "rate": 57.14
+        },
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 63107,
+          "rate": 42.39
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 708,
+          "rate": 0.48
+        }
+      ]
+    },
+    {
+      "area": "002",
+      "name": "中壢市",
+      "stem": "中壢",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 17.98,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 90642,
+          "rate": 58.71
+        },
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 62871,
+          "rate": 40.73
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 864,
+          "rate": 0.56
+        }
+      ]
+    },
+    {
+      "area": "003",
+      "name": "大溪鎮",
+      "stem": "大溪",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 4.62,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 20442,
+          "rate": 51.99
+        },
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 18625,
+          "rate": 47.37
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 254,
+          "rate": 0.65
+        }
+      ]
+    },
+    {
+      "area": "004",
+      "name": "楊梅鎮",
+      "stem": "楊梅",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 1.93,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 29817,
+          "rate": 50.68
+        },
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 28684,
+          "rate": 48.75
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 333,
+          "rate": 0.57
+        }
+      ]
+    },
+    {
+      "area": "005",
+      "name": "蘆竹鄉",
+      "stem": "蘆竹",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 1.84,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 22214,
+          "rate": 50.59
+        },
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 21408,
+          "rate": 48.75
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 289,
+          "rate": 0.66
+        }
+      ]
+    },
+    {
+      "area": "006",
+      "name": "大園鄉",
+      "stem": "大園",
+      "winner": "彭紹瑾",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 2.05,
+      "results": [
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 17878,
+          "rate": 50.63
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 17156,
+          "rate": 48.58
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 280,
+          "rate": 0.79
+        }
+      ]
+    },
+    {
+      "area": "007",
+      "name": "龜山鄉",
+      "stem": "龜山",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 16.22,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 28911,
+          "rate": 57.84
+        },
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 20803,
+          "rate": 41.62
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 271,
+          "rate": 0.54
+        }
+      ]
+    },
+    {
+      "area": "008",
+      "name": "八德市",
+      "stem": "八德",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 26.9,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 48088,
+          "rate": 63.18
+        },
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 27611,
+          "rate": 36.28
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 416,
+          "rate": 0.55
+        }
+      ]
+    },
+    {
+      "area": "009",
+      "name": "龍潭鄉",
+      "stem": "龍潭",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 16.82,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 28090,
+          "rate": 58.18
+        },
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 19969,
+          "rate": 41.36
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 224,
+          "rate": 0.46
+        }
+      ]
+    },
+    {
+      "area": "010",
+      "name": "平鎮市",
+      "stem": "平鎮",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 11.41,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 48948,
+          "rate": 55.43
+        },
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 38870,
+          "rate": 44.02
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 490,
+          "rate": 0.55
+        }
+      ]
+    },
+    {
+      "area": "011",
+      "name": "新屋鄉",
+      "stem": "新屋",
+      "winner": "彭紹瑾",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 27.03,
+      "results": [
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 16051,
+          "rate": 63.2
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 9187,
+          "rate": 36.17
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 161,
+          "rate": 0.63
+        }
+      ]
+    },
+    {
+      "area": "012",
+      "name": "觀音鄉",
+      "stem": "觀音",
+      "winner": "彭紹瑾",
+      "winnerParty": "民主進步黨",
+      "winnerPartyCode": "16",
+      "margin": 26.42,
+      "results": [
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 16535,
+          "rate": 62.85
+        },
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 9586,
+          "rate": 36.43
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 189,
+          "rate": 0.72
+        }
+      ]
+    },
+    {
+      "area": "013",
+      "name": "復興鄉",
+      "stem": "復興",
+      "winner": "朱立倫",
+      "winnerParty": "中國國民黨",
+      "winnerPartyCode": "1",
+      "margin": 51.93,
+      "results": [
+        {
+          "name": "朱立倫",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 3686,
+          "rate": 75.66
+        },
+        {
+          "name": "彭紹瑾",
+          "partyCode": "16",
+          "partyName": "民主進步黨",
+          "votes": 1156,
+          "rate": 23.73
+        },
+        {
+          "name": "莊志忠",
+          "partyCode": "999",
+          "partyName": "無",
+          "votes": 30,
+          "rate": 0.62
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "朱立倫",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 441827,
+        "rate": 55.24
+      },
+      {
+        "name": "彭紹瑾",
+        "partyCode": "16",
+        "partyName": "民主進步黨",
+        "votes": 353568,
+        "rate": 44.2
+      },
+      {
+        "name": "莊志忠",
+        "partyCode": "999",
+        "partyName": "無",
+        "votes": 4509,
+        "rate": 0.56
+      }
+    ],
+    "winner": "朱立倫"
+  }
+}

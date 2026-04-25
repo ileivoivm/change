@@ -1,0 +1,819 @@
+{
+  "election": "2014 台北市長（6屆）",
+  "year": 2014,
+  "date": "2014-11-29",
+  "source": "CEC via kiang/db.cec.gov.tw",
+  "candidates": [
+    {
+      "name": "陳汝斌",
+      "partyCode": "210",
+      "partyName": "三等國民公義人權自救黨"
+    },
+    {
+      "name": "趙衍慶",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "李宏信",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "陳永昌",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "馮光遠",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    },
+    {
+      "name": "連勝文",
+      "partyCode": "1",
+      "partyName": "中國國民黨"
+    },
+    {
+      "name": "柯文哲",
+      "partyCode": "999",
+      "partyName": "無黨籍及未經政黨推薦"
+    }
+  ],
+  "districts": [
+    {
+      "area": "010",
+      "name": "松山區",
+      "stem": "松山",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 10.25,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 62271,
+          "rate": 54.09
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 50476,
+          "rate": 43.84
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1254,
+          "rate": 1.08
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 667,
+          "rate": 0.57
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 201,
+          "rate": 0.17
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 144,
+          "rate": 0.12
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 107,
+          "rate": 0.09
+        }
+      ]
+    },
+    {
+      "area": "020",
+      "name": "信義區",
+      "stem": "信義",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 9.86,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 70023,
+          "rate": 53.9
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 57216,
+          "rate": 44.04
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1442,
+          "rate": 1.1
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 648,
+          "rate": 0.49
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 236,
+          "rate": 0.18
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 187,
+          "rate": 0.14
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 158,
+          "rate": 0.12
+        }
+      ]
+    },
+    {
+      "area": "030",
+      "name": "大安區",
+      "stem": "大安",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 6.73,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 86931,
+          "rate": 52.35
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 75755,
+          "rate": 45.62
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1690,
+          "rate": 1.01
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1034,
+          "rate": 0.62
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 312,
+          "rate": 0.18
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 174,
+          "rate": 0.1
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 133,
+          "rate": 0.08
+        }
+      ]
+    },
+    {
+      "area": "040",
+      "name": "中山區",
+      "stem": "中山",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 21.46,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 76588,
+          "rate": 59.8
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 49112,
+          "rate": 38.34
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1188,
+          "rate": 0.92
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 649,
+          "rate": 0.5
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 229,
+          "rate": 0.17
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 155,
+          "rate": 0.12
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 151,
+          "rate": 0.11
+        }
+      ]
+    },
+    {
+      "area": "050",
+      "name": "中正區",
+      "stem": "中正",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 12.54,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 47785,
+          "rate": 55.23
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 36936,
+          "rate": 42.69
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 919,
+          "rate": 1.06
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 502,
+          "rate": 0.58
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 160,
+          "rate": 0.18
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 143,
+          "rate": 0.16
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 71,
+          "rate": 0.08
+        }
+      ]
+    },
+    {
+      "area": "060",
+      "name": "大同區",
+      "stem": "大同",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 35.93,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 50187,
+          "rate": 67.07
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 23306,
+          "rate": 31.14
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 677,
+          "rate": 0.9
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 320,
+          "rate": 0.42
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 128,
+          "rate": 0.17
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 123,
+          "rate": 0.16
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 83,
+          "rate": 0.11
+        }
+      ]
+    },
+    {
+      "area": "070",
+      "name": "萬華區",
+      "stem": "萬華",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 21.1,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 66883,
+          "rate": 59.65
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 43221,
+          "rate": 38.55
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1024,
+          "rate": 0.91
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 520,
+          "rate": 0.46
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 173,
+          "rate": 0.15
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 146,
+          "rate": 0.13
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 144,
+          "rate": 0.12
+        }
+      ]
+    },
+    {
+      "area": "080",
+      "name": "文山區",
+      "stem": "文山",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 2.16,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 74230,
+          "rate": 49.93
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 71027,
+          "rate": 47.77
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1829,
+          "rate": 1.23
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 955,
+          "rate": 0.64
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 274,
+          "rate": 0.18
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 184,
+          "rate": 0.12
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 161,
+          "rate": 0.1
+        }
+      ]
+    },
+    {
+      "area": "090",
+      "name": "南港區",
+      "stem": "南港",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 18.62,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 39558,
+          "rate": 58.19
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 26899,
+          "rate": 39.57
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 865,
+          "rate": 1.27
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 343,
+          "rate": 0.5
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 124,
+          "rate": 0.18
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 98,
+          "rate": 0.14
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 83,
+          "rate": 0.12
+        }
+      ]
+    },
+    {
+      "area": "100",
+      "name": "內湖區",
+      "stem": "內湖",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 15.33,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 87990,
+          "rate": 56.59
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 64161,
+          "rate": 41.26
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1884,
+          "rate": 1.21
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 837,
+          "rate": 0.53
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 260,
+          "rate": 0.16
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 211,
+          "rate": 0.13
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 124,
+          "rate": 0.07
+        }
+      ]
+    },
+    {
+      "area": "110",
+      "name": "士林區",
+      "stem": "士林",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 26.97,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 103891,
+          "rate": 62.54
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 59095,
+          "rate": 35.57
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1617,
+          "rate": 0.97
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 820,
+          "rate": 0.49
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 294,
+          "rate": 0.17
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 190,
+          "rate": 0.11
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 186,
+          "rate": 0.11
+        }
+      ]
+    },
+    {
+      "area": "120",
+      "name": "北投區",
+      "stem": "北投",
+      "winner": "柯文哲",
+      "winnerParty": "無黨籍及未經政黨推薦",
+      "winnerPartyCode": "999",
+      "margin": 24.37,
+      "results": [
+        {
+          "name": "柯文哲",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 87646,
+          "rate": 61.17
+        },
+        {
+          "name": "連勝文",
+          "partyCode": "1",
+          "partyName": "中國國民黨",
+          "votes": 52728,
+          "rate": 36.8
+        },
+        {
+          "name": "趙衍慶",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 1509,
+          "rate": 1.05
+        },
+        {
+          "name": "馮光遠",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 785,
+          "rate": 0.54
+        },
+        {
+          "name": "李宏信",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 235,
+          "rate": 0.16
+        },
+        {
+          "name": "陳永昌",
+          "partyCode": "999",
+          "partyName": "無黨籍及未經政黨推薦",
+          "votes": 195,
+          "rate": 0.13
+        },
+        {
+          "name": "陳汝斌",
+          "partyCode": "210",
+          "partyName": "三等國民公義人權自救黨",
+          "votes": 176,
+          "rate": 0.12
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "results": [
+      {
+        "name": "柯文哲",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 853983,
+        "rate": 57.16
+      },
+      {
+        "name": "連勝文",
+        "partyCode": "1",
+        "partyName": "中國國民黨",
+        "votes": 609932,
+        "rate": 40.82
+      },
+      {
+        "name": "趙衍慶",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 15898,
+        "rate": 1.06
+      },
+      {
+        "name": "馮光遠",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 8080,
+        "rate": 0.54
+      },
+      {
+        "name": "李宏信",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 2621,
+        "rate": 0.18
+      },
+      {
+        "name": "陳永昌",
+        "partyCode": "999",
+        "partyName": "無黨籍及未經政黨推薦",
+        "votes": 1908,
+        "rate": 0.13
+      },
+      {
+        "name": "陳汝斌",
+        "partyCode": "210",
+        "partyName": "三等國民公義人權自救黨",
+        "votes": 1624,
+        "rate": 0.11
+      }
+    ],
+    "winner": "柯文哲"
+  }
+}

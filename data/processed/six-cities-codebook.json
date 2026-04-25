@@ -1,0 +1,259 @@
+{
+  "_meta": {
+    "description": "六都 CEC 代碼盤點 — Stage 0",
+    "source": "kiang/db.cec.gov.tw (data/raw/**/elbase.csv)",
+    "updated": "2026-04-25",
+    "note": "prv/city 為 elbase.csv 第1/2欄（去除 Excel apostrophe）。city='000' 代表直轄市；county-level 用 city=3位數。"
+  },
+  "cities": {
+    "tpe": {
+      "name": "台北市",
+      "nameZh": "臺北市",
+      "type": "直轄市（1967年起）",
+      "districts": 12,
+      "districtNote": "12區，1990年後不變",
+      "cec_codes": [
+        {
+          "years": [1994, 1998, 2002, 2006, 2010],
+          "prv": "01",
+          "city": "000",
+          "electionType": "直轄市長",
+          "dataDir": "data/raw/{year}-直轄市長"
+        },
+        {
+          "years": [2014, 2018, 2022],
+          "prv": "63",
+          "city": "000",
+          "electionType": "直轄市長",
+          "dataDir": "data/raw/{year}-直轄市長",
+          "note": "2014起 CEC 重編代碼，prv 01→63"
+        }
+      ],
+      "elections": [1994, 1998, 2002, 2006, 2010, 2014, 2018, 2022],
+      "m9_scope": "全程（1994起已是直轄市）",
+      "winners": {
+        "1994": { "name": "陳水扁", "party": "DPP" },
+        "1998": { "name": "馬英九", "party": "KMT" },
+        "2002": { "name": "馬英九", "party": "KMT" },
+        "2006": { "name": "郝龍斌", "party": "KMT" },
+        "2010": { "name": "郝龍斌", "party": "KMT" },
+        "2014": { "name": "柯文哲", "party": "IND" },
+        "2018": { "name": "柯文哲", "party": "TPP" },
+        "2022": { "name": "蔣萬安", "party": "KMT" }
+      }
+    },
+    "ntpc": {
+      "name": "新北市",
+      "nameZh": "新北市（前身台北縣）",
+      "type": "直轄市（2010年12月升格）",
+      "districts": 29,
+      "districtNote": "29區（含原台北縣29鄉鎮市）",
+      "cec_codes": [
+        {
+          "years": [1994, 1997, 2001, 2005],
+          "prv": "01",
+          "city": "001",
+          "electionType": "縣市長（臺北縣）",
+          "dataDir": "data/raw/{year}-縣市長",
+          "note": "1994無資料目錄，從1997起有資料"
+        },
+        {
+          "years": [2010],
+          "prv": "02",
+          "city": "000",
+          "electionType": "直轄市長",
+          "dataDir": "data/raw/2010-直轄市長",
+          "note": "升格首年，prv 重編為02"
+        },
+        {
+          "years": [2014, 2018, 2022],
+          "prv": "65",
+          "city": "000",
+          "electionType": "直轄市長",
+          "dataDir": "data/raw/{year}-直轄市長",
+          "note": "2014起 CEC 重編，prv 02→65"
+        }
+      ],
+      "elections": [1997, 2001, 2005, 2010, 2014, 2018, 2022],
+      "m9_scope": "已完成（M1–M8）",
+      "status": "DONE"
+    },
+    "tyc": {
+      "name": "桃園市",
+      "nameZh": "桃園市（前身桃園縣）",
+      "type": "直轄市（2014年12月升格）",
+      "districts": 13,
+      "districtNote": "13區（升格前為13鄉鎮市，升格後轉為13區，數量不變）",
+      "cec_codes": [
+        {
+          "years": [1997, 2001, 2005],
+          "prv": "01",
+          "city": "003",
+          "electionType": "縣市長（桃園縣）",
+          "dataDir": "data/raw/{year}-縣市長",
+          "note": "plain CSV 格式"
+        },
+        {
+          "years": [2009],
+          "prv": "03",
+          "city": "003",
+          "electionType": "縣市長（桃園縣）",
+          "dataDir": "data/raw/2009-縣市長",
+          "note": "2009 CEC 重編，prv 01→03；quoted CSV 格式"
+        },
+        {
+          "years": [2014, 2018, 2022],
+          "prv": "68",
+          "city": "000",
+          "electionType": "直轄市長",
+          "dataDir": "data/raw/{year}-直轄市長",
+          "note": "2014-12-25升格，首屆市長選舉同年11月"
+        }
+      ],
+      "elections": [1997, 2001, 2005, 2009, 2014, 2018, 2022],
+      "elections_note": "1994縣長資料目錄不存在（data/raw 未下載）；2010無選舉（縣長任期延至2014升格）",
+      "m9_scope": "2014起（升格後直轄市）",
+      "winners": {
+        "1997": { "name": "呂秀蓮", "party": "DPP" },
+        "2001": { "name": "朱立倫", "party": "KMT" },
+        "2005": { "name": "朱立倫", "party": "KMT" },
+        "2009": { "name": "吳志揚", "party": "KMT" },
+        "2014": { "name": "鄭文燦", "party": "DPP" },
+        "2018": { "name": "鄭文燦", "party": "DPP" },
+        "2022": { "name": "張善政", "party": "KMT" }
+      }
+    },
+    "txg": {
+      "name": "台中市",
+      "nameZh": "臺中市（前身台中縣+台中市）",
+      "type": "直轄市（2010年12月升格合併）",
+      "districts": 29,
+      "districtNote": "29區（含原台中縣21鄉鎮市 + 原台中市8區 合併重劃）",
+      "pre_merger": {
+        "台中縣": {
+          "prv": "01", "city": "006",
+          "districts": 21,
+          "elections": [1994, 1997, 2001, 2005],
+          "note": "2009未舉行縣長選舉（五都升格前夕延任）"
+        },
+        "台中市_省轄": {
+          "prv": "01", "city": "019",
+          "districts": 8,
+          "elections": [1994, 1997, 2001, 2005],
+          "note": "省轄市，2009亦未舉行"
+        }
+      },
+      "cec_codes": [
+        {
+          "years": [2010],
+          "prv": "03",
+          "city": "000",
+          "electionType": "直轄市長（合併首年）",
+          "dataDir": "data/raw/2010-直轄市長"
+        },
+        {
+          "years": [2014, 2018, 2022],
+          "prv": "66",
+          "city": "000",
+          "electionType": "直轄市長",
+          "dataDir": "data/raw/{year}-直轄市長",
+          "note": "2014起 CEC 重編，prv 03→66"
+        }
+      ],
+      "elections": [2010, 2014, 2018, 2022],
+      "elections_note": "合併前台中縣/市各自選舉（1994-2005），M9 決策跳過合併前資料，從2010起",
+      "m9_scope": "2010起（合併後直轄市）",
+      "winners": {
+        "2010": { "name": "胡志強", "party": "KMT" },
+        "2014": { "name": "林佳龍", "party": "DPP" },
+        "2018": { "name": "盧秀燕", "party": "KMT" },
+        "2022": { "name": "盧秀燕", "party": "KMT" }
+      }
+    },
+    "tnn": {
+      "name": "台南市",
+      "nameZh": "臺南市（前身台南縣+台南市）",
+      "type": "直轄市（2010年12月升格合併）",
+      "districts": 37,
+      "districtNote": "37區（含原台南縣31鄉鎮市 + 原台南市6區 合併重劃）",
+      "pre_merger": {
+        "台南縣": {
+          "prv": "01", "city": "011",
+          "districts": 31,
+          "elections": [1994, 1997, 2001, 2005],
+          "note": "2009未舉行縣長選舉（五都升格前夕延任）"
+        },
+        "台南市_省轄": {
+          "prv": "01", "city": "021",
+          "districts": 7,
+          "elections": [1994, 1997, 2001, 2005],
+          "note": "省轄市，2009亦未舉行；7區含中西區"
+        }
+      },
+      "cec_codes": [
+        {
+          "years": [2010],
+          "prv": "04",
+          "city": "000",
+          "electionType": "直轄市長（合併首年）",
+          "dataDir": "data/raw/2010-直轄市長"
+        },
+        {
+          "years": [2014, 2018, 2022],
+          "prv": "67",
+          "city": "000",
+          "electionType": "直轄市長",
+          "dataDir": "data/raw/{year}-直轄市長",
+          "note": "2014起 CEC 重編，prv 04→67"
+        }
+      ],
+      "elections": [2010, 2014, 2018, 2022],
+      "elections_note": "合併前台南縣/市各自選舉（1994-2005），M9 決策跳過合併前資料，從2010起",
+      "m9_scope": "2010起（合併後直轄市）",
+      "winners": {
+        "2010": { "name": "賴清德", "party": "DPP" },
+        "2014": { "name": "賴清德", "party": "DPP" },
+        "2018": { "name": "黃偉哲", "party": "DPP" },
+        "2022": { "name": "黃偉哲", "party": "DPP" }
+      }
+    },
+    "khh": {
+      "name": "高雄市",
+      "nameZh": "高雄市（前身高雄縣+高雄市）",
+      "type": "直轄市（2010年12月升格合併）",
+      "districts": 38,
+      "districtNote": "38區（含原高雄縣27鄉鎮市 + 原高雄市11區 合併重劃）",
+      "status": "另一 session 盤點中",
+      "m9_scope": "2010起（合併後直轄市）"
+    }
+  },
+  "cec_prv_changelog": {
+    "description": "CEC 代碼歷次重編對照",
+    "changes": [
+      {
+        "when": "2010直轄市長選舉",
+        "note": "五都升格，新直轄市使用新 prv：台北市01、新北02、台中03、台南04、高雄05"
+      },
+      {
+        "when": "2014直轄市長選舉",
+        "note": "CEC 全面重編直轄市 prv：台北01→63、新北02→65、台中03→66、台南04→67、高雄05→64、桃園新增68"
+      },
+      {
+        "when": "2009縣市長選舉",
+        "note": "台灣省各縣市 prv 從01改為03，離島從01改為04（故桃園縣01,003→03,003）"
+      }
+    ]
+  },
+  "data_availability": {
+    "1994-縣市長": "目錄不存在（data/raw 未下載）",
+    "1994-直轄市長": "有（台北市、高雄市）",
+    "1997-縣市長": "有（含桃園縣 prv=01,city=003）",
+    "2001-縣市長": "有",
+    "2005-縣市長": "有",
+    "2009-縣市長": "有（台中縣/市、台南縣/市不在列—延任至2010升格）",
+    "2010-直轄市長": "有（五都）",
+    "2014-直轄市長": "有（六都，桃園首次）",
+    "2018-直轄市長": "有（六都）",
+    "2022-直轄市長-prv": "有（六都）"
+  }
+}
