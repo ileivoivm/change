@@ -224,7 +224,7 @@ const villageHistoryMap = (() => {
         entry = { years: {}, townName: v.townName, villageName: v.villageName };
         m.set(k, entry);
       }
-      entry.years[year] = { partyCode: v.winnerPartyCode, margin: v.margin };
+      entry.years[year] = { partyCode: v.winnerPartyCode, winner: v.winner, margin: v.margin };
     }
   }
   // Aggregate per-village stats
@@ -255,7 +255,7 @@ function renderVillageHistoryStrip(townName, villageName) {
     if (!data) {
       return `<span class="hsq no-data" title="${y} · 本里無對應資料"></span>`;
     }
-    const hex = '#' + partyColor(data.partyCode).toString(16).padStart(6, '0');
+    const hex = '#' + candidateColor({ name: data.winner, partyCode: data.partyCode }).toString(16).padStart(6, '0');
     const cls = y === currentYear ? 'hsq current' : 'hsq';
     const title = y === currentYear ? `${y}（目前）` : `切至 ${y}`;
     return `<span class="${cls}" style="background:${hex}" data-year="${y}" title="${title}"></span>`;
