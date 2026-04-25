@@ -199,8 +199,16 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
 | 路由 | `?city=tpe\|ntpc\|tyc\|txg\|tnn\|khh` |
 | 展開順序 | 台北 → 新北 → 桃園 → 台中 → 台南 → 高雄 |
 
-- [ ] **Stage 0**：六都代碼表 + 資料來源盤點（不動 code）
-- [ ] **Stage 1**：首頁 MVP（A 方案，2D Metro 卡片）+ `?city=` 路由 + 現有新北頁左上加「← 六都」breadcrumb
+- [x] **Stage 0**：六都代碼表 + 資料來源盤點 ✅（2026-04-24 完成）
+  - 台北市 8 屆（1994–2022）→ `tpe-YYYY-mayor.json`（scripts/extract-tpe-elections.mjs）
+  - 高雄 2020 補選 → `khh-2020-mayor.json`（scripts/extract-khh-2020-byeelection.mjs，CEC BEL API）
+  - raw CSV：`data/raw/1994-直轄市長/`…`2006-直轄市長/`（kiang GitHub 下載）
+  - TODO.md：多 session 協作用，每個 session 開始前必讀
+- [x] **Stage 1**：首頁 MVP（A 方案，2D Metro 卡片）+ `?city=` 路由 + 現有新北頁左上加「← 六都」chip ✅（2026-04-25 小A）
+  - 首頁：6 城市 Metro 卡片，新北 active，其餘「即將推出」
+  - URL 路由：`?city=ntpc` → ntpc 場景；無 city param → 首頁；舊 `?y=&d=&v=` 向下兼容
+  - `#city-back-btn`「← 六都」chip 固定在城市頁左上角，點擊回首頁
+  - `writeUrl()` 現在永遠包含 `city=ntpc`，確保分享連結帶 city param
 - [ ] **Stage 2**：資料管線通用化 — `extract-elections` / `extract-villages` 支援任意縣市；`src/main.js` 抽 city config（範圍、中心、歷屆年份）
 - [ ] **Stage 3**：依序打亮六都（從台北 MVP 開始，一個一個來）
 - [ ] **Stage 4**：首頁升級成 C 方案（voxel backdrop + 卡片浮層）
@@ -217,6 +225,7 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
 ## 工作慣例
 
 - **單一來源**：所有決策、里程碑進度更新於本檔，其他臨時筆記別散落各處
+- **多 session 協作**：`TODO.md` 是分工協調中樞。每個 session 開始前先讀 TODO.md，認領工作前在「進行中」標記，完成後打勾移到「完成紀錄」，避免撞車。完成的工作也要同步到 CLAUDE.md（里程碑 checkbox）+ 長期記憶。
 - **資料快取**：抓下來的選舉原始資料存入 `data/raw/`，清洗後存 `data/processed/`
 - **逐步驗證**：每完成一個里程碑，先 demo 給用戶看過再往下
 - **美學迭代**：視覺不要求一次到位，會隨開發反覆調整
