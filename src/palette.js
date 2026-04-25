@@ -13,9 +13,10 @@
 
 const MARGIN_THRESHOLD = 20;
 
-// Close-race anchor: mixed with 75% off-white. Fixed value chosen so the
-// pale tint is still recognizably party-colored against the scene beige.
-const CLOSE_WHITE_MIX = 0.75;
+// Close-race anchor: mixed with off-white. Reduced from 0.75 → 0.55 so that
+// low-saturation parties (warm gray #aa9478, TPP #3bb5c4) stay visible against
+// the scene beige background even at near-zero margin.
+const CLOSE_WHITE_MIX = 0.55;
 
 // Party codes as defined by CEC / kiang/db.cec.gov.tw
 // 1 = 中國國民黨 (KMT, blue)
