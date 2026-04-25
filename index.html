@@ -540,6 +540,7 @@
            so the image blends seamlessly — no visible rectangular boundary */
         background: #c5bdb1;
         overflow-y: auto;
+        overflow-x: hidden;
         z-index: 200;
         font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
         display: flex; align-items: flex-start; justify-content: center;
@@ -624,10 +625,10 @@
       }
       #home-footer {
         margin-top: 40px;
-        font-size: 12px; color: #bbb;
+        font-size: 12px; color: #000;
         text-align: center;
       }
-      #home-footer a { color: #aaa; }
+      #home-footer a { color: #000; }
 
       /* ─── Taiwan hero map image ─── */
       /* Strategy: fill the full viewport height so top / bottom / right edges
@@ -690,18 +691,29 @@
         .city-card-meta { font-size: 12px; }
         .city-card-winner { font-size: 13px; margin-top: 10px; }
         #city-back-btn { top: 10px; left: 10px; font-size: 12px; padding: 5px 11px; }
-        /* Mobile: take image out of absolute flow → in-document below footer,
-           centered, not too large so it doesn't push content off screen */
+        /* Mobile: island centered, larger scale, bleeds off bottom.
+           Top fades in, bottom fades out so no hard rectangle boundary. */
         #home-map-img {
-          position: static;
-          width: 62%;
-          max-width: 240px;
+          position: absolute;
+          bottom: -5%;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 150%;
           height: auto;
-          transform: none;
-          margin: 20px auto 4px;
-          /* Reset desktop mask; use radial fade so corners blend into bg */
-          -webkit-mask-image: radial-gradient(ellipse 78% 82% at center, black 40%, transparent 72%);
-          mask-image: radial-gradient(ellipse 78% 82% at center, black 40%, transparent 72%);
+          -webkit-mask-image: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(0,0,0,0.35) 10%,
+            black 25%,
+            black 75%,
+            transparent 100%
+          );
+          mask-image: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(0,0,0,0.35) 10%,
+            black 25%,
+            black 75%,
+            transparent 100%
+          );
         }
       }
     </style>
