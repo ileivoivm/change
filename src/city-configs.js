@@ -40,7 +40,7 @@ export const CITY_CONFIGS = {
   tyc: {
     key: 'tyc',
     nameZh: '桃園市',
-    years: [2014, 2018, 2022],
+    years: [1997, 2001, 2005, 2009, 2014, 2018, 2022],
     defaultYear: 2022,
     worldSize: 32,
     camera: {

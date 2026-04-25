@@ -18,7 +18,7 @@
 | Session | 日期 | 工作內容 |
 |---|---|---|
 | 小A | 2026-04-25 | ✅ Stage 1 完成。下一步待認領 |
-| 小B | 2026-04-25 | ✅ Stage 3 台北市完成。下一步待認領 |
+| 小B | 2026-04-25 | ✅ Stage 3 桃園市完成。下一步待認領 |
 
 ---
 
@@ -49,7 +49,7 @@
 ### Stage 3：依序打亮六都
 
 - [x] 台北市 ✅ 小B（12 區彩色 voxel、8 屆 1994-2022、里級全年份、村數/得票率標籤、動態 hint 文字）
-- [ ] 桃園市（13 區）
+- [x] 桃園市 ✅ 小B（13 區、7 屆 1997-2022 含縣長時期、里級 2005+、bootstrap 通用化）
 - [ ] 台中市（29 區，2010 合併後）
 - [ ] 台南市（37 區，2010 合併後）
 - [ ] 高雄市（38 區，2010 合併後）
@@ -92,3 +92,5 @@
 | 2026-04-25 | 小B | Stage 2-2：extract-villages.mjs 通用化（--city flag，六都邊界+歷屆里票全通過） |
 | 2026-04-25 | 小B | Stage 2-3：src/main.js 抽 city config（CITY_CONFIGS export、CITY_CONFIG 路由、build 驗證通過）|
 | 2026-04-25 | 小B | Stage 3 台北市：?city=tpe 完整渲染（12 區 voxel、8 屆時間軸、里級全年份、新北 context 層）|
+| 2026-04-25 | 小B | 修復首頁崩潰：補提交 index.html（#home-screen 漏 commit 導致 production TypeError）|
+| 2026-04-25 | 小B | Stage 3 桃園市：?city=tyc 完整渲染（13 區、7 屆 1997-2022、bootstrap 通用化、per-city 資料 map）|

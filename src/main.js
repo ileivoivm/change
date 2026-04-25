@@ -3,10 +3,12 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { computeBounds, makeProjector, projectFeature, voxelize } from './geo.js';
 import { colorForDistrict, partyColor, NEUTRAL, PARTY_COLORS } from './palette.js';
 import ntpcGeo from '../data/processed/ntpc-districts.geo.json';
-import tpeGeo from '../data/processed/tpe-districts.geo.json';
+import tpeGeo  from '../data/processed/tpe-districts.geo.json';
+import tycGeo  from '../data/processed/tyc-districts.geo.json';
 import restGeo from '../data/processed/tw-rest-districts.geo.json';
 import ntpcVillageGeo from '../data/processed/ntpc-villages.geo.json';
 import tpeVillageGeo  from '../data/processed/tpe-villages.geo.json';
+import tycVillageGeo  from '../data/processed/tyc-villages.geo.json';
 import v1997 from '../data/processed/ntpc-1997-villages.json';
 import v2001 from '../data/processed/ntpc-2001-villages.json';
 import v2005 from '../data/processed/ntpc-2005-villages.json';
@@ -22,6 +24,13 @@ import tv2010 from '../data/processed/tpe-2010-villages.json';
 import tv2014 from '../data/processed/tpe-2014-villages.json';
 import tv2018 from '../data/processed/tpe-2018-villages.json';
 import tv2022 from '../data/processed/tpe-2022-villages.json';
+import yv1997 from '../data/processed/tyc-1997-villages.json';
+import yv2001 from '../data/processed/tyc-2001-villages.json';
+import yv2005 from '../data/processed/tyc-2005-villages.json';
+import yv2009 from '../data/processed/tyc-2009-villages.json';
+import yv2014 from '../data/processed/tyc-2014-villages.json';
+import yv2018 from '../data/processed/tyc-2018-villages.json';
+import yv2022 from '../data/processed/tyc-2022-villages.json';
 
 // ─────────── city routing (determined early so all constants can use it) ───────────
 // ?city=ntpc / ?city=tpe / etc.  → which city's data to show
@@ -32,14 +41,17 @@ const _cityParam = _sp.get('city')
 const CITY_CONFIG = CITY_CONFIGS[_cityParam] || CITY_CONFIGS.ntpc;
 
 
-const NTPC_VILLAGE_ELECTIONS = { 1997: v1997, 2001: v2001, 2005: v2005, 2010: v2010, 2014: v2014, 2018: v2018, 2022: v2022 };
-const TPE_VILLAGE_ELECTIONS  = { 1994: tv1994, 1998: tv1998, 2002: tv2002, 2006: tv2006, 2010: tv2010, 2014: tv2014, 2018: tv2018, 2022: tv2022 };
-const VILLAGE_ELECTIONS = CITY_CONFIG.key === 'tpe' ? TPE_VILLAGE_ELECTIONS : NTPC_VILLAGE_ELECTIONS;
+const ALL_VILLAGE_ELECTIONS = {
+  ntpc: { 1997: v1997, 2001: v2001, 2005: v2005, 2010: v2010, 2014: v2014, 2018: v2018, 2022: v2022 },
+  tpe:  { 1994: tv1994, 1998: tv1998, 2002: tv2002, 2006: tv2006, 2010: tv2010, 2014: tv2014, 2018: tv2018, 2022: tv2022 },
+  tyc:  { 1997: yv1997, 2001: yv2001, 2005: yv2005, 2009: yv2009, 2014: yv2014, 2018: yv2018, 2022: yv2022 },
+};
+const VILLAGE_ELECTIONS = ALL_VILLAGE_ELECTIONS[CITY_CONFIG.key] || ALL_VILLAGE_ELECTIONS.ntpc;
 // Which years actually have village-level data (non-empty)
 const VILLAGE_YEARS = Object.entries(VILLAGE_ELECTIONS)
   .filter(([, d]) => (d.villages || []).length > 0)
   .map(([y]) => Number(y));
-let villageVotes = VILLAGE_ELECTIONS[2022];
+let villageVotes = VILLAGE_ELECTIONS[CITY_CONFIG.defaultYear];
 import e1997 from '../data/processed/ntpc-1997-mayor.json';
 import e2001 from '../data/processed/ntpc-2001-mayor.json';
 import e2005 from '../data/processed/ntpc-2005-mayor.json';
@@ -55,14 +67,27 @@ import te2010 from '../data/processed/tpe-2010-mayor.json';
 import te2014 from '../data/processed/tpe-2014-mayor.json';
 import te2018 from '../data/processed/tpe-2018-mayor.json';
 import te2022 from '../data/processed/tpe-2022-mayor.json';
+import ye1997 from '../data/processed/tyc-1997-mayor.json';
+import ye2001 from '../data/processed/tyc-2001-mayor.json';
+import ye2005 from '../data/processed/tyc-2005-mayor.json';
+import ye2009 from '../data/processed/tyc-2009-mayor.json';
+import ye2014 from '../data/processed/tyc-2014-mayor.json';
+import ye2018 from '../data/processed/tyc-2018-mayor.json';
+import ye2022 from '../data/processed/tyc-2022-mayor.json';
 import { CITY_CONFIGS } from './city-configs.js';
 
-const NTPC_ELECTIONS = { 1997: e1997, 2001: e2001, 2005: e2005, 2010: e2010, 2014: e2014, 2018: e2018, 2022: e2022 };
-const TPE_ELECTIONS  = { 1994: te1994, 1998: te1998, 2002: te2002, 2006: te2006, 2010: te2010, 2014: te2014, 2018: te2018, 2022: te2022 };
-const ELECTIONS = CITY_CONFIG.key === 'tpe' ? TPE_ELECTIONS : NTPC_ELECTIONS;
-const villageGeo = CITY_CONFIG.key === 'tpe' ? tpeVillageGeo : ntpcVillageGeo;
+const ALL_ELECTIONS = {
+  ntpc: { 1997: e1997, 2001: e2001, 2005: e2005, 2010: e2010, 2014: e2014, 2018: e2018, 2022: e2022 },
+  tpe:  { 1994: te1994, 1998: te1998, 2002: te2002, 2006: te2006, 2010: te2010, 2014: te2014, 2018: te2018, 2022: te2022 },
+  tyc:  { 1997: ye1997, 2001: ye2001, 2005: ye2005, 2009: ye2009, 2014: ye2014, 2018: ye2018, 2022: ye2022 },
+};
+const ELECTIONS = ALL_ELECTIONS[CITY_CONFIG.key] || ALL_ELECTIONS.ntpc;
+const ALL_VILLAGE_GEO = { ntpc: ntpcVillageGeo, tpe: tpeVillageGeo, tyc: tycVillageGeo };
+const villageGeo = ALL_VILLAGE_GEO[CITY_CONFIG.key] || ntpcVillageGeo;
+const ALL_DISTRICT_GEO = { ntpc: ntpcGeo, tpe: tpeGeo, tyc: tycGeo };
 // Fallback village list (for district card counts when current year has no village data)
-const fallbackVillages = (CITY_CONFIG.key === 'tpe' ? tv2022 : v2022).villages;
+const ALL_FALLBACK_VILLAGES = { ntpc: v2022.villages, tpe: tv2022.villages, tyc: yv2022.villages };
+const fallbackVillages = ALL_FALLBACK_VILLAGES[CITY_CONFIG.key] || v2022.villages;
 const YEARS = CITY_CONFIG.years;
 let currentYear = CITY_CONFIG.defaultYear;
 
@@ -502,21 +527,41 @@ function buildVillageLayer(projector) {
 }
 
 function bootstrap() {
-  // Determine which district GeoJSON is the "main" city and which is the context sibling.
-  // For ntpc: preserve existing calibrated camera (bounds from ntpc+tpe combined).
-  // For tpe: center on tpe alone; ntpc appears as context layer.
-  const isTpe = CITY_CONFIG.key === 'tpe';
-  const mainGeo     = isTpe ? tpeGeo  : ntpcGeo;
-  const contextGeo  = isTpe ? ntpcGeo : tpeGeo;
-  const contextKey  = isTpe ? 'ntpc'  : 'tpe';
+  const key = CITY_CONFIG.key;
+  const mainGeo = ALL_DISTRICT_GEO[key];
 
-  const boundsFeatures = isTpe ? mainGeo.features : [...ntpcGeo.features, ...tpeGeo.features];
+  // ntpc uses combined ntpc+tpe bounds to preserve calibrated camera coordinates.
+  // All other cities center on their own features.
+  const boundsFeatures = key === 'ntpc'
+    ? [...ntpcGeo.features, ...tpeGeo.features]
+    : mainGeo.features;
   const bounds = computeBounds(boundsFeatures);
   const projector = makeProjector(bounds, WORLD_SIZE);
 
-  const restCount    = buildLayer(restGeo.features,    projector, { height: CONTEXT_HEIGHT, layer: 'rest',       interactive: false });
-  const contextCount = buildLayer(contextGeo.features, projector, { height: CONTEXT_HEIGHT, layer: contextKey,   interactive: true });
-  const mainCount    = buildLayer(mainGeo.features,    projector, { height: VOXEL_HEIGHT,   layer: CITY_CONFIG.key, interactive: true });
+  // restGeo covers all Taiwan EXCEPT ntpc and tpe. For cities other than ntpc/tpe,
+  // filter out the main city's county so it doesn't double-render under the main layer.
+  const mainCountyNames = CITY_CONFIG.geoCountyNames;
+  const restFeatures = (key === 'ntpc' || key === 'tpe')
+    ? restGeo.features
+    : restGeo.features.filter(f => {
+        const cn = f.properties.COUNTYNAME || (f.properties.KEY || '').split('/')[0];
+        return !mainCountyNames.includes(cn);
+      });
+
+  const restCount = buildLayer(restFeatures, projector, { height: CONTEXT_HEIGHT, layer: 'rest', interactive: false });
+
+  // ntpc↔tpe act as each other's named context sibling; all other cities get ntpc+tpe as generic gray.
+  let contextCount = 0;
+  if (key === 'ntpc') {
+    contextCount = buildLayer(tpeGeo.features, projector, { height: CONTEXT_HEIGHT, layer: 'tpe',  interactive: true });
+  } else if (key === 'tpe') {
+    contextCount = buildLayer(ntpcGeo.features, projector, { height: CONTEXT_HEIGHT, layer: 'ntpc', interactive: true });
+  } else {
+    buildLayer(ntpcGeo.features, projector, { height: CONTEXT_HEIGHT, layer: 'ntpc', interactive: true });
+    buildLayer(tpeGeo.features,  projector, { height: CONTEXT_HEIGHT, layer: 'tpe',  interactive: true });
+  }
+
+  const mainCount = buildLayer(mainGeo.features, projector, { height: VOXEL_HEIGHT, layer: key, interactive: true });
 
   buildBorders();
   villageGroup = buildVillageLayer(projector);
@@ -1102,9 +1147,11 @@ function renderBubble(mesh) {
     return;
   }
 
-  const tag = mesh.userData.layer === 'rest' ? mesh.userData.countyName
-    : mesh.userData.layer === CITY_CONFIG.key ? CITY_CONFIG.nameZh
-    : CITY_CONFIG.key === 'tpe' ? '新北市' : '台北市';
+  const tag = mesh.userData.layer === 'rest'
+    ? mesh.userData.countyName
+    : mesh.userData.layer === CITY_CONFIG.key
+      ? CITY_CONFIG.nameZh
+      : CITY_CONFIGS[mesh.userData.layer]?.nameZh || mesh.userData.countyName || '';
 
   if (isContext) {
     labelBubble.innerHTML = `<div class="row"><span class="tag">${tag}</span><span class="name">${townName}</span></div>
