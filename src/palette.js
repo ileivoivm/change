@@ -90,7 +90,7 @@ export function candidateColor(result) {
 // Given a district's sorted results (descending by votes), return a color.
 // Color is always keyed to the winner's party; margin drives saturation.
 export function colorForDistrict(results) {
-  if (!results || results.length === 0) return 0xb8b2a6;
+  if (!results || results.length === 0) return 0xddd6c7;
   const winner = results[0];
   const runnerUp = results[1];
   const winnerHex = candidateColor(winner);
@@ -101,4 +101,4 @@ export function colorForDistrict(results) {
 }
 
 // Fallback neutral (unknown district) palette for graceful degradation.
-export const NEUTRAL = 0xc4beae;
+export const NEUTRAL = 0xece6d5;

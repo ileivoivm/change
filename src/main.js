@@ -5,7 +5,6 @@ import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { computeBounds, makeProjector, projectFeature, voxelize } from './geo.js';
 import { colorForDistrict, candidateColor, partyColor, NEUTRAL, PARTY_COLORS } from './palette.js';
-import { initHomeCanvas } from './home-canvas.js';
 import ntpcGeo from '../data/processed/ntpc-districts.geo.json';
 import tpeGeo  from '../data/processed/tpe-districts.geo.json';
 import tycGeo  from '../data/processed/tyc-districts.geo.json';
@@ -140,8 +139,8 @@ let viewMode = 'district'; // 'district' | 'village'
 
 // ─────────── scene ───────────
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xede7da);
-scene.fog = new THREE.Fog(0xede7da, 120, 720);
+scene.background = new THREE.Color(0xdcd9e9);
+scene.fog = new THREE.Fog(0xdcd9e9, 120, 720); // halved — visible at long range
 
 const camera = new THREE.PerspectiveCamera(
   40,
@@ -187,11 +186,10 @@ scene.add(sun);
 // ─────────── ground ───────────
 const ground = new THREE.Mesh(
   new THREE.PlaneGeometry(2000, 2000),
-  new THREE.MeshStandardMaterial({ color: 0xe4dfd2, roughness: 1 })
+  new THREE.MeshBasicMaterial({ color: 0xdcd9e9 })
 );
 ground.rotation.x = -Math.PI / 2;
 ground.position.y = -0.01;
-ground.receiveShadow = true;
 scene.add(ground);
 
 // ─────────── election lookup ───────────
@@ -389,7 +387,7 @@ function buildLayer(features, projector, opts) {
       baseColor = election ? colorForDistrict(election.results) : NEUTRAL;
     } else {
       // context layers → soft gray
-      baseColor = 0xb8b2a6;
+      baseColor = 0xddd6c7;
     }
 
     const mat = makeMaterial({ color: baseColor, isContext });
@@ -751,7 +749,7 @@ function selectVillage(v) {
     drillByStem(townStem);
   }
   if (vm) {
-    panZoomWithPitch(vm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100);
+    panZoomWithPitch(vm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100, autoPanForBubble);
     sticky = false;
     setHover(vm);
     sticky = true;
@@ -765,7 +763,7 @@ function selectVillage(v) {
     const dm = districtMeshes.find(
       m => m.userData.layer === CITY_CONFIG.key && m.userData.townName.slice(0, -1) === townStem
     );
-    if (dm) panZoomWithPitch(dm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100);
+    if (dm) panZoomWithPitch(dm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100, autoPanForBubble);
     // A duck-typed stub that satisfies setHover / renderBubble /
     // updateLabelPosition — no Three.js mesh, just the fields they read.
     const ghostCentroid = dm
@@ -802,8 +800,6 @@ function selectVillage(v) {
   updateCardState();
   layoutCards();
   writeUrl();
-  // After DOM settles, pan camera if bubble bottom exceeds viewport.
-  requestAnimationFrame(() => autoPanForBubble());
 }
 
 function autoPanForBubble() {
@@ -850,7 +846,7 @@ function panZoomTo(targetVec, distance = 20) {
 // Pan / zoom while forcing a specific pitch. Preserves current azimuth
 // unless `deltaAzimuthDeg` is passed — e.g. selectVillage passes a random
 // value in [-50, +50] for a small rotational transition between villages.
-function panZoomWithPitch(targetVec, distance, pitchDeg, deltaAzimuthDeg = 0) {
+function panZoomWithPitch(targetVec, distance, pitchDeg, deltaAzimuthDeg = 0, onComplete) {
   const dx = camera.position.x - controls.target.x;
   const dz = camera.position.z - controls.target.z;
   const azimuth = Math.atan2(dx, dz) + (deltaAzimuthDeg * Math.PI) / 180;
@@ -862,7 +858,7 @@ function panZoomWithPitch(targetVec, distance, pitchDeg, deltaAzimuthDeg = 0) {
     targetVec.y + y,
     targetVec.z + planar * Math.cos(azimuth),
   );
-  tweenCamera(newPos, targetVec.clone(), 800);
+  tweenCamera(newPos, targetVec.clone(), 800, onComplete);
 }
 
 // ─────────── URL sync (share links) ───────────
@@ -959,8 +955,6 @@ if (!_cityParam) {
   document.getElementById('controls').style.display = 'none';
   document.getElementById('label').style.display = 'none';
   document.getElementById('village-panel').style.display = 'none';
-  // Render the Three.js Taiwan outline canvas
-  initHomeCanvas(document.getElementById('home-canvas'));
 } else {
   // City page: hide home screen, show back button, init scene
   document.getElementById('city-back-btn').style.display = 'flex';
@@ -1335,6 +1329,10 @@ function abbrParty(name) {
   return m[name] || name?.slice(0, 3) || '';
 }
 function hexToCss(n) { return '#' + n.toString(16).padStart(6, '0'); }
+// margin (0–100) → strip width px: sqrt curve so small leads still show colour
+function marginToStripW(margin) {
+  return (3 + Math.sqrt(Math.max(0, Math.min(margin, 45)) / 45) * 18).toFixed(1) + 'px';
+}
 function textColorFor(n) {
   const r = (n >> 16) & 0xff, g = (n >> 8) & 0xff, b = n & 0xff;
   // perceptual brightness (0-255)
@@ -1359,10 +1357,12 @@ function renderPanel() {
   const cityCard = document.createElement('div');
   cityCard.className = 'card card-city';
   const cityHex = overall ? colorForDistrict(data.overall.results) : NEUTRAL;
-  cityCard.style.background = hexToCss(cityHex);
-  cityCard.style.color = textColorFor(cityHex);
+  const cityMargin = overall?.margin ?? 0;
+  cityCard.style.setProperty('--c', hexToCss(cityHex));
+  cityCard.style.setProperty('--w', marginToStripW(cityMargin));
   cityCard.innerHTML = `
     <div class="name">${CITY_CONFIG.nameZh}</div>
+    <hr class="card-divider">
     <div class="meta">${data.year}</div>`;
   cityCard.title = '回到全局視角 / 收合卡片';
   cityCard.addEventListener('click', () => {
@@ -1389,12 +1389,13 @@ function renderPanel() {
     card.className = 'card card-district';
     card.dataset.stem = d.name.slice(0, -1); // use slice(0,-1) to match drillStem / drilledStem
     const hex = colorForDistrict(d.results);
-    card.style.background = hexToCss(hex);
-    card.style.color = textColorFor(hex);
+    card.style.setProperty('--c', hexToCss(hex));
+    card.style.setProperty('--w', marginToStripW(d.margin));
     const count = villageCountByStem.get(d.stem) ?? '';
     const metaText = count ? `${count}里 ${d.margin.toFixed(1)}%` : `${d.margin.toFixed(1)}%`;
     card.innerHTML = `
       <div class="name">${d.name}</div>
+      <hr class="card-divider">
       <div class="meta">${metaText}</div>`;
     card.title = `${d.winner} ${d.results[0]?.rate.toFixed(1)}%`;
     card.addEventListener('click', () => {
@@ -1464,10 +1465,11 @@ function renderVillagesFor(stem) {
     vCard.className = 'card card-village';
     vCard.dataset.villageKey = `${v.townName.slice(0, -1)}/${v.villageName.slice(0, -1)}`;
     const hex = colorForDistrict(v.results);
-    vCard.style.background = hexToCss(hex);
-    vCard.style.color = textColorFor(hex);
+    vCard.style.setProperty('--c', hexToCss(hex));
+    vCard.style.setProperty('--w', marginToStripW(v.margin));
     vCard.innerHTML = `
       <div class="name">${v.villageName}</div>
+      <hr class="card-divider">
       <div class="meta">${v.margin.toFixed(0)}%</div>`;
     vCard.title = `${v.winner} ${v.results[0]?.rate.toFixed(1)}% vs ${v.results[1]?.name ?? ''} ${v.results[1]?.rate.toFixed(1) ?? ''}%`;
     vCard.addEventListener('click', (e) => {
@@ -1865,7 +1867,7 @@ const INITIAL_CAM_POS = camera.position.clone();
 const INITIAL_TARGET = controls.target.clone();
 
 let camTween = null;
-function tweenCamera(toPos, toTarget, duration = 700) {
+function tweenCamera(toPos, toTarget, duration = 700, onComplete) {
   const fromPos = camera.position.clone();
   const fromTarget = controls.target.clone();
   const start = performance.now();
@@ -1881,6 +1883,7 @@ function tweenCamera(toPos, toTarget, duration = 700) {
     if (t >= 1) {
       camTween = null;
       controls.enabled = true;
+      if (onComplete) onComplete();
     }
   };
 }

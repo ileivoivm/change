@@ -4,13 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CHANGE — 台灣選戰版圖</title>
-    <!-- Cormorant Garamond: high-contrast editorial serif — thin hairlines
-         contrast beautifully with Chinese sans-serif, matching Ref 1 feel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400;1,600&display=swap" rel="stylesheet">
     <style>
-      html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #ede7da; }
+      html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #dcd9e9; }
       /* touch-action: none is REQUIRED for Three.js OrbitControls to capture
          touch gestures on mobile. Without it the browser handles pan/zoom
          defaults (nothing useful with body overflow:hidden) and the user
@@ -120,96 +117,97 @@
       }
       #label.visible { opacity: 1; }
       #label .bubble {
-        background: #fff;
-        color: #2a2a2a;
-        padding: 14px 21px;
-        border-radius: 16px;
-        min-width: 340px;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
+        background: rgba(255,255,255,0.97);
+        color: #1a1a1a;
+        padding: 14px 18px;
+        border-radius: 0;
+        min-width: 320px;
+        box-shadow: 0 8px 28px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.07);
+        backdrop-filter: blur(8px);
       }
       #label .bubble .row {
         display: flex; align-items: baseline; gap: 8px;
-        margin-bottom: 5px;
+        margin-bottom: 4px;
       }
       #label .bubble .tag {
-        font-size: 13px; font-weight: 500;
-        color: #999; letter-spacing: 0.5px;
+        font-size: 10px; font-weight: 300;
+        color: #999; letter-spacing: 0.3em;
       }
       #label .bubble .name {
-        font-size: 20px; font-weight: 700;
+        font-family: "Noto Sans TC", -apple-system, sans-serif;
+        font-style: normal; font-weight: 500;
+        font-size: 20px; letter-spacing: 0.04em;
       }
       #label .bubble .winner {
-        font-size: 16px; font-weight: 600;
-        margin: 3px 0 9px;
+        font-size: 13px; font-weight: 300;
+        letter-spacing: 0.06em;
+        margin: 4px 0 10px;
       }
       #label .bubble .sub {
-        font-size: 14px; color: #888; font-weight: 500;
+        font-size: 12px; color: #999; font-weight: 300;
+        letter-spacing: 0.06em;
       }
       #label .bubble .cands {
-        display: flex; flex-direction: column; gap: 4px;
+        display: flex; flex-direction: column; gap: 5px;
       }
       #label .bubble .cand {
         display: grid;
-        grid-template-columns: 13px 1fr auto auto auto;
-        gap: 10px;
+        grid-template-columns: 10px 1fr auto auto auto;
+        gap: 9px;
         align-items: center;
-        font-size: 16px;
+        font-size: 14px;
       }
       #label .bubble .cand .swatch {
-        width: 13px; height: 13px; border-radius: 2px;
+        width: 10px; height: 10px; border-radius: 0;
       }
-      #label .bubble .cand .cn { font-weight: 600; }
-      #label .bubble .cand .cp { color: #999; font-size: 13px; }
+      #label .bubble .cand .cn { font-weight: 400; }
+      #label .bubble .cand .cp { color: #aaa; font-size: 11px; font-weight: 300; }
       #label .bubble .cand .cv {
         font-variant-numeric: tabular-nums;
-        color: #555; font-size: 14px;
-        min-width: 57px; text-align: right;
+        color: #888; font-size: 12px; font-weight: 300;
+        min-width: 52px; text-align: right;
       }
       #label .bubble .cand .cr {
-        font-weight: 700; font-variant-numeric: tabular-nums;
-        min-width: 52px; text-align: right;
+        font-weight: 400; font-variant-numeric: tabular-nums;
+        min-width: 48px; text-align: right;
       }
 
       #label .bubble .flip {
-        margin-top: 10px;
-        padding-top: 10px;
+        margin-top: 10px; padding-top: 10px;
         border-top: 1px solid rgba(0,0,0,0.08);
-        font-size: 14px;
-        line-height: 1.5;
+        font-size: 13px; font-weight: 300;
+        line-height: 1.6;
       }
       #label .bubble .flip-head {
-        font-weight: 700;
+        font-weight: 400; letter-spacing: 0.04em;
         margin-bottom: 3px;
       }
       #label .bubble .flip-row {
-        color: #555;
-        font-variant-numeric: tabular-nums;
+        color: #666; font-variant-numeric: tabular-nums;
       }
       #label .bubble .flip-row b {
-        color: #2a2a2a;
-        font-weight: 700;
+        color: #1a1a1a; font-weight: 400;
       }
-      #label .bubble .flip .dim { color: #aaa; font-size: 13px; }
+      #label .bubble .flip .dim { color: #bbb; font-size: 11px; }
 
-      /* 25-year history strip — single village's color sequence across 7 elections */
+      /* 25-year history strip */
       #label .bubble .history {
-        margin-top: 10px;
-        padding-top: 10px;
+        margin-top: 10px; padding-top: 10px;
         border-top: 1px solid rgba(0,0,0,0.08);
       }
       #label .bubble .history .hs-label {
         display: flex; justify-content: space-between;
-        color: #aaa; font-size: 10px;
-        letter-spacing: 1px; margin-bottom: 4px;
+        color: #bbb; font-size: 10px; font-weight: 300;
+        letter-spacing: 0.1em; margin-bottom: 4px;
         font-variant-numeric: tabular-nums;
       }
       #label .bubble .history .hs-row {
-        display: flex; gap: 3px;
+        display: flex; gap: 2px;
         margin-bottom: 6px;
       }
       #label .bubble .history .hsq {
-        flex: 1; height: 16px;
-        border-radius: 2px;
+        flex: 1; height: 14px;
+        border-radius: 0;
         background: #e0e0e0;
         transition: transform 120ms, box-shadow 120ms;
         cursor: default;
@@ -255,17 +253,18 @@
       #label .bubble .share-btn {
         display: block; width: 100%;
         margin-top: 12px; padding: 8px 12px;
-        font: inherit; font-size: 13px; font-weight: 600;
-        color: #2a7a9a; background: #eef6f9;
-        border: 1px solid rgba(42,122,154,0.3); border-radius: 8px;
+        font: inherit; font-size: 12px; font-weight: 300;
+        letter-spacing: 0.08em;
+        color: #555; background: #f2f0f7;
+        border: 1px solid rgba(0,0,0,0.1); border-radius: 0;
         cursor: pointer; transition: background 160ms, color 160ms;
-        pointer-events: auto; /* #label is pointer-events:none; opt in here */
+        pointer-events: auto;
       }
-      #label .bubble .share-btn:hover:not(.disabled) { background: #dcecf2; }
-      #label .bubble .share-btn.copied { color: #2aa046; background: #e6f4ea; border-color: rgba(42,160,70,0.3); }
+      #label .bubble .share-btn:hover:not(.disabled) { background: #e5e1f0; }
+      #label .bubble .share-btn.copied { color: #2aa046; background: #e6f4ea; border-color: rgba(42,160,70,0.25); }
       #label .bubble .share-btn.disabled {
-        color: #9aa3a8; background: #f3f4f5;
-        border-color: rgba(0,0,0,0.08);
+        color: #bbb; background: #f8f8f8;
+        border-color: rgba(0,0,0,0.06);
         cursor: not-allowed;
       }
 
@@ -274,7 +273,7 @@
         background: linear-gradient(to bottom, #2a2a2a 0%, #2a2a2a 70%, transparent 100%);
         margin: 0 auto;
       }
-      #label.context .bubble { background: #ededea; color: #6a6a6a; }
+      #label.context .bubble { background: rgba(240,238,234,0.97); color: #6a6a6a; }
       #label.context .pin { background: linear-gradient(to bottom, #888 0%, #888 70%, transparent 100%); }
 
       /* control cluster */
@@ -370,6 +369,9 @@
         cursor: pointer; user-select: none;
         overflow: hidden;
         transition: opacity 260ms ease-out, filter 100ms;
+        /* light paper bg */
+        background: rgba(255,255,255,0.88);
+        backdrop-filter: blur(4px);
       }
       .card.tween {
         transition:
@@ -383,23 +385,51 @@
       .card:hover { filter: brightness(1.12); }
       .card:active { filter: brightness(0.88); }
 
-      .card .name { font-weight: 700; line-height: 1.2; }
-      .card .meta {
-        font-size: 16px; opacity: 0.85; margin-top: 3px;
-        font-variant-numeric: tabular-nums;
+      /* coloured left strip: 2px gap on all sides, width doubled for contrast */
+      .card::before {
+        content: '';
+        position: absolute;
+        left: 4px; top: 4px; bottom: 4px;
+        width: calc(var(--w, 5px) * 2);
+        background: var(--c, #aaa);
+        border-radius: 2px;
       }
 
-      .card-city { padding: 19px 22px; }
-      .card-city .name { font-size: 45px; }
-      .card-city .meta { font-size: 19px; }
+      .card .name {
+        font-family: "Noto Sans TC", -apple-system, sans-serif;
+        font-weight: 300; letter-spacing: 0.06em; line-height: 1.2;
+        color: #1a1a1a;
+      }
+      .card .meta {
+        font-size: 11px; font-weight: 300;
+        letter-spacing: 0.08em;
+        color: #666; margin-top: 0;
+        font-variant-numeric: tabular-nums;
+      }
+      .card-divider {
+        border: none; border-top: 1px solid rgba(0,0,0,0.12);
+        margin: 5px 0 4px; width: 100%;
+      }
 
-      /* Compact breadcrumb chip — shared by city + selected district */
-      .card.compact { padding: 10px 22px; }
-      .card.compact .name { font-size: 24px; }
-      .card.compact .meta { font-size: 16px; }
+      /* ── city header card ─────────────── */
+      .card-city { padding: 18px 20px 18px calc(var(--w, 7px) * 2 + 16px); }
+      .card-city .name {
+        font-family: "Noto Sans TC", -apple-system, sans-serif;
+        font-style: normal; font-weight: 500;
+        font-size: 34px; letter-spacing: 0.04em; color: #1a1a1a;
+      }
+      .card-city .meta { font-size: 13px; color: #666; }
 
-      .card-district { padding: 13px 16px; }
-      .card-district .name { font-size: 21px; }
+      /* Compact breadcrumb chip — left padding still tracks strip width */
+      .card.compact { padding: 8px 18px 8px calc(var(--w, 5px) * 2 + 13px); }
+      .card.compact .name { font-size: 18px; letter-spacing: 0.04em; } /* city default = 18 */
+      .card-district.compact .name { font-size: 15px; }  /* district = 15 (18 ÷ 1.2) */
+      .card-village.compact  .name { font-size: 13px; }  /* village  = 13 */
+      .card.compact .meta { font-size: 12px; }
+
+      /* ── district tiles ───────────────── */
+      .card-district { padding: 10px 13px 10px calc(var(--w, 5px) * 2 + 13px); }
+      .card-district .name { font-size: 15px; }
       .card-district.active {
         outline: 3px solid rgba(255,255,255,0.9);
         outline-offset: -3px;
@@ -428,9 +458,10 @@
         pointer-events: none;
       }
 
-      .card-village { padding: 10px 13px; }
-      .card-village .name { font-size: 18px; font-weight: 600; }
-      .card-village .meta { font-size: 14px; }
+      /* ── village tiles ────────────────── */
+      .card-village { padding: 8px 11px 8px calc(var(--w, 5px) * 2 + 11px); }
+      .card-village .name { font-size: 13px; font-weight: 300; }
+      .card-village .meta { font-size: 10px; }
       .card-village.active {
         outline: 3px solid rgba(255,255,255,0.9);
         outline-offset: -3px;
@@ -490,12 +521,16 @@
         #label .bubble .history .hs-meta { font-size: 11px; }
         #label .bubble .share-btn { font-size: 12px; padding: 7px 10px; margin-top: 9px; }
 
-        .card-city .name { font-size: 22px; }
-        .card-city .meta { font-size: 11px; }
-        .card.card-city { padding: 10px 13px; }
+        .card-city .name { font-size: 20px; }
+        .card-city .meta { font-size: 10px; }
+        .card.card-city { padding: 9px 12px; }
+        .card-district .name { font-size: 12px; }
+        .card-district { padding: 7px 9px 7px calc(var(--w, 5px) * 2 + 11px); }
 
         .card.compact { padding: 6px 11px; }
-        .card.compact .name { font-size: 14px; }
+        .card.compact .name { font-size: 14px; }          /* city = 14 on mobile */
+        .card-district.compact .name { font-size: 12px; } /* district = 12 (14 ÷ 1.2) */
+        .card-village.compact  .name { font-size: 11px; } /* village  = 11 */
         .card.compact .meta { font-size: 11px; }
 
         .card-district { padding: 7px 9px; }
@@ -538,114 +573,163 @@
           border-radius: 2px;
         }
       }
-      /* ─── Home screen: left-aligned asymmetric layout ─── */
+      /* ─── Home screen ─── */
       #home-screen {
         position: fixed; inset: 0;
-        background: #ede7da;
-        overflow-y: auto; overflow-x: hidden;
+        background: #dcd9e9;
+        overflow-y: auto;
+        overflow-x: hidden;
         z-index: 200;
         font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
-        /* Block layout — text lives left, map bleeds right */
-        display: block;
-        padding: 0;
+        display: flex; align-items: flex-start; justify-content: center;
+        padding: 0 16px 48px;
       }
       #home-screen[hidden] { display: none !important; }
-
-      /* Text column: occupies left ~50% of viewport */
       #home-inner {
-        position: relative; z-index: 1;
-        padding: 7vh 0 8vh 7vw;
-        max-width: 54vw;
-        box-sizing: border-box;
-        min-height: 100vh;
-        display: flex; flex-direction: column;
+        width: 100%; max-width: 960px;
+        padding-top: 72px;
       }
+      #home-header { margin-bottom: 44px; }
 
-      /* ── Layer 1: small-caps category label in blue accent ── */
-      #home-title-row { margin-bottom: 0; }
-      #home-title-sub {
+      /* ── Eyebrow label ─────────────────── */
+      #home-eyebrow {
         display: block;
-        font-size: 10px; font-weight: 500;
-        letter-spacing: 3.5px; text-transform: uppercase;
-        color: #d44f6b; /* single blue accent — mirrors Ref 1's ARCHIVE */
-        margin-bottom: 8px;
-        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-family: "Noto Sans TC", -apple-system, sans-serif;
+        font-size: 10px; font-weight: 300;
+        letter-spacing: 0.42em;
+        color: #777;
+        text-transform: uppercase;
+        margin-bottom: 10px;
       }
 
-      /* ── Layer 2: Cormorant Garamond fluid display title ── */
-      #home-title {
-        font-size: clamp(56px, 9.5vw, 148px);
-        font-weight: 500; letter-spacing: 1px;
-        color: #d44f6b; margin: 0; line-height: 0.88;
-        font-family: 'Cormorant Garamond', Georgia, serif;
-        font-style: italic;
-      }
-
-      /* ── Layer 3: data annotation ── */
-      #home-desc {
-        font-size: 10px; color: rgba(0,0,0,0.38);
-        margin: 10px 0 0; letter-spacing: 0.4px; line-height: 1.6;
-      }
-
-      /* Blue accent rule — the spine, like Ref 1's vertical axis */
+      /* ── Thin rule ─────────────────────── */
       #home-rule {
-        border: none; border-top: 1px solid #d44f6b;
-        opacity: 0.35; margin: 22px 0 0;
+        border: none; border-top: 1px solid rgba(0,0,0,0.18);
+        margin: 0 0 12px; width: 48px;
       }
 
-      /* ── City index: pure typography list, zero containers ── */
-      #city-index { flex: 1; }
+      /* ── Display title ─────────────────── */
+      #home-title {
+        font-family: 'Cormorant Garamond', 'Georgia', serif;
+        font-style: italic; font-weight: 600;
+        font-size: 96px; letter-spacing: -2px;
+        color: #1a1a1a; margin: 0 0 6px; line-height: 0.92;
+      }
 
-      .city-row {
+      /* ── Secondary line ────────────────── */
+      #home-subtitle {
+        font-family: "Noto Sans TC", -apple-system, sans-serif;
+        font-size: 20px; font-weight: 300;
+        letter-spacing: 0.12em;
+        color: #333; margin: 0 0 10px;
+      }
+
+      /* ── Meta / detail line ────────────── */
+      #home-desc {
+        font-family: "Noto Sans TC", -apple-system, sans-serif;
+        font-size: 11px; font-weight: 300;
+        letter-spacing: 0.1em; color: #999;
+        margin: 0; line-height: 2;
+      }
+      #city-grid {
         display: grid;
-        grid-template-columns: 42px 1fr auto;
-        align-items: baseline;
-        gap: 12px;
-        padding: 13px 0;
-        border-bottom: 1px solid rgba(0,0,0,0.07);
-        text-decoration: none; color: inherit;
-        transition: opacity 150ms;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 8px;
       }
-      .city-row:hover { opacity: 0.5; }
-
-      .city-row-code {
-        font-size: 9px; font-weight: 500;
-        letter-spacing: 2px; text-transform: uppercase;
-        color: #d44f6b; /* blue accent consistent with label */
+      .city-card {
+        background: rgba(255,255,255,0.78);
+        border-radius: 2px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.11);
+        box-shadow: none;
+        display: flex; flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 150ms, background 150ms;
+        position: relative;
+      }
+      a.city-card:hover {
+        background: rgba(255,255,255,0.96);
+        border-color: rgba(0,0,0,0.26);
+      }
+      a.city-card:active { background: rgba(255,255,255,0.6); }
+      .city-card.unavailable {
+        cursor: default;
+        opacity: 0.45;
+        pointer-events: none;
+      }
+      /* Colored bar removed — party identity lives only in the dot */
+      .city-card-bar { display: none; }
+      .city-card-body {
+        padding: 18px 18px 20px;
+        display: flex; flex-direction: column;
+        flex: 1;
+      }
+      /* Tiny city-code index in the top-right corner */
+      .city-card-code {
+        position: absolute; top: 14px; right: 15px;
+        font-size: 10px; font-weight: 500;
+        letter-spacing: 1.6px; text-transform: uppercase;
+        color: rgba(0,0,0,0.28);
         font-family: "Helvetica Neue", Arial, sans-serif;
-        padding-top: 3px;
       }
-      .city-row-name {
-        font-size: 22px; font-weight: 300;
-        letter-spacing: -0.2px; color: rgba(0,0,0,0.88);
+      .city-card-name {
+        font-size: 26px; font-weight: 400; line-height: 1.1;
+        letter-spacing: -0.2px; color: #1a1a1a;
+        margin-bottom: 9px;
       }
-      .city-row-winner {
-        font-size: 10px; color: rgba(0,0,0,0.38);
-        letter-spacing: 0.2px;
-        display: flex; align-items: center; gap: 5px;
-        white-space: nowrap;
+      .city-card-meta {
+        font-size: 11px; color: #999; line-height: 1.75;
       }
-      .city-row-winner .pdot {
-        width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
+      .city-card-winner {
+        margin-top: 14px;
+        padding-top: 13px;
+        border-top: 1px solid rgba(0,0,0,0.07);
+        display: flex; align-items: center; gap: 6px;
+        font-size: 12px; color: #555; font-weight: 400;
       }
-
+      .city-card-winner .pdot {
+        width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+      }
+      /* Badge removed — code takes that role */
+      .city-card-badge { display: none; }
       #home-footer {
-        margin-top: 32px; padding-bottom: 4px;
-        font-size: 10px; color: rgba(0,0,0,0.38); letter-spacing: 0.2px;
+        margin-top: 40px;
+        font-size: 12px; color: #000;
+        text-align: center;
       }
-      #home-footer a { color: rgba(0,0,0,0.45); }
+      #home-footer a { color: #000; }
 
-      /* ─── Taiwan outline canvas (Three.js) ─── */
-      /* JS (home-canvas.js) sets pixel dimensions and CSS width/height.
-         We only set the anchor position and z-order here. */
-      #home-canvas {
+      /* ─── Taiwan hero map image ─── */
+      /* Strategy: fill the full viewport height so top / bottom / right edges
+         all bleed off-screen (no visible rectangle boundary). Only the left
+         edge needs a mask gradient to fade in seamlessly. */
+      #home-map-img {
         position: absolute;
         right: 0;
         top: 0;
+        height: 100vh;   /* fills viewport height → no top/bottom boundary */
+        width: auto;
         pointer-events: none;
         user-select: none;
-        z-index: 0;        /* above #home-inner's z-index:-1 bg but behind text */
+        z-index: -1;
         display: block;
+        /* Left-edge fade: ease-in curve over 28% so the transition is soft */
+        -webkit-mask-image: linear-gradient(to right,
+          transparent 0%,
+          rgba(0,0,0,0.08) 6%,
+          rgba(0,0,0,0.30) 12%,
+          rgba(0,0,0,0.65) 20%,
+          black 28%
+        );
+        mask-image: linear-gradient(to right,
+          transparent 0%,
+          rgba(0,0,0,0.08) 6%,
+          rgba(0,0,0,0.30) 12%,
+          rgba(0,0,0,0.65) 20%,
+          black 28%
+        );
       }
 
       /* ─── ← 六都 back button (shown on city pages) ─── */
@@ -668,32 +752,40 @@
       #city-back-btn svg { display: block; }
 
       @media (max-width: 640px) {
-        /* Mobile: collapse text column to full width; map bleeds behind content */
-        #home-inner {
-          padding-top: 36px;
-          max-width: 100%;
-          padding-right: 7vw;
-        }
-        #home-title { font-size: 60px; letter-spacing: 0px; }
-        #home-title-sub { font-size: 9px; letter-spacing: 2.5px; }
+        #home-inner { padding-top: 44px; }
+        #home-header { margin-bottom: 28px; }
+        #home-title { font-size: 64px; letter-spacing: -1px; }
+        #home-subtitle { font-size: 16px; }
         #home-desc { font-size: 10px; }
-        #home-rule { margin: 18px 0 12px; }
-        /* City index rows: tighter on mobile */
-        .city-row { padding: 11px 0; gap: 9px; grid-template-columns: 36px 1fr auto; }
-        .city-row-code { font-size: 8px; letter-spacing: 1.5px; }
-        .city-row-name { font-size: 19px; }
-        .city-row-winner { font-size: 9px; }
+        #city-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .city-card-name { font-size: 22px; }
+        .city-card-body { padding: 14px 15px 16px; }
+        .city-card-meta { font-size: 12px; }
+        .city-card-winner { font-size: 13px; margin-top: 10px; }
         #city-back-btn { top: 10px; left: 10px; font-size: 12px; padding: 5px 11px; }
-        /* Mobile: canvas centered, fills width, fades in from top.
-           JS sizes it to fill full viewport width × TW_ASPECT height.
-           We override position to center it over the text like a watermark. */
-        #home-canvas {
-          top: auto;
-          bottom: 0;
-          right: auto;
+        /* Mobile: island centered, larger scale, bleeds off bottom.
+           Top fades in, bottom fades out so no hard rectangle boundary. */
+        #home-map-img {
+          position: absolute;
+          bottom: -5%;
           left: 50%;
           transform: translateX(-50%);
-          opacity: 0.38;
+          width: 150%;
+          height: auto;
+          -webkit-mask-image: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(0,0,0,0.35) 10%,
+            black 25%,
+            black 75%,
+            transparent 100%
+          );
+          mask-image: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(0,0,0,0.35) 10%,
+            black 25%,
+            black 75%,
+            transparent 100%
+          );
         }
       }
     </style>
@@ -777,52 +869,95 @@
     <!-- Home screen: shown when no ?city= param -->
     <div id="home-screen" hidden>
       <div id="home-inner">
-        <div id="home-title-row">
-          <span id="home-title-sub">台灣選戰版圖</span>
+        <div id="home-header">
+          <span id="home-eyebrow">台 灣 選 戰 版 圖</span>
+          <hr id="home-rule">
           <h1 id="home-title">CHANGE</h1>
+          <p id="home-subtitle">六都市長選舉</p>
+          <p id="home-desc">voxel 地圖 · 里級下鑽 · 1994 → 2022</p>
         </div>
-        <p id="home-desc">六都市長選舉 · voxel 地圖 · 里級下鑽 · 1994 → 2022</p>
-        <hr id="home-rule">
 
-        <div id="city-index">
+        <div id="city-grid">
 
-          <a class="city-row" href="?city=tpe">
-            <span class="city-row-code">TPE</span>
-            <span class="city-row-name">台北市</span>
-            <span class="city-row-winner"><span class="pdot" style="background:#2060b0"></span>蔣萬安 42.3%</span>
+          <!-- 台北市 (ACTIVE) -->
+          <a class="city-card" href="?city=tpe">
+            <div class="city-card-bar" style="background:#2060b0"></div>
+            <div class="city-card-body">
+              <div class="city-card-name">台北市</div>
+              <div class="city-card-meta">12 區 · 8 屆選舉<br/>1994 – 2022</div>
+              <div class="city-card-winner">
+                <span class="pdot" style="background:#2060b0"></span>
+                蔣萬安 42.3%（2022）
+              </div>
+            </div>
           </a>
 
-          <a class="city-row" href="?city=ntpc">
-            <span class="city-row-code">NTPC</span>
-            <span class="city-row-name">新北市</span>
-            <span class="city-row-winner"><span class="pdot" style="background:#2060b0"></span>侯友宜 62.4%</span>
+          <!-- 新北市 (ACTIVE) -->
+          <a class="city-card" href="?city=ntpc">
+            <div class="city-card-bar" style="background:#2060b0"></div>
+            <div class="city-card-body">
+              <div class="city-card-name">新北市</div>
+              <div class="city-card-meta">29 區 · 1,032 里 · 7 屆選舉<br/>1997 – 2022</div>
+              <div class="city-card-winner">
+                <span class="pdot" style="background:#2060b0"></span>
+                侯友宜 62.4%（2022）
+              </div>
+            </div>
           </a>
 
-          <a class="city-row" href="?city=tyc">
-            <span class="city-row-code">TYC</span>
-            <span class="city-row-name">桃園市</span>
-            <span class="city-row-winner"><span class="pdot" style="background:#2060b0"></span>張善政 54.8%</span>
+          <!-- 桃園市 (ACTIVE) -->
+          <a class="city-card" href="?city=tyc">
+            <div class="city-card-bar" style="background:#2060b0"></div>
+            <div class="city-card-body">
+              <div class="city-card-name">桃園市</div>
+              <div class="city-card-meta">13 區 · 7 屆選舉<br/>1997 – 2022</div>
+              <div class="city-card-winner">
+                <span class="pdot" style="background:#2060b0"></span>
+                張善政 54.8%（2022）
+              </div>
+            </div>
           </a>
 
-          <a class="city-row" href="?city=txg">
-            <span class="city-row-code">TXG</span>
-            <span class="city-row-name">台中市</span>
-            <span class="city-row-winner"><span class="pdot" style="background:#2060b0"></span>盧秀燕 62.7%</span>
+          <!-- 台中市 -->
+          <a class="city-card" href="?city=txg">
+            <div class="city-card-bar" style="background:#2060b0"></div>
+            <div class="city-card-body">
+              <div class="city-card-name">台中市</div>
+              <div class="city-card-meta">29 區 · 4 屆選舉<br/>2010 – 2022</div>
+              <div class="city-card-winner">
+                <span class="pdot" style="background:#2060b0"></span>
+                盧秀燕 62.7%（2022）
+              </div>
+            </div>
           </a>
 
-          <a class="city-row" href="?city=tnn">
-            <span class="city-row-code">TNN</span>
-            <span class="city-row-name">台南市</span>
-            <span class="city-row-winner"><span class="pdot" style="background:#2aa046"></span>黃偉哲 60.9%</span>
+          <!-- 台南市 -->
+          <a class="city-card" href="?city=tnn">
+            <div class="city-card-bar" style="background:#2aa046"></div>
+            <div class="city-card-body">
+              <div class="city-card-name">台南市</div>
+              <div class="city-card-meta">37 區 · 4 屆選舉<br/>2010 – 2022</div>
+              <div class="city-card-winner">
+                <span class="pdot" style="background:#2aa046"></span>
+                黃偉哲 60.9%（2022）
+              </div>
+            </div>
           </a>
 
-          <a class="city-row" href="?city=khh">
-            <span class="city-row-code">KHH</span>
-            <span class="city-row-name">高雄市</span>
-            <span class="city-row-winner"><span class="pdot" style="background:#2aa046"></span>陳其邁 70.0%</span>
+          <!-- 高雄市 -->
+          <a class="city-card" href="?city=khh">
+            <div class="city-card-bar" style="background:#2aa046"></div>
+            <div class="city-card-body">
+              <div class="city-card-name">高雄市</div>
+              <div class="city-card-meta">38 區 · 4 屆選舉<br/>2010 – 2022</div>
+              <div class="city-card-winner">
+                <span class="pdot" style="background:#2aa046"></span>
+                陳其邁 70.0%（2022）
+              </div>
+            </div>
           </a>
 
-        </div><!-- #city-index -->
+        </div><!-- #city-grid -->
 
         <p id="home-footer">
           選舉資料：<a href="https://github.com/kiang/db.cec.gov.tw" target="_blank" rel="noopener">kiang/db.cec.gov.tw</a> ·
@@ -830,10 +965,8 @@
           <a href="https://github.com/ileivoivm/change" target="_blank" rel="noopener">GitHub</a>
         </p>
         <!-- Taiwan voxel map hero — desktop: absolute right bg; mobile: in-flow below footer -->
+        <img id="home-map-img" src="taiwan.png" alt="台灣 voxel 地圖" aria-hidden="true">
       </div>
-      <!-- Taiwan outline canvas: Three.js renders county rings in editorial
-           outline style. Sized + positioned by home-canvas.js initHomeCanvas(). -->
-      <canvas id="home-canvas" aria-hidden="true"></canvas>
     </div>
 
     <script type="module" src="/src/main.js"></script>
