@@ -569,65 +569,72 @@
       #city-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        margin-top: 8px;
+        gap: 8px;
+        margin-top: 12px;
       }
       .city-card {
-        background: rgba(255,255,255,0.78);
+        /* Near-transparent frosted glass — content floats on the map,
+           white rectangle no longer dominates */
+        background: rgba(255,255,255,0.22);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
         border-radius: 2px;
         overflow: hidden;
-        border: 1px solid rgba(0,0,0,0.11);
+        border: 1px solid rgba(255,255,255,0.55);
         box-shadow: none;
         display: flex; flex-direction: column;
         text-decoration: none;
         color: inherit;
-        transition: border-color 150ms, background 150ms;
+        transition: background 180ms, border-color 180ms;
         position: relative;
       }
       a.city-card:hover {
-        background: rgba(255,255,255,0.96);
-        border-color: rgba(0,0,0,0.26);
+        background: rgba(255,255,255,0.42);
+        border-color: rgba(255,255,255,0.85);
       }
-      a.city-card:active { background: rgba(255,255,255,0.6); }
+      a.city-card:active { background: rgba(255,255,255,0.12); }
       .city-card.unavailable {
         cursor: default;
-        opacity: 0.45;
+        opacity: 0.35;
         pointer-events: none;
       }
-      /* Colored bar removed — party identity lives only in the dot */
       .city-card-bar { display: none; }
       .city-card-body {
-        padding: 18px 18px 20px;
+        padding: 20px 20px 22px;
         display: flex; flex-direction: column;
         flex: 1;
       }
-      /* Tiny city-code index in the top-right corner */
+      /* Top label: category index — like Ref 2's small-caps section header */
       .city-card-code {
-        position: absolute; top: 14px; right: 15px;
-        font-size: 10px; font-weight: 500;
-        letter-spacing: 1.6px; text-transform: uppercase;
-        color: rgba(0,0,0,0.28);
+        display: block;
+        font-size: 9px; font-weight: 500;
+        letter-spacing: 2.2px; text-transform: uppercase;
+        color: rgba(0,0,0,0.40);
+        margin-bottom: 10px;
         font-family: "Helvetica Neue", Arial, sans-serif;
       }
+      /* City name: ultra-light + large — Ref 1 scale drama */
       .city-card-name {
-        font-size: 26px; font-weight: 400; line-height: 1.1;
-        letter-spacing: -0.2px; color: #1a1a1a;
-        margin-bottom: 9px;
+        font-size: 36px; font-weight: 200; line-height: 1;
+        letter-spacing: -1px; color: rgba(0,0,0,0.85);
+        margin-bottom: 12px;
       }
+      /* Meta: very small, tracked, low-contrast — pure data annotation */
       .city-card-meta {
-        font-size: 11px; color: #999; line-height: 1.75;
+        font-size: 10px; color: rgba(0,0,0,0.42);
+        line-height: 1.8; letter-spacing: 0.3px;
       }
+      /* Winner: no border-top, just spacing — remove last box-thinking remnant */
       .city-card-winner {
-        margin-top: 14px;
-        padding-top: 13px;
-        border-top: 1px solid rgba(0,0,0,0.07);
+        margin-top: 16px;
         display: flex; align-items: center; gap: 6px;
-        font-size: 12px; color: #555; font-weight: 400;
+        font-size: 11px; color: rgba(0,0,0,0.65); font-weight: 400;
+        letter-spacing: 0.1px;
       }
       .city-card-winner .pdot {
         width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+        opacity: 0.85;
       }
-      /* Badge removed — code takes that role */
       .city-card-badge { display: none; }
       #home-footer {
         margin-top: 40px;
@@ -691,11 +698,11 @@
         #home-title { font-size: 36px; }
         #home-title-sub { font-size: 15px; }
         #home-desc { font-size: 13px; margin-bottom: 28px; }
-        #city-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .city-card-name { font-size: 20px; }
+        #city-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        .city-card-name { font-size: 26px; letter-spacing: -0.5px; }
         .city-card-body { padding: 14px 14px 16px; }
-        .city-card-meta { font-size: 11px; }
-        .city-card-winner { font-size: 11px; margin-top: 12px; padding-top: 11px; }
+        .city-card-meta { font-size: 10px; }
+        .city-card-winner { font-size: 11px; margin-top: 12px; }
         #city-back-btn { top: 10px; left: 10px; font-size: 12px; padding: 5px 11px; }
         /* Mobile: island centered, larger scale, bleeds off bottom.
            Top fades in, bottom fades out so no hard rectangle boundary. */
@@ -812,10 +819,10 @@
         <div id="city-grid">
 
           <a class="city-card" href="?city=tpe">
-            <span class="city-card-code">TPE</span>
             <div class="city-card-body">
+              <span class="city-card-code">TPE · 直轄市</span>
               <div class="city-card-name">台北市</div>
-              <div class="city-card-meta">12 區 · 8 屆選舉<br/>1994 – 2022</div>
+              <div class="city-card-meta">12 區 · 8 屆選舉 · 1994 – 2022</div>
               <div class="city-card-winner">
                 <span class="pdot" style="background:#2060b0"></span>
                 蔣萬安 42.3%（2022）
@@ -824,10 +831,10 @@
           </a>
 
           <a class="city-card" href="?city=ntpc">
-            <span class="city-card-code">NTPC</span>
             <div class="city-card-body">
+              <span class="city-card-code">NTPC · 直轄市</span>
               <div class="city-card-name">新北市</div>
-              <div class="city-card-meta">29 區 · 1,032 里 · 7 屆選舉<br/>1997 – 2022</div>
+              <div class="city-card-meta">29 區 · 1,032 里 · 7 屆選舉 · 1997 – 2022</div>
               <div class="city-card-winner">
                 <span class="pdot" style="background:#2060b0"></span>
                 侯友宜 62.4%（2022）
@@ -836,10 +843,10 @@
           </a>
 
           <a class="city-card" href="?city=tyc">
-            <span class="city-card-code">TYC</span>
             <div class="city-card-body">
+              <span class="city-card-code">TYC · 直轄市</span>
               <div class="city-card-name">桃園市</div>
-              <div class="city-card-meta">13 區 · 7 屆選舉<br/>1997 – 2022</div>
+              <div class="city-card-meta">13 區 · 7 屆選舉 · 1997 – 2022</div>
               <div class="city-card-winner">
                 <span class="pdot" style="background:#2060b0"></span>
                 張善政 54.8%（2022）
@@ -848,10 +855,10 @@
           </a>
 
           <a class="city-card" href="?city=txg">
-            <span class="city-card-code">TXG</span>
             <div class="city-card-body">
+              <span class="city-card-code">TXG · 直轄市</span>
               <div class="city-card-name">台中市</div>
-              <div class="city-card-meta">29 區 · 4 屆選舉<br/>2010 – 2022</div>
+              <div class="city-card-meta">29 區 · 4 屆選舉 · 2010 – 2022</div>
               <div class="city-card-winner">
                 <span class="pdot" style="background:#2060b0"></span>
                 盧秀燕 62.7%（2022）
@@ -860,10 +867,10 @@
           </a>
 
           <a class="city-card" href="?city=tnn">
-            <span class="city-card-code">TNN</span>
             <div class="city-card-body">
+              <span class="city-card-code">TNN · 直轄市</span>
               <div class="city-card-name">台南市</div>
-              <div class="city-card-meta">37 區 · 4 屆選舉<br/>2010 – 2022</div>
+              <div class="city-card-meta">37 區 · 4 屆選舉 · 2010 – 2022</div>
               <div class="city-card-winner">
                 <span class="pdot" style="background:#2aa046"></span>
                 黃偉哲 60.9%（2022）
@@ -872,10 +879,10 @@
           </a>
 
           <a class="city-card" href="?city=khh">
-            <span class="city-card-code">KHH</span>
             <div class="city-card-body">
+              <span class="city-card-code">KHH · 直轄市</span>
               <div class="city-card-name">高雄市</div>
-              <div class="city-card-meta">38 區 · 4 屆選舉<br/>2010 – 2022</div>
+              <div class="city-card-meta">38 區 · 4 屆選舉 · 2010 – 2022</div>
               <div class="city-card-winner">
                 <span class="pdot" style="background:#2aa046"></span>
                 陳其邁 70.0%（2022）
