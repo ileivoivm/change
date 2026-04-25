@@ -1384,7 +1384,7 @@ function renderPanel() {
   for (const d of districts) {
     const card = document.createElement('div');
     card.className = 'card card-district';
-    card.dataset.stem = d.stem;
+    card.dataset.stem = d.name.slice(0, -1); // use slice(0,-1) to match drillStem / drilledStem
     const hex = colorForDistrict(d.results);
     card.style.background = hexToCss(hex);
     card.style.color = textColorFor(hex);
