@@ -18,6 +18,12 @@ const MARGIN_THRESHOLD = 20;
 // the scene beige background even at near-zero margin.
 const CLOSE_WHITE_MIX = 0.55;
 
+// Candidates who ran as 無黨籍 (999) but are visually associated with a party.
+const CANDIDATE_COLOR_OVERRIDES = {
+  '柯文哲': 0x3bb5c4, // 民眾黨 TPP aqua (2014/2018 無黨籍)
+  '黃珊珊': 0x3bb5c4, // 民眾黨 TPP aqua (2022 無黨籍)
+};
+
 // Party codes as defined by CEC / kiang/db.cec.gov.tw
 // 1 = 中國國民黨 (KMT, blue)
 // 16 = 民主進步黨 (DPP, green)
@@ -76,9 +82,10 @@ function paleVersion(hex) {
   });
 }
 
-// 柯文哲 ran as 無黨籍 (code 999) in 2014/2018 but is visually associated
-// with 民眾黨 (TPP), so display using TPP aqua rather than independent warm gray.
-const KO_TPP_COLOR = 0x3bb5c4;
+// Color for a single candidate result object { name, partyCode, ... }.
+export function candidateColor(result) {
+  return CANDIDATE_COLOR_OVERRIDES[result.name] ?? partyColor(result.partyCode);
+}
 
 // Given a district's sorted results (descending by votes), return a color.
 // Color is always keyed to the winner's party; margin drives saturation.
@@ -86,7 +93,7 @@ export function colorForDistrict(results) {
   if (!results || results.length === 0) return 0xb8b2a6;
   const winner = results[0];
   const runnerUp = results[1];
-  const winnerHex = winner.name === '柯文哲' ? KO_TPP_COLOR : partyColor(winner.partyCode);
+  const winnerHex = candidateColor(winner);
   if (!runnerUp) return winnerHex;
   const margin = winner.rate - runnerUp.rate; // always >= 0
   const t = Math.min(margin / MARGIN_THRESHOLD, 1);

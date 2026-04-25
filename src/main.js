@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { computeBounds, makeProjector, projectFeature, voxelize } from './geo.js';
-import { colorForDistrict, partyColor, NEUTRAL, PARTY_COLORS } from './palette.js';
+import { colorForDistrict, candidateColor, partyColor, NEUTRAL, PARTY_COLORS } from './palette.js';
 import ntpcGeo from '../data/processed/ntpc-districts.geo.json';
 import tpeGeo  from '../data/processed/tpe-districts.geo.json';
 import tycGeo  from '../data/processed/tyc-districts.geo.json';
@@ -1103,7 +1103,7 @@ function renderBubble(mesh) {
     }
     const fmt = n => n.toLocaleString('en-US');
     const rows = v.results.map(r => {
-      const hex = '#' + partyColor(r.partyCode).toString(16).padStart(6, '0');
+      const hex = '#' + candidateColor(r).toString(16).padStart(6, '0');
       return `<div class="cand">
         <span class="swatch" style="background:${hex}"></span>
         <span class="cn">${r.name}</span>
@@ -1112,7 +1112,7 @@ function renderBubble(mesh) {
         <span class="cr">${r.rate.toFixed(1)}%</span>
       </div>`;
     }).join('');
-    const winColor = '#' + partyColor(v.winnerPartyCode).toString(16).padStart(6, '0');
+    const winColor = '#' + candidateColor(v.results[0]).toString(16).padStart(6, '0');
 
     // Flip math for the runner-up: swing = votes that must change sides
     // (gap closes at 2× leverage); mobilize = new votes all flowing to loser.
@@ -1122,7 +1122,7 @@ function renderBubble(mesh) {
       const gap = w.votes - l.votes;
       const swing = Math.ceil((gap + 1) / 2);
       const mobilize = gap + 1;
-      const loserColor = '#' + partyColor(l.partyCode).toString(16).padStart(6, '0');
+      const loserColor = '#' + candidateColor(l).toString(16).padStart(6, '0');
       flipBlock = `<div class="flip">
         <div class="flip-head" style="color:${loserColor}">${l.name}（${l.partyName}）翻盤需</div>
         <div class="flip-row"><b>${fmt(swing)}</b> 票改投 <span class="dim">（1 票 = 2 差距）</span></div>
@@ -1164,7 +1164,7 @@ function renderBubble(mesh) {
     return;
   }
   const rows = election.results.map(r => {
-    const hex = '#' + partyColor(r.partyCode).toString(16).padStart(6, '0');
+    const hex = '#' + candidateColor(r).toString(16).padStart(6, '0');
     return `<div class="cand">
       <span class="swatch" style="background:${hex}"></span>
       <span class="cn">${r.name}</span>
@@ -1172,7 +1172,7 @@ function renderBubble(mesh) {
       <span class="cr">${r.rate.toFixed(1)}%</span>
     </div>`;
   }).join('');
-  const winColor = '#' + partyColor(election.winnerPartyCode).toString(16).padStart(6, '0');
+  const winColor = '#' + candidateColor(election.results[0]).toString(16).padStart(6, '0');
   labelBubble.innerHTML = `
     <div class="row"><span class="tag">${tag}</span><span class="name">${election.name}</span></div>
     <div class="winner" style="color:${winColor}">${election.winner} 勝 ${election.margin.toFixed(1)}%</div>
