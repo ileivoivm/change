@@ -569,60 +569,66 @@
       #city-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
+        gap: 10px;
+        margin-top: 8px;
       }
       .city-card {
-        background: #fff;
-        border-radius: 16px;
+        background: rgba(255,255,255,0.78);
+        border-radius: 2px;
         overflow: hidden;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.05);
+        border: 1px solid rgba(0,0,0,0.11);
+        box-shadow: none;
         display: flex; flex-direction: column;
         text-decoration: none;
         color: inherit;
-        transition: transform 140ms, box-shadow 140ms;
+        transition: border-color 150ms, background 150ms;
         position: relative;
       }
       a.city-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
+        background: rgba(255,255,255,0.96);
+        border-color: rgba(0,0,0,0.26);
       }
-      a.city-card:active { transform: translateY(0); }
+      a.city-card:active { background: rgba(255,255,255,0.6); }
       .city-card.unavailable {
         cursor: default;
-        opacity: 0.55;
+        opacity: 0.45;
+        pointer-events: none;
       }
-      .city-card-bar {
-        height: 6px; width: 100%;
-        flex-shrink: 0;
-      }
+      /* Colored bar removed — party identity lives only in the dot */
+      .city-card-bar { display: none; }
       .city-card-body {
-        padding: 20px 22px 22px;
-        display: flex; flex-direction: column; gap: 4px;
+        padding: 18px 18px 20px;
+        display: flex; flex-direction: column;
         flex: 1;
       }
+      /* Tiny city-code index in the top-right corner */
+      .city-card-code {
+        position: absolute; top: 14px; right: 15px;
+        font-size: 10px; font-weight: 500;
+        letter-spacing: 1.6px; text-transform: uppercase;
+        color: rgba(0,0,0,0.28);
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
       .city-card-name {
-        font-size: 32px; font-weight: 800; line-height: 1;
-        letter-spacing: -0.5px; color: #1a1a1a;
-        margin-bottom: 6px;
+        font-size: 26px; font-weight: 400; line-height: 1.1;
+        letter-spacing: -0.2px; color: #1a1a1a;
+        margin-bottom: 9px;
       }
       .city-card-meta {
-        font-size: 13px; color: #888; line-height: 1.5;
+        font-size: 11px; color: #999; line-height: 1.75;
       }
       .city-card-winner {
         margin-top: 14px;
-        display: flex; align-items: center; gap: 7px;
-        font-size: 14px; color: #2a2a2a; font-weight: 600;
+        padding-top: 13px;
+        border-top: 1px solid rgba(0,0,0,0.07);
+        display: flex; align-items: center; gap: 6px;
+        font-size: 12px; color: #555; font-weight: 400;
       }
       .city-card-winner .pdot {
-        width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+        width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
       }
-      .city-card-badge {
-        position: absolute; top: 16px; right: 16px;
-        font-size: 11px; font-weight: 600; color: #888;
-        background: rgba(0,0,0,0.06);
-        padding: 3px 8px; border-radius: 20px;
-        letter-spacing: 0.3px;
-      }
+      /* Badge removed — code takes that role */
+      .city-card-badge { display: none; }
       #home-footer {
         margin-top: 40px;
         font-size: 12px; color: #000;
@@ -685,11 +691,11 @@
         #home-title { font-size: 36px; }
         #home-title-sub { font-size: 15px; }
         #home-desc { font-size: 13px; margin-bottom: 28px; }
-        #city-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .city-card-name { font-size: 22px; }
-        .city-card-body { padding: 14px 15px 16px; }
-        .city-card-meta { font-size: 12px; }
-        .city-card-winner { font-size: 13px; margin-top: 10px; }
+        #city-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .city-card-name { font-size: 20px; }
+        .city-card-body { padding: 14px 14px 16px; }
+        .city-card-meta { font-size: 11px; }
+        .city-card-winner { font-size: 11px; margin-top: 12px; padding-top: 11px; }
         #city-back-btn { top: 10px; left: 10px; font-size: 12px; padding: 5px 11px; }
         /* Mobile: island centered, larger scale, bleeds off bottom.
            Top fades in, bottom fades out so no hard rectangle boundary. */
@@ -805,9 +811,8 @@
 
         <div id="city-grid">
 
-          <!-- 台北市 (ACTIVE) -->
           <a class="city-card" href="?city=tpe">
-            <div class="city-card-bar" style="background:#2060b0"></div>
+            <span class="city-card-code">TPE</span>
             <div class="city-card-body">
               <div class="city-card-name">台北市</div>
               <div class="city-card-meta">12 區 · 8 屆選舉<br/>1994 – 2022</div>
@@ -818,9 +823,8 @@
             </div>
           </a>
 
-          <!-- 新北市 (ACTIVE) -->
           <a class="city-card" href="?city=ntpc">
-            <div class="city-card-bar" style="background:#2060b0"></div>
+            <span class="city-card-code">NTPC</span>
             <div class="city-card-body">
               <div class="city-card-name">新北市</div>
               <div class="city-card-meta">29 區 · 1,032 里 · 7 屆選舉<br/>1997 – 2022</div>
@@ -831,9 +835,8 @@
             </div>
           </a>
 
-          <!-- 桃園市 (ACTIVE) -->
           <a class="city-card" href="?city=tyc">
-            <div class="city-card-bar" style="background:#2060b0"></div>
+            <span class="city-card-code">TYC</span>
             <div class="city-card-body">
               <div class="city-card-name">桃園市</div>
               <div class="city-card-meta">13 區 · 7 屆選舉<br/>1997 – 2022</div>
@@ -844,9 +847,8 @@
             </div>
           </a>
 
-          <!-- 台中市 -->
           <a class="city-card" href="?city=txg">
-            <div class="city-card-bar" style="background:#2060b0"></div>
+            <span class="city-card-code">TXG</span>
             <div class="city-card-body">
               <div class="city-card-name">台中市</div>
               <div class="city-card-meta">29 區 · 4 屆選舉<br/>2010 – 2022</div>
@@ -857,9 +859,8 @@
             </div>
           </a>
 
-          <!-- 台南市 -->
           <a class="city-card" href="?city=tnn">
-            <div class="city-card-bar" style="background:#2aa046"></div>
+            <span class="city-card-code">TNN</span>
             <div class="city-card-body">
               <div class="city-card-name">台南市</div>
               <div class="city-card-meta">37 區 · 4 屆選舉<br/>2010 – 2022</div>
@@ -870,9 +871,8 @@
             </div>
           </a>
 
-          <!-- 高雄市 -->
           <a class="city-card" href="?city=khh">
-            <div class="city-card-bar" style="background:#2aa046"></div>
+            <span class="city-card-code">KHH</span>
             <div class="city-card-body">
               <div class="city-card-name">高雄市</div>
               <div class="city-card-meta">38 區 · 4 屆選舉<br/>2010 – 2022</div>
