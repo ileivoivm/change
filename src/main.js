@@ -1,11 +1,14 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { computeBounds, makeProjector, projectFeature, voxelize } from './geo.js';
-import { colorForDistrict, partyColor, NEUTRAL, PARTY_COLORS } from './palette.js';
+import { colorForDistrict, candidateColor, partyColor, NEUTRAL, PARTY_COLORS } from './palette.js';
 import ntpcGeo from '../data/processed/ntpc-districts.geo.json';
-import tpeGeo from '../data/processed/tpe-districts.geo.json';
+import tpeGeo  from '../data/processed/tpe-districts.geo.json';
+import tycGeo  from '../data/processed/tyc-districts.geo.json';
 import restGeo from '../data/processed/tw-rest-districts.geo.json';
-import villageGeo from '../data/processed/ntpc-villages.geo.json';
+import ntpcVillageGeo from '../data/processed/ntpc-villages.geo.json';
+import tpeVillageGeo  from '../data/processed/tpe-villages.geo.json';
+import tycVillageGeo  from '../data/processed/tyc-villages.geo.json';
 import v1997 from '../data/processed/ntpc-1997-villages.json';
 import v2001 from '../data/processed/ntpc-2001-villages.json';
 import v2005 from '../data/processed/ntpc-2005-villages.json';
@@ -13,16 +16,42 @@ import v2010 from '../data/processed/ntpc-2010-villages.json';
 import v2014 from '../data/processed/ntpc-2014-villages.json';
 import v2018 from '../data/processed/ntpc-2018-villages.json';
 import v2022 from '../data/processed/ntpc-2022-villages.json';
+import tv1994 from '../data/processed/tpe-1994-villages.json';
+import tv1998 from '../data/processed/tpe-1998-villages.json';
+import tv2002 from '../data/processed/tpe-2002-villages.json';
+import tv2006 from '../data/processed/tpe-2006-villages.json';
+import tv2010 from '../data/processed/tpe-2010-villages.json';
+import tv2014 from '../data/processed/tpe-2014-villages.json';
+import tv2018 from '../data/processed/tpe-2018-villages.json';
+import tv2022 from '../data/processed/tpe-2022-villages.json';
+import yv1997 from '../data/processed/tyc-1997-villages.json';
+import yv2001 from '../data/processed/tyc-2001-villages.json';
+import yv2005 from '../data/processed/tyc-2005-villages.json';
+import yv2009 from '../data/processed/tyc-2009-villages.json';
+import yv2014 from '../data/processed/tyc-2014-villages.json';
+import yv2018 from '../data/processed/tyc-2018-villages.json';
+import yv2022 from '../data/processed/tyc-2022-villages.json';
 
-const VILLAGE_ELECTIONS = {
-  1997: v1997, 2001: v2001, 2005: v2005, 2010: v2010,
-  2014: v2014, 2018: v2018, 2022: v2022,
+// ─────────── city routing (determined early so all constants can use it) ───────────
+// ?city=ntpc / ?city=tpe / etc.  → which city's data to show
+// Legacy share links (no city=)  → treat as ntpc (the only city pre-M9)
+const _sp = new URLSearchParams(location.search);
+const _cityParam = _sp.get('city')
+  || (_sp.has('y') || _sp.has('d') || _sp.has('v') ? 'ntpc' : null);
+const CITY_CONFIG = CITY_CONFIGS[_cityParam] || CITY_CONFIGS.ntpc;
+
+
+const ALL_VILLAGE_ELECTIONS = {
+  ntpc: { 1997: v1997, 2001: v2001, 2005: v2005, 2010: v2010, 2014: v2014, 2018: v2018, 2022: v2022 },
+  tpe:  { 1994: tv1994, 1998: tv1998, 2002: tv2002, 2006: tv2006, 2010: tv2010, 2014: tv2014, 2018: tv2018, 2022: tv2022 },
+  tyc:  { 1997: yv1997, 2001: yv2001, 2005: yv2005, 2009: yv2009, 2014: yv2014, 2018: yv2018, 2022: yv2022 },
 };
+const VILLAGE_ELECTIONS = ALL_VILLAGE_ELECTIONS[CITY_CONFIG.key] || ALL_VILLAGE_ELECTIONS.ntpc;
 // Which years actually have village-level data (non-empty)
 const VILLAGE_YEARS = Object.entries(VILLAGE_ELECTIONS)
   .filter(([, d]) => (d.villages || []).length > 0)
   .map(([y]) => Number(y));
-let villageVotes = VILLAGE_ELECTIONS[2022];
+let villageVotes = VILLAGE_ELECTIONS[CITY_CONFIG.defaultYear];
 import e1997 from '../data/processed/ntpc-1997-mayor.json';
 import e2001 from '../data/processed/ntpc-2001-mayor.json';
 import e2005 from '../data/processed/ntpc-2005-mayor.json';
@@ -30,16 +59,43 @@ import e2010 from '../data/processed/ntpc-2010-mayor.json';
 import e2014 from '../data/processed/ntpc-2014-mayor.json';
 import e2018 from '../data/processed/ntpc-2018-mayor.json';
 import e2022 from '../data/processed/ntpc-2022-mayor.json';
+import te1994 from '../data/processed/tpe-1994-mayor.json';
+import te1998 from '../data/processed/tpe-1998-mayor.json';
+import te2002 from '../data/processed/tpe-2002-mayor.json';
+import te2006 from '../data/processed/tpe-2006-mayor.json';
+import te2010 from '../data/processed/tpe-2010-mayor.json';
+import te2014 from '../data/processed/tpe-2014-mayor.json';
+import te2018 from '../data/processed/tpe-2018-mayor.json';
+import te2022 from '../data/processed/tpe-2022-mayor.json';
+import ye1997 from '../data/processed/tyc-1997-mayor.json';
+import ye2001 from '../data/processed/tyc-2001-mayor.json';
+import ye2005 from '../data/processed/tyc-2005-mayor.json';
+import ye2009 from '../data/processed/tyc-2009-mayor.json';
+import ye2014 from '../data/processed/tyc-2014-mayor.json';
+import ye2018 from '../data/processed/tyc-2018-mayor.json';
+import ye2022 from '../data/processed/tyc-2022-mayor.json';
+import { CITY_CONFIGS } from './city-configs.js';
 
-const ELECTIONS = { 1997: e1997, 2001: e2001, 2005: e2005, 2010: e2010, 2014: e2014, 2018: e2018, 2022: e2022 };
-const YEARS = [1997, 2001, 2005, 2010, 2014, 2018, 2022];
-let currentYear = 2022;
+const ALL_ELECTIONS = {
+  ntpc: { 1997: e1997, 2001: e2001, 2005: e2005, 2010: e2010, 2014: e2014, 2018: e2018, 2022: e2022 },
+  tpe:  { 1994: te1994, 1998: te1998, 2002: te2002, 2006: te2006, 2010: te2010, 2014: te2014, 2018: te2018, 2022: te2022 },
+  tyc:  { 1997: ye1997, 2001: ye2001, 2005: ye2005, 2009: ye2009, 2014: ye2014, 2018: ye2018, 2022: ye2022 },
+};
+const ELECTIONS = ALL_ELECTIONS[CITY_CONFIG.key] || ALL_ELECTIONS.ntpc;
+const ALL_VILLAGE_GEO = { ntpc: ntpcVillageGeo, tpe: tpeVillageGeo, tyc: tycVillageGeo };
+const villageGeo = ALL_VILLAGE_GEO[CITY_CONFIG.key] || ntpcVillageGeo;
+const ALL_DISTRICT_GEO = { ntpc: ntpcGeo, tpe: tpeGeo, tyc: tycGeo };
+// Fallback village list (for district card counts when current year has no village data)
+const ALL_FALLBACK_VILLAGES = { ntpc: v2022.villages, tpe: tv2022.villages, tyc: yv2022.villages };
+const fallbackVillages = ALL_FALLBACK_VILLAGES[CITY_CONFIG.key] || v2022.villages;
+const YEARS = CITY_CONFIG.years;
+let currentYear = CITY_CONFIG.defaultYear;
 
 const VOXEL_CELL = 0.45;
 const VILLAGE_CELL = 0.20;
 const VOXEL_HEIGHT = 0.9;
 const CONTEXT_HEIGHT = 0.25;
-const WORLD_SIZE = 36; // NTPC+TPE spans this longer axis
+const WORLD_SIZE = CITY_CONFIG.worldSize;
 let viewMode = 'district'; // 'district' | 'village'
 
 // ─────────── scene ───────────
@@ -53,7 +109,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1600
 );
-camera.position.set(-13.19, 98.58, 30.58);
+camera.position.set(...CITY_CONFIG.camera.position);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -70,7 +126,7 @@ controls.dampingFactor = 0.08;
 controls.minDistance = 10;
 controls.maxDistance = 500;
 controls.maxPolarAngle = Math.PI * 0.48;
-controls.target.set(-12.71, -8.73, 12.83);
+controls.target.set(...CITY_CONFIG.camera.target);
 
 // ─────────── lights ───────────
 scene.add(new THREE.AmbientLight(0xffffff, 0.55));
@@ -248,7 +304,7 @@ function makeMaterial({ color, isContext }) {
 function buildLayer(features, projector, opts) {
   const { height, layer, interactive } = opts;
   const cubeGeo = new THREE.BoxGeometry(VOXEL_CELL * 0.96, height, VOXEL_CELL * 0.96);
-  const isContext = layer !== 'ntpc';
+  const isContext = layer !== CITY_CONFIG.key;
   let totalVoxels = 0;
 
   // First pass: voxelize + populate voxelOwner globally
@@ -273,14 +329,14 @@ function buildLayer(features, projector, opts) {
   perFeature.forEach(({ feature: f, cells, townKey }) => {
     const townName = f.properties.TOWNNAME;
     const stem = townName.slice(0, -1);
-    const election = layer === 'ntpc' ? electionByStem[stem] : null;
+    const election = layer === CITY_CONFIG.key ? electionByStem[stem] : null;
 
     let baseColor;
-    if (layer === 'ntpc') {
+    if (layer === CITY_CONFIG.key) {
       baseColor = election ? colorForDistrict(election.results) : NEUTRAL;
     } else {
-      // context layers (tpe / rest) → soft gray
-      baseColor = layer === 'tpe' ? 0xb8b2a6 : 0xbab5a8;
+      // context layers → soft gray
+      baseColor = 0xb8b2a6;
     }
 
     const mat = makeMaterial({ color: baseColor, isContext });
@@ -471,42 +527,57 @@ function buildVillageLayer(projector) {
 }
 
 function bootstrap() {
-  const allFeatures = [...ntpcGeo.features, ...tpeGeo.features];
-  const bounds = computeBounds(allFeatures);
+  const key = CITY_CONFIG.key;
+  const mainGeo = ALL_DISTRICT_GEO[key];
+
+  // ntpc uses combined ntpc+tpe bounds to preserve calibrated camera coordinates.
+  // All other cities center on their own features.
+  const boundsFeatures = key === 'ntpc'
+    ? [...ntpcGeo.features, ...tpeGeo.features]
+    : mainGeo.features;
+  const bounds = computeBounds(boundsFeatures);
   const projector = makeProjector(bounds, WORLD_SIZE);
 
-  // Rest of Taiwan first (drawn behind visually due to lower height)
-  const restCount = buildLayer(restGeo.features, projector, {
-    height: CONTEXT_HEIGHT,
-    layer: 'rest',
-    interactive: false,
-  });
-  const tpeCount = buildLayer(tpeGeo.features, projector, {
-    height: CONTEXT_HEIGHT,
-    layer: 'tpe',
-    interactive: true,
-  });
-  const ntpcCount = buildLayer(ntpcGeo.features, projector, {
-    height: VOXEL_HEIGHT,
-    layer: 'ntpc',
-    interactive: true,
-  });
+  // restGeo covers all Taiwan EXCEPT ntpc and tpe. For cities other than ntpc/tpe,
+  // filter out the main city's county so it doesn't double-render under the main layer.
+  const mainCountyNames = CITY_CONFIG.geoCountyNames;
+  const restFeatures = (key === 'ntpc' || key === 'tpe')
+    ? restGeo.features
+    : restGeo.features.filter(f => {
+        const cn = f.properties.COUNTYNAME || (f.properties.KEY || '').split('/')[0];
+        return !mainCountyNames.includes(cn);
+      });
+
+  const restCount = buildLayer(restFeatures, projector, { height: CONTEXT_HEIGHT, layer: 'rest', interactive: false });
+
+  // ntpc↔tpe act as each other's named context sibling; all other cities get ntpc+tpe as generic gray.
+  let contextCount = 0;
+  if (key === 'ntpc') {
+    contextCount = buildLayer(tpeGeo.features, projector, { height: CONTEXT_HEIGHT, layer: 'tpe',  interactive: true });
+  } else if (key === 'tpe') {
+    contextCount = buildLayer(ntpcGeo.features, projector, { height: CONTEXT_HEIGHT, layer: 'ntpc', interactive: true });
+  } else {
+    buildLayer(ntpcGeo.features, projector, { height: CONTEXT_HEIGHT, layer: 'ntpc', interactive: true });
+    buildLayer(tpeGeo.features,  projector, { height: CONTEXT_HEIGHT, layer: 'tpe',  interactive: true });
+  }
+
+  const mainCount = buildLayer(mainGeo.features, projector, { height: VOXEL_HEIGHT, layer: key, interactive: true });
 
   buildBorders();
   villageGroup = buildVillageLayer(projector);
-  refreshHud(ntpcCount, tpeCount, restCount);
+  refreshHud(mainCount, contextCount, restCount);
 }
 
-// Track NTPC district meshes so we can hide them when switching to village mode.
-function isNtpcDistrictMesh(m) {
-  return m.userData?.layer === 'ntpc';
+// Track main city district meshes (not tpe/rest context) for visibility toggling.
+function isMainCityMesh(m) {
+  return m.userData?.layer === CITY_CONFIG.key;
 }
 
 function setViewMode(mode) {
   if (mode === viewMode) return;
   if (drilledDistrict) exitDrill(false); // cancel drill when user manually toggles
   viewMode = mode;
-  const ntpcDistrictMeshes = districtMeshes.filter(isNtpcDistrictMesh);
+  const ntpcDistrictMeshes = districtMeshes.filter(isMainCityMesh);
   if (mode === 'village') {
     ntpcDistrictMeshes.forEach(m => m.visible = false);
     if (villageGroup) villageGroup.visible = true;
@@ -523,10 +594,9 @@ function setViewMode(mode) {
 
 // ─────────── drill into a single district ───────────
 function drillInto(mesh) {
-  if (!mesh || mesh.userData.layer !== 'ntpc') return;
-  // 1997/2001 CEC didn't publish village-level data — fall back to 2022
-  // only for those. Other years (2005+) drill in place.
-  if (!villageVotes.villages.length) setYear(2022);
+  if (!mesh || mesh.userData.layer !== CITY_CONFIG.key) return;
+  // Some years (ntpc 1997/2001) have no village-level data — fall back to defaultYear.
+  if (!villageVotes.villages.length) setYear(CITY_CONFIG.defaultYear);
   // Preserve current collapse state on drill. If the user already has the
   // cards expanded (tapped 新北市 chip on mobile), drilling a district
   // should show its village grid — not silently re-collapse and hide it.
@@ -535,7 +605,7 @@ function drillInto(mesh) {
   const stem = drilledDistrict.slice(0, -1);
 
   // hide every NTPC district mesh (including the clicked one)
-  districtMeshes.filter(isNtpcDistrictMesh).forEach(m => m.visible = false);
+  districtMeshes.filter(isMainCityMesh).forEach(m => m.visible = false);
 
   // show only villages inside the drilled district
   if (villageGroup) villageGroup.visible = true;
@@ -577,7 +647,7 @@ function exitDrill(flyHome = true) {
     return;
   }
   drilledDistrict = null;
-  districtMeshes.filter(isNtpcDistrictMesh).forEach(m => m.visible = true);
+  districtMeshes.filter(isMainCityMesh).forEach(m => m.visible = true);
   if (villageGroup) villageGroup.visible = false;
   villageMeshes.forEach(m => m.visible = true);
   villageBorderLines.forEach(l => l.visible = true);
@@ -593,7 +663,7 @@ function exitDrill(flyHome = true) {
 // Drill into a district by townName stem (e.g. "永和") — used by panel clicks
 function drillByStem(stem) {
   const mesh = districtMeshes.find(
-    m => m.userData.layer === 'ntpc' && m.userData.townName.slice(0, -1) === stem
+    m => m.userData.layer === CITY_CONFIG.key && m.userData.townName.slice(0, -1) === stem
   );
   if (mesh) drillInto(mesh);
 }
@@ -625,7 +695,7 @@ function selectVillage(v) {
     // is pinned above the district centroid so the viewer sees vote numbers
     // (or a "no data" note) even though there's no voxel to glow.
     const dm = districtMeshes.find(
-      m => m.userData.layer === 'ntpc' && m.userData.townName.slice(0, -1) === townStem
+      m => m.userData.layer === CITY_CONFIG.key && m.userData.townName.slice(0, -1) === townStem
     );
     if (dm) panZoomWithPitch(dm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100);
     // A duck-typed stub that satisfies setHover / renderBubble /
@@ -707,21 +777,23 @@ function panZoomWithPitch(targetVec, distance, pitchDeg, deltaAzimuthDeg = 0) {
 }
 
 // ─────────── URL sync (share links) ───────────
-// Format: ?y=YYYY&d=中和&v=安和
+// Format: ?city=ntpc&y=YYYY&d=中和&v=安和
+// city= is always preserved so back-navigation works correctly.
 // Year always written so 2022/2026/... are unambiguous in shared links.
 function writeUrl() {
   const params = new URLSearchParams();
+  params.set('city', CITY_CONFIG.key);
   params.set('y', String(currentYear));
   if (drilledDistrict) params.set('d', drilledDistrict.slice(0, -1));
   if (sticky && hovered?.userData?.layer === 'village') {
     params.set('v', hovered.userData.villageName.slice(0, -1));
   }
-  const qs = params.toString();
-  history.replaceState({}, '', qs ? `?${qs}` : location.pathname);
+  history.replaceState({}, '', `?${params.toString()}`);
 }
 
 function parseAndApplyUrl() {
   const p = new URLSearchParams(location.search);
+  // 'city' param is routing-only; already consumed above as CITY_CONFIG
   const yStr = p.get('y');
   const d = p.get('d');
   const v = p.get('v');
@@ -774,27 +846,56 @@ function updateCardState() {
   }
 }
 
-let hudVoxelCounts = { ntpc: 0, tpe: 0, rest: 0 };
-function refreshHud(ntpc, tpe, rest) {
-  if (ntpc !== undefined) hudVoxelCounts = { ntpc, tpe, rest };
+let hudVoxelCounts = { main: 0, context: 0, rest: 0 };
+function refreshHud(main, context, rest) {
+  if (main !== undefined) hudVoxelCounts = { main, context, rest };
   const data = ELECTIONS[currentYear];
   const topTwo = data.overall?.results?.slice(0, 2) || [];
   const vs = topTwo.map(r => `${r.name}（${r.partyName.replace(/(黨|中國|民主|主黨|中國國)/g, '').slice(0, 2) || r.partyName}）`).join(' vs ');
   hud.innerHTML = `<b>${data.election}</b><br />
     ${vs}<br />
-    <span style="opacity:.6">新北 ${hudVoxelCounts.ntpc} · 台北 ${hudVoxelCounts.tpe} · 其他 ${hudVoxelCounts.rest} 方塊</span>`;
+    <span style="opacity:.6">${CITY_CONFIG.hud.mainLabel} ${hudVoxelCounts.main} · ${CITY_CONFIG.hud.contextLabel ? CITY_CONFIG.hud.contextLabel + ' ' + hudVoxelCounts.context + ' · ' : ''}其他 ${hudVoxelCounts.rest} 方塊</span>`;
 }
 
-try {
-  bootstrap();
-  buildTimeline();
-  updateTimelineActive();
-  buildVillagePanel();
-  wireViewToggle();
-  parseAndApplyUrl();
-} catch (err) {
-  hud.innerHTML = `<b>載入失敗</b><br />${err.message}`;
-  console.error(err);
+// ─────────── routing ───────────
+// ?city=ntpc        → init full Three.js scene (current experience)
+// ?y=&d=&v= only    → backward-compat: old share links have no city param;
+//                     treat as ntpc (the only city that existed before M9)
+// no params at all  → home screen
+if (!_cityParam) {
+  // Home screen: show the city-picker, hide city-page chrome
+  document.getElementById('home-screen').removeAttribute('hidden');
+  document.getElementById('timeline').style.display = 'none';
+  document.getElementById('timeline-hint').style.display = 'none';
+  document.getElementById('controls').style.display = 'none';
+  document.getElementById('label').style.display = 'none';
+  document.getElementById('village-panel').style.display = 'none';
+} else {
+  // City page: hide home screen, show back button, init scene
+  document.getElementById('city-back-btn').style.display = 'flex';
+
+  try {
+    bootstrap();
+    buildTimeline();
+    updateTimelineActive();
+    buildVillagePanel();
+    wireViewToggle();
+    parseAndApplyUrl();
+    // Update timeline hint dynamically based on which years have village data
+    const missingVillageYears = YEARS.filter(y => !VILLAGE_YEARS.includes(y));
+    const hintEl = document.getElementById('timeline-hint');
+    if (hintEl) {
+      if (missingVillageYears.length === 0) {
+        hintEl.textContent = `所有 ${YEARS.length} 屆均有里級資料`;
+      } else {
+        const firstVillageYear = Math.min(...VILLAGE_YEARS);
+        hintEl.textContent = `里級資料自 ${firstVillageYear} 起 · ${missingVillageYears.join(' / ')} 中選會未公開里級`;
+      }
+    }
+  } catch (err) {
+    hud.innerHTML = `<b>載入失敗</b><br />${err.message}`;
+    console.error(err);
+  }
 }
 
 // ─────────── hover + floating label ───────────
@@ -926,7 +1027,7 @@ function handleCanvasClick(cx, cy) {
   if (!drilledDistrict) {
     // district mode: click an NTPC district to drill; empty canvas toggles
     // the card overlay (same as Space / 新北市 tap).
-    const targets = districtMeshes.filter(m => m.userData.layer === 'ntpc' && m.visible);
+    const targets = districtMeshes.filter(m => m.userData.layer === CITY_CONFIG.key && m.visible);
     const hit = raycaster.intersectObjects(targets, false)[0];
     if (hit) drillInto(hit.object);
     else toggleCardsCollapsed();
@@ -995,14 +1096,14 @@ function renderBubble(mesh) {
     const vName = mesh.userData.villageName;
     const tName = mesh.userData.townName;
     if (!v) {
-      labelBubble.innerHTML = `<div class="row"><span class="tag">新北市 ${tName}</span><span class="name">${vName}</span></div>
+      labelBubble.innerHTML = `<div class="row"><span class="tag">${CITY_CONFIG.nameZh} ${tName}</span><span class="name">${vName}</span></div>
         <div class="sub">${currentYear} 年無里級資料</div>
         ${renderVillageHistoryStrip(tName, vName)}`;
       return;
     }
     const fmt = n => n.toLocaleString('en-US');
     const rows = v.results.map(r => {
-      const hex = '#' + partyColor(r.partyCode).toString(16).padStart(6, '0');
+      const hex = '#' + candidateColor(r).toString(16).padStart(6, '0');
       return `<div class="cand">
         <span class="swatch" style="background:${hex}"></span>
         <span class="cn">${r.name}</span>
@@ -1011,7 +1112,7 @@ function renderBubble(mesh) {
         <span class="cr">${r.rate.toFixed(1)}%</span>
       </div>`;
     }).join('');
-    const winColor = '#' + partyColor(v.winnerPartyCode).toString(16).padStart(6, '0');
+    const winColor = '#' + candidateColor(v.results[0]).toString(16).padStart(6, '0');
 
     // Flip math for the runner-up: swing = votes that must change sides
     // (gap closes at 2× leverage); mobilize = new votes all flowing to loser.
@@ -1021,7 +1122,7 @@ function renderBubble(mesh) {
       const gap = w.votes - l.votes;
       const swing = Math.ceil((gap + 1) / 2);
       const mobilize = gap + 1;
-      const loserColor = '#' + partyColor(l.partyCode).toString(16).padStart(6, '0');
+      const loserColor = '#' + candidateColor(l).toString(16).padStart(6, '0');
       flipBlock = `<div class="flip">
         <div class="flip-head" style="color:${loserColor}">${l.name}（${l.partyName}）翻盤需</div>
         <div class="flip-row"><b>${fmt(swing)}</b> 票改投 <span class="dim">（1 票 = 2 差距）</span></div>
@@ -1046,9 +1147,11 @@ function renderBubble(mesh) {
     return;
   }
 
-  const tag = mesh.userData.layer === 'tpe' ? '台北市'
-    : mesh.userData.layer === 'rest' ? mesh.userData.countyName
-    : '新北市';
+  const tag = mesh.userData.layer === 'rest'
+    ? mesh.userData.countyName
+    : mesh.userData.layer === CITY_CONFIG.key
+      ? CITY_CONFIG.nameZh
+      : CITY_CONFIGS[mesh.userData.layer]?.nameZh || mesh.userData.countyName || '';
 
   if (isContext) {
     labelBubble.innerHTML = `<div class="row"><span class="tag">${tag}</span><span class="name">${townName}</span></div>
@@ -1061,7 +1164,7 @@ function renderBubble(mesh) {
     return;
   }
   const rows = election.results.map(r => {
-    const hex = '#' + partyColor(r.partyCode).toString(16).padStart(6, '0');
+    const hex = '#' + candidateColor(r).toString(16).padStart(6, '0');
     return `<div class="cand">
       <span class="swatch" style="background:${hex}"></span>
       <span class="cn">${r.name}</span>
@@ -1069,7 +1172,7 @@ function renderBubble(mesh) {
       <span class="cr">${r.rate.toFixed(1)}%</span>
     </div>`;
   }).join('');
-  const winColor = '#' + partyColor(election.winnerPartyCode).toString(16).padStart(6, '0');
+  const winColor = '#' + candidateColor(election.results[0]).toString(16).padStart(6, '0');
   labelBubble.innerHTML = `
     <div class="row"><span class="tag">${tag}</span><span class="name">${election.name}</span></div>
     <div class="winner" style="color:${winColor}">${election.winner} 勝 ${election.margin.toFixed(1)}%</div>
@@ -1183,7 +1286,7 @@ function renderPanel() {
   cityCard.style.background = hexToCss(cityHex);
   cityCard.style.color = textColorFor(cityHex);
   cityCard.innerHTML = `
-    <div class="name">新北市</div>
+    <div class="name">${CITY_CONFIG.nameZh}</div>
     <div class="meta">${data.year}</div>`;
   cityCard.title = '回到全局視角 / 收合卡片';
   cityCard.addEventListener('click', () => {
@@ -1199,7 +1302,7 @@ function renderPanel() {
   const districts = data.districts.slice().sort((a, b) => a.area.localeCompare(b.area));
 
   const villageCountByStem = new Map();
-  const src = villageVotes.villages.length ? villageVotes.villages : v2022.villages;
+  const src = villageVotes.villages.length ? villageVotes.villages : fallbackVillages;
   for (const v of src) {
     const s = v.townName.slice(0, -1);
     villageCountByStem.set(s, (villageCountByStem.get(s) || 0) + 1);
@@ -1600,7 +1703,7 @@ function setYear(newYear, { preserveContext = false } = {}) {
 
   // District color tween
   for (const mesh of districtMeshes) {
-    if (mesh.userData.layer !== 'ntpc') continue;
+    if (mesh.userData.layer !== CITY_CONFIG.key) continue;
     const stem = mesh.userData.townName.slice(0, -1);
     const election = electionByStem[stem];
     const targetHex = election ? colorForDistrict(election.results) : NEUTRAL;
