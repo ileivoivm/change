@@ -790,7 +790,7 @@ function autoPanForBubble() {
   // Shift selected village to upper 1/4 of viewport so bubble content has
   // room to expand downward. Moving camera in -screenUp direction shifts the
   // scene upward on screen, placing the village above centre.
-  const shiftPx = window.innerHeight * 0.25;
+  const shiftPx = window.innerHeight * 0.125;
   const delta = screenUp.clone().multiplyScalar(shiftPx * worldPerPx);
   tweenCamera(camera.position.clone().add(delta), controls.target.clone().add(delta), 350);
 }
