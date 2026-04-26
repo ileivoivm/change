@@ -1289,22 +1289,18 @@ labelBubble.addEventListener('click', async (e) => {
   // Fire tally (non-blocking; silently fails if Worker not yet deployed)
   postTally(townName, villageName, 'share');
 
-  if (navigator.share) {
-    try {
-      await navigator.share({ url, title: `${CITY_CONFIG.nameZh} ${townName} ${villageName} 選舉結果` });
-    } catch (err) {
-      if (err.name !== 'AbortError') console.warn(err);
-    }
-  } else {
-    try {
-      await navigator.clipboard.writeText(url);
-      const orig = btn.textContent;
-      btn.textContent = '已複製 ✓';
-      btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1600);
-    } catch {
-      prompt('複製連結分享：', url);
-    }
+  // Always use clipboard — `navigator.share()` opens the iOS native share
+  // sheet (AirDrop / Mail / Messages / 一堆) which surprised users who
+  // expected the simple "複製分享連結 → 已複製 ✓" flow. Clipboard works
+  // identically across desktop and mobile and keeps the bubble's micro-feedback.
+  try {
+    await navigator.clipboard.writeText(url);
+    const orig = btn.textContent;
+    btn.textContent = '已複製 ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1600);
+  } catch {
+    prompt('複製連結分享：', url);
   }
 });
 
