@@ -1196,8 +1196,13 @@ function buildTowerIM(records, threshold) {
   top.frustumCulled   = false;
   const m4 = new THREE.Matrix4();
   const _tmpColor = new THREE.Color();
-  records.forEach(({ centroid, count }, i) => {
-    const h = towerH(count, threshold);
+  records.forEach((rec, i) => {
+    const { centroid, count } = rec;
+    // Use precomputed `rec.level` (set in rebuildTowers; village + district
+    // share the same formula). Falls back to threshold-based calc for
+    // legacy callers that don't pre-set level.
+    const lvl = rec.level ?? towerLevel(count, threshold);
+    const h   = lvl * TOWER_STEP_HEIGHT;
     // Shaft: scale Y by h so the unit cylinder becomes h tall; center at h/2 above voxel top
     m4.makeScale(1, h, 1);
     m4.setPosition(centroid.x, VOXEL_HEIGHT + h / 2, centroid.z);
@@ -1205,7 +1210,10 @@ function buildTowerIM(records, threshold) {
     // Top sphere: sits at tip of shaft, colour derived from share count.
     m4.makeTranslation(centroid.x, VOXEL_HEIGHT + h + 0.15, centroid.z);
     top.setMatrixAt(i, m4);
-    top.setColorAt(i, towerTopColor(count, threshold, _tmpColor));
+    // Use rec.baseColor when available (already lerped with village threshold);
+    // otherwise compute on the fly with the supplied threshold.
+    const colorSrc = rec.baseColor || towerTopColor(count, threshold, _tmpColor);
+    top.setColorAt(i, colorSrc);
   });
   shaft.instanceMatrix.needsUpdate = true;
   top.instanceMatrix.needsUpdate   = true;
@@ -1243,9 +1251,13 @@ function rebuildTowers() {
         villageName:   vName,
         centroid:      m.userData.centroid,
         count,
+        // `level` is the visible height tier (1..10). Stored on the record so
+        // village + district towers can share the same height formula → LOD
+        // swap doesn't change apparent height.
+        level:         towerLevel(count, TOWER_VILLAGE_THRESHOLD),
         meshRef:       m,                               // tickTowerLift follows voxel Y
         _lastLift:     -Infinity,
-        // Star-twinkle state (per-instance random phase + period 0.5–2s)
+        // Star-twinkle state (per-instance random phase + period 2–6s)
         baseColor:     towerTopColor(count, TOWER_VILLAGE_THRESHOLD).clone(),
         twinklePhase:  Math.random() * Math.PI * 2,
         twinklePeriod: 2 + Math.random() * 4,
@@ -1292,9 +1304,15 @@ function rebuildTowers() {
         stem,
         centroid:      new THREE.Vector3(cx, VOXEL_HEIGHT, cz),
         count,
+        // Same level formula as village towers: a district at count=52 →
+        // Lv.5, height 5.0 — matches whatever its tallest village tower
+        // looked like at zoom-in. LOD swap = same height, no shrink/grow.
+        level:         towerLevel(count, TOWER_VILLAGE_THRESHOLD),
         meshRef:       m,
         _lastLift:     -Infinity,
-        baseColor:     towerTopColor(count, TOWER_DISTRICT_THRESHOLD).clone(),
+        // Same colour formula too: a Lv.5 lantern is the same #FCE327→#FC8654
+        // shade whether the camera shows the village or district layer.
+        baseColor:     towerTopColor(count, TOWER_VILLAGE_THRESHOLD).clone(),
         twinklePhase:  Math.random() * Math.PI * 2,
         twinklePeriod: 2 + Math.random() * 4,
       };
@@ -1357,7 +1375,10 @@ function syncTowerLift(records, shaftIM, topIM, threshold) {
       shaftIM.setMatrixAt(i, _zeroMat);
       topIM.setMatrixAt(i, _zeroMat);
     } else {
-      const h = towerH(rec.count, threshold);
+      // Use precomputed `rec.level` (set in rebuildTowers with village
+      // formula for both village and district records) so the LOD swap at
+      // dist=50 doesn't change the apparent height.
+      const h = (rec.level ?? towerLevel(rec.count, threshold)) * TOWER_STEP_HEIGHT;
       _liftMat.makeScale(1, h, 1);
       _liftMat.setPosition(rec.centroid.x, VOXEL_HEIGHT + lift + h / 2, rec.centroid.z);
       shaftIM.setMatrixAt(i, _liftMat);
@@ -1420,7 +1441,11 @@ function checkTowerHit() {
 }
 
 function makeTowerGhost(hit) {
-  const h = towerH(hit.count, hit.isVillage ? TOWER_VILLAGE_THRESHOLD : TOWER_DISTRICT_THRESHOLD);
+  // Both village and district records pre-compute `level` with the village
+  // formula so hover tooltip / bubble height anchor lines up with what's
+  // drawn. Fall back to recompute if record lacks the field.
+  const lvl = hit.level ?? towerLevel(hit.count, TOWER_VILLAGE_THRESHOLD);
+  const h   = lvl * TOWER_STEP_HEIGHT;
   const tipY = VOXEL_HEIGHT + h + 0.15;
   return {
     userData: {
@@ -1790,10 +1815,11 @@ function renderBubble(mesh) {
     const label = mesh.userData.villageName
       ? `${mesh.userData.townName} ${mesh.userData.villageName}`
       : `${mesh.userData.townName}（${CITY_CONFIG.nameZh}）`;
-    const isVillage = !!mesh.userData.villageName;
-    const threshold = isVillage ? TOWER_VILLAGE_THRESHOLD : TOWER_DISTRICT_THRESHOLD;
     const count = mesh.userData.count;
-    const level = towerLevel(count, threshold);
+    // Always use the village threshold for level — village & district towers
+    // share the same height/colour scale so the LOD swap doesn't change
+    // the displayed Lv. number either.
+    const level = towerLevel(count, TOWER_VILLAGE_THRESHOLD);
     const lvLabel = level >= TOWER_MAX_LEVEL ? `Lv.${TOWER_MAX_LEVEL}（MAX）` : `Lv.${level}`;
     labelBubble.innerHTML = `
       <div class="row"><span class="name">${label}</span></div>
