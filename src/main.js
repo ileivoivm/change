@@ -1024,10 +1024,14 @@ function refreshTallyLineInBubble() {
   const totalCount = tShares + tViews;
   const VILLAGE_TOWER_THRESHOLD = TOWER_VILLAGE_THRESHOLD;
   if (totalCount >= VILLAGE_TOWER_THRESHOLD) {
-    const level = Math.floor((totalCount - VILLAGE_TOWER_THRESHOLD) / TOWER_STEP_BUCKET) + 1;
-    const nextRemain = TOWER_STEP_BUCKET - ((totalCount - VILLAGE_TOWER_THRESHOLD) % TOWER_STEP_BUCKET);
+    const level = towerLevel(totalCount, VILLAGE_TOWER_THRESHOLD);
     tallyEl.classList.add('lit');
-    tallyEl.innerHTML = `🏯 燈塔 <b>Lv.${level}</b> · 累積 <b>${totalCount}</b> 次 · 還差 <b>${nextRemain}</b> 次升 Lv.${level + 1}`;
+    if (level >= TOWER_MAX_LEVEL) {
+      tallyEl.innerHTML = `🏯 燈塔 <b>Lv.${TOWER_MAX_LEVEL}（MAX）</b> · 累積 <b>${totalCount}</b> 次 · 已達最高等級`;
+    } else {
+      const nextRemain = TOWER_STEP_BUCKET - ((totalCount - VILLAGE_TOWER_THRESHOLD) % TOWER_STEP_BUCKET);
+      tallyEl.innerHTML = `🏯 燈塔 <b>Lv.${level}</b> · 累積 <b>${totalCount}</b> 次 · 還差 <b>${nextRemain}</b> 次升 Lv.${level + 1}`;
+    }
   } else {
     const remain = VILLAGE_TOWER_THRESHOLD - totalCount;
     tallyEl.classList.remove('lit');
@@ -1073,15 +1077,21 @@ function towerTopColor(count, threshold, target = new THREE.Color()) {
 const towerGroup = new THREE.Group();
 
 // Discrete step height: every TOWER_STEP_BUCKET (10) shares above the
-// threshold climbs by TOWER_STEP_HEIGHT (0.5 world units). User feedback:
-// 「每超過 10 次，就變高一個新量級」. Threshold itself counts as level 1
-// so the first appearance jumps directly to a visible height.
+// threshold climbs one level. Capped at TOWER_MAX_LEVEL (10) so a runaway
+// village can't tower over the whole map. User feedback:
+// 「燈塔最多 10 級（也就是 100 分享），目前燈塔的高度 *2」.
 const TOWER_STEP_BUCKET = 10;
-const TOWER_STEP_HEIGHT = 0.5;
-function towerH(count, threshold) {
+const TOWER_STEP_HEIGHT = 1.0; // doubled from 0.5 for taller silhouettes
+const TOWER_MAX_LEVEL   = 10;
+function towerLevel(count, threshold) {
   if (count < threshold) return 0;
-  const level = Math.floor((count - threshold) / TOWER_STEP_BUCKET) + 1;
-  return level * TOWER_STEP_HEIGHT;
+  return Math.min(
+    TOWER_MAX_LEVEL,
+    Math.floor((count - threshold) / TOWER_STEP_BUCKET) + 1,
+  );
+}
+function towerH(count, threshold) {
+  return towerLevel(count, threshold) * TOWER_STEP_HEIGHT;
 }
 
 function buildTowerIM(records, threshold) {
@@ -1596,10 +1606,11 @@ function renderBubble(mesh) {
     const isVillage = !!mesh.userData.villageName;
     const threshold = isVillage ? TOWER_VILLAGE_THRESHOLD : TOWER_DISTRICT_THRESHOLD;
     const count = mesh.userData.count;
-    const level = Math.floor((count - threshold) / TOWER_STEP_BUCKET) + 1;
+    const level = towerLevel(count, threshold);
+    const lvLabel = level >= TOWER_MAX_LEVEL ? `Lv.${TOWER_MAX_LEVEL}（MAX）` : `Lv.${level}`;
     labelBubble.innerHTML = `
       <div class="row"><span class="name">${label}</span></div>
-      <div class="sub">🏯 Lv.${level} · 已被分享 ${fmt(count)} 次</div>`;
+      <div class="sub">🏯 ${lvLabel} · 已被分享 ${fmt(count)} 次</div>`;
     return;
   }
 
@@ -1656,9 +1667,13 @@ function renderBubble(mesh) {
     const VILLAGE_TOWER_THRESHOLD = TOWER_VILLAGE_THRESHOLD;
     let tallyBlock;
     if (totalCount >= VILLAGE_TOWER_THRESHOLD) {
-      const level = Math.floor((totalCount - VILLAGE_TOWER_THRESHOLD) / TOWER_STEP_BUCKET) + 1;
-      const nextRemain = TOWER_STEP_BUCKET - ((totalCount - VILLAGE_TOWER_THRESHOLD) % TOWER_STEP_BUCKET);
-      tallyBlock = `<div class="tally-count lit" data-town="${tName}" data-village="${vName}">🏯 燈塔 <b>Lv.${level}</b> · 累積 <b>${totalCount}</b> 次 · 還差 <b>${nextRemain}</b> 次升 Lv.${level + 1}</div>`;
+      const level = towerLevel(totalCount, VILLAGE_TOWER_THRESHOLD);
+      if (level >= TOWER_MAX_LEVEL) {
+        tallyBlock = `<div class="tally-count lit" data-town="${tName}" data-village="${vName}">🏯 燈塔 <b>Lv.${TOWER_MAX_LEVEL}（MAX）</b> · 累積 <b>${totalCount}</b> 次 · 已達最高等級</div>`;
+      } else {
+        const nextRemain = TOWER_STEP_BUCKET - ((totalCount - VILLAGE_TOWER_THRESHOLD) % TOWER_STEP_BUCKET);
+        tallyBlock = `<div class="tally-count lit" data-town="${tName}" data-village="${vName}">🏯 燈塔 <b>Lv.${level}</b> · 累積 <b>${totalCount}</b> 次 · 還差 <b>${nextRemain}</b> 次升 Lv.${level + 1}</div>`;
+      }
     } else {
       const remain = VILLAGE_TOWER_THRESHOLD - totalCount;
       tallyBlock = `<div class="tally-count" data-town="${tName}" data-village="${vName}">分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（還差 ${remain} 次）</div>`;
@@ -2414,6 +2429,25 @@ if (homeEl) {
     if (drilledDistrict) exitDrill();
     else tweenCamera(INITIAL_CAM_POS.clone(), INITIAL_TARGET.clone());
   });
+}
+
+// Help / 燈塔規則 modal: open on button click, close on backdrop click,
+// 'X' button, or ESC. The modal is a `<div hidden>` in index.html — toggle
+// the `hidden` attribute to show/hide.
+const helpBtnEl    = document.getElementById('help-btn');
+const helpModalEl  = document.getElementById('help-modal');
+if (helpBtnEl && helpModalEl) {
+  const closeHelp = () => helpModalEl.setAttribute('hidden', '');
+  const openHelp  = () => helpModalEl.removeAttribute('hidden');
+  helpBtnEl.addEventListener('click', openHelp);
+  helpModalEl.querySelector('.help-backdrop')?.addEventListener('click', closeHelp);
+  helpModalEl.querySelector('.help-close')?.addEventListener('click', closeHelp);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !helpModalEl.hasAttribute('hidden')) {
+      closeHelp();
+      e.stopPropagation(); // don't also exit drill / unselect
+    }
+  }, true); // capture phase: run before the existing ESC handler below
 }
 
 // Zoom +/- buttons

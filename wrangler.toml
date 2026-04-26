@@ -7,3 +7,8 @@ workers_dev = true
 [[kv_namespaces]]
 binding = "CHANGE_TALLY"
 id = "fb9b871a0c8e4a9595b27da13fdf2106"
+
+# Daily decay: every tally's shares & views tick down by 1 each day. Once
+# both hit 0 the entry is deleted. Runs 00:05 UTC = 08:05 Taipei time.
+[triggers]
+crons = ["5 0 * * *"]

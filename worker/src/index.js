@@ -42,7 +42,53 @@ export default {
       return jsonResponse(request, { error: "Internal error", detail: error.message }, 500);
     }
   },
+
+  // Daily decay: each scheduled run subtracts 1 from every counted
+  // (shares, views) tally. Counts clamped at 0; once both fields hit 0 the
+  // entry is deleted entirely so KV doesn't accumulate dead villages and the
+  // map's "沒被分享的里完全不畫塔" rule stays clean.
+  //
+  // Wired via wrangler.toml [triggers] crons. Configured to run once a day
+  // (00:05 UTC ≈ 08:05 Taipei) so the share counts tick down before the
+  // morning rush.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(decayAllTallies(env));
+  },
 };
+
+async function decayAllTallies(env) {
+  if (!env.CHANGE_TALLY) return { processed: 0 };
+  let processed = 0;
+  let decayed   = 0;
+  let cleared   = 0;
+  let cursor;
+  do {
+    const page = await env.CHANGE_TALLY.list({ cursor });
+    for (const { name } of page.keys) {
+      // Skip non-tally helper keys (rate-limit locks, future namespaced keys)
+      if (name.startsWith("lock:")) continue;
+      const value = await env.CHANGE_TALLY.get(name, "json");
+      if (!value || typeof value !== "object") continue;
+      processed++;
+      const shares = Math.max(0, (Number(value.shares) || 0) - 1);
+      const views  = Math.max(0, (Number(value.views)  || 0) - 1);
+      if (shares === 0 && views === 0) {
+        await env.CHANGE_TALLY.delete(name);
+        cleared++;
+      } else {
+        await env.CHANGE_TALLY.put(name, JSON.stringify({
+          ...value,
+          shares,
+          views,
+          lastDecay: Date.now(),
+        }));
+        decayed++;
+      }
+    }
+    cursor = page.list_complete ? undefined : page.cursor;
+  } while (cursor);
+  return { processed, decayed, cleared };
+}
 
 async function handleTally(request, env) {
   let payload;
