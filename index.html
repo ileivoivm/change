@@ -448,14 +448,27 @@
         background: transparent;
       }
       #search-modal #search-input::placeholder { color: #aaa; }
+      /* Keyboard key chips — single-char keys (↑ ↓ /) look like square caps;
+         multi-char keys (Enter / ESC) keep their text but share height + box
+         shadow for visual rhythm. The light inset shadow mimics a key cap. */
       #search-modal .search-hint, #search-modal kbd {
-        font: 11px/1 -apple-system, monospace;
-        color: #888;
-        background: #f3f1ed;
-        border: 1px solid rgba(0,0,0,0.08);
+        display: inline-flex;
+        align-items: center; justify-content: center;
+        min-width: 22px; height: 22px;
+        padding: 0 7px;
+        font: 500 11px/1 -apple-system, "SF Mono", Menlo, monospace;
+        color: #555;
+        background: linear-gradient(180deg, #fefefb 0%, #efece5 100%);
+        border: 1px solid rgba(0,0,0,0.12);
         border-radius: 4px;
-        padding: 3px 6px;
+        box-shadow:
+          inset 0 -1px 0 rgba(0,0,0,0.06),
+          0 1px 0 rgba(255,255,255,0.5);
+        letter-spacing: 0;
+        vertical-align: middle;
       }
+      /* Enter / ESC labels are slightly stretched; keep their type tabular */
+      #search-modal .search-hint { font-weight: 400; min-width: 32px; }
       #search-modal #search-results {
         overflow-y: auto;
         max-height: 50vh;
@@ -1153,7 +1166,7 @@
         <div id="search-results" role="listbox"></div>
         <div class="search-foot" aria-hidden="true">
           <span><kbd>↑</kbd><kbd>↓</kbd> 選擇</span>
-          <span><kbd>Enter</kbd> 跳到</span>
+          <span><kbd>↵</kbd> 跳到</span>
           <span><kbd>/</kbd> 開啟</span>
         </div>
       </div>
