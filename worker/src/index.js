@@ -13,7 +13,13 @@ const EVENTS = {
   view: "views",
 };
 
-const LOCK_TTL_SECONDS = 10 * 60;
+// IP rate-limit window for production (non-localhost) callers.
+// Lifted from 10 minutes → 24 hours to harden against IP-rotation pump attacks.
+// Combined with the daily decay cron (-1/day) this means a casual abuser would
+// need >24h staying power AND new IPs each window to outrun decay; for a
+// good-faith user wanting to share repeatedly, once-per-day is also more
+// in line with the「每天 +1，每天 −1」mental model in the help modal.
+const LOCK_TTL_SECONDS = 24 * 60 * 60;
 const KEY_PART_PATTERN = /^[\p{Letter}\p{Number}_-]+$/u;
 
 export default {

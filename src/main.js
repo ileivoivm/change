@@ -1018,6 +1018,7 @@ async function fetchShareCounts() {
     }
     rebuildTowers();
     refreshVillageCardDots();
+    refreshTallyLineInBubble();
   } catch {}
 }
 
