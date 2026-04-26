@@ -59,13 +59,23 @@ async function handleTally(request, env) {
 
   const { city, district, village, event } = normalized.data;
   const key = tallyKey(city, district, village);
-  const ipHash = await getIpHash(request);
-  const lockKey = `lock:${key}:${ipHash}`;
-  const lockExists = await env.CHANGE_TALLY.get(lockKey);
 
-  if (lockExists) {
-    const current = await readCount(env.CHANGE_TALLY, key);
-    return jsonResponse(request, { key, counted: false, reason: "rate_limited", count: current });
+  // Dev bypass: when the request comes from a localhost origin (already
+  // restricted to the dev allowlist above), skip the IP rate-limit so a
+  // single dev machine can hammer +1 to verify the tally pipeline. Production
+  // origins still go through the 10-min IP lock.
+  const origin = request.headers.get("Origin") || "";
+  const isDevOrigin = origin.startsWith("http://localhost:") || origin.startsWith("http://127.0.0.1:");
+
+  let lockKey = null;
+  if (!isDevOrigin) {
+    const ipHash = await getIpHash(request);
+    lockKey = `lock:${key}:${ipHash}`;
+    const lockExists = await env.CHANGE_TALLY.get(lockKey);
+    if (lockExists) {
+      const current = await readCount(env.CHANGE_TALLY, key);
+      return jsonResponse(request, { key, counted: false, reason: "rate_limited", count: current });
+    }
   }
 
   const current = await readCount(env.CHANGE_TALLY, key);
@@ -80,7 +90,9 @@ async function handleTally(request, env) {
   };
 
   await env.CHANGE_TALLY.put(key, JSON.stringify(next));
-  await env.CHANGE_TALLY.put(lockKey, "1", { expirationTtl: LOCK_TTL_SECONDS });
+  if (lockKey) {
+    await env.CHANGE_TALLY.put(lockKey, "1", { expirationTtl: LOCK_TTL_SECONDS });
+  }
 
   return jsonResponse(request, { key, counted: true, count: next });
 }

@@ -938,14 +938,21 @@ function parseAndApplyUrl() {
 
 // ─────────── tally + share tracking (T1 / T2) ───────────
 const TALLY_DEDUP_MS = 30 * 60 * 1000; // 30 minutes
+// In dev (Vite localhost), bypass the sessionStorage dedup so the developer
+// can hammer the share button to verify counts go up. Production keeps full
+// dedup so a refresh-spamming user can't inflate counts. Worker also bypasses
+// its IP lock when Origin is localhost (see worker/src/index.js).
+const TALLY_DEV_UNLIMITED = !!import.meta.env.DEV;
 
 function isDedupActive(dedupKey) {
+  if (TALLY_DEV_UNLIMITED) return false;
   try {
     const t = sessionStorage.getItem('tally:' + dedupKey);
     return t ? Date.now() - Number(t) < TALLY_DEDUP_MS : false;
   } catch { return false; }
 }
 function markDedup(dedupKey) {
+  if (TALLY_DEV_UNLIMITED) return;
   try { sessionStorage.setItem('tally:' + dedupKey, String(Date.now())); } catch {}
 }
 
