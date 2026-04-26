@@ -968,10 +968,14 @@ async function fetchShareCounts() {
     const r = await fetch(`${TALLY_WORKER_URL}/counts?city=${CITY_CONFIG.key}`);
     if (!r.ok) return;
     const data = await r.json();
-    shareCounts = data;
-    window.shareCounts = data; // debug: console.table(window.shareCounts)
+    // Worker returns { city, counts }; the previous version stored the whole
+    // object as shareCounts, which made shareCounts[key] always undefined and
+    // prevented any tower from ever appearing. Pull out .counts here.
+    const counts = data.counts || {};
+    shareCounts = counts;
+    window.shareCounts = counts; // debug: console.table(window.shareCounts)
     districtShareCounts = new Map();
-    for (const [key, v] of Object.entries(data)) {
+    for (const [key, v] of Object.entries(counts)) {
       // key: "{city}-{townName}-{villageName}", e.g. "ntpc-板橋區-留侯里"
       const parts = key.split('-');
       if (parts.length < 3) continue;
@@ -981,6 +985,14 @@ async function fetchShareCounts() {
     }
     rebuildTowers();
   } catch {}
+}
+
+// Re-render the currently-pinned bubble so freshly-fetched share counts show
+// up as 「已被分享 N 次」 without the user needing to click away and back.
+function refreshBubbleAfterTally() {
+  if (!sticky) return;
+  const m = pulseMesh || hovered;
+  if (m) renderBubble(m);
 }
 
 function getTotalForVillage(townName, villageName) {
@@ -1286,8 +1298,11 @@ labelBubble.addEventListener('click', async (e) => {
   });
   const url = `${shareBase}/?${sp}`;
 
-  // Fire tally (non-blocking; silently fails if Worker not yet deployed)
-  postTally(townName, villageName, 'share');
+  // Fire tally and re-fetch counts so the bubble's 「已被分享 N 次」 line
+  // (and tower height, once thresholds are met) updates immediately. Worker
+  // is fast (~150ms) so the await usually finishes before the user notices.
+  await postTally(townName, villageName, 'share');
+  fetchShareCounts().then(refreshBubbleAfterTally);
 
   // Always use clipboard — `navigator.share()` opens the iOS native share
   // sheet (AirDrop / Mail / Messages / 一堆) which surprised users who
@@ -1462,9 +1477,24 @@ function renderBubble(mesh) {
       </div>`;
     }
 
-    // Share button: always active — uses navigator.share() on mobile, clipboard on desktop.
+    // Share button: clipboard on all platforms (avoids surprising iOS share sheet).
     // data-town/data-village carry full names (with suffix) for the tally key.
     const shareBlock = `<button class="share-btn" data-town="${tName}" data-village="${vName}">分享</button>`;
+
+    // Tally readout — gives the share-presser instant visual feedback before
+    // hitting the 里塔 ≥10 / 區塔 ≥50 thresholds. Always shown so the
+    // "分享點亮燈塔" mechanism is discoverable; 0 / 9 / 50+ all visible.
+    const tally = shareCounts[`${CITY_CONFIG.key}-${tName}-${vName}`];
+    const tShares = tally?.shares || 0;
+    const tViews  = tally?.views  || 0;
+    const totalCount = tShares + tViews;
+    const VILLAGE_TOWER_THRESHOLD = 10;
+    const remaining = Math.max(0, VILLAGE_TOWER_THRESHOLD - totalCount);
+    const tallyBlock = totalCount === 0
+      ? `<div class="tally-count" data-town="${tName}" data-village="${vName}">分享點亮燈塔 · 累積 <b>${VILLAGE_TOWER_THRESHOLD}</b> 次後此里會在地圖上長出塔</div>`
+      : totalCount >= VILLAGE_TOWER_THRESHOLD
+        ? `<div class="tally-count lit" data-town="${tName}" data-village="${vName}">🏯 燈塔已點亮 · 已被分享 <b>${totalCount}</b> 次（${tShares} 分享 · ${tViews} 點開）</div>`
+        : `<div class="tally-count" data-town="${tName}" data-village="${vName}">已被分享 <b>${totalCount}</b> 次 · 還差 <b>${remaining}</b> 次點亮燈塔</div>`;
 
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
@@ -1472,6 +1502,7 @@ function renderBubble(mesh) {
       <div class="cands">${rows}</div>
       ${flipBlock}
       ${renderVillageHistoryStrip(tName, vName)}
+      ${tallyBlock}
       ${shareBlock}`;
     return;
   }
