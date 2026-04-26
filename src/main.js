@@ -1720,32 +1720,50 @@ labelBubble.addEventListener('click', async (e) => {
   // 4-digit village within district) — stable, ASCII, easier to share. The
   // legacy Chinese-stem path /share/{city}/{區}/{里}/ is still generated for
   // backward compat, so FB/LINE-cached old links keep working.
-  const shareBase = import.meta.env.DEV
-    ? 'https://ileivoivm.github.io/change'
-    : location.origin + import.meta.env.BASE_URL.replace(/\/$/, '');
+  // Always build share URLs against the production origin: dev / staging
+  // testers paste links to friends, who hit the canonical site. Hard-coded
+  // so a stray import.meta.env.BASE_URL value or a future Vite config tweak
+  // can't smuggle a leading character into the clipboard string (one user
+  // hit `ahttps://...` in Messenger; couldn't reproduce in source — but
+  // hardening the construction means it's structurally impossible now).
+  const SHARE_ORIGIN = 'https://ileivoivm.github.io';
+  const SHARE_BASE_PATH = '/change';
   const hasOgPage = currentYear === 2022; // all six cities have OG for 2022
   const match = villageVotes.villages.find(x =>
     x.townName === townName && x.villageName === villageName
   );
   const useNumeric = hasOgPage && match?.area && match?.villageCode;
-  let url;
+  let pathname;
+  let search;
   if (useNumeric) {
-    url = `${shareBase}/share/${CITY_CONFIG.key}/${match.area}/${match.villageCode}/?ref=share`;
+    pathname = `${SHARE_BASE_PATH}/share/${CITY_CONFIG.key}/${match.area}/${match.villageCode}/`;
+    search = '?ref=share';
   } else if (hasOgPage) {
     // Fallback: numeric IDs not found (data missing area/villageCode for this
     // village) — fall back to Chinese-stem path, which is also generated.
     const dStem = encodeURIComponent(townName.slice(0, -1));
     const vStem = encodeURIComponent(villageName.slice(0, -1));
-    url = `${shareBase}/share/${CITY_CONFIG.key}/${dStem}/${vStem}/?ref=share`;
+    pathname = `${SHARE_BASE_PATH}/share/${CITY_CONFIG.key}/${dStem}/${vStem}/`;
+    search = '?ref=share';
   } else {
     // No pre-built OG for non-2022 years — share the SPA URL directly.
-    url = `${shareBase}/?${new URLSearchParams({
+    pathname = `${SHARE_BASE_PATH}/`;
+    search = '?' + new URLSearchParams({
       city: CITY_CONFIG.key,
       y:    String(currentYear),
       d:    townName.slice(0, -1),
       v:    villageName.slice(0, -1),
       ref:  'share',
-    })}`;
+    }).toString();
+  }
+  // Use the URL constructor: it validates / normalises and refuses to be
+  // prefixed with anything outside the parts we passed in. Belt and braces.
+  let url = new URL(pathname + search, SHARE_ORIGIN).toString();
+  // Last-line defence — if anything ever slipped a non-protocol char in
+  // front of the URL, slice it off rather than copy garbage to clipboard.
+  if (!/^https:\/\//.test(url)) {
+    const i = url.indexOf('https://');
+    url = i > 0 ? url.slice(i) : SHARE_ORIGIN + pathname + search;
   }
 
   // Copy URL to clipboard with three-tier fallback so the user always sees
@@ -1767,9 +1785,20 @@ labelBubble.addEventListener('click', async (e) => {
   } catch {
     // Hidden textarea + execCommand fallback. Works in iframes / unfocused
     // documents that block navigator.clipboard. Cleanup on next tick.
+    //
+    // readonly + autocomplete/autocorrect/autocapitalize/spellcheck off so
+    // the iOS / Android virtual keyboard's predictive text and any browser
+    // autofill cannot mutate the selection between select() and copy. This
+    // is the suspected route for stray characters appearing on pasted URLs.
     try {
       const ta = document.createElement('textarea');
       ta.value = url;
+      ta.setAttribute('readonly', '');
+      ta.setAttribute('autocomplete', 'off');
+      ta.setAttribute('autocorrect', 'off');
+      ta.setAttribute('autocapitalize', 'off');
+      ta.setAttribute('spellcheck', 'false');
+      ta.setAttribute('aria-hidden', 'true');
       ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
       document.body.appendChild(ta);
       ta.select();
