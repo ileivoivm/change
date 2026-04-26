@@ -1259,15 +1259,38 @@ function rebuildTowers() {
     villageOrder.push(...vRecs);
   }
 
-  // District towers (main city only)
+  // District towers (main city only).
+  // Position the district tower at the count-weighted average of its lit
+  // villages, NOT at the district's administrative geometric centroid.
+  // Otherwise, when the camera zooms past the LOD threshold (dist=50), the
+  // village tower vanishes from the village voxel and the district tower
+  // pops in at a totally different XZ — looks like 「塔跳動」. By aligning
+  // to the activity centroid, the LOD swap stays close to where the user's
+  // eye was, making the transition feel continuous.
+  const districtVoxelCentroid = new Map(); // stem → { x, z, total }
+  for (const v of vRecs) {
+    const stem = v.townName.slice(0, -1);
+    const acc  = districtVoxelCentroid.get(stem) || { x: 0, z: 0, total: 0 };
+    acc.x     += v.centroid.x * v.count;
+    acc.z     += v.centroid.z * v.count;
+    acc.total += v.count;
+    districtVoxelCentroid.set(stem, acc);
+  }
   const dRecs = districtMeshes
     .filter(m => m.userData.layer === CITY_CONFIG.key)
     .map(m => {
       const stem  = m.userData.townName.slice(0, -1);
       const count = districtShareCounts.get(stem) || 0;
+      const acc   = districtVoxelCentroid.get(stem);
+      // Use weighted-average village centroid when available; otherwise
+      // fall back to the district mesh's own centroid (eg. district sum
+      // ≥ 50 from many small villages none of which individually hit the
+      // village threshold).
+      const cx = acc && acc.total > 0 ? acc.x / acc.total : m.userData.centroid.x;
+      const cz = acc && acc.total > 0 ? acc.z / acc.total : m.userData.centroid.z;
       return {
         stem,
-        centroid:      m.userData.centroid,
+        centroid:      new THREE.Vector3(cx, VOXEL_HEIGHT, cz),
         count,
         meshRef:       m,
         _lastLift:     -Infinity,
