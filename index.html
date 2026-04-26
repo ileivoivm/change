@@ -301,13 +301,16 @@
       #label.context .bubble { background: rgba(240,238,234,0.97); color: #6a6a6a; }
 
       /* Leader line: SVG full-viewport overlay, line endpoints set per
-         frame in updateLabelPosition (bubble corner → voxel top). */
+         frame in updateLabelPosition (bubble corner → voxel top).
+         Hidden for now (使用者：「先隱藏，有點妨礙畫面」) — JS still
+         updates the line endpoints, so flipping display:block / removing
+         this rule is enough to bring it back when desired. */
       #label-leader {
+        display: none;
         position: fixed; top: 0; left: 0;
         width: 100%; height: 100%;
         pointer-events: none;
-        z-index: 49; /* below #label (50) so the bubble's white background
-                        covers any overshoot of the line into the bubble */
+        z-index: 49;
         opacity: 0;
         transition: opacity 120ms ease-out;
       }
