@@ -1126,6 +1126,8 @@ function rebuildTowers() {
       villageName: m.userData.villageName,
       centroid:    m.userData.centroid,
       count:       getTotalForVillage(m.userData.townName, m.userData.villageName),
+      meshRef:     m,       // used by tickTowerLift to follow voxel Y
+      _lastLift:   -Infinity,
     }))
     .filter(r => r.count >= TOWER_VILLAGE_THRESHOLD);
   if (vRecs.length > 0) {
@@ -1142,6 +1144,8 @@ function rebuildTowers() {
       stem:     m.userData.townName.slice(0, -1),
       centroid: m.userData.centroid,
       count:    districtShareCounts.get(m.userData.townName.slice(0, -1)) || 0,
+      meshRef:  m,
+      _lastLift: -Infinity,
     }))
     .filter(r => r.count >= TOWER_DISTRICT_THRESHOLD);
   if (dRecs.length > 0) {
@@ -1160,6 +1164,42 @@ function updateTowerLOD() {
   const showDistrict = dist > TOWER_NEAR;
   if (villageTowerShaft)  { villageTowerShaft.visible  = showVillage;  villageTowerTop.visible   = showVillage; }
   if (districtTowerShaft) { districtTowerShaft.visible = showDistrict; districtTowerTop.visible  = showDistrict; }
+}
+
+// Sync each tower's Y position with its voxel's current `position.y`. The
+// voxel can lift on hover (+0.4) or breathe via the gold pulse (+0.4 ±0.15).
+// Without this, towers sit at static Y and visually detach from the voxel
+// — user feedback: 「voxel 上下移動時，燈塔要連動，不然很怪」.
+//
+// Hot-path notes:
+// - Skip records where lift hasn't changed since last frame (most are 0).
+// - Single InstancedMesh.setMatrixAt + needsUpdate — cheap.
+const _liftMat = new THREE.Matrix4();
+function syncTowerLift(records, shaftIM, topIM, threshold) {
+  if (!shaftIM || !topIM) return;
+  let dirty = false;
+  for (let i = 0; i < records.length; i++) {
+    const rec = records[i];
+    const lift = rec.meshRef ? rec.meshRef.position.y : 0;
+    if (lift === rec._lastLift) continue;
+    rec._lastLift = lift;
+    const h = towerH(rec.count, threshold);
+    _liftMat.makeScale(1, h, 1);
+    _liftMat.setPosition(rec.centroid.x, VOXEL_HEIGHT + lift + h / 2, rec.centroid.z);
+    shaftIM.setMatrixAt(i, _liftMat);
+    _liftMat.makeTranslation(rec.centroid.x, VOXEL_HEIGHT + lift + h + 0.15, rec.centroid.z);
+    topIM.setMatrixAt(i, _liftMat);
+    dirty = true;
+  }
+  if (dirty) {
+    shaftIM.instanceMatrix.needsUpdate = true;
+    topIM.instanceMatrix.needsUpdate = true;
+  }
+}
+
+function tickTowerLift() {
+  syncTowerLift(villageOrder,  villageTowerShaft,  villageTowerTop,  TOWER_VILLAGE_THRESHOLD);
+  syncTowerLift(districtOrder, districtTowerShaft, districtTowerTop, TOWER_DISTRICT_THRESHOLD);
 }
 
 function checkTowerHit() {
@@ -2425,6 +2465,7 @@ window.addEventListener('resize', () => {
   updateCameraReadout();
   tickColorTween(now);
   tickPulse(now);
+  tickTowerLift();
   updateTowerLOD();
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
