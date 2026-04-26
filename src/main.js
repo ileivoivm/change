@@ -355,6 +355,7 @@ function renderVillageHistoryStrip(townName, villageName) {
 
 // ─────────── share counts + tower state ───────────
 let shareCounts = {};            // key "{city}-{townName}-{villageName}" → {shares,views}
+let shareCountsByStem = {};      // key "{tStem}/{vStem}" → {shares,views}（命名 fallback）
 let districtShareCounts = new Map(); // distStem → aggregate total
 // Filled by rebuildTowers() to enable raycasting → data lookups
 const villageOrder   = []; // [{ townName, villageName, centroid, count }]
@@ -989,20 +990,31 @@ async function fetchShareCounts() {
     const r = await fetch(`${TALLY_WORKER_URL}/counts?city=${CITY_CONFIG.key}`);
     if (!r.ok) return;
     const data = await r.json();
-    // Worker returns { city, counts }; the previous version stored the whole
-    // object as shareCounts, which made shareCounts[key] always undefined and
-    // prevented any tower from ever appearing. Pull out .counts here.
+    // Worker returns { city, counts }; pull out .counts.
     const counts = data.counts || {};
     shareCounts = counts;
     window.shareCounts = counts; // debug: console.table(window.shareCounts)
     districtShareCounts = new Map();
+    // Stem-based index lets villages from either naming convention (1982
+    // GeoJSON「永和市」 vs modern vote data「永和區」) find their counts.
+    // Without this, village cards (vote names) never matched KV keys
+    // (mesh names) and the 燈塔點亮 dot never appeared.
+    shareCountsByStem = {};
     for (const [key, v] of Object.entries(counts)) {
       // key: "{city}-{townName}-{villageName}", e.g. "ntpc-板橋區-留侯里"
       const parts = key.split('-');
       if (parts.length < 3) continue;
       const townName = parts[1];
-      const stem = townName.slice(0, -1);
-      districtShareCounts.set(stem, (districtShareCounts.get(stem) || 0) + (v.shares || 0) + (v.views || 0));
+      const villageName = parts[2];
+      const tStem = townName.slice(0, -1);
+      const vStem = villageName.slice(0, -1);
+      const shares = v.shares || 0;
+      const views  = v.views  || 0;
+      districtShareCounts.set(tStem, (districtShareCounts.get(tStem) || 0) + shares + views);
+      const stemKey = `${tStem}/${vStem}`;
+      const acc = shareCountsByStem[stemKey] || (shareCountsByStem[stemKey] = { shares: 0, views: 0 });
+      acc.shares += shares;
+      acc.views  += views;
     }
     rebuildTowers();
     refreshVillageCardDots();
@@ -1049,9 +1061,7 @@ function refreshTallyLineInBubble() {
   const tName = tallyEl.dataset.town;
   const vName = tallyEl.dataset.village;
   if (!tName || !vName) return;
-  const tally = shareCounts[`${CITY_CONFIG.key}-${tName}-${vName}`];
-  const tShares = tally?.shares || 0;
-  const tViews  = tally?.views  || 0;
+  const { shares: tShares, views: tViews } = getTallyForVillage(tName, vName);
   const totalCount = tShares + tViews;
   const VILLAGE_TOWER_THRESHOLD = TOWER_VILLAGE_THRESHOLD;
   if (totalCount >= VILLAGE_TOWER_THRESHOLD) {
@@ -1071,9 +1081,27 @@ function refreshTallyLineInBubble() {
 }
 
 function getTotalForVillage(townName, villageName) {
+  // Direct exact-key lookup first (fastest path).
   const key = `${CITY_CONFIG.key}-${townName}-${villageName}`;
   const v = shareCounts[key];
-  return v ? (v.shares || 0) + (v.views || 0) : 0;
+  if (v) return (v.shares || 0) + (v.views || 0);
+  // Stem-based fallback: KV may have been written with a different naming
+  // convention (1982「永和市」 vs 現代「永和區」). Match on first-N-chars
+  // stem so cards built from vote data still find counts written by the
+  // share-btn (which uses GeoJSON 1982 names).
+  const stemKey = `${townName.slice(0, -1)}/${villageName.slice(0, -1)}`;
+  const s = shareCountsByStem[stemKey];
+  return s ? (s.shares || 0) + (s.views || 0) : 0;
+}
+
+// Same fallback logic, for callers that need shares/views split (eg. tally bubble).
+function getTallyForVillage(townName, villageName) {
+  const key = `${CITY_CONFIG.key}-${townName}-${villageName}`;
+  const v = shareCounts[key];
+  if (v) return { shares: v.shares || 0, views: v.views || 0 };
+  const stemKey = `${townName.slice(0, -1)}/${villageName.slice(0, -1)}`;
+  const s = shareCountsByStem[stemKey];
+  return { shares: s?.shares || 0, views: s?.views || 0 };
 }
 
 // ─────────── tower rendering (T3) ───────────
@@ -1749,9 +1777,8 @@ function renderBubble(mesh) {
     // Tally readout — gives the share-presser instant visual feedback before
     // hitting the 里塔 ≥10 / 區塔 ≥50 thresholds. Always shown so the
     // "分享點亮燈塔" mechanism is discoverable; 0 / 9 / 50+ all visible.
-    const tally = shareCounts[`${CITY_CONFIG.key}-${tName}-${vName}`];
-    const tShares = tally?.shares || 0;
-    const tViews  = tally?.views  || 0;
+    // Uses stem-aware lookup so naming mismatches (1982 vs modern) resolve.
+    const { shares: tShares, views: tViews } = getTallyForVillage(tName, vName);
     const totalCount = tShares + tViews;
     const VILLAGE_TOWER_THRESHOLD = TOWER_VILLAGE_THRESHOLD;
     let tallyBlock;
