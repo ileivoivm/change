@@ -253,17 +253,17 @@
       #label.locked .bubble .history .hsq.current:hover {
         transform: scaleY(1.25);
       }
-      /* Village identity strip line ("永藍里 · 5 場未翻轉" etc.) — hidden
-         per user feedback「畫面資訊過多」. JS still computes & emits the
-         markup (renderVillageHistoryStrip), so removing this rule is
-         enough to bring it back. */
+      /* Village identity strip line — P1 升級後改顯示「永藍里 · 連莊 17 年」
+         「搖擺里 · 翻過 3 次 · 當前 綠 連莊 4 年」這類密度較高的時序統計，
+         過去暫時隱藏（用「畫面資訊過多」），現在資訊有實際 takeaway 重新顯示。 */
       #label .bubble .history .hs-meta {
-        display: none;
+        margin-top: 6px;
         color: #777; font-size: 12px;
         font-variant-numeric: tabular-nums;
+        letter-spacing: 0.04em;
       }
       #label .bubble .history .hs-meta b {
-        color: #2a2a2a; font-weight: 700;
+        color: #2a2a2a; font-weight: 500;
       }
 
       #label .bubble .tally-count {

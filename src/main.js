@@ -323,8 +323,8 @@ function renderVillageHistoryStrip(townName, villageName) {
     return `<span class="${cls}" style="background:${hex}" data-year="${y}" title="${title}"></span>`;
   }).join('');
 
-  // Meta line — identity label. Identity 字在前（粗體），factual 描述在後，三型平行。
-  // 永藍/永綠/永白 用台灣慣用語；其他政黨 fallback 到黨名。
+  // Meta line — identity label + 「連莊 X 年」 streak. P1 升級：把純前端可
+  // 計算的時序統計（連莊 / 翻過 N 次）併陳，讓資料密度提高一個量級。
   const permanentLabel = (code) => {
     if (code === '1') return '永藍里';
     if (code === '16') return '永綠里';
@@ -332,15 +332,45 @@ function renderVillageHistoryStrip(townName, villageName) {
     const n = PARTY_COLORS[code]?.name || '單黨';
     return `永 ${n} 里`;
   };
+  // 黨派色簡稱 — 對齊「永藍/永綠/永白」的命名邏輯，連莊敘事更短
+  const colorShort = (code) => {
+    if (code === '1') return '藍';
+    if (code === '16') return '綠';
+    if (code === '350') return '白';
+    return (PARTY_COLORS[code]?.name || '').slice(0, 1) || '?';
+  };
+  // 計算當前連莊：從最新有資料年往前走，到遇到不同黨派為止
+  const sortedYears = [...years].sort((a, b) => a - b);
+  let streak = null;
+  let latestY = null;
+  for (let i = sortedYears.length - 1; i >= 0; i--) {
+    if (entry?.years[sortedYears[i]]?.partyCode) { latestY = sortedYears[i]; break; }
+  }
+  if (latestY != null) {
+    const latestParty = entry.years[latestY].partyCode;
+    let from = latestY;
+    for (let i = sortedYears.length - 1; i >= 0; i--) {
+      const y = sortedYears[i];
+      const p = entry.years[y]?.partyCode;
+      if (p === latestParty) from = y;
+      else if (p) break;       // 遇到不同黨 → 中斷
+      // p == null（年份無資料）不中斷連莊
+    }
+    streak = { party: latestParty, fromYear: from, toYear: latestY, spanYears: latestY - from };
+  }
 
   let meta = `近 ${years.length} 場里長選舉`;
   if (entry && entry.dataYears >= 2) {
+    const streakBit = streak && streak.spanYears > 0
+      ? ` · 當前 <b>${colorShort(streak.party)}</b> 連莊 <b>${streak.spanYears}</b> 年`
+      : '';
     if (entry.flips === 0) {
-      meta = `<b>${permanentLabel(entry.dominantPartyCode)}</b> · ${entry.dataYears} 場未翻轉`;
+      // 永X里 — 連莊整段資料區間
+      meta = `<b>${permanentLabel(entry.dominantPartyCode)}</b> · 連莊 <b>${streak.spanYears}</b> 年（${streak.fromYear}–${streak.toYear}）`;
     } else if (entry.flips === 1) {
-      meta = `<b>翻轉里</b> · 翻過 1 次`;
+      meta = `<b>翻轉里</b> · 翻過 <b>1</b> 次${streakBit}`;
     } else {
-      meta = `<b>搖擺里</b> · 翻過 ${entry.flips} 次`;
+      meta = `<b>搖擺里</b> · 翻過 <b>${entry.flips}</b> 次${streakBit}`;
     }
   } else if (entry && entry.dataYears === 1) {
     meta = `僅 ${Object.keys(entry.years)[0]} 一場里級資料`;
