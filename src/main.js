@@ -1698,6 +1698,14 @@ labelBubble.addEventListener('click', async (e) => {
 
   const btn = e.target.closest('.share-btn');
   if (!btn || btn.disabled) return;
+  // Belt: ignore the click if the bubble itself isn't visible. CSS already
+  // strips pointer-events from .share-btn while #label has no .visible class,
+  // but stale event listeners or a fade-in race during the same frame can
+  // still let a tap squeak through — and the cost is a misfired clipboard
+  // copy + a misplaced firework burst on empty canvas. JS guard here closes
+  // that hole so behaviour matches the user's mental model: 「氣泡看不到 →
+  // 任何點擊都不應該有反應」.
+  if (!labelEl.classList.contains('visible')) return;
   e.stopPropagation();
 
   const townName    = btn.dataset.town;

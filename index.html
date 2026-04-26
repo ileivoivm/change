@@ -300,6 +300,20 @@
         cursor: not-allowed;
       }
 
+      /* When the bubble is hidden (no .visible class), strip pointer-events
+         from EVERY descendant. #label itself is always pointer-events: none,
+         but .share-btn and the history .hsq squares opt back in via
+         pointer-events: auto — so without this they stay hit-testable at
+         opacity:0. Users tapping where the bubble used to be (e.g. the
+         lower-right corner where 「複製分享連結」 sits when pinned) would
+         fire the share copy + the celebratory firework burst on empty
+         canvas, looking absurd. Universal selector + !important: any future
+         interactive child (e.g. a new in-bubble button) is auto-locked
+         while the bubble isn't visible — opt-in only when bubble is shown. */
+      #label:not(.visible) .bubble * {
+        pointer-events: none !important;
+      }
+
       /* Old vertical pin kept for backward compat but always hidden — the
          leader line is now an SVG drawn from bubble corner to voxel. */
       #label .pin { display: none; }
