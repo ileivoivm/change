@@ -407,6 +407,126 @@
         appearance: none;
       }
 
+      /* Search modal — Cmd+K / 「/」 風格的跨六都搜尋 */
+      #search-modal[hidden] { display: none; }
+      #search-modal {
+        position: fixed; inset: 0;
+        z-index: 210;       /* above help modal */
+        display: flex;
+        align-items: flex-start;     /* 16% from top, not centered */
+        justify-content: center;
+        padding: 16vh 24px 24px;
+        font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+      }
+      #search-modal .search-backdrop {
+        position: absolute; inset: 0;
+        background: rgba(20, 20, 30, 0.42);
+        backdrop-filter: blur(4px);
+      }
+      #search-modal .search-card {
+        position: relative;
+        width: 100%; max-width: 520px;
+        max-height: calc(100vh - 32vh);
+        background: #fff;
+        box-shadow: 0 16px 48px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06);
+        display: flex; flex-direction: column;
+        overflow: hidden;
+      }
+      #search-modal .search-input-row {
+        display: flex; align-items: center;
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(0,0,0,0.08);
+        gap: 12px;
+      }
+      #search-modal .search-icon { color: #888; flex-shrink: 0; }
+      #search-modal #search-input {
+        flex: 1; min-width: 0;
+        font: inherit; font-size: 15px; font-weight: 300;
+        letter-spacing: 0.04em;
+        color: #1a1a1a;
+        border: none; outline: none;
+        background: transparent;
+      }
+      #search-modal #search-input::placeholder { color: #aaa; }
+      #search-modal .search-hint, #search-modal kbd {
+        font: 11px/1 -apple-system, monospace;
+        color: #888;
+        background: #f3f1ed;
+        border: 1px solid rgba(0,0,0,0.08);
+        border-radius: 4px;
+        padding: 3px 6px;
+      }
+      #search-modal #search-results {
+        overflow-y: auto;
+        max-height: 50vh;
+      }
+      #search-modal #search-results:empty { display: none; }
+      #search-modal .search-result {
+        display: flex; align-items: center;
+        padding: 11px 16px;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(0,0,0,0.04);
+        font-size: 14px; font-weight: 300;
+        color: #1a1a1a;
+        transition: background 100ms;
+      }
+      #search-modal .search-result:last-child { border-bottom: none; }
+      #search-modal .search-result.active,
+      #search-modal .search-result:hover {
+        background: #f7f4ee;
+      }
+      #search-modal .search-result .city-tag {
+        font-size: 11px; font-weight: 400;
+        color: #777;
+        background: #f3f1ed;
+        padding: 2px 8px;
+        margin-right: 10px;
+        letter-spacing: 0.06em;
+        border-radius: 999px;
+      }
+      #search-modal .search-result .path {
+        flex: 1; min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      #search-modal .search-result .path b {
+        font-weight: 500;
+        color: #1a1a1a;
+      }
+      #search-modal .search-result .path .sep {
+        color: #bbb; margin: 0 6px;
+      }
+      #search-modal .search-result .type-tag {
+        font-size: 10px; color: #999;
+        margin-left: 10px;
+        font-weight: 300;
+        letter-spacing: 0.12em;
+      }
+      #search-modal .search-empty {
+        padding: 24px 16px;
+        text-align: center;
+        color: #888;
+        font-size: 13px; font-weight: 300;
+      }
+      #search-modal .search-foot {
+        display: flex; justify-content: center;
+        gap: 16px;
+        padding: 10px 16px;
+        border-top: 1px solid rgba(0,0,0,0.06);
+        font-size: 11px; font-weight: 300;
+        color: #888;
+        background: #fafaf7;
+      }
+      #search-modal .search-foot span {
+        display: inline-flex; align-items: center; gap: 4px;
+      }
+      @media (max-width: 640px) {
+        #search-modal { padding: 8vh 12px 12px; }
+        #search-modal .search-card { max-width: 100%; }
+        #search-modal .search-foot { display: none; }
+      }
+
       /* Help / 燈塔規則 modal */
       #help-modal[hidden] { display: none; }
       #help-modal {
@@ -995,6 +1115,13 @@
         <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
       </a>
 
+      <button class="btn-solo" id="search-btn" title="搜尋｜城市 區 里（／ 開啟）" type="button">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <line x1="12.2" y1="12.2" x2="15.5" y2="15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+
       <button class="btn-solo" id="help-btn" title="說明｜燈塔規則" type="button">
         <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
           <circle cx="9" cy="9" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/>
@@ -1002,6 +1129,34 @@
           <circle cx="9" cy="13.3" r="0.9" fill="currentColor"/>
         </svg>
       </button>
+    </div>
+
+    <!-- 搜尋 modal：跨六都查 城市 / 區 / 里 -->
+    <div id="search-modal" hidden>
+      <div class="search-backdrop"></div>
+      <div class="search-card" role="dialog" aria-modal="true" aria-label="搜尋">
+        <div class="search-input-row">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+            <circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <line x1="12.2" y1="12.2" x2="15.5" y2="15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <input
+            id="search-input"
+            type="text"
+            placeholder="搜尋 城市 / 區 / 里…  例：永和 安和"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+          >
+          <kbd class="search-hint" aria-hidden="true">ESC</kbd>
+        </div>
+        <div id="search-results" role="listbox"></div>
+        <div class="search-foot" aria-hidden="true">
+          <span><kbd>↑</kbd><kbd>↓</kbd> 選擇</span>
+          <span><kbd>Enter</kbd> 跳到</span>
+          <span><kbd>/</kbd> 開啟</span>
+        </div>
+      </div>
     </div>
 
     <!-- Help / 燈塔規則 modal -->

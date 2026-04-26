@@ -2669,6 +2669,195 @@ if (helpBtnEl && helpModalEl) {
   }, true); // capture phase: run before the existing ESC handler below
 }
 
+// ─────────── Search modal (cross-city village/district lookup) ───────────
+// Type 「永和 安和」 → 直接跳到 安和里。多 token 必須全部命中（city / district
+// / village 任一欄位 includes 即算）。在當前城市內跳轉走 selectVillage /
+// drillByStem 不重新載入；跨城市時走 location.assign 觸發整頁路由。
+const searchBtnEl    = document.getElementById('search-btn');
+const searchModalEl  = document.getElementById('search-modal');
+const searchInputEl  = document.getElementById('search-input');
+const searchResultsEl= document.getElementById('search-results');
+
+// Build a flat searchable index across all six 直轄市 using the 2022 village
+// data already imported at module init (no extra network).
+const SEARCH_INDEX = (() => {
+  const idx = [];
+  for (const [cityKey, cfg] of Object.entries(CITY_CONFIGS)) {
+    const cityName = cfg.nameZh;
+    const data = ALL_VILLAGE_ELECTIONS[cityKey]?.[2022];
+    const villages = data?.villages || [];
+    const seenDistricts = new Set();
+    for (const v of villages) {
+      const tName = v.townName;
+      const vName = v.villageName;
+      if (!seenDistricts.has(tName)) {
+        seenDistricts.add(tName);
+        idx.push({
+          type: 'district',
+          city: cityKey,
+          cityName,
+          districtName: tName,
+          dStem: tName.slice(0, -1),
+          haystack: `${cityName} ${tName}`,
+        });
+      }
+      idx.push({
+        type: 'village',
+        city: cityKey,
+        cityName,
+        districtName: tName,
+        dStem: tName.slice(0, -1),
+        villageName: vName,
+        vStem: vName.slice(0, -1),
+        haystack: `${cityName} ${tName} ${vName}`,
+      });
+    }
+  }
+  return idx;
+})();
+
+let searchActiveIdx = 0;
+let searchCurrentResults = [];
+
+function searchFilter(q) {
+  const tokens = q.trim().split(/\s+/).filter(Boolean);
+  if (!tokens.length) return [];
+  const ranked = [];
+  for (const item of SEARCH_INDEX) {
+    if (!tokens.every(t => item.haystack.includes(t))) continue;
+    // Base: district outranks village so 「松山」 surfaces 松山區 first
+    // (broad context above specific point). Two-token queries like
+    // 「松山 三民」 will boost the matching village above its district via
+    // the village-stem exact bonus below.
+    let score = item.type === 'district' ? 5 : 3;
+    for (const t of tokens) {
+      // Exact name / stem match — strongest signal that token IS this thing
+      if (item.dStem === t || item.districtName === t) score += 12;
+      if (item.type === 'village' && (item.vStem === t || item.villageName === t)) score += 14;
+      // City-name exact match (eg. 「台北市」) gates result-set without
+      // dominating ranking
+      if (item.cityName === t) score += 1;
+    }
+    ranked.push({ item, score });
+  }
+  ranked.sort((a, b) => b.score - a.score);
+  return ranked.slice(0, 12).map(r => r.item);
+}
+
+function renderSearchResults(results) {
+  searchCurrentResults = results;
+  if (!results.length) {
+    const q = searchInputEl.value.trim();
+    searchResultsEl.innerHTML = q
+      ? `<div class="search-empty">找不到「${q}」相符的城市 / 區 / 里</div>`
+      : '';
+    return;
+  }
+  searchResultsEl.innerHTML = results.map((r, i) => {
+    const path = r.type === 'village'
+      ? `${r.districtName}<span class="sep">·</span><b>${r.villageName}</b>`
+      : `<b>${r.districtName}</b>`;
+    const typeTag = r.type === 'village' ? '里' : '區';
+    return `<div class="search-result${i === searchActiveIdx ? ' active' : ''}" data-idx="${i}" role="option">
+      <span class="city-tag">${r.cityName}</span>
+      <span class="path">${path}</span>
+      <span class="type-tag">${typeTag}</span>
+    </div>`;
+  }).join('');
+}
+
+function searchNavigate(item) {
+  if (!item) return;
+  if (item.city === CITY_CONFIG.key) {
+    // Same city: navigate without reload via existing handlers.
+    if (currentYear !== 2022) setYear(2022);
+    if (item.type === 'village') {
+      const v = villageVotes.villages.find(x =>
+        x.townName.slice(0, -1) === item.dStem &&
+        x.villageName.slice(0, -1) === item.vStem
+      );
+      if (v) selectVillage(v);
+      else drillByStem(item.dStem);
+    } else {
+      drillByStem(item.dStem);
+    }
+  } else {
+    // Cross-city: full reload with new ?city= so all city-scoped imports
+    // (geo / votes / vote map) re-init.
+    const sp = new URLSearchParams({
+      city: item.city,
+      y: '2022',
+      d: item.dStem,
+    });
+    if (item.type === 'village') sp.set('v', item.vStem);
+    location.assign(`?${sp}`);
+  }
+  closeSearchModal();
+}
+
+function openSearchModal() {
+  if (!searchModalEl) return;
+  searchModalEl.removeAttribute('hidden');
+  searchInputEl.value = '';
+  searchActiveIdx = 0;
+  renderSearchResults([]);
+  // Defer focus so the modal animates in cleanly
+  setTimeout(() => searchInputEl.focus(), 0);
+}
+
+function closeSearchModal() {
+  if (!searchModalEl) return;
+  searchModalEl.setAttribute('hidden', '');
+}
+
+if (searchBtnEl && searchModalEl) {
+  searchBtnEl.addEventListener('click', openSearchModal);
+  searchModalEl.querySelector('.search-backdrop')?.addEventListener('click', closeSearchModal);
+
+  searchInputEl.addEventListener('input', () => {
+    searchActiveIdx = 0;
+    renderSearchResults(searchFilter(searchInputEl.value));
+  });
+
+  searchInputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeSearchModal();
+      e.stopPropagation();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (!searchCurrentResults.length) return;
+      searchActiveIdx = (searchActiveIdx + 1) % searchCurrentResults.length;
+      renderSearchResults(searchCurrentResults);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!searchCurrentResults.length) return;
+      searchActiveIdx = (searchActiveIdx - 1 + searchCurrentResults.length) % searchCurrentResults.length;
+      renderSearchResults(searchCurrentResults);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      searchNavigate(searchCurrentResults[searchActiveIdx]);
+    }
+  });
+
+  searchResultsEl.addEventListener('click', (e) => {
+    const row = e.target.closest('.search-result');
+    if (!row) return;
+    const idx = parseInt(row.dataset.idx, 10);
+    searchNavigate(searchCurrentResults[idx]);
+  });
+
+  // Global hotkeys: 「/」 or Cmd/Ctrl+K to open. Skip when user is typing
+  // in another input / textarea so it doesn't hijack form fields elsewhere.
+  window.addEventListener('keydown', (e) => {
+    const tag = (e.target && e.target.tagName) || '';
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(tag)) return;
+    if (e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')) {
+      e.preventDefault();
+      openSearchModal();
+    }
+  });
+}
+
 // Zoom +/- buttons
 function zoomBy(factor) {
   const dir = new THREE.Vector3().subVectors(camera.position, controls.target);
