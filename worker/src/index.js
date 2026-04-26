@@ -19,9 +19,14 @@ const EVENTS = {
 const LOCK_TTL_SECONDS = 24 * 60 * 60;
 const KEY_PART_PATTERN = /^[\p{Letter}\p{Number}_-]+$/u;
 
-// /counts edge cache TTL. Multiple visitors landing within a 60s window share
-// one Cache API hit instead of each round-tripping to KV.
-const COUNTS_CACHE_TTL = 60;
+// /counts edge cache TTL. The Cache API is per-Cloudflare-POP — with global
+// traffic spread across ~60 active POPs, a 60s TTL means each POP refetches
+// every minute (≈ 60 × 1440 = 86k KV reads/day just for /counts), which under
+// a viral spike can saturate the free tier on its own. 300s caps that ceiling
+// at ≈ 17k reads/day, with at most 5 minutes of stale share counts visible to
+// other viewers — which is fine for a tally feature (the sharer themselves
+// sees an instant +1 via the client-side optimistic update in main.js).
+const COUNTS_CACHE_TTL = 300;
 
 // All tallies for a city live in a single KV value at `agg:{city}`. Reading
 // counts is one KV get instead of (1 list + N gets); writes RMW the same key.
@@ -123,9 +128,11 @@ async function handleTally(request, env) {
     lockKey = `lock:${fullKey}:${ipHash}`;
     const lockExists = await env.CHANGE_TALLY.get(lockKey);
     if (lockExists) {
-      const agg = await loadAgg(env, city);
-      const current = agg[fullKey] || { city, district, village, shares: 0, views: 0, lastUpdate: null };
-      return jsonResponse(request, { key: fullKey, counted: false, reason: "rate_limited", count: current });
+      // Don't read the agg just to echo the current count — the client only
+      // checks `counted` to decide whether to optimistically +1 locally.
+      // Saves 1 KV read per rate-limited tally; for a viral village that's
+      // hit by many same-IP retries this adds up.
+      return jsonResponse(request, { key: fullKey, counted: false, reason: "rate_limited" });
     }
   }
 
