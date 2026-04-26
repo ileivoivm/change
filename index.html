@@ -697,10 +697,15 @@
         /* light paper bg */
         background: rgba(255,255,255,0.88);
         backdrop-filter: blur(4px);
-        /* Promote each card to its own GPU compositing layer. iOS Safari
-           sometimes drops backdrop-filter elements during heavy Three.js
-           render (50k+ voxels) — forcing a dedicated layer keeps the card
-           painted independently and prevents flicker / blank-out. */
+      }
+      /* GPU compositing promotion limited to chips (always visible at top)
+         and the city card. Originally applied to ALL .card, but with 126
+         里 in 板橋 / 三重 / 中和 each grid card got its own layer + each
+         had backdrop-filter — iOS GPU saturates and starts dropping the
+         chip layer. By NOT promoting grid cards, total layer count stays
+         small and chips stay stable. Grid cards still get default rendering
+         (still visible, just not on a dedicated GPU plane). */
+      .card.compact, .card-city {
         transform: translateZ(0);
       }
       .card.tween {
@@ -1101,7 +1106,12 @@
         .city-card-body { padding: 14px 15px 16px; }
         .city-card-meta { font-size: 12px; }
         .city-card-winner { font-size: 13px; margin-top: 10px; }
-        #city-back-btn { top: 10px; left: 10px; font-size: 12px; padding: 5px 11px; }
+        /* On mobile the breadcrumb city chip is ~46px tall starting at top:12,
+           so its bottom edge sits at y=58. Place the back button below that
+           (12 + 46 + 6 gap = 64) so it never overlaps the chip — especially
+           while drilled, when the breadcrumb expands to 3 chips that span
+           almost full width and previously collided with a top:10 button. */
+        #city-back-btn { top: 64px; left: 10px; font-size: 12px; padding: 5px 11px; }
         /* Mobile: island centered, larger scale, bleeds off bottom.
            Top fades in, bottom fades out so no hard rectangle boundary. */
         #home-map-img {

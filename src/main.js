@@ -2194,6 +2194,15 @@ function renderPanel() {
   const listEl = document.getElementById('village-list');
   if (!listEl) return;
   listEl.innerHTML = '';  // also clears any village cards
+  // Wipe orphan chips left in #village-panel by a previous drill state.
+  // layoutCards' reparenting sweep moves .compact chips out of #village-list
+  // into #village-panel; the listEl.innerHTML='' above doesn't reach those.
+  // Without this, a year-change-while-drilled (setYear with preserveContext)
+  // leaves the old district/village chip stacked under the freshly-built
+  // ones, and on iOS Safari the duplicated compositing layers (each with
+  // backdrop-filter) blink the chip out of view on heavier Three.js loads.
+  document.querySelectorAll('#village-panel > .card-district, #village-panel > .card-village')
+    .forEach(el => el.remove());
 
   const data = ELECTIONS[currentYear];
   if (!data) return;
