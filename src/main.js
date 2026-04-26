@@ -1627,29 +1627,44 @@ labelBubble.addEventListener('click', async (e) => {
 
   // Build canonical share URL.
   // For 2022 villages in any of the six 直轄市 there's a pre-built static
-  // OG page at /share/{city}/{stem}/{stem}/index.html with FB / LINE /
+  // OG page at /share/{city}/{area}/{villageCode}/index.html with FB / LINE /
   // Threads-friendly og:image + og:title / og:description. Use that so
   // social-platform crawlers get a village-specific preview card. Its IIFE
   // redirect (see scripts/build-share.mjs) preserves any query string —
   // including ?ref=share — so the human receiver still triggers the view
   // tally on the SPA.
-  // For non-2022 years we fall back to the direct SPA URL (no pre-built
-  // OG for older years).
+  //
+  // Path uses CEC-issued numeric codes (area=3-digit district, villageCode=
+  // 4-digit village within district) — stable, ASCII, easier to share. The
+  // legacy Chinese-stem path /share/{city}/{區}/{里}/ is still generated for
+  // backward compat, so FB/LINE-cached old links keep working.
   const shareBase = import.meta.env.DEV
     ? 'https://ileivoivm.github.io/change'
     : location.origin + import.meta.env.BASE_URL.replace(/\/$/, '');
-  const dStem = encodeURIComponent(townName.slice(0, -1));
-  const vStem = encodeURIComponent(villageName.slice(0, -1));
   const hasOgPage = currentYear === 2022; // all six cities have OG for 2022
-  const url = hasOgPage
-    ? `${shareBase}/share/${CITY_CONFIG.key}/${dStem}/${vStem}/?ref=share`
-    : `${shareBase}/?${new URLSearchParams({
-        city: CITY_CONFIG.key,
-        y:    String(currentYear),
-        d:    townName.slice(0, -1),
-        v:    villageName.slice(0, -1),
-        ref:  'share',
-      })}`;
+  const match = villageVotes.villages.find(x =>
+    x.townName === townName && x.villageName === villageName
+  );
+  const useNumeric = hasOgPage && match?.area && match?.villageCode;
+  let url;
+  if (useNumeric) {
+    url = `${shareBase}/share/${CITY_CONFIG.key}/${match.area}/${match.villageCode}/?ref=share`;
+  } else if (hasOgPage) {
+    // Fallback: numeric IDs not found (data missing area/villageCode for this
+    // village) — fall back to Chinese-stem path, which is also generated.
+    const dStem = encodeURIComponent(townName.slice(0, -1));
+    const vStem = encodeURIComponent(villageName.slice(0, -1));
+    url = `${shareBase}/share/${CITY_CONFIG.key}/${dStem}/${vStem}/?ref=share`;
+  } else {
+    // No pre-built OG for non-2022 years — share the SPA URL directly.
+    url = `${shareBase}/?${new URLSearchParams({
+      city: CITY_CONFIG.key,
+      y:    String(currentYear),
+      d:    townName.slice(0, -1),
+      v:    villageName.slice(0, -1),
+      ref:  'share',
+    })}`;
+  }
 
   // Copy URL to clipboard with three-tier fallback so the user always sees
   // 「已複製 ✓」 instead of an iOS share sheet or a system prompt() popup.

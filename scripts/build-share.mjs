@@ -327,15 +327,24 @@ async function renderPng(fontBuffer, ctx) {
 
 // ───────── HTML template ─────────
 function shareHtml(ctx) {
-  const { city, district, village, dStem, vStem, winner, loser, margin, flip } = ctx;
+  const { city, district, village, dStem, vStem, urlPart1, urlPart2, winner, loser, margin, flip } = ctx;
   const cityKey = city.key;
   const cityName = city.cityName;
   const mayorRole = city.mayorRole;
+  // SPA URL always uses Chinese stems — parseAndApplyUrl in src/main.js looks
+  // up villages by stem; switching it to numeric IDs would break shared SPA
+  // links and is out of scope for this OG-card path change.
   const dEnc = encodeURIComponent(dStem);
   const vEnc = encodeURIComponent(vStem);
   const spaUrl = `${SITE_BASE}/?city=${cityKey}&y=${YEAR}&d=${dEnc}&v=${vEnc}`;
-  const shareUrl = `${SITE_BASE}/share/${cityKey}/${dEnc}/${vEnc}/`;
-  const ogImageUrl = `${SITE_BASE}/og/${cityKey}/${dEnc}/${vEnc}.png`;
+  // urlPart1/2 control which path this HTML self-canonicalizes to. Caller
+  // generates two variants per village: numeric (area/villageCode, new
+  // canonical) and Chinese stems (legacy, kept so cached FB/LINE previews
+  // don't break). Defaults to Chinese stems for any direct caller.
+  const p1 = encodeURIComponent(urlPart1 ?? dStem);
+  const p2 = encodeURIComponent(urlPart2 ?? vStem);
+  const shareUrl = `${SITE_BASE}/share/${cityKey}/${p1}/${p2}/`;
+  const ogImageUrl = `${SITE_BASE}/og/${cityKey}/${p1}/${p2}.png`;
 
   const title = `${cityName}・${district} ${village} — ${loser.partyName}翻盤需 ${fmt(flip.swing)} 票`;
   const desc = `${YEAR} ${mayorRole}：${winner.name} ${fmt(winner.votes)} 票 vs ${loser.name} ${fmt(loser.votes)} 票｜差距 ${margin.toFixed(1)}%`;
@@ -441,16 +450,32 @@ async function buildCity(city, fontBuffer, limitPerCity) {
       historyYears: city.historyYears,
     };
 
-    const html = shareHtml(ctx);
-    writeFileRec(join(DIST, 'share', city.key, dStem, vStem, 'index.html'), html);
-
+    // PNG content depends only on candidate / city / history data — not on
+    // which URL path it lives at — so render once and write the bytes to
+    // every backward-compat path below.
     const png = await renderPng(fontBuffer, ctx);
+
+    // Numeric path (new canonical): /share/{city}/{area}/{villageCode}/
+    // Stable, ASCII-only URLs, easier to share verbally / in non-Chinese
+    // contexts. CEC-issued codes; area is district code (3 digits e.g. "010"),
+    // villageCode is village code within district (4 digits e.g. "0002").
+    if (v.area && v.villageCode) {
+      const numHtml = shareHtml({ ...ctx, urlPart1: v.area, urlPart2: v.villageCode });
+      writeFileRec(join(DIST, 'share', city.key, v.area, v.villageCode, 'index.html'), numHtml);
+      writeFileRec(join(DIST, 'og', city.key, v.area, `${v.villageCode}.png`), png);
+    }
+
+    // Chinese stems (legacy, backward compat): /share/{city}/{區}/{里}/
+    // Self-canonical so any FB/LINE/Threads card previously cached against
+    // this URL keeps rendering with its own og:url + og:image.
+    const cnHtml = shareHtml(ctx); // defaults to dStem / vStem
+    writeFileRec(join(DIST, 'share', city.key, dStem, vStem, 'index.html'), cnHtml);
     writeFileRec(join(DIST, 'og', city.key, dStem, `${vStem}.png`), png);
 
-    // Backward-compat: ntpc 2022 also writes to legacy paths so previously
-    // shared FB / LINE / Threads URLs (cached for 30 days) still resolve.
+    // Backward-compat: ntpc 2022 legacy /share/2022/{d}/{v}/ — kept for
+    // FB/LINE/Threads URLs cached before the per-city paths existed.
     if (city.key === 'ntpc') {
-      writeFileRec(join(DIST, 'share', String(YEAR), dStem, vStem, 'index.html'), html);
+      writeFileRec(join(DIST, 'share', String(YEAR), dStem, vStem, 'index.html'), cnHtml);
       writeFileRec(join(DIST, 'og', String(YEAR), dStem, `${vStem}.png`), png);
     }
 
