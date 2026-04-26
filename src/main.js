@@ -987,12 +987,28 @@ async function fetchShareCounts() {
   } catch {}
 }
 
-// Re-render the currently-pinned bubble so freshly-fetched share counts show
-// up as 「已被分享 N 次」 without the user needing to click away and back.
-function refreshBubbleAfterTally() {
+// Surgically update only the `.tally-count` line in the currently-pinned
+// bubble — avoids re-rendering the whole bubble (which would clobber the
+// share button's "已複製 ✓" textContent micro-feedback set by the click handler).
+function refreshTallyLineInBubble() {
   if (!sticky) return;
-  const m = pulseMesh || hovered;
-  if (m) renderBubble(m);
+  const tallyEl = labelBubble.querySelector('.tally-count');
+  if (!tallyEl) return;
+  const tName = tallyEl.dataset.town;
+  const vName = tallyEl.dataset.village;
+  if (!tName || !vName) return;
+  const tally = shareCounts[`${CITY_CONFIG.key}-${tName}-${vName}`];
+  const tShares = tally?.shares || 0;
+  const tViews  = tally?.views  || 0;
+  const totalCount = tShares + tViews;
+  const VILLAGE_TOWER_THRESHOLD = 10;
+  if (totalCount >= VILLAGE_TOWER_THRESHOLD) {
+    tallyEl.classList.add('lit');
+    tallyEl.innerHTML = `🏯 燈塔已點亮 · <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（${tShares} 分享 · ${tViews} 點開）`;
+  } else {
+    tallyEl.classList.remove('lit');
+    tallyEl.innerHTML = `分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>`;
+  }
 }
 
 function getTotalForVillage(townName, villageName) {
@@ -1298,16 +1314,10 @@ labelBubble.addEventListener('click', async (e) => {
   });
   const url = `${shareBase}/?${sp}`;
 
-  // Fire tally and re-fetch counts so the bubble's 「已被分享 N 次」 line
-  // (and tower height, once thresholds are met) updates immediately. Worker
-  // is fast (~150ms) so the await usually finishes before the user notices.
-  await postTally(townName, villageName, 'share');
-  fetchShareCounts().then(refreshBubbleAfterTally);
-
-  // Always use clipboard — `navigator.share()` opens the iOS native share
-  // sheet (AirDrop / Mail / Messages / 一堆) which surprised users who
-  // expected the simple "複製分享連結 → 已複製 ✓" flow. Clipboard works
-  // identically across desktop and mobile and keeps the bubble's micro-feedback.
+  // Clipboard FIRST — gives the user instant 「已複製 ✓」 visual feedback.
+  // The tally POST + count refresh happen in parallel below; refreshTally
+  // only patches the .tally-count line so the share button's textContent
+  // change isn't clobbered.
   try {
     await navigator.clipboard.writeText(url);
     const orig = btn.textContent;
@@ -1317,6 +1327,12 @@ labelBubble.addEventListener('click', async (e) => {
   } catch {
     prompt('複製連結分享：', url);
   }
+
+  // Fire tally + refresh the count line. Worker IP lock + sessionStorage
+  // dedup prevent double-counting on rapid presses; failures are silent.
+  await postTally(townName, villageName, 'share');
+  await fetchShareCounts();
+  refreshTallyLineInBubble();
 });
 
 window.addEventListener('pointermove', (e) => {
@@ -1489,12 +1505,9 @@ function renderBubble(mesh) {
     const tViews  = tally?.views  || 0;
     const totalCount = tShares + tViews;
     const VILLAGE_TOWER_THRESHOLD = 10;
-    const remaining = Math.max(0, VILLAGE_TOWER_THRESHOLD - totalCount);
-    const tallyBlock = totalCount === 0
-      ? `<div class="tally-count" data-town="${tName}" data-village="${vName}">分享點亮燈塔 · 累積 <b>${VILLAGE_TOWER_THRESHOLD}</b> 次後此里會在地圖上長出塔</div>`
-      : totalCount >= VILLAGE_TOWER_THRESHOLD
-        ? `<div class="tally-count lit" data-town="${tName}" data-village="${vName}">🏯 燈塔已點亮 · 已被分享 <b>${totalCount}</b> 次（${tShares} 分享 · ${tViews} 點開）</div>`
-        : `<div class="tally-count" data-town="${tName}" data-village="${vName}">已被分享 <b>${totalCount}</b> 次 · 還差 <b>${remaining}</b> 次點亮燈塔</div>`;
+    const tallyBlock = totalCount >= VILLAGE_TOWER_THRESHOLD
+      ? `<div class="tally-count lit" data-town="${tName}" data-village="${vName}">🏯 燈塔已點亮 · <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（${tShares} 分享 · ${tViews} 點開）</div>`
+      : `<div class="tally-count" data-town="${tName}" data-village="${vName}">分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b></div>`;
 
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
