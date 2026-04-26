@@ -1142,14 +1142,23 @@ function rebuildTowers() {
       seenVillage.add(k);
       return true;
     })
-    .map(m => ({
-      townName:    m.userData.townName,
-      villageName: m.userData.villageName,
-      centroid:    m.userData.centroid,
-      count:       getTotalForVillage(m.userData.townName, m.userData.villageName),
-      meshRef:     m,       // used by tickTowerLift to follow voxel Y
-      _lastLift:   -Infinity,
-    }))
+    .map(m => {
+      const tName = m.userData.townName;
+      const vName = m.userData.villageName;
+      const count = getTotalForVillage(tName, vName);
+      return {
+        townName:      tName,
+        villageName:   vName,
+        centroid:      m.userData.centroid,
+        count,
+        meshRef:       m,                               // tickTowerLift follows voxel Y
+        _lastLift:     -Infinity,
+        // Star-twinkle state (per-instance random phase + period 0.5–2s)
+        baseColor:     towerTopColor(count, TOWER_VILLAGE_THRESHOLD).clone(),
+        twinklePhase:  Math.random() * Math.PI * 2,
+        twinklePeriod: 0.5 + Math.random() * 1.5,
+      };
+    })
     .filter(r => r.count >= TOWER_VILLAGE_THRESHOLD);
   if (vRecs.length > 0) {
     const { shaft, top } = buildTowerIM(vRecs, TOWER_VILLAGE_THRESHOLD);
@@ -1161,13 +1170,20 @@ function rebuildTowers() {
   // District towers (main city only)
   const dRecs = districtMeshes
     .filter(m => m.userData.layer === CITY_CONFIG.key)
-    .map(m => ({
-      stem:     m.userData.townName.slice(0, -1),
-      centroid: m.userData.centroid,
-      count:    districtShareCounts.get(m.userData.townName.slice(0, -1)) || 0,
-      meshRef:  m,
-      _lastLift: -Infinity,
-    }))
+    .map(m => {
+      const stem  = m.userData.townName.slice(0, -1);
+      const count = districtShareCounts.get(stem) || 0;
+      return {
+        stem,
+        centroid:      m.userData.centroid,
+        count,
+        meshRef:       m,
+        _lastLift:     -Infinity,
+        baseColor:     towerTopColor(count, TOWER_DISTRICT_THRESHOLD).clone(),
+        twinklePhase:  Math.random() * Math.PI * 2,
+        twinklePeriod: 0.5 + Math.random() * 1.5,
+      };
+    })
     .filter(r => r.count >= TOWER_DISTRICT_THRESHOLD);
   if (dRecs.length > 0) {
     const { shaft, top } = buildTowerIM(dRecs, TOWER_DISTRICT_THRESHOLD);
@@ -1244,6 +1260,31 @@ function syncTowerLift(records, shaftIM, topIM, threshold) {
 function tickTowerLift() {
   syncTowerLift(villageOrder,  villageTowerShaft,  villageTowerTop,  TOWER_VILLAGE_THRESHOLD);
   syncTowerLift(districtOrder, districtTowerShaft, districtTowerTop, TOWER_DISTRICT_THRESHOLD);
+}
+
+// Star-twinkle: each top sphere oscillates brightness 0.4–1.0 with its own
+// random period (0.5–2s) + phase. Looks like a sky of slowly-blinking stars
+// rather than a synchronised metronome. User feedback: 「燈塔的圓球，要亮暗，
+// 並且亮暗的秒數，每顆都是亂數，在 0.5-2s 之間，要像星光閃閃」.
+const _twinkleColor = new THREE.Color();
+function twinkleLayer(records, topIM, nowSec) {
+  if (!topIM || records.length === 0) return;
+  for (let i = 0; i < records.length; i++) {
+    const rec = records[i];
+    if (!rec.baseColor) continue;
+    if (rec._lastLift === 'hidden') continue;          // skip drilled-out instances
+    const angle      = (nowSec / rec.twinklePeriod) * Math.PI * 2 + rec.twinklePhase;
+    const wave       = 0.5 + 0.5 * Math.sin(angle);    // 0..1
+    const brightness = 0.4 + 0.6 * wave;               // 0.4..1.0 (never fully dark)
+    _twinkleColor.copy(rec.baseColor).multiplyScalar(brightness);
+    topIM.setColorAt(i, _twinkleColor);
+  }
+  if (topIM.instanceColor) topIM.instanceColor.needsUpdate = true;
+}
+function tickTowerTwinkle(now) {
+  const nowSec = now / 1000;
+  twinkleLayer(villageOrder,  villageTowerTop,  nowSec);
+  twinkleLayer(districtOrder, districtTowerTop, nowSec);
 }
 
 function checkTowerHit() {
@@ -2534,6 +2575,7 @@ window.addEventListener('resize', () => {
   tickColorTween(now);
   tickPulse(now);
   tickTowerLift();
+  tickTowerTwinkle(now);
   updateTowerLOD();
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
