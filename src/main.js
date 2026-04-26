@@ -969,19 +969,51 @@ function markDedup(dedupKey) {
   try { sessionStorage.setItem('tally:' + dedupKey, String(Date.now())); } catch {}
 }
 
+// Returns true iff the Worker confirms the event was actually counted (counted:
+// true). Client-side dedup hits + Worker-side IP-lock hits both return false so
+// callers can skip optimistic UI updates that would lie about the server state.
 async function postTally(townName, villageName, event) {
-  if (!TALLY_WORKER_URL) return;
+  if (!TALLY_WORKER_URL) return false;
   const key = `${CITY_CONFIG.key}-${townName}-${villageName}`;
   const dedupKey = key + ':' + event;
-  if (isDedupActive(dedupKey)) return;
+  if (isDedupActive(dedupKey)) return false;
   markDedup(dedupKey);
   try {
-    await fetch(`${TALLY_WORKER_URL}/tally`, {
+    const r = await fetch(`${TALLY_WORKER_URL}/tally`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ city: CITY_CONFIG.key, district: townName, village: villageName, event }),
     });
-  } catch {} // network failure is silent
+    if (!r.ok) return false;
+    const data = await r.json().catch(() => null);
+    return data?.counted === true;
+  } catch {
+    return false;
+  }
+}
+
+// Optimistic local +1 in place of an extra GET /counts after a successful
+// /tally. Mirrors the aggregation fetchShareCounts() does so the bubble line,
+// district tally, and tower thresholds all see the new value immediately.
+function bumpLocalShareCount(townName, villageName, event) {
+  const fullKey = `${CITY_CONFIG.key}-${townName}-${villageName}`;
+  const tStem = townName.slice(0, -1);
+  const vStem = villageName.slice(0, -1);
+  const stemKey = `${tStem}/${vStem}`;
+  const field = event === 'share' ? 'shares' : 'views';
+
+  const cur = shareCounts[fullKey] || { city: CITY_CONFIG.key, district: townName, village: villageName, shares: 0, views: 0 };
+  shareCounts[fullKey] = { ...cur, [field]: (cur[field] || 0) + 1, lastUpdate: Date.now() };
+  window.shareCounts = shareCounts;
+
+  const stemAcc = shareCountsByStem[stemKey] || (shareCountsByStem[stemKey] = { shares: 0, views: 0 });
+  stemAcc[field] = (stemAcc[field] || 0) + 1;
+
+  districtShareCounts.set(tStem, (districtShareCounts.get(tStem) || 0) + 1);
+
+  rebuildTowers();
+  refreshVillageCardDots();
+  refreshTallyLineInBubble();
 }
 
 async function fetchShareCounts() {
@@ -1609,11 +1641,12 @@ labelBubble.addEventListener('click', async (e) => {
     setTimeout(() => { btn.textContent = orig; }, 2000);
   }
 
-  // Fire tally + refresh the count line. Worker IP lock + sessionStorage
-  // dedup prevent double-counting on rapid presses; failures are silent.
-  await postTally(townName, villageName, 'share');
-  await fetchShareCounts();
-  refreshTallyLineInBubble();
+  // Fire tally; on success, optimistic local +1 instead of refetching the
+  // whole city's counts (each /counts call previously cost 1 list + N KV
+  // gets — burning the free-tier read budget on every share click).
+  const counted = await postTally(townName, villageName, 'share');
+  if (counted) bumpLocalShareCount(townName, villageName, 'share');
+  else refreshTallyLineInBubble();
 });
 
 window.addEventListener('pointermove', (e) => {
