@@ -1626,23 +1626,23 @@ labelBubble.addEventListener('click', async (e) => {
   if (!townName || !villageName) return;
 
   // Build canonical share URL.
-  // For ntpc 2022 villages there's a pre-built static OG page at
-  // /share/2022/{stem}/{stem}/index.html with FB / LINE / Threads-friendly
-  // og:image + og:title / og:description. Use that so social-platform
-  // crawlers get a village-specific preview card. Its IIFE redirect (see
-  // scripts/build-share.mjs) preserves any query string — including
-  // ?ref=share — so the human receiver still triggers the view tally on
-  // the SPA. (Past regression: 小B commit 1fbeb3f short-circuited to the
-  // SPA root, where index.html has no village OG → 「FB 沒縮圖」.)
-  // For other cities / years we fall back to the direct SPA URL.
+  // For 2022 villages in any of the six 直轄市 there's a pre-built static
+  // OG page at /share/{city}/{stem}/{stem}/index.html with FB / LINE /
+  // Threads-friendly og:image + og:title / og:description. Use that so
+  // social-platform crawlers get a village-specific preview card. Its IIFE
+  // redirect (see scripts/build-share.mjs) preserves any query string —
+  // including ?ref=share — so the human receiver still triggers the view
+  // tally on the SPA.
+  // For non-2022 years we fall back to the direct SPA URL (no pre-built
+  // OG for older years).
   const shareBase = import.meta.env.DEV
     ? 'https://ileivoivm.github.io/change'
     : location.origin + import.meta.env.BASE_URL.replace(/\/$/, '');
   const dStem = encodeURIComponent(townName.slice(0, -1));
   const vStem = encodeURIComponent(villageName.slice(0, -1));
-  const hasOgPage = CITY_CONFIG.key === 'ntpc' && currentYear === 2022;
+  const hasOgPage = currentYear === 2022; // all six cities have OG for 2022
   const url = hasOgPage
-    ? `${shareBase}/share/2022/${dStem}/${vStem}/?ref=share`
+    ? `${shareBase}/share/${CITY_CONFIG.key}/${dStem}/${vStem}/?ref=share`
     : `${shareBase}/?${new URLSearchParams({
         city: CITY_CONFIG.key,
         y:    String(currentYear),

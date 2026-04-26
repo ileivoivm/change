@@ -46,7 +46,7 @@ jobs:
           path: |
             dist/og
             dist/share
-          key: share-${{ hashFiles('data/processed/ntpc-2022-villages.json', 'src/palette.js', 'scripts/build-share.mjs') }}
+          key: share-${{ hashFiles('data/processed/*-2022-villages.json', 'src/palette.js', 'scripts/build-share.mjs') }}
 
       - name: Build share pages
         if: steps.share-cache.outputs.cache-hit != 'true'

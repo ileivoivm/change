@@ -1,13 +1,21 @@
-// Pre-generate share pages + OG PNGs for every 2022 village in ntpc.
+// Pre-generate share pages + OG PNGs for every 2022 village across the six
+// directly-governed municipalities (六都).
 //
 // Outputs to dist/ (alongside Vite's build output):
-//   dist/share/2022/{districtStem}/{villageStem}/index.html
+//   dist/share/{city}/{districtStem}/{villageStem}/index.html
 //       — tiny HTML with OG meta + JS redirect to SPA
-//   dist/og/2022/{districtStem}/{villageStem}.png
+//   dist/og/{city}/{districtStem}/{villageStem}.png
 //       — 1200×630 PNG (social card)
+//
+// Backward-compat: ntpc 2022 cards are also written to the legacy paths
+//   dist/share/2022/{districtStem}/{villageStem}/index.html
+//   dist/og/2022/{districtStem}/{villageStem}.png
+// so that FB / LINE / Threads URLs already crawled (30-day cache) still work.
 //
 // Usage:  npm run build     (vite build → then this)
 //         npm run build:share
+//         CITY=tpe npm run build:share   (build only one city)
+//         LIMIT=20 npm run build:share   (limit count per city for testing)
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -19,9 +27,20 @@ import { PARTY_COLORS } from '../src/palette.js';
 const SITE_BASE = process.env.SITE_BASE || 'https://ileivoivm.github.io/change';
 const DIST = 'dist';
 const YEAR = 2022;
-// Only years with published village-level CEC data (1997/2001 district-only).
-// Strip shows this span so viewers see the 17-year arc of one village.
-const VILLAGE_YEARS = [2005, 2010, 2014, 2018, 2022];
+
+// Per-city display config + history-strip year span. The strip shows the
+// chosen years so viewers see the arc of one village across multiple
+// elections; cities that didn't exist in their current form before 2010
+// (台中/台南/高雄 縣市合併) only show 2010-2022.
+const CITIES = [
+  { key: 'ntpc', cityName: '新北市', mayorRole: '新北市長', historyYears: [2005, 2010, 2014, 2018, 2022] },
+  { key: 'tpe',  cityName: '台北市', mayorRole: '台北市長', historyYears: [2002, 2006, 2010, 2014, 2018, 2022] },
+  { key: 'tyc',  cityName: '桃園市', mayorRole: '桃園市長', historyYears: [2005, 2009, 2014, 2018, 2022] },
+  { key: 'txg',  cityName: '台中市', mayorRole: '台中市長', historyYears: [2010, 2014, 2018, 2022] },
+  { key: 'tnn',  cityName: '台南市', mayorRole: '台南市長', historyYears: [2010, 2014, 2018, 2022] },
+  { key: 'khh',  cityName: '高雄市', mayorRole: '高雄市長', historyYears: [2010, 2014, 2018, 2022] },
+];
+
 const FONT_CACHE = '.cache/NotoSansTC-Medium.otf';
 const FONT_URL = 'https://github.com/googlefonts/noto-cjk/raw/main/Sans/OTF/TraditionalChinese/NotoSansCJKtc-Medium.otf';
 
@@ -59,10 +78,10 @@ function writeFileRec(path, data) {
 // townName varies across years (台北縣 板橋市 → 新北市 板橋區), so we key on
 // stem (drop the trailing 市/區/里) which stays stable. Same approach the
 // app uses in main.js → villageHistoryMap.
-function loadVillageHistory() {
+function loadVillageHistory(city) {
   const m = new Map();
-  for (const y of VILLAGE_YEARS) {
-    const path = `data/processed/ntpc-${y}-villages.json`;
+  for (const y of city.historyYears) {
+    const path = `data/processed/${city.key}-${y}-villages.json`;
     if (!existsSync(path)) continue;
     const data = JSON.parse(readFileSync(path, 'utf8'));
     for (const v of data.villages || []) {
@@ -77,7 +96,7 @@ function loadVillageHistory() {
   }
   // Aggregate flips + dominant party
   for (const entry of m.values()) {
-    const seq = VILLAGE_YEARS.map(y => entry.years[y]).filter(Boolean);
+    const seq = city.historyYears.map(y => entry.years[y]).filter(Boolean);
     let flips = 0;
     for (let i = 1; i < seq.length; i++) if (seq[i] !== seq[i - 1]) flips++;
     entry.flips = flips;
@@ -101,9 +120,9 @@ function permanentLabel(code) {
   return `永 ${n} 里`;
 }
 
-function identityMeta(entry) {
+function identityMeta(entry, historyYears) {
   if (!entry || entry.dataYears < 2) {
-    return { label: null, sub: `近 ${VILLAGE_YEARS.length} 場里長選舉` };
+    return { label: null, sub: `近 ${historyYears.length} 場里長選舉` };
   }
   if (entry.flips === 0) {
     return { label: permanentLabel(entry.dominantPartyCode), sub: `${entry.dataYears} 場未翻轉` };
@@ -137,7 +156,7 @@ const h = (type, props = {}, ...children) => ({
 });
 
 function ogLayout(ctx) {
-  const { district, village, winner, loser, margin, flip, history, meta } = ctx;
+  const { district, village, winner, loser, margin, flip, history, meta, historyYears } = ctx;
   const winColor = partyHex(winner.partyCode);
   const loseColor = partyHex(loser.partyCode);
   const winPct = winner.rate;
@@ -191,17 +210,17 @@ function ogLayout(ctx) {
       letterSpacing: 1, marginBottom: 4,
     },
   },
-    ...VILLAGE_YEARS.map((y, i) => h('div', {
+    ...historyYears.map((y, i) => h('div', {
       style: {
         display: 'flex', flex: 1,
-        justifyContent: i === 0 ? 'flex-start' : (i === VILLAGE_YEARS.length - 1 ? 'flex-end' : 'center'),
+        justifyContent: i === 0 ? 'flex-start' : (i === historyYears.length - 1 ? 'flex-end' : 'center'),
       },
     }, String(y))),
   );
 
   const stripRow = h('div', {
     style: { display: 'flex', width: '100%', gap: 8, alignItems: 'center' },
-  }, ...VILLAGE_YEARS.map(stripSquare));
+  }, ...historyYears.map(stripSquare));
 
   const stripMeta = h('div', {
     style: {
@@ -308,13 +327,18 @@ async function renderPng(fontBuffer, ctx) {
 
 // ───────── HTML template ─────────
 function shareHtml(ctx) {
-  const { district, village, dStem, vStem, winner, loser, margin, flip } = ctx;
-  const spaUrl = `${SITE_BASE}/?y=${YEAR}&d=${encodeURIComponent(dStem)}&v=${encodeURIComponent(vStem)}`;
-  const shareUrl = `${SITE_BASE}/share/${YEAR}/${encodeURIComponent(dStem)}/${encodeURIComponent(vStem)}/`;
-  const ogImageUrl = `${SITE_BASE}/og/${YEAR}/${encodeURIComponent(dStem)}/${encodeURIComponent(vStem)}.png`;
+  const { city, district, village, dStem, vStem, winner, loser, margin, flip } = ctx;
+  const cityKey = city.key;
+  const cityName = city.cityName;
+  const mayorRole = city.mayorRole;
+  const dEnc = encodeURIComponent(dStem);
+  const vEnc = encodeURIComponent(vStem);
+  const spaUrl = `${SITE_BASE}/?city=${cityKey}&y=${YEAR}&d=${dEnc}&v=${vEnc}`;
+  const shareUrl = `${SITE_BASE}/share/${cityKey}/${dEnc}/${vEnc}/`;
+  const ogImageUrl = `${SITE_BASE}/og/${cityKey}/${dEnc}/${vEnc}.png`;
 
-  const title = `${district} ${village} — ${loser.partyName}翻盤需 ${fmt(flip.swing)} 票`;
-  const desc = `2022 新北市長：${winner.name} ${fmt(winner.votes)} 票 vs ${loser.name} ${fmt(loser.votes)} 票｜差距 ${margin.toFixed(1)}%`;
+  const title = `${cityName}・${district} ${village} — ${loser.partyName}翻盤需 ${fmt(flip.swing)} 票`;
+  const desc = `${YEAR} ${mayorRole}：${winner.name} ${fmt(winner.votes)} 票 vs ${loser.name} ${fmt(loser.votes)} 票｜差距 ${margin.toFixed(1)}%`;
 
   return `<!DOCTYPE html>
 <html lang="zh-Hant">
@@ -385,48 +409,81 @@ function shareHtml(ctx) {
 }
 
 // ───────── main ─────────
-async function main() {
-  const fontBuffer = await ensureFont();
-  const data = JSON.parse(readFileSync(`data/processed/ntpc-${YEAR}-villages.json`, 'utf8'));
-  const history = loadVillageHistory();
-  console.log(`  history loaded: ${history.size} villages across ${VILLAGE_YEARS.length} years`);
+async function buildCity(city, fontBuffer, limitPerCity) {
+  const dataPath = `data/processed/${city.key}-${YEAR}-villages.json`;
+  if (!existsSync(dataPath)) {
+    console.log(`  [${city.key}] skip — no ${YEAR} village data`);
+    return { ok: 0, skip: 0 };
+  }
+  const data = JSON.parse(readFileSync(dataPath, 'utf8'));
+  const history = loadVillageHistory(city);
+  console.log(`  [${city.key}] history: ${history.size} villages across ${city.historyYears.length} years`);
 
   let ok = 0, skip = 0;
   const t0 = Date.now();
-  const LIMIT = process.env.LIMIT ? parseInt(process.env.LIMIT, 10) : Infinity;
 
   for (const v of data.villages) {
-    if (ok >= LIMIT) break;
+    if (ok >= limitPerCity) break;
     const flip = flipMath(v.results);
     if (!flip) { skip++; continue; }
 
     const dStem = stem(v.townName);
     const vStem = stem(v.villageName);
     const vHistory = history.get(dStem + '/' + vStem);
-    const meta = identityMeta(vHistory);
+    const meta = identityMeta(vHistory, city.historyYears);
     const ctx = {
+      city,
       district: v.townName, village: v.villageName,
       dStem, vStem,
       winner: flip.winner, loser: flip.loser,
       margin: v.margin, flip,
       history: vHistory, meta,
+      historyYears: city.historyYears,
     };
 
     const html = shareHtml(ctx);
-    writeFileRec(join(DIST, 'share', String(YEAR), dStem, vStem, 'index.html'), html);
+    writeFileRec(join(DIST, 'share', city.key, dStem, vStem, 'index.html'), html);
 
     const png = await renderPng(fontBuffer, ctx);
-    writeFileRec(join(DIST, 'og', String(YEAR), dStem, `${vStem}.png`), png);
+    writeFileRec(join(DIST, 'og', city.key, dStem, `${vStem}.png`), png);
+
+    // Backward-compat: ntpc 2022 also writes to legacy paths so previously
+    // shared FB / LINE / Threads URLs (cached for 30 days) still resolve.
+    if (city.key === 'ntpc') {
+      writeFileRec(join(DIST, 'share', String(YEAR), dStem, vStem, 'index.html'), html);
+      writeFileRec(join(DIST, 'og', String(YEAR), dStem, `${vStem}.png`), png);
+    }
 
     ok++;
     if (ok % 100 === 0) {
-      console.log(`  ${ok}/${data.villages.length} · ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+      console.log(`  [${city.key}] ${ok}/${data.villages.length} · ${((Date.now() - t0) / 1000).toFixed(1)}s`);
     }
   }
+  console.log(`  [${city.key}] ✓ ${ok} cards · ${skip} skip · ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+  return { ok, skip };
+}
 
-  console.log(`\n✓ ${ok} share pages + PNGs generated`);
-  if (skip) console.log(`  (${skip} villages skipped — no winner/runner-up)`);
-  console.log(`  total ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+async function main() {
+  const fontBuffer = await ensureFont();
+  const tStart = Date.now();
+  const onlyCity = process.env.CITY;
+  const cities = onlyCity ? CITIES.filter(c => c.key === onlyCity) : CITIES;
+  if (onlyCity && cities.length === 0) {
+    console.error(`Unknown CITY: ${onlyCity}. Valid: ${CITIES.map(c => c.key).join(', ')}`);
+    process.exit(1);
+  }
+  const LIMIT = process.env.LIMIT ? parseInt(process.env.LIMIT, 10) : Infinity;
+
+  let totalOk = 0, totalSkip = 0;
+  for (const city of cities) {
+    const { ok, skip } = await buildCity(city, fontBuffer, LIMIT);
+    totalOk += ok;
+    totalSkip += skip;
+  }
+
+  console.log(`\n✓ ${totalOk} share pages + PNGs across ${cities.length} cities`);
+  if (totalSkip) console.log(`  (${totalSkip} villages skipped — no winner/runner-up)`);
+  console.log(`  total ${((Date.now() - tStart) / 1000).toFixed(1)}s`);
 }
 
 main().catch(err => {
