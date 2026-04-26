@@ -1005,7 +1005,38 @@ async function fetchShareCounts() {
       districtShareCounts.set(stem, (districtShareCounts.get(stem) || 0) + (v.shares || 0) + (v.views || 0));
     }
     rebuildTowers();
+    refreshVillageCardDots();
   } catch {}
+}
+
+// Sync the small 「燈塔點亮」 dot on every visible `.card-village`. Called
+// after fetchShareCounts so a freshly-incremented village whose count just
+// crossed TOWER_VILLAGE_THRESHOLD gets its dot without a full panel rebuild.
+function refreshVillageCardDots() {
+  const cards = document.querySelectorAll('.card-village');
+  if (!cards.length) return;
+  for (const card of cards) {
+    const key = card.dataset.villageKey;
+    if (!key) continue;
+    const [tStem, vStem] = key.split('/');
+    const v = villageVotes.villages.find(x =>
+      x.townName.slice(0, -1) === tStem && x.villageName.slice(0, -1) === vStem
+    );
+    if (!v) continue;
+    const count = getTotalForVillage(v.townName, v.villageName);
+    const lit = count >= TOWER_VILLAGE_THRESHOLD;
+    const nameEl = card.querySelector('.name');
+    if (!nameEl) continue;
+    let dot = nameEl.querySelector('.tower-dot');
+    if (lit && !dot) {
+      dot = document.createElement('span');
+      dot.className = 'tower-dot';
+      nameEl.appendChild(dot);
+    } else if (!lit && dot) {
+      dot.remove();
+    }
+    if (dot) dot.title = `燈塔已點亮 · 累積 ${count} 次`;
+  }
 }
 
 // Surgically update only the `.tally-count` line in the currently-pinned
@@ -1156,7 +1187,7 @@ function rebuildTowers() {
         // Star-twinkle state (per-instance random phase + period 0.5–2s)
         baseColor:     towerTopColor(count, TOWER_VILLAGE_THRESHOLD).clone(),
         twinklePhase:  Math.random() * Math.PI * 2,
-        twinklePeriod: 0.5 + Math.random() * 1.5,
+        twinklePeriod: 2 + Math.random() * 4,
       };
     })
     .filter(r => r.count >= TOWER_VILLAGE_THRESHOLD);
@@ -1181,7 +1212,7 @@ function rebuildTowers() {
         _lastLift:     -Infinity,
         baseColor:     towerTopColor(count, TOWER_DISTRICT_THRESHOLD).clone(),
         twinklePhase:  Math.random() * Math.PI * 2,
-        twinklePeriod: 0.5 + Math.random() * 1.5,
+        twinklePeriod: 2 + Math.random() * 4,
       };
     })
     .filter(r => r.count >= TOWER_DISTRICT_THRESHOLD);
@@ -1263,9 +1294,9 @@ function tickTowerLift() {
 }
 
 // Star-twinkle: each top sphere oscillates brightness 0.4–1.0 with its own
-// random period (0.5–2s) + phase. Looks like a sky of slowly-blinking stars
-// rather than a synchronised metronome. User feedback: 「燈塔的圓球，要亮暗，
-// 並且亮暗的秒數，每顆都是亂數，在 0.5-2s 之間，要像星光閃閃」.
+// random period (2–6 s) + phase. Looks like a sky of slowly-blinking stars
+// rather than a synchronised metronome. Period range tuned per user
+// feedback (initial 0.5–2 s felt too rapid → 「燈塔亮暗太快，改 2-6 秒」).
 const _twinkleColor = new THREE.Color();
 function twinkleLayer(records, topIM, nowSec) {
   if (!topIM || records.length === 0) return;
@@ -2031,8 +2062,15 @@ function renderVillagesFor(stem) {
     const hex = colorForDistrict(v.results);
     vCard.style.setProperty('--c', hexToCss(hex));
     vCard.style.setProperty('--w', marginToStripW(v.margin));
+    // 燈塔點亮指示：里若已累積到 ≥ TOWER_VILLAGE_THRESHOLD（10）次分享，
+    // 在里名右邊放一個暖橘小圓點，跟地圖上的燈塔對得起來。
+    const tallyCount = getTotalForVillage(v.townName, v.villageName);
+    const lit = tallyCount >= TOWER_VILLAGE_THRESHOLD;
+    const litDot = lit
+      ? `<span class="tower-dot" title="燈塔已點亮 · 累積 ${tallyCount} 次"></span>`
+      : '';
     vCard.innerHTML = `
-      <div class="name">${v.villageName}</div>
+      <div class="name">${v.villageName}${litDot}</div>
       <hr class="card-divider">
       <div class="meta">${v.margin.toFixed(0)}%</div>`;
     vCard.title = `${v.winner} ${v.results[0]?.rate.toFixed(1)}% vs ${v.results[1]?.name ?? ''} ${v.results[1]?.rate.toFixed(1) ?? ''}%`;
