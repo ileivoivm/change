@@ -2016,8 +2016,9 @@ function renderBubble(mesh) {
     }).join('');
     const winColor = '#' + candidateColor(v.results[0]).toString(16).padStart(6, '0');
 
-    // Flip math for the runner-up: swing = votes that must change sides
-    // (gap closes at 2× leverage); mobilize = new votes all flowing to loser.
+    // Vote gap framing — descriptive, not mobilizational. P3 升級：把
+    // 「翻盤需 N 票改投」（動員話術）改成「差距 N 票」（事實陳述），
+    // 數字一樣但語氣中性。不再隱含「應該翻」的訴求。
     let flipBlock = '';
     if (v.results.length >= 2 && v.results[0].votes > v.results[1].votes) {
       const w = v.results[0], l = v.results[1];
@@ -2026,9 +2027,10 @@ function renderBubble(mesh) {
       const mobilize = gap + 1;
       const loserColor = '#' + candidateColor(l).toString(16).padStart(6, '0');
       flipBlock = `<div class="flip">
-        <div class="flip-head" style="color:${loserColor}">${l.name}（${l.partyName}）翻盤需</div>
-        <div class="flip-row"><b>${fmt(swing)}</b> 票改投 <span class="dim">（1 票 = 2 差距）</span></div>
-        <div class="flip-row">或爭取 <b>${fmt(mobilize)}</b> 張新票 <span class="dim">（全流向落後方）</span></div>
+        <div class="flip-head">${w.name} 與 <span style="color:${loserColor}">${l.name}</span> 差距</div>
+        <div class="flip-row"><b>${fmt(gap)}</b> 票 <span class="dim">（${(gap / w.votes * 100).toFixed(1)}% 領先）</span></div>
+        <div class="flip-row"><b>${fmt(swing)}</b> 票流動即可平手 <span class="dim">（1 票 = 2 差距）</span></div>
+        <div class="flip-row">或多 <b>${fmt(mobilize)}</b> 張票進場 <span class="dim">（給落後方）</span></div>
       </div>`;
     }
 
@@ -2057,6 +2059,9 @@ function renderBubble(mesh) {
       tallyBlock = `<div class="tally-count" data-town="${tName}" data-village="${vName}">分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（還差 ${remain} 次）</div>`;
     }
 
+    // P2 武器化緩衝：燈塔免責小字，避免被當「選區重要性 = 政治戰場」工具
+    const towerDisclaimer = `<div class="tower-disclaimer">燈塔代表分享熱度，不代表選區政治重要性</div>`;
+
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
       <div class="winner" style="color:${winColor}">${v.winner} 勝 ${v.margin.toFixed(1)}%</div>
@@ -2064,6 +2069,7 @@ function renderBubble(mesh) {
       ${flipBlock}
       ${renderVillageHistoryStrip(tName, vName)}
       ${tallyBlock}
+      ${towerDisclaimer}
       ${shareBlock}`;
     return;
   }
