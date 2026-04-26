@@ -253,7 +253,12 @@
       #label.locked .bubble .history .hsq.current:hover {
         transform: scaleY(1.25);
       }
+      /* Village identity strip line ("永藍里 · 5 場未翻轉" etc.) — hidden
+         per user feedback「畫面資訊過多」. JS still computes & emits the
+         markup (renderVillageHistoryStrip), so removing this rule is
+         enough to bring it back. */
       #label .bubble .history .hs-meta {
+        display: none;
         color: #777; font-size: 12px;
         font-variant-numeric: tabular-nums;
       }
