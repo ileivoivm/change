@@ -1446,19 +1446,24 @@ renderer.domElement.addEventListener('pointerup', (e) => {
 function handleCanvasClick(cx, cy) {
   const p = { x: (cx / window.innerWidth) * 2 - 1, y: -(cy / window.innerHeight) * 2 + 1 };
   raycaster.setFromCamera(p, camera);
-  if (!drilledDistrict) {
-    // T4: tower click → fly to village/district
-    const towerHit = checkTowerHit();
-    if (towerHit) {
-      if (towerHit.isVillage) {
-        const voteData = villageVoteMap.get(towerHit.townName.slice(0, -1) + '/' + towerHit.villageName.slice(0, -1));
-        if (voteData) selectVillage(voteData);
-        else drillByStem(towerHit.townName.slice(0, -1));
-      } else {
-        drillByStem(towerHit.stem);
-      }
-      return;
+
+  // Tower click jumps directly to that village/district regardless of the
+  // current drill state — works at top-level (district mode) AND when already
+  // drilled into a different district. User feedback: 「我如果點選燈塔的
+  // 圓圈，也會快速切換到該里」.
+  const towerHit = checkTowerHit();
+  if (towerHit) {
+    if (towerHit.isVillage) {
+      const voteData = villageVoteMap.get(towerHit.townName.slice(0, -1) + '/' + towerHit.villageName.slice(0, -1));
+      if (voteData) selectVillage(voteData);
+      else drillByStem(towerHit.townName.slice(0, -1));
+    } else {
+      drillByStem(towerHit.stem);
     }
+    return;
+  }
+
+  if (!drilledDistrict) {
     // district mode: click an NTPC district to drill; empty canvas toggles
     // the card overlay (same as Space / 新北市 tap).
     const targets = districtMeshes.filter(m => m.userData.layer === CITY_CONFIG.key && m.visible);
