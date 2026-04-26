@@ -1545,18 +1545,31 @@ labelBubble.addEventListener('click', async (e) => {
   const villageName = btn.dataset.village;
   if (!townName || !villageName) return;
 
-  // Build canonical share URL: app URL + ref=share for view tracking
+  // Build canonical share URL.
+  // For ntpc 2022 villages there's a pre-built static OG page at
+  // /share/2022/{stem}/{stem}/index.html with FB / LINE / Threads-friendly
+  // og:image + og:title / og:description. Use that so social-platform
+  // crawlers get a village-specific preview card. Its IIFE redirect (see
+  // scripts/build-share.mjs) preserves any query string — including
+  // ?ref=share — so the human receiver still triggers the view tally on
+  // the SPA. (Past regression: 小B commit 1fbeb3f short-circuited to the
+  // SPA root, where index.html has no village OG → 「FB 沒縮圖」.)
+  // For other cities / years we fall back to the direct SPA URL.
   const shareBase = import.meta.env.DEV
     ? 'https://ileivoivm.github.io/change'
     : location.origin + import.meta.env.BASE_URL.replace(/\/$/, '');
-  const sp = new URLSearchParams({
-    city: CITY_CONFIG.key,
-    y:    String(currentYear),
-    d:    townName.slice(0, -1),
-    v:    villageName.slice(0, -1),
-    ref:  'share',
-  });
-  const url = `${shareBase}/?${sp}`;
+  const dStem = encodeURIComponent(townName.slice(0, -1));
+  const vStem = encodeURIComponent(villageName.slice(0, -1));
+  const hasOgPage = CITY_CONFIG.key === 'ntpc' && currentYear === 2022;
+  const url = hasOgPage
+    ? `${shareBase}/share/2022/${dStem}/${vStem}/?ref=share`
+    : `${shareBase}/?${new URLSearchParams({
+        city: CITY_CONFIG.key,
+        y:    String(currentYear),
+        d:    townName.slice(0, -1),
+        v:    villageName.slice(0, -1),
+        ref:  'share',
+      })}`;
 
   // Copy URL to clipboard with three-tier fallback so the user always sees
   // 「已複製 ✓」 instead of an iOS share sheet or a system prompt() popup.
