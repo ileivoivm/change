@@ -367,7 +367,18 @@ function shareHtml(ctx) {
   <div class="flip">${esc(loser.partyName)} 翻盤需 ${fmt(flip.swing)} 票改投</div>
   <div class="hint">正在開啟互動地圖… 若未跳轉請 <a href="${esc(spaUrl)}">點這裡</a>。</div>
 </div>
-<script>location.replace(${JSON.stringify(spaUrl)});</script>
+<script>
+// Preserve ?ref=share (Share Tower view tally) when redirecting into the SPA.
+// Any other query params on this OG card URL also flow through.
+(function () {
+  var spa = ${JSON.stringify(spaUrl)};
+  var incoming = location.search;
+  if (incoming && incoming.length > 1) {
+    spa += spa.indexOf('?') >= 0 ? '&' + incoming.slice(1) : incoming;
+  }
+  location.replace(spa);
+})();
+</script>
 </body>
 </html>
 `;

@@ -101,6 +101,17 @@
         z-index: 40;
       }
 
+      #map-scrim {
+        position: fixed;
+        inset: 0;
+        background: rgba(9,54,99,0.30);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 500ms ease;
+        z-index: 20;
+      }
+      body.map-scrim-visible #map-scrim { opacity: 1; }
+
       /* floating speech bubble anchored to hovered district */
       #label {
         position: fixed; left: 0; top: 0;
@@ -281,6 +292,7 @@
         position: fixed; top: 16px; right: 16px;
         display: flex; flex-direction: column; gap: 10px;
         align-items: center;
+        z-index: 60;
       }
       #compass {
         width: 64px; height: 64px;
@@ -353,6 +365,7 @@
         position: fixed; inset: 0;
         pointer-events: none;
         font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+        z-index: 30;
       }
       #village-panel .header { display: none; }
       #village-list {
@@ -803,6 +816,8 @@
       <div class="row"><span>azimuth</span><span id="cam-az">—</span></div>
       <div class="row"><span>pitch</span><span id="cam-pitch">—</span></div>
     </div>
+
+    <div id="map-scrim" aria-hidden="true"></div>
 
     <div id="label">
       <div class="bubble"><span class="tag"></span><span class="name"></span></div>

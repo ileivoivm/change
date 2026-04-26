@@ -1,0 +1,9 @@
+name = "change-tw"
+main = "worker/src/index.js"
+compatibility_date = "2026-04-25"
+
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "CHANGE_TALLY"
+id = "fb9b871a0c8e4a9595b27da13fdf2106"

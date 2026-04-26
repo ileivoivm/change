@@ -4,6 +4,7 @@ dist
 *.log
 .vite
 .cache
+.wrangler
 
 # Downloaded raw CEC / topojson — re-fetchable via scripts
 data/raw/
