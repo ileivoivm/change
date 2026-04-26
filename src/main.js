@@ -795,7 +795,7 @@ function selectVillage(v) {
     drillByStem(townStem);
   }
   if (vm) {
-    panZoomWithPitch(vm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100, autoPanForBubble);
+    panZoomWithPitch(vm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100, true);
     sticky = false;
     setHover(vm);
     sticky = true;
@@ -809,7 +809,7 @@ function selectVillage(v) {
     const dm = districtMeshes.find(
       m => m.userData.layer === CITY_CONFIG.key && m.userData.townName.slice(0, -1) === townStem
     );
-    if (dm) panZoomWithPitch(dm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100, autoPanForBubble);
+    if (dm) panZoomWithPitch(dm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100, true);
     // A duck-typed stub that satisfies setHover / renderBubble /
     // updateLabelPosition — no Three.js mesh, just the fields they read.
     const ghostCentroid = dm
@@ -846,29 +846,10 @@ function selectVillage(v) {
   updateCardState();
   layoutCards();
   writeUrl();
-  // autoPanForBubble runs as the panZoomWithPitch tween's onComplete callback
-  // (see selectVillage above) so the pitch tween finishes first. Older code
-  // queued via requestAnimationFrame here and the second tween clobbered the
-  // pitch mid-flight.
-}
-
-function autoPanForBubble() {
-  const dist = camera.position.distanceTo(controls.target);
-  const worldH = 2 * dist * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-  const worldPerPx = worldH / window.innerHeight;
-
-  const viewDir = new THREE.Vector3().subVectors(controls.target, camera.position).normalize();
-  const screenUp = new THREE.Vector3()
-    .copy(camera.up)
-    .addScaledVector(viewDir, -camera.up.dot(viewDir))
-    .normalize();
-
-  // Shift selected village to upper 1/4 of viewport so bubble content has
-  // room to expand downward. Moving camera in -screenUp direction shifts the
-  // scene upward on screen, placing the village above centre.
-  const shiftPx = window.innerHeight * 0.125;
-  const delta = screenUp.clone().multiplyScalar(shiftPx * worldPerPx);
-  tweenCamera(camera.position.clone().add(delta), controls.target.clone().add(delta), 350);
+  // The bubble-pan offset is now baked into panZoomWithPitch's single 800ms
+  // tween (5th arg = true), instead of running as a separate 350ms tween
+  // after pitch completes. Old behaviour was a visible "rotate, pause,
+  // slide" two-step; new behaviour is one continuous motion.
 }
 
 function unselectVillage() {
@@ -896,7 +877,14 @@ function panZoomTo(targetVec, distance = 20) {
 // Pan / zoom while forcing a specific pitch. Preserves current azimuth
 // unless `deltaAzimuthDeg` is passed — e.g. selectVillage passes a random
 // value in [-50, +50] for a small rotational transition between villages.
-function panZoomWithPitch(targetVec, distance, pitchDeg, deltaAzimuthDeg = 0, onComplete) {
+//
+// `bubblePan = true` bakes a 1/8-viewport screen-up shift into the same
+// tween, so the village settles in the upper quarter (leaving room for the
+// bubble to expand downward) without a visible second-tween jump after
+// rotation completes. The shift is computed at the FINAL pose (using the
+// post-rotation viewDir), so the offset stays correct regardless of how
+// far we rotated.
+function panZoomWithPitch(targetVec, distance, pitchDeg, deltaAzimuthDeg = 0, bubblePan = false) {
   const dx = camera.position.x - controls.target.x;
   const dz = camera.position.z - controls.target.z;
   const azimuth = Math.atan2(dx, dz) + (deltaAzimuthDeg * Math.PI) / 180;
@@ -908,7 +896,21 @@ function panZoomWithPitch(targetVec, distance, pitchDeg, deltaAzimuthDeg = 0, on
     targetVec.y + y,
     targetVec.z + planar * Math.cos(azimuth),
   );
-  tweenCamera(newPos, targetVec.clone(), 800, onComplete);
+  const finalTarget = targetVec.clone();
+  if (bubblePan) {
+    // shiftPx = innerHeight * 0.125, worldPerPx = 2·d·tan(fov/2) / innerHeight
+    // → world-space shift = d · tan(fov/2) · 0.25, independent of viewport.
+    const shiftWorld = distance * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 0.25;
+    const viewDir = new THREE.Vector3().subVectors(targetVec, newPos).normalize();
+    const screenUp = new THREE.Vector3()
+      .copy(camera.up)
+      .addScaledVector(viewDir, -camera.up.dot(viewDir))
+      .normalize();
+    const offset = screenUp.multiplyScalar(shiftWorld);
+    newPos.add(offset);
+    finalTarget.add(offset);
+  }
+  tweenCamera(newPos, finalTarget, 800);
 }
 
 // ─────────── URL sync (share links) ───────────
@@ -2216,7 +2218,16 @@ function renderPanel() {
     if (drilledDistrict) exitDrill(true);
     else toggleCardsCollapsed();
   });
-  listEl.appendChild(cityCard);
+  // Mount the city chip on the panel itself, NOT inside #village-list — the
+  // list becomes a -webkit-overflow-scrolling:touch container on mobile when
+  // drilled, and iOS Safari mis-anchors position:fixed children of such
+  // containers to the scroll content instead of the viewport. The chip ends
+  // up scrolling out of view as the user scrolls the village list. Mounting
+  // it on #village-panel (a plain non-scrolling overlay) keeps it truly
+  // viewport-fixed.
+  const panelEl = document.getElementById('village-panel');
+  panelEl.querySelector(':scope > .card-city')?.remove();
+  panelEl.appendChild(cityCard);
 
   // ── district tiles ──
   const districts = data.districts.slice().sort((a, b) => a.area.localeCompare(b.area));

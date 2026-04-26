@@ -697,6 +697,11 @@
         /* light paper bg */
         background: rgba(255,255,255,0.88);
         backdrop-filter: blur(4px);
+        /* Promote each card to its own GPU compositing layer. iOS Safari
+           sometimes drops backdrop-filter elements during heavy Three.js
+           render (50k+ voxels) — forcing a dedicated layer keeps the card
+           painted independently and prevents flicker / blank-out. */
+        transform: translateZ(0);
       }
       .card.tween {
         transition:
@@ -882,7 +887,10 @@
           /* top / bottom set by layoutCards to match bc + timeline heights */
           overflow-y: auto;
           overflow-x: hidden;
-          -webkit-overflow-scrolling: touch;
+          /* `-webkit-overflow-scrolling: touch` removed: iOS 13+ already gives
+             overflow:auto containers native momentum scroll, and the property
+             still creates a special compositing layer that breaks position:
+             fixed children (city chip would scroll out of view with the list). */
           pointer-events: auto;
           touch-action: pan-y;
         }
