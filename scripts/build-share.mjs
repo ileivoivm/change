@@ -156,7 +156,7 @@ const h = (type, props = {}, ...children) => ({
 });
 
 function ogLayout(ctx) {
-  const { district, village, winner, loser, margin, flip, history, meta, historyYears } = ctx;
+  const { city, district, village, winner, loser, margin, flip, history, meta, historyYears } = ctx;
   const winColor = partyHex(winner.partyCode);
   const loseColor = partyHex(loser.partyCode);
   const winPct = winner.rate;
@@ -248,7 +248,7 @@ function ogLayout(ctx) {
     // tag
     h('div', {
       style: { display: 'flex', fontSize: 24, color: '#888', letterSpacing: 2, fontWeight: 500 },
-    }, `新北市 · ${district}`),
+    }, `${city.cityName} · ${district}`),
 
     // big title
     h('div', {
@@ -309,7 +309,7 @@ function ogLayout(ctx) {
         fontSize: 18, color: '#888',
       },
     },
-      h('div', { style: { display: 'flex' } }, '2022 新北市長 · 台灣選戰版圖'),
+      h('div', { style: { display: 'flex' } }, `${YEAR} ${city.mayorRole} · 台灣選戰版圖`),
       h('div', { style: { display: 'flex' } }, 'ileivoivm.github.io/change'),
     ),
   );
@@ -384,7 +384,7 @@ function shareHtml(ctx) {
 </head>
 <body>
 <div class="card">
-  <div class="tag">新北市 · ${esc(district)}</div>
+  <div class="tag">${esc(cityName)} · ${esc(district)}</div>
   <h1>${esc(village)}</h1>
   <div class="row"><b>${esc(winner.name)}</b>（${esc(winner.partyName)}）${fmt(winner.votes)} 票 · ${winner.rate.toFixed(1)}%</div>
   <div class="row"><b>${esc(loser.name)}</b>（${esc(loser.partyName)}）${fmt(loser.votes)} 票 · ${loser.rate.toFixed(1)}%</div>
