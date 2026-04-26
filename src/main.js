@@ -1527,15 +1527,10 @@ if (!_cityParam) {
     buildVillagePanel();
     wireViewToggle();
     parseAndApplyUrl();
-    // T1: view tracking — if arriving from a share link, record a view event
-    if (new URLSearchParams(location.search).get('ref') === 'share') {
-      setTimeout(() => {
-        if (hovered?.userData?.layer === 'village') {
-          postTally(hovered.userData.townName, hovered.userData.villageName, 'view');
-        }
-      }, 700);
-    }
-    // T2: load share counts → builds towers when Worker responds
+    // View tracking removed: counting every ?ref=share landing burned 2 reads
+    // + 2 writes per visitor on the Worker, and a single viral village could
+    // chew through the KV daily budget on views alone. Only the share button
+    // press counts toward 燈塔 progression now.
     fetchShareCounts();
     // Update timeline hint dynamically based on which years have village data
     const missingVillageYears = YEARS.filter(y => !VILLAGE_YEARS.includes(y));

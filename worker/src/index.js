@@ -116,6 +116,17 @@ async function handleTally(request, env) {
   const { city, district, village, event } = normalized.data;
   const fullKey = `${city}-${district}-${village}`;
 
+  // View events are no longer counted: each view used to cost 2 KV reads +
+  // 2 writes (lock check, loadAgg, agg put, lock put), and a single viral
+  // village's view stream (e.g. 183 views/day on 永和-安和里) was eating
+  // 4× as many KV ops as the actual share signal we care about. Schema is
+  // kept (validation still passes) so any in-flight ?ref=share clients fail
+  // gracefully instead of erroring; existing view counts in KV decay naturally
+  // via the daily cron until they reach zero.
+  if (event === 'view') {
+    return jsonResponse(request, { key: fullKey, counted: false, reason: 'view_disabled' });
+  }
+
   // Dev bypass: localhost origins (already restricted to the dev allowlist
   // above) skip the IP rate-limit so a single dev machine can hammer +1 to
   // verify the tally pipeline.
