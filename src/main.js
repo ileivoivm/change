@@ -137,8 +137,10 @@ const CONTEXT_HEIGHT = 0.25;
 const WORLD_SIZE = CITY_CONFIG.worldSize;
 
 // ─────────── share tower config ───────────
-// TALLY_WORKER_URL → small C fills in after T0 deploys (Cloudflare Worker endpoint)
-const TALLY_WORKER_URL = null;
+// Cloudflare Worker endpoint (Stage T0 deployed by 小C 2026-04-26).
+// Source: worker/src/index.js, deployed via `npx wrangler deploy`.
+// CORS allowed origins: github pages production + localhost:5173/5200 dev.
+const TALLY_WORKER_URL = 'https://change-tw.ileivoivm.workers.dev';
 const TOWER_VILLAGE_THRESHOLD = 10;
 const TOWER_DISTRICT_THRESHOLD = 50;
 const TOWER_SCALE = 0.8; // h = log(count - threshold + 1) * TOWER_SCALE
@@ -1314,18 +1316,42 @@ labelBubble.addEventListener('click', async (e) => {
   });
   const url = `${shareBase}/?${sp}`;
 
-  // Clipboard FIRST — gives the user instant 「已複製 ✓」 visual feedback.
-  // The tally POST + count refresh happen in parallel below; refreshTally
-  // only patches the .tally-count line so the share button's textContent
-  // change isn't clobbered.
+  // Copy URL to clipboard with three-tier fallback so the user always sees
+  // 「已複製 ✓」 instead of an iOS share sheet or a system prompt() popup.
+  //
+  //   1. navigator.clipboard.writeText (modern; needs user activation + focus)
+  //   2. document.execCommand('copy') via a hidden textarea (legacy fallback;
+  //      works even when navigator.clipboard rejects with "Document is not
+  //      focused" — the bug behind 「有時有 popup 有時沒有」)
+  //   3. inline button feedback 「複製失敗 · 請手動選取」 — never popup
+  //
+  // Set the success label first so the visual feedback is locked in even
+  // if the user clicks away mid-copy.
+  const orig = btn.textContent;
+  let copied = false;
   try {
     await navigator.clipboard.writeText(url);
-    const orig = btn.textContent;
+    copied = true;
+  } catch {
+    // Hidden textarea + execCommand fallback. Works in iframes / unfocused
+    // documents that block navigator.clipboard. Cleanup on next tick.
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = url;
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+      document.body.appendChild(ta);
+      ta.select();
+      copied = document.execCommand('copy');
+      document.body.removeChild(ta);
+    } catch { /* fall through */ }
+  }
+  if (copied) {
     btn.textContent = '已複製 ✓';
     btn.classList.add('copied');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1600);
-  } catch {
-    prompt('複製連結分享：', url);
+  } else {
+    btn.textContent = '複製失敗 · 再試一次';
+    setTimeout(() => { btn.textContent = orig; }, 2000);
   }
 
   // Fire tally + refresh the count line. Worker IP lock + sessionStorage
