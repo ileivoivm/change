@@ -215,9 +215,9 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
   - `src/main.js`：CITY_CONFIGS + CITY_CONFIG，`?city=` 路由，ntpc 向下兼容
 - [x] **Stage 3-1 台北市** ✅（2026-04-25 小B）：12 區彩色 voxel、8 屆 1994-2022、里級全年份
 - [x] **Stage 3-2 桃園市** ✅（2026-04-25 小B）：13 區、7 屆 1997-2022 含縣長時期、里級 2005+
-- [x] **Stage 3-3 台中市** ✅（2026-04-25 小B）：29 區（txg-districts.geo.json）、4 屆 2010-2022、stem slice(0,2) 修正 2 字地名
-- [ ] **Stage 3-4 台南市**（37 區，2010 合併後）
-- [ ] **Stage 3-5 高雄市**（38 區，2010 合併後）
+- [x] **Stage 3-3 台中市** ✅（2026-04-25 小B 實作 / 2026-04-26 小A 驗證）：29 區（txg-districts.geo.json）、4 屆 2010-2022、stem slice(0,2) 修正 2 字地名；驗證：2010 KMT→2014 DPP→2018 KMT→2022 KMT、西屯 39 里、bubble 惠來里
+- [x] **Stage 3-4 台南市** ✅（2026-04-25 小B 實作 / 2026-04-26 小A 驗證）：37 區（tnn-districts.geo.json）、4 屆 2010-2022、stem 37/37 對齊；驗證：四屆全 DPP、歸仁 21 里、bubble 永綠里
+- [x] **Stage 3-5 高雄市** ✅（2026-04-25 小B 實作 / 2026-04-26 小A 驗證）：38 區（khh-districts.geo.json）、4 屆 2010-2022、三民鄉→那瑪夏區 rename 修正 stem 衝突；驗證：2010/2014 陳菊 DPP→2018 韓國瑜 KMT→2022 陳其邁 DPP、鳳山 76 里、bubble 文英里
 - [x] **首頁背景圖** ✅（2026-04-25 小A）：`public/taiwan.png` voxel 台灣島；`#home-screen` 背景改 `#c5bdb1` 精確匹配圖片底色；桌機 `position:absolute; right:0; top:0; height:100vh` 全高貼右；左邊 28% 漸層遮罩淡入；手機 `position:static` 置中顯示於 footer 下方
 - [ ] **Stage 4**：首頁升級成 C 方案（voxel backdrop + 卡片浮層）
 - [ ] 並排比較模式（永和 vs 中和）候選
@@ -226,6 +226,64 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
 - `CLOSE_WHITE_MIX` 0.75→0.55：低 margin 顏色不再幾乎不可見
 - 柯文哲特例 → TPP 青藍 `#3bb5c4`；黃珊珊加入 TPP 特例
 - `candidateColor(name, partyCode)` helper：候選人名稱優先查特例表，再 fallback partyCode
+
+### ✅ M11 — Share Tower（分享塔，2026-04-26）
+
+讓被分享的里在地圖上長出「塔」（細線 + 頂端圓球），分享越多塔越高，達到門檻才會顯現。設計目的：路過民眾看到遠處高塔會好奇「那是哪一個里」，進而探索；沒被分享的里完全不畫塔，讓沉默是沉默、被點亮才發聲。塔顏色刻意中性（暖白），不延伸藍綠對抗。
+
+協作分工（見 `SHARE_TOWER_TODO.md`）：
+
+| Session | 角色 | 完成項目 |
+|---|---|---|
+| 小C | 後端 | T0：Cloudflare Worker + KV namespace + wrangler 部署 |
+| 小B | 前端 | T1–T4：分享流程 / 計數讀取 / 塔渲染 / 互動 |
+| 小A | 驗證 | T0 預驗證 + 部署後 E2E + merge 修復 + 補強 |
+
+**T0 後端基礎建設（小C）**
+- `worker/src/index.js`：POST `/tally` 寫 share/view 事件、GET `/counts?city=xxx` 讀回該城市所有 KV
+- KV key 設計：`{city}-{districtId}-{villageId}`（例 `ntpc-板橋區-留侯里`）；value `{shares, views, lastUpdate}`
+- 防刷：Worker 端用 IP SHA-256 hash 做 lock key + 10 分鐘 TTL
+- CORS 白名單：`https://ileivoivm.github.io`（production）+ `localhost:5173/5200` + `127.0.0.1:5173/5200`（dev E2E）
+- Endpoint：`https://change-tw.ileivoivm.workers.dev`
+- KV namespace ID：`fb9b871a0c8e4a9595b27da13fdf2106`
+
+**T1 前端分享流程（小B）**
+- bubble 內 `.share-btn`：桌機 clipboard、手機 `navigator.share()` 原生分享
+- 分享連結帶 `?ref=share`，並透過 `scripts/build-share.mjs` 重定向時保留 query
+- 點分享按鈕 → `POST /tally {event:'share'}`
+- 頁面載入 `parseAndApplyUrl` 偵測 `?ref=share` → `POST /tally {event:'view'}`
+- 防刷：sessionStorage 30 分鐘鎖（`tally_lock:{event}:{key}`）+ keepalive flag 讓使用者跳走也能寫入
+
+**T2 計數讀取與聚合（小B）**
+- `fetchShareCounts()` 城市載入時非同步呼叫 GET /counts
+- `window.shareCounts` / `districtShareCounts` 提供 debug 與塔渲染使用
+- `getTotalForVillage(townName, villageName)` → share + view 總和
+
+**T3 塔的視覺渲染（小B，InstancedMesh）**
+- `buildTowerIM()`：shaft `CylinderGeometry` r=0.05 + top `SphereGeometry` r=0.15
+- 自發光暖白 `emissive #fff5d6`；高度 = `log(count - threshold + 1) * 0.8`
+- 里級塔：count ≥ 10 才建塔；區級塔：聚合 ≥ 50 才建塔
+- LOD：dist < 60 顯示里塔，dist > 40 顯示區塔；每幀 `updateTowerLOD()` 淡入淡出切換
+
+**T4 互動（小B）**
+- `updateHover()` 優先偵測塔 → `setHover(towerGhost)` 顯示 tooltip
+- `handleCanvasClick()` 點塔 → `selectVillage` / `drillByStem` 沿用既有下鑽機制
+- mobile touch 對應同步
+
+**T5 打磨（待做）**
+- [ ] 塔生長動畫（球先出現、線把球頂上去，0.8 秒 ease-out）
+- [ ] 確認 OG 圖在 FB / Threads / Line 預覽正常
+- [ ] 1000+ 塔效能測試（FPS ≥ 30）
+- [ ] 首頁文案：「這張地圖會隨民眾分享而生長，塔的高度是被點亮的次數」
+- [ ] （可選）時間衰減：舊分享慢慢沉下去，新的長起來
+
+#### Merge 殘留陷阱（小A 修復紀錄）
+
+小B 在 worktree branch `claude/peaceful-heyrovsky-7a5ef2` commit `1fbeb3f` 完成 T1–T4 後，merge 回 main 時 `selectVillage` 留下兩處 `autoPanForBubble` 處理並存：
+1. 我的 `panZoomWithPitch(..., autoPanForBubble)` callback 串法（pitch tween 完成後才接 autoPan）
+2. 小B 分支舊版的 `requestAnimationFrame(() => autoPanForBubble())` + 重複 function 宣告
+
+兩者並存導致 `SyntaxError: Identifier 'autoPanForBubble' has already been declared`，整個 SPA 無法啟動。修法：刪重複 function、移除 RAF 呼叫，保留 callback 串法。
 
 ### ☐ M10 — 開票日即時
 - [ ] 研究當年中選會即時 endpoint
@@ -238,7 +296,8 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
 ## 工作慣例
 
 - **單一來源**：所有決策、里程碑進度更新於本檔，其他臨時筆記別散落各處
-- **多 session 協作**：`TODO.md` 是分工協調中樞。每個 session 開始前先讀 TODO.md，認領工作前在「進行中」標記，完成後打勾移到「完成紀錄」，避免撞車。完成的工作也要同步到 CLAUDE.md（里程碑 checkbox）+ 長期記憶。
+- **多 session 協作**：`TODO.md`（六都本體）+ `SHARE_TOWER_TODO.md`（分享塔功能）是分工協調中樞。兩份檔在 `.gitignore`，本地各自維護，不進 git history（避免暴露 session 狀態 / 工作流細節）。每個 session 開始前先讀對應 TODO，認領工作前在「進行中」標記，完成後打勾移到「完成紀錄」，避免撞車。完成的工作也要同步到 CLAUDE.md（里程碑 checkbox）+ 長期記憶。
+- **Session 角色**：小A 驗證 / 小B 實作（peaceful-heyrovsky worktree）/ 小C 後端（Cloudflare Worker / KV / 部署）。小B 通常在 worktree branch 工作，完成後需 merge 回 main；小A 驗證後在 TODO 勾名。
 - **資料快取**：抓下來的選舉原始資料存入 `data/raw/`，清洗後存 `data/processed/`
 - **逐步驗證**：每完成一個里程碑，先 demo 給用戶看過再往下
 - **美學迭代**：視覺不要求一次到位，會隨開發反覆調整

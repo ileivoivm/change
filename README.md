@@ -184,9 +184,11 @@ node scripts/extract-villages.mjs --city all
 - ✅ 17 年里身分條（永藍 / 永綠 / 翻轉 / 搖擺）+ hover 切年
 - ✅ 1,032 里社群分享卡（預建 OG PNG + HTML）
 - ✅ 候選人過濾（得票率 < 1% 不顯示）+ bubble 自動偏移
+- ✅ M11 Share Tower：被分享的里長出暖白塔（log 高度，里級 ≥ 10、區級 ≥ 50），Cloudflare Worker + KV 寫入計數
 
 下一步候選：
 
+- M11 T5 打磨：塔生長動畫、OG 預覽驗證、1000+ 塔效能測試
 - 開票日即時連中選會 JSON endpoint（M10）
 - 並排比較模式（例如永和 vs 中和）
 - Stage 4：首頁 voxel 全台底圖 + 卡片浮層（C 方案）
