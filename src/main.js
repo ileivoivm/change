@@ -548,6 +548,18 @@ function buildVillageLayer(projector) {
       cx += x; cz += z;
     });
     mesh.instanceMatrix.needsUpdate = true;
+    // Snap centroid to the voxel cell closest to the arithmetic mean. For
+    // irregular village shapes (L / U / donut) the raw mean can land in a
+    // gap between voxels, leaving the share-tower's shaft visibly floating
+    // off-grid. Snapping guarantees the shaft sits on top of an actual voxel.
+    const meanX = cx / cells.length;
+    const meanZ = cz / cells.length;
+    let bestCell = cells[0];
+    let bestDist = Infinity;
+    for (const c of cells) {
+      const d = (c.x - meanX) ** 2 + (c.z - meanZ) ** 2;
+      if (d < bestDist) { bestDist = d; bestCell = c; }
+    }
     mesh.userData = {
       layer: 'village',
       townName: f.properties.TOWNNAME,
@@ -556,7 +568,7 @@ function buildVillageLayer(projector) {
       baseColor: color,
       baseY: 0,
       isContext: false,
-      centroid: new THREE.Vector3(cx / cells.length, VOXEL_HEIGHT, cz / cells.length),
+      centroid: new THREE.Vector3(bestCell.x, VOXEL_HEIGHT, bestCell.z),
       vote,
     };
     group.add(mesh);
@@ -1010,13 +1022,16 @@ function refreshTallyLineInBubble() {
   const tShares = tally?.shares || 0;
   const tViews  = tally?.views  || 0;
   const totalCount = tShares + tViews;
-  const VILLAGE_TOWER_THRESHOLD = 10;
+  const VILLAGE_TOWER_THRESHOLD = TOWER_VILLAGE_THRESHOLD;
   if (totalCount >= VILLAGE_TOWER_THRESHOLD) {
+    const level = Math.floor((totalCount - VILLAGE_TOWER_THRESHOLD) / TOWER_STEP_BUCKET) + 1;
+    const nextRemain = TOWER_STEP_BUCKET - ((totalCount - VILLAGE_TOWER_THRESHOLD) % TOWER_STEP_BUCKET);
     tallyEl.classList.add('lit');
-    tallyEl.innerHTML = `🏯 燈塔已點亮 · <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（${tShares} 分享 · ${tViews} 點開）`;
+    tallyEl.innerHTML = `🏯 燈塔 <b>Lv.${level}</b> · 累積 <b>${totalCount}</b> 次 · 還差 <b>${nextRemain}</b> 次升 Lv.${level + 1}`;
   } else {
+    const remain = VILLAGE_TOWER_THRESHOLD - totalCount;
     tallyEl.classList.remove('lit');
-    tallyEl.innerHTML = `分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>`;
+    tallyEl.innerHTML = `分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（還差 ${remain} 次）`;
   }
 }
 
@@ -1027,39 +1042,72 @@ function getTotalForVillage(townName, villageName) {
 }
 
 // ─────────── tower rendering (T3) ───────────
-const _shaftGeo = new THREE.CylinderGeometry(0.05, 0.05, 1, 8);
-const _topGeo   = new THREE.SphereGeometry(0.15, 8, 8);
-const _towerMat = new THREE.MeshStandardMaterial({
-  color: 0xfff5d6, emissive: 0xfff5d6, emissiveIntensity: 0.7,
-  roughness: 0.3, metalness: 0.2,
+// Shaft: half the original thickness (0.05 → 0.025) so towers feel like
+// thin reeds against the chunky voxels. Subtle glow.
+const _shaftGeo = new THREE.CylinderGeometry(0.025, 0.025, 1, 8);
+const _shaftMat = new THREE.MeshStandardMaterial({
+  color: 0xfff5d6, emissive: 0xfff5d6, emissiveIntensity: 0.5,
+  roughness: 0.4, metalness: 0.1,
 });
+// Top sphere: MeshBasicMaterial so the per-instance color renders at full
+// brightness (no lighting / fog drag-down), reading as a "lit lantern".
+// Colour is set per instance via `setColorAt` based on share count:
+//   count = 10  → #FCE327 (warm yellow)
+//   count = 100 → #FC8654 (warm orange)
+//   linear lerp between, clamped above/below.
+const _topGeo = new THREE.SphereGeometry(0.15, 12, 12);
+const _topMat = new THREE.MeshBasicMaterial({
+  color: 0xffffff, // multiplied by per-instance colour; white = identity
+  toneMapped: false,
+  fog: false,
+});
+const TOWER_TOP_COLOR_LO = new THREE.Color(0xFCE327); // count = threshold
+const TOWER_TOP_COLOR_HI = new THREE.Color(0xFC8654); // count >= 100
+function towerTopColor(count, threshold, target = new THREE.Color()) {
+  // 0 at threshold, 1 at 100 (interpreted as 100 absolute, not threshold+90).
+  // For districts (threshold=50) the gradient still reaches HI at count=100.
+  const span = Math.max(1, 100 - threshold);
+  const t = Math.max(0, Math.min(1, (count - threshold) / span));
+  return target.copy(TOWER_TOP_COLOR_LO).lerp(TOWER_TOP_COLOR_HI, t);
+}
 const towerGroup = new THREE.Group();
 
+// Discrete step height: every TOWER_STEP_BUCKET (10) shares above the
+// threshold climbs by TOWER_STEP_HEIGHT (0.5 world units). User feedback:
+// 「每超過 10 次，就變高一個新量級」. Threshold itself counts as level 1
+// so the first appearance jumps directly to a visible height.
+const TOWER_STEP_BUCKET = 10;
+const TOWER_STEP_HEIGHT = 0.5;
 function towerH(count, threshold) {
-  return count >= threshold ? Math.log(count - threshold + 1) * TOWER_SCALE : 0;
+  if (count < threshold) return 0;
+  const level = Math.floor((count - threshold) / TOWER_STEP_BUCKET) + 1;
+  return level * TOWER_STEP_HEIGHT;
 }
 
 function buildTowerIM(records, threshold) {
   // records: [{ centroid, count, ... }] — only entries where count >= threshold
   const n = records.length;
   if (n === 0) return { shaft: null, top: null };
-  const shaft = new THREE.InstancedMesh(_shaftGeo, _towerMat, n);
-  const top   = new THREE.InstancedMesh(_topGeo,   _towerMat, n);
+  const shaft = new THREE.InstancedMesh(_shaftGeo, _shaftMat, n);
+  const top   = new THREE.InstancedMesh(_topGeo,   _topMat,   n);
   shaft.frustumCulled = false;
   top.frustumCulled   = false;
   const m4 = new THREE.Matrix4();
+  const _tmpColor = new THREE.Color();
   records.forEach(({ centroid, count }, i) => {
     const h = towerH(count, threshold);
     // Shaft: scale Y by h so the unit cylinder becomes h tall; center at h/2 above voxel top
     m4.makeScale(1, h, 1);
     m4.setPosition(centroid.x, VOXEL_HEIGHT + h / 2, centroid.z);
     shaft.setMatrixAt(i, m4);
-    // Top sphere: sits at tip of shaft
+    // Top sphere: sits at tip of shaft, colour derived from share count.
     m4.makeTranslation(centroid.x, VOXEL_HEIGHT + h + 0.15, centroid.z);
     top.setMatrixAt(i, m4);
+    top.setColorAt(i, towerTopColor(count, threshold, _tmpColor));
   });
   shaft.instanceMatrix.needsUpdate = true;
   top.instanceMatrix.needsUpdate   = true;
+  if (top.instanceColor) top.instanceColor.needsUpdate = true;
   return { shaft, top };
 }
 
@@ -1248,6 +1296,8 @@ let pointerInside = false;
 
 const labelEl = document.getElementById('label');
 const labelBubble = labelEl.querySelector('.bubble');
+const leaderSvg  = document.getElementById('label-leader');
+const leaderLine = leaderSvg ? leaderSvg.querySelector('line') : null;
 const tmpVec = new THREE.Vector3();
 
 // Share button: copies pre-rendered /share/YYYY/{d}/{v}/ URL to clipboard so
@@ -1481,9 +1531,13 @@ function renderBubble(mesh) {
     const label = mesh.userData.villageName
       ? `${mesh.userData.townName} ${mesh.userData.villageName}`
       : `${mesh.userData.townName}（${CITY_CONFIG.nameZh}）`;
+    const isVillage = !!mesh.userData.villageName;
+    const threshold = isVillage ? TOWER_VILLAGE_THRESHOLD : TOWER_DISTRICT_THRESHOLD;
+    const count = mesh.userData.count;
+    const level = Math.floor((count - threshold) / TOWER_STEP_BUCKET) + 1;
     labelBubble.innerHTML = `
       <div class="row"><span class="name">${label}</span></div>
-      <div class="sub">已被分享 ${fmt(mesh.userData.count)} 次</div>`;
+      <div class="sub">🏯 Lv.${level} · 已被分享 ${fmt(count)} 次</div>`;
     return;
   }
 
@@ -1537,10 +1591,16 @@ function renderBubble(mesh) {
     const tShares = tally?.shares || 0;
     const tViews  = tally?.views  || 0;
     const totalCount = tShares + tViews;
-    const VILLAGE_TOWER_THRESHOLD = 10;
-    const tallyBlock = totalCount >= VILLAGE_TOWER_THRESHOLD
-      ? `<div class="tally-count lit" data-town="${tName}" data-village="${vName}">🏯 燈塔已點亮 · <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（${tShares} 分享 · ${tViews} 點開）</div>`
-      : `<div class="tally-count" data-town="${tName}" data-village="${vName}">分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b></div>`;
+    const VILLAGE_TOWER_THRESHOLD = TOWER_VILLAGE_THRESHOLD;
+    let tallyBlock;
+    if (totalCount >= VILLAGE_TOWER_THRESHOLD) {
+      const level = Math.floor((totalCount - VILLAGE_TOWER_THRESHOLD) / TOWER_STEP_BUCKET) + 1;
+      const nextRemain = TOWER_STEP_BUCKET - ((totalCount - VILLAGE_TOWER_THRESHOLD) % TOWER_STEP_BUCKET);
+      tallyBlock = `<div class="tally-count lit" data-town="${tName}" data-village="${vName}">🏯 燈塔 <b>Lv.${level}</b> · 累積 <b>${totalCount}</b> 次 · 還差 <b>${nextRemain}</b> 次升 Lv.${level + 1}</div>`;
+    } else {
+      const remain = VILLAGE_TOWER_THRESHOLD - totalCount;
+      tallyBlock = `<div class="tally-count" data-town="${tName}" data-village="${vName}">分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（還差 ${remain} 次）</div>`;
+    }
 
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
@@ -1604,9 +1664,11 @@ function setHover(mesh) {
     // view-only to prevent drive-by hover from scrubbing years.
     labelEl.classList.toggle('locked', sticky);
     labelEl.classList.add('visible');
+    if (leaderSvg) leaderSvg.classList.add('visible');
   } else {
     document.body.style.cursor = '';
     labelEl.classList.remove('visible');
+    if (leaderSvg) leaderSvg.classList.remove('visible');
   }
 }
 
@@ -1648,20 +1710,41 @@ function updateHover() {
 
 function updateLabelPosition() {
   if (!hovered) return;
+  // Project the voxel's TOP face position (where the share-tower starts) —
+  // this is the anchor point the leader line connects back to.
   tmpVec.copy(hovered.userData.centroid);
-  tmpVec.y += hovered.position.y + 0.3;
+  const baseY = tmpVec.y + hovered.position.y;
+  tmpVec.y = baseY;
   tmpVec.project(camera);
   const W = window.innerWidth;
-  const x = (tmpVec.x * 0.5 + 0.5) * W;
-  const y = (-tmpVec.y * 0.5 + 0.5) * window.innerHeight;
-  // Clamp X so the bubble (centered on x via translate -50%) stays inside the
-  // viewport — matters on narrow phones where the bubble would otherwise fall
-  // off screen when the anchored voxel is near an edge.
+  const Hh = window.innerHeight;
+  const voxelX = (tmpVec.x * 0.5 + 0.5) * W;
+  const voxelY = (-tmpVec.y * 0.5 + 0.5) * Hh;
+
+  // Anchor the bubble ABOVE-LEFT of the voxel so the share-tower stays
+  // visible (towers stand directly above the voxel centroid; centered
+  // bubble would cover them). Bubble's bottom-right corner sits at
+  // (anchorX, anchorY) with translate(-100%, -100%).
   const margin = 12;
+  const gap = 24;       // horizontal breathing room between bubble and tower
+  const liftY = 40;     // bubble lifted above voxel so leader line has length
   const bw = labelBubble.offsetWidth;
-  const half = bw / 2;
-  const cx = Math.max(half + margin, Math.min(W - half - margin, x));
-  labelEl.style.transform = `translate(${cx}px, ${y}px) translate(-50%, -100%)`;
+  let anchorX = voxelX - gap;
+  let anchorY = voxelY - liftY;
+  // Clamp so bubble stays fully on screen.
+  anchorX = Math.max(margin + bw, Math.min(W - margin, anchorX));
+  anchorY = Math.max(margin + labelBubble.offsetHeight, Math.min(Hh - margin, anchorY));
+  labelEl.style.transform = `translate(${anchorX}px, ${anchorY}px) translate(-100%, -100%)`;
+
+  // Leader line: from bubble's bottom-right corner (anchorX, anchorY) to
+  // the voxel top (voxelX, voxelY). User feedback: 「bubble 下方的黑線，
+  // 要接回 voxel 的位置，也就是預設燈塔的起點」.
+  if (leaderLine) {
+    leaderLine.setAttribute('x1', anchorX);
+    leaderLine.setAttribute('y1', anchorY);
+    leaderLine.setAttribute('x2', voxelX);
+    leaderLine.setAttribute('y2', voxelY);
+  }
 }
 
 // ─────────── village list panel ───────────
