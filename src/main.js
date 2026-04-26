@@ -242,6 +242,16 @@ let drillFlashUntil = 0; // perf-time until which the just-drilled district shim
 // a one-tap expand) matches the user's initial-version experience.
 const isMobile = () => window.innerWidth < 640;
 let cardsCollapsed = isMobile();
+function updateMapScrim() {
+  // The scrim is only for expanded choice grids:
+  // - top level district cards
+  // - drilled village cards
+  // Breadcrumb-only states and floating bubbles leave the map clear.
+  const districtCardsOpen = !!_cityParam && !drilledDistrict && !cardsCollapsed;
+  const villageCardsOpen = !!_cityParam && !!drilledDistrict && !cardsCollapsed && !selectedVillageKey;
+  const chooserCardsVisible = districtCardsOpen || villageCardsOpen;
+  document.body.classList.toggle('map-scrim-visible', chooserCardsVisible);
+}
 function toggleCardsCollapsed() {
   cardsCollapsed = !cardsCollapsed;
   layoutCards();
@@ -821,27 +831,10 @@ function selectVillage(v) {
   updateCardState();
   layoutCards();
   writeUrl();
-  // After DOM settles, pan camera if bubble bottom exceeds viewport.
-  requestAnimationFrame(() => autoPanForBubble());
-}
-
-function autoPanForBubble() {
-  const dist = camera.position.distanceTo(controls.target);
-  const worldH = 2 * dist * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-  const worldPerPx = worldH / window.innerHeight;
-
-  const viewDir = new THREE.Vector3().subVectors(controls.target, camera.position).normalize();
-  const screenUp = new THREE.Vector3()
-    .copy(camera.up)
-    .addScaledVector(viewDir, -camera.up.dot(viewDir))
-    .normalize();
-
-  // Shift selected village to upper 1/4 of viewport so bubble content has
-  // room to expand downward. Moving camera in -screenUp direction shifts the
-  // scene upward on screen, placing the village above centre.
-  const shiftPx = window.innerHeight * 0.125;
-  const delta = screenUp.clone().multiplyScalar(shiftPx * worldPerPx);
-  tweenCamera(camera.position.clone().add(delta), controls.target.clone().add(delta), 350);
+  // autoPanForBubble runs as the panZoomWithPitch tween's onComplete callback
+  // (see selectVillage above) so the pitch tween finishes first. Older code
+  // queued via requestAnimationFrame here and the second tween clobbered the
+  // pitch mid-flight.
 }
 
 function autoPanForBubble() {
@@ -1817,6 +1810,7 @@ function layoutCards() {
   // CSS picks the right thing to hide based on `drilled` + `cards-collapsed`.
   document.body.classList.toggle('drilled', drilled);
   document.body.classList.toggle('cards-collapsed', cardsCollapsed);
+  updateMapScrim();
 
   const mobile = W < 640;
   const sidePad = mobile ? 8 : 0;
