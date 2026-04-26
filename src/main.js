@@ -1578,6 +1578,88 @@ for (const ev of ['pointerdown', 'pointerup', 'click', 'dblclick']) {
     if (e.target.closest('.hsq[data-year]')) stopEvt(e);
   });
 }
+
+// Celebratory firework burst at the share button's centre. Pure CSS animation;
+// JS just injects ~20 particles (with random angle / distance / colour) and
+// removes the layer after they fade out. Triggered after a successful share.
+const FIREWORK_COLORS = ['#FCE327', '#FC8654', '#FFD56B', '#FFA060', '#FFEAA0', '#FFB740'];
+function launchFireworks(originEl) {
+  if (!originEl) return;
+  const rect = originEl.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+
+  const layer = document.createElement('div');
+  layer.className = 'fireworks-layer';
+  layer.style.left = cx + 'px';
+  layer.style.top  = cy + 'px';
+
+  // Initial flash ring
+  const flash = document.createElement('span');
+  flash.className = 'fireworks-flash';
+  layer.appendChild(flash);
+
+  // Outer "main" burst — large, far-flung. User asked for 更浮誇:
+  // 18 → 38 particles, 70-120 → 160-280 spread, longer animation.
+  const PARTICLES = 38;
+  for (let i = 0; i < PARTICLES; i++) {
+    const angle = (i / PARTICLES) * Math.PI * 2 + (Math.random() - 0.5) * 0.35;
+    const dist = 160 + Math.random() * 120;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist - 30; // upward bias for "rising rocket" feel
+    const p = document.createElement('span');
+    p.className = 'fireworks-particle';
+    p.style.color = FIREWORK_COLORS[i % FIREWORK_COLORS.length];
+    p.style.background = 'currentColor';
+    p.style.setProperty('--dx', dx.toFixed(1) + 'px');
+    p.style.setProperty('--dy', dy.toFixed(1) + 'px');
+    p.style.setProperty('--gravity', (60 + Math.random() * 40).toFixed(1) + 'px');
+    p.style.animationDelay = (Math.random() * 80).toFixed(0) + 'ms';
+    p.style.animationDuration = (1100 + Math.random() * 400).toFixed(0) + 'ms';
+    layer.appendChild(p);
+  }
+
+  // Mid-ring — fills the gap between sparks and main burst
+  const MID = 16;
+  for (let i = 0; i < MID; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 80 + Math.random() * 50;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist - 15;
+    const m = document.createElement('span');
+    m.className = 'fireworks-particle';
+    m.style.color = FIREWORK_COLORS[i % FIREWORK_COLORS.length];
+    m.style.background = 'currentColor';
+    m.style.setProperty('--dx', dx.toFixed(1) + 'px');
+    m.style.setProperty('--dy', dy.toFixed(1) + 'px');
+    m.style.setProperty('--gravity', (40 + Math.random() * 25).toFixed(1) + 'px');
+    m.style.animationDelay = (Math.random() * 100).toFixed(0) + 'ms';
+    m.style.animationDuration = (950 + Math.random() * 300).toFixed(0) + 'ms';
+    layer.appendChild(m);
+  }
+
+  // Inner sparks — bright cluster around the origin
+  const SPARKS = 22;
+  for (let i = 0; i < SPARKS; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 30 + Math.random() * 40;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist;
+    const s = document.createElement('span');
+    s.className = 'fireworks-particle spark';
+    s.style.color = FIREWORK_COLORS[i % FIREWORK_COLORS.length];
+    s.style.background = 'currentColor';
+    s.style.setProperty('--dx', dx.toFixed(1) + 'px');
+    s.style.setProperty('--dy', dy.toFixed(1) + 'px');
+    s.style.setProperty('--gravity', '20px');
+    s.style.animationDelay = (Math.random() * 100).toFixed(0) + 'ms';
+    layer.appendChild(s);
+  }
+
+  document.body.appendChild(layer);
+  // Outer animation duration up to 1500ms + delay 80ms ≈ 1.6s; 2000ms safe.
+  setTimeout(() => layer.remove(), 2000);
+}
 // Shared year-jump helper used by both the strip hover/scrub and click paths.
 // Returns true if it actually fired (so the caller can stopPropagation only
 // when a real jump happened).
@@ -1703,6 +1785,11 @@ labelBubble.addEventListener('click', async (e) => {
     btn.textContent = '複製失敗 · 再試一次';
     setTimeout(() => { btn.textContent = orig; }, 2000);
   }
+  // Celebratory burst fires unconditionally — the meaningful share is the
+  // postTally write below (always happens), and clipboard occasionally
+  // rejects on focus changes / iframes. The ceremony is about pressing
+  // the button, not about clipboard succeeding.
+  launchFireworks(btn);
 
   // Fire tally; on success, optimistic local +1 instead of refetching the
   // whole city's counts (each /counts call previously cost 1 list + N KV
@@ -1883,7 +1970,7 @@ function renderBubble(mesh) {
 
     // Share button: clipboard on all platforms (avoids surprising iOS share sheet).
     // data-town/data-village carry full names (with suffix) for the tally key.
-    const shareBlock = `<button class="share-btn" data-town="${tName}" data-village="${vName}">分享</button>`;
+    const shareBlock = `<button class="share-btn" data-town="${tName}" data-village="${vName}">複製分享連結、點亮燈塔</button>`;
 
     // Tally readout — gives the share-presser instant visual feedback before
     // hitting the 里塔 ≥10 / 區塔 ≥50 thresholds. Always shown so the
