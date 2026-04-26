@@ -1174,21 +1174,38 @@ function updateTowerLOD() {
 // Hot-path notes:
 // - Skip records where lift hasn't changed since last frame (most are 0).
 // - Single InstancedMesh.setMatrixAt + needsUpdate — cheap.
-const _liftMat = new THREE.Matrix4();
+const _liftMat  = new THREE.Matrix4();
+const _zeroMat  = new THREE.Matrix4().makeScale(0, 0, 0);
 function syncTowerLift(records, shaftIM, topIM, threshold) {
   if (!shaftIM || !topIM) return;
   let dirty = false;
+  // When drilled into a district, hide village towers from OTHER districts.
+  // Reason: those towers stay at their real world XZ but visually feel like
+  // they're hovering near the camera target. User feedback: 「永和區的燈塔
+  // 位置，當我切換到中和區時，他一樣畫在正中央」.
+  const drilledStem = drilledDistrict ? drilledDistrict.slice(0, -1) : null;
   for (let i = 0; i < records.length; i++) {
     const rec = records[i];
+    const isVillageRec = !!rec.villageName;
+    const hideForDrill = isVillageRec && drilledStem
+      && rec.townName.slice(0, -1) !== drilledStem;
     const lift = rec.meshRef ? rec.meshRef.position.y : 0;
-    if (lift === rec._lastLift) continue;
-    rec._lastLift = lift;
-    const h = towerH(rec.count, threshold);
-    _liftMat.makeScale(1, h, 1);
-    _liftMat.setPosition(rec.centroid.x, VOXEL_HEIGHT + lift + h / 2, rec.centroid.z);
-    shaftIM.setMatrixAt(i, _liftMat);
-    _liftMat.makeTranslation(rec.centroid.x, VOXEL_HEIGHT + lift + h + 0.15, rec.centroid.z);
-    topIM.setMatrixAt(i, _liftMat);
+    // Combine lift state + hide state in a single key so a switch from
+    // visible→hidden (or vice versa) re-writes the matrix.
+    const stateKey = hideForDrill ? 'hidden' : lift;
+    if (stateKey === rec._lastLift) continue;
+    rec._lastLift = stateKey;
+    if (hideForDrill) {
+      shaftIM.setMatrixAt(i, _zeroMat);
+      topIM.setMatrixAt(i, _zeroMat);
+    } else {
+      const h = towerH(rec.count, threshold);
+      _liftMat.makeScale(1, h, 1);
+      _liftMat.setPosition(rec.centroid.x, VOXEL_HEIGHT + lift + h / 2, rec.centroid.z);
+      shaftIM.setMatrixAt(i, _liftMat);
+      _liftMat.makeTranslation(rec.centroid.x, VOXEL_HEIGHT + lift + h + 0.15, rec.centroid.z);
+      topIM.setMatrixAt(i, _liftMat);
+    }
     dirty = true;
   }
   if (dirty) {
