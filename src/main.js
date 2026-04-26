@@ -1129,8 +1129,19 @@ function rebuildTowers() {
   villageTowerShaft  = null; villageTowerTop    = null;
   districtTowerShaft = null; districtTowerTop   = null;
 
-  // Village towers
+  // Village towers — deduplicate by villageKey since离島 / 斷裂 villages
+  // can show up as multiple GeoJSON features (= multiple villageMeshes for
+  // the same logical village). Without dedup, each feature gets its own
+  // tower → 「明明只有一根，卻畫兩根」.
+  const seenVillage = new Set();
   const vRecs = villageMeshes
+    .filter(m => {
+      const k = m.userData.villageKey
+        || `${m.userData.townName}/${m.userData.villageName}`;
+      if (seenVillage.has(k)) return false;
+      seenVillage.add(k);
+      return true;
+    })
     .map(m => ({
       townName:    m.userData.townName,
       villageName: m.userData.villageName,
@@ -1169,9 +1180,15 @@ function rebuildTowers() {
 }
 
 function updateTowerLOD() {
+  // Single threshold (no overlap) — old code had `< TOWER_FAR (60)` for
+  // village + `> TOWER_NEAR (40)` for district which created a 40–60 dist
+  // band where BOTH layers rendered. Symptom: in mid-zoom users would see
+  // a village tower AND a district tower for the same area, looking like
+  // 「明明只有一根，卻畫兩根」. Pick a single midpoint so only one layer
+  // is visible at any zoom.
   const dist = camera.position.distanceTo(controls.target);
-  const showVillage  = dist < TOWER_FAR;
-  const showDistrict = dist > TOWER_NEAR;
+  const showVillage  = dist < 50;
+  const showDistrict = !showVillage;
   if (villageTowerShaft)  { villageTowerShaft.visible  = showVillage;  villageTowerTop.visible   = showVillage; }
   if (districtTowerShaft) { districtTowerShaft.visible = showDistrict; districtTowerTop.visible  = showDistrict; }
 }
