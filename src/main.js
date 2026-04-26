@@ -2575,6 +2575,31 @@ function layoutCards() {
     villageList.style.bottom = '';
   }
 
+  // Reparent breadcrumb chips out of the scroll container.
+  //
+  // .card-city is mounted on #village-panel from creation (renderPanel), but
+  // .card-district / .card-village toggle between grid mode (in #village-list,
+  // scrolling with the list) and chip mode (.compact, breadcrumb at top).
+  // On iOS Safari, position:fixed elements inside a -webkit-overflow-scrolling
+  // / overflow:auto container are mis-anchored to the scroll content — so a
+  // chip left inside #village-list scrolls out of view as the user pages
+  // through 板橋 126 里. Sweep at the end of layout: any .compact card (or
+  // .card-city) belongs in #village-panel; everything else stays in the list
+  // so the village grid still scrolls.
+  //
+  // Inline left/top/width/height are preserved across appendChild (cards are
+  // position:fixed), so this reparenting is invisible — no layout shift.
+  const panelHost = document.getElementById('village-panel');
+  const listHost  = document.getElementById('village-list');
+  if (panelHost && listHost) {
+    for (const card of document.querySelectorAll('.card')) {
+      const wantsPanel = card.classList.contains('card-city')
+        || card.classList.contains('compact');
+      const desired = wantsPanel ? panelHost : listHost;
+      if (card.parentElement !== desired) desired.appendChild(card);
+    }
+  }
+
   // Enable transitions after first placement (no-op on subsequent calls).
   requestAnimationFrame(() => {
     city.classList.add('tween');
