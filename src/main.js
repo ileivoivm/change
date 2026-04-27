@@ -421,6 +421,120 @@ function applyVillageHeights() {
   }
 }
 
+// ─────────── ripple effect (M11+ decoration) ───────────
+// Drop-in-water ripple: an outward expanding ring of voxel Y offsets centred
+// on a village. Triggered by share-button success (邊界事件) and by an idle
+// demo timer (every 5–10s) so the home view feels alive even when nobody is
+// sharing. Whole-mesh `position.y` shift (one assignment per village in the
+// ring band per frame) — cheap vs rewriting per-cell instance matrices.
+//
+// Composes additively with hover/pulse: each mesh stores `_rippleY` (the
+// last-applied ripple delta). tickRipple updates `position.y` by
+// `target - prev`, then writes `prev = target`. Hover/pulse code paths that
+// directly assign `position.y` MUST also clear `_rippleY = 0` so this delta
+// stays correct across overrides.
+const RIPPLE_DURATION = 1500;     // ms — full lifecycle, sin envelope decays in
+const RIPPLE_AMPLITUDE = 0.22;    // max Y offset per voxel mesh (≈ 1/4 voxel)
+const RIPPLE_SPEED = 14;          // world units / second — ring radius growth
+const RIPPLE_BAND = 2.4;          // ring half-width — soft cosine edge
+const RIPPLE_MAX_REACH = 28;      // hard cull beyond this distance from origin
+
+const ripples = [];
+
+function triggerRipple(x, z) {
+  ripples.push({ x, z, startTime: performance.now() });
+}
+
+function triggerRippleAtVillage(townName, villageName) {
+  for (const m of villageMeshes) {
+    if (m.userData.townName === townName && m.userData.villageName === villageName) {
+      triggerRipple(m.userData.centroid.x, m.userData.centroid.z);
+      return true;
+    }
+  }
+  return false;
+}
+
+function _rippleContribution(centroid, ripple, now) {
+  const elapsedSec = (now - ripple.startTime) / 1000;
+  const lifeT = elapsedSec / (RIPPLE_DURATION / 1000);
+  if (lifeT < 0 || lifeT > 1) return 0;
+  const dx = centroid.x - ripple.x;
+  const dz = centroid.z - ripple.z;
+  const dist = Math.sqrt(dx * dx + dz * dz);
+  if (dist > RIPPLE_MAX_REACH) return 0;
+  const peakDist = RIPPLE_SPEED * elapsedSec;
+  const off = dist - peakDist;
+  if (Math.abs(off) > RIPPLE_BAND) return 0;
+  // Cosine bump: 1 at the ring centre, 0 at band edges. No negative dip — a
+  // single rising-then-falling pulse reads cleaner than a true sin wave at
+  // this small amplitude.
+  const wave = Math.cos((off / RIPPLE_BAND) * (Math.PI / 2));
+  // Quadratic decay so the tail is gentler than the head.
+  const decay = 1 - lifeT * lifeT;
+  return RIPPLE_AMPLITUDE * wave * decay;
+}
+
+function _rippleApplyTo(meshes, now) {
+  for (const mesh of meshes) {
+    let target = 0;
+    if (ripples.length && mesh.visible) {
+      const c = mesh.userData.centroid;
+      for (let i = 0; i < ripples.length; i++) {
+        target += _rippleContribution(c, ripples[i], now);
+      }
+    }
+    const prev = mesh.userData._rippleY || 0;
+    if (target === 0 && prev === 0) continue;
+    const delta = target - prev;
+    if (Math.abs(delta) < 0.0005) continue;
+    mesh.position.y += delta;
+    mesh.userData._rippleY = target;
+  }
+}
+
+function tickRipple(now) {
+  // Drop expired ripples
+  for (let i = ripples.length - 1; i >= 0; i--) {
+    if (now - ripples[i].startTime > RIPPLE_DURATION) ripples.splice(i, 1);
+  }
+  // Walk both layers — at top level only districts are visible, when drilled
+  // only villages are visible, so the visible-check inside _rippleApplyTo
+  // skips the inactive layer cheaply.
+  _rippleApplyTo(villageMeshes, now);
+  _rippleApplyTo(districtMeshes, now);
+}
+
+// Idle demo: fire a ripple every 5–10s at a random visible voxel so the
+// landing view has motion even when nobody is sharing. Skipped while the
+// ranking lens is on (voxels are scaled — ripples on a 12× column look
+// off).
+let _idleRippleNext = 0;
+function tickIdleRipple(now) {
+  if (_idleRippleNext === 0) {
+    _idleRippleNext = now + 3000 + Math.random() * 4000;
+    return;
+  }
+  if (now < _idleRippleNext) return;
+  _idleRippleNext = now + 5000 + Math.random() * 5000;
+  if (_rankingMode) return;
+  // Prefer drilled-in villages (more granular waves). Fall back to main-
+  // city districts at top level — those are the only voxels with non-zero
+  // height there.
+  const candidates = [];
+  for (const m of villageMeshes) if (m.visible) candidates.push(m);
+  if (!candidates.length) {
+    for (const m of districtMeshes) {
+      if (m.visible && m.userData.layer === CITY_CONFIG.key && !m.userData.isContext) {
+        candidates.push(m);
+      }
+    }
+  }
+  if (!candidates.length) return;
+  const target = candidates[Math.floor(Math.random() * candidates.length)];
+  triggerRipple(target.userData.centroid.x, target.userData.centroid.z);
+}
+
 function setRankingMode(mode) {
   if (mode === _rankingMode) return;
   _rankingMode = mode;
@@ -2308,6 +2422,10 @@ labelBubble.addEventListener('click', async (e) => {
   // rejects on focus changes / iframes. The ceremony is about pressing
   // the button, not about clipboard succeeding.
   launchFireworks(btn);
+  // Geographic counterpart of the button-side fireworks: an outward-
+  // expanding ripple of voxel Y offsets centred on the shared village.
+  // Decorative only — independent of postTally outcome.
+  triggerRippleAtVillage(townName, villageName);
 
   // Fire tally; on success, optimistic local +1 instead of refetching the
   // whole city's counts (each /counts call previously cost 1 list + N KV
@@ -2619,12 +2737,16 @@ function setHover(mesh) {
   if (hovered) {
     hovered.material.emissive.setHex(0x000000);
     hovered.position.y = hovered.userData.baseY;
+    // Direct position.y assignment wipes any ripple offset; clear the
+    // tracker so tickRipple's next delta is computed against this new base.
+    hovered.userData._rippleY = 0;
   }
   hovered = mesh;
   if (mesh) {
     mesh.material.emissive.setHex(0x332211);
     mesh.material.emissiveIntensity = 0.5;
     mesh.position.y = mesh.userData.isContext ? 0.1 : 0.4;
+    mesh.userData._rippleY = 0;
     document.body.style.cursor = 'pointer';
     renderBubble(mesh);
     labelEl.classList.toggle('context', mesh.userData.isContext);
@@ -3328,6 +3450,10 @@ function tickPulse(now) {
     pulseMesh.material.emissive.setHex(GLOW_HEX);
     pulseMesh.material.emissiveIntensity = 0.35 + 0.65 * t;
     pulseMesh.position.y = (pulseMesh.userData.baseY ?? 0) + 0.4 + 0.15 * t;
+    // pulse re-writes position.y every frame, so any ripple delta we
+    // applied last frame is gone. Reset the tracker so tickRipple (which
+    // runs after tickPulse) computes its delta from a clean base.
+    pulseMesh.userData._rippleY = 0;
   }
   // 2. Drill flash: villages in drilled district shimmer for ~1s on entry
   if (drillFlashUntil > now && drilledDistrict) {
@@ -3694,6 +3820,8 @@ window.addEventListener('resize', () => {
   updateCameraReadout();
   tickColorTween(now);
   tickPulse(now);
+  tickIdleRipple(now);
+  tickRipple(now);
   tickTowerLift();
   tickTowerTwinkle(now);
   updateTowerLOD();
