@@ -1253,6 +1253,20 @@
       }
       /* Badge removed — code takes that role */
       .city-card-badge { display: none; }
+      #home-tagline {
+        font-family: "Noto Sans TC", -apple-system, sans-serif;
+        font-size: 12px; font-weight: 300;
+        letter-spacing: 0.18em;
+        color: #555;
+        margin: 0 0 18px;
+        line-height: 1.7;
+      }
+      #home-tagline::before {
+        content: "✦";
+        margin-right: 8px;
+        color: #b89b6b;
+        font-size: 11px;
+      }
       #home-footer {
         margin-top: 40px;
         font-size: 12px; color: #000;
@@ -1316,6 +1330,7 @@
         #home-title { font-size: 64px; letter-spacing: -1px; }
         #home-subtitle { font-size: 16px; }
         #home-desc { font-size: 10px; }
+        #home-tagline { font-size: 11px; letter-spacing: 0.14em; margin-bottom: 14px; }
         #city-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .city-card-name { font-size: 22px; }
         .city-card-body { padding: 14px 15px 16px; }
@@ -1588,6 +1603,8 @@
           <p id="home-subtitle">六都市長選舉</p>
           <p id="home-desc">voxel 地圖 · 里級下鑽 · 1994 → 2022</p>
         </div>
+
+        <p id="home-tagline">這張地圖會隨民眾分享而生長</p>
 
         <div id="city-grid">
 
