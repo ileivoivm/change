@@ -2071,13 +2071,9 @@ function renderBubble(mesh) {
     // district view 時 hover 一堆 voxel 會被滿版資訊壓垮，輕量 bubble
     // 才能 glanceable。
     if (!sticky) {
-      const hex = v
-        ? '#' + colorForDistrict(v.results).toString(16).padStart(6, '0')
-        : '#bbb';
       labelBubble.classList.add('minimal');
       labelBubble.innerHTML = `
         <div class="minimal-row">
-          <span class="minimal-stripe" style="background:${hex}"></span>
           <span class="minimal-name">${vName}</span>
         </div>`;
       // No secondary bubble during transient hover — keep eye on map
@@ -2173,13 +2169,9 @@ function renderBubble(mesh) {
   // Hover-pinning is rare here — top-level click drills into the district —
   // so this branch fires for nearly every district hover.
   if (!sticky) {
-    const stripeHex = (election && election.results?.length)
-      ? '#' + colorForDistrict(election.results).toString(16).padStart(6, '0')
-      : '#bbb';
     labelBubble.classList.add('minimal');
     labelBubble.innerHTML = `
       <div class="minimal-row">
-        <span class="minimal-stripe" style="background:${stripeHex}"></span>
         <span class="minimal-name">${townName}</span>
       </div>`;
     if (secondaryEl) secondaryEl.classList.remove('visible');

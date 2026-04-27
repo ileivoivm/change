@@ -215,7 +215,8 @@
         box-shadow: 0 8px 28px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.07);
         backdrop-filter: blur(8px);
       }
-      /* Minimal hover bubble — 只有里/區名 + 左側彩條，glanceable 不打擾。
+      /* Minimal hover bubble — 只有里/區名，glanceable 不打擾。地圖上
+         voxel 顏色已標明黨派傾向，bubble 不需重複帶彩條。
          僅 transient hover 出現；click pin 後立即升級成完整 bubble。 */
       #label .bubble.minimal {
         padding: 0;
@@ -226,12 +227,8 @@
         background: rgba(255,255,255,0.97);
         height: 38px;
       }
-      #label .bubble.minimal .minimal-stripe {
-        display: block;
-        width: 6px; flex-shrink: 0;
-      }
       #label .bubble.minimal .minimal-name {
-        padding: 0 16px;
+        padding: 0 18px;
         display: inline-flex; align-items: center;
         font-family: "Noto Sans TC", -apple-system, sans-serif;
         font-size: 16px; font-weight: 500;
