@@ -2952,24 +2952,27 @@ if (homeEl) {
   });
 }
 
-// Help / 燈塔規則 modal: open on button click, close on backdrop click,
-// 'X' button, or ESC. The modal is a `<div hidden>` in index.html — toggle
-// the `hidden` attribute to show/hide.
-const helpBtnEl    = document.getElementById('help-btn');
-const helpModalEl  = document.getElementById('help-modal');
-if (helpBtnEl && helpModalEl) {
-  const closeHelp = () => helpModalEl.setAttribute('hidden', '');
-  const openHelp  = () => helpModalEl.removeAttribute('hidden');
-  helpBtnEl.addEventListener('click', openHelp);
-  helpModalEl.querySelector('.help-backdrop')?.addEventListener('click', closeHelp);
-  helpModalEl.querySelector('.help-close')?.addEventListener('click', closeHelp);
+// Help / Report modal pair — both are `<div hidden>` toggled by their button.
+// Backdrop / X / ESC all close. ESC handler runs in capture phase so it
+// closes the modal first instead of exiting drill / unselect village.
+function wireModal(btnId, modalId) {
+  const btn   = document.getElementById(btnId);
+  const modal = document.getElementById(modalId);
+  if (!btn || !modal) return;
+  const close = () => modal.setAttribute('hidden', '');
+  const open  = () => modal.removeAttribute('hidden');
+  btn.addEventListener('click', open);
+  modal.querySelector('.help-backdrop')?.addEventListener('click', close);
+  modal.querySelector('.help-close')?.addEventListener('click', close);
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !helpModalEl.hasAttribute('hidden')) {
-      closeHelp();
-      e.stopPropagation(); // don't also exit drill / unselect
+    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) {
+      close();
+      e.stopPropagation();
     }
-  }, true); // capture phase: run before the existing ESC handler below
+  }, true);
 }
+wireModal('help-btn',   'help-modal');
+wireModal('report-btn', 'report-modal');
 
 // ─────────── Search modal (cross-city village/district lookup) ───────────
 // Type 「永和 安和」 → 直接跳到 安和里。多 token 必須全部命中（city / district
