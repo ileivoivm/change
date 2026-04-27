@@ -459,6 +459,109 @@ function setRankingMode(mode) {
       : '';
     cap.classList.toggle('visible', !!mode);
   }
+  // Mobile mode: also sync the bottom category strip + top title pill.
+  document.querySelectorAll('#mobile-ranking-categories button').forEach(b => {
+    b.classList.toggle('active', b.dataset.mode === mode);
+  });
+  updateMobileRankingTitle();
+}
+
+// Plain-zh category labels (shorter than RANKING_LABELS, fit the title pill).
+const MOBILE_RANKING_CATEGORY_ZH = { swing: '最搖擺', kmt: '最藍', dpp: '最綠', close: '最激戰' };
+
+function updateMobileRankingTitle() {
+  const t = document.getElementById('mobile-ranking-title');
+  if (!t) return;
+  const cat = MOBILE_RANKING_CATEGORY_ZH[_rankingMode];
+  if (!cat) {
+    t.innerHTML = `<div class="mr-main">${CITY_CONFIG.nameZh} · 排行榜</div>`;
+    return;
+  }
+  // Mobile bubbles are hidden in ranking-mode → the title pill has to
+  // carry the 資料來源 / 免責 info (mirrors the bubble's rank-disclaimer
+  // on desktop). Two-line layout: main + dim sub.
+  const sourceYear = _rankingMode === 'swing'
+    ? `${YEARS[0]}–${YEARS[YEARS.length - 1]}`
+    : `依 ${RANKINGS.latestYear}`;
+  const methodHint = {
+    kmt:   'KMT 得票率單指標',
+    dpp:   'DPP 得票率單指標',
+    swing: '勝方政黨翻盤次數',
+    close: '勝負差距絕對值',
+  }[_rankingMode] || '';
+  t.innerHTML = `
+    <div class="mr-main">${CITY_CONFIG.nameZh} · ${cat}</div>
+    <div class="mr-sub">${methodHint} · ${sourceYear} 中選會</div>`;
+}
+
+// Mobile ranking mode is the modal-style mode-switch. Entering it:
+// - Sets a default category (swing) if none active
+// - Drops sticky bubble + clears hover (CSS hides #label too, this is belt-and-braces)
+// Exiting it:
+// - Turns ranking off (heights reset to default)
+let rankingMobileMode = false;
+function setRankingMobileMode(on) {
+  if (on === rankingMobileMode) return;
+  rankingMobileMode = on;
+  document.body.classList.toggle('ranking-mobile-mode', on);
+  document.getElementById('ranking-toggle')?.classList.toggle('on', on);
+
+  if (on) {
+    // Drop bubble state so re-exit doesn't leave a stale sticky pin.
+    sticky = false;
+    pulseMesh = null;
+    if (typeof setHover === 'function') setHover(null);
+    // Default to 最搖擺 if no mode is active. setRankingMode handles
+    // viewMode swap, card collapse, towerGroup hide, UI sync + title.
+    if (!_rankingMode) setRankingMode('swing');
+    else updateMobileRankingTitle();
+  } else {
+    // Leaving the modal turns the lens off entirely.
+    setRankingMode(null);
+  }
+}
+
+function wireMobileRankingUI() {
+  document.getElementById('ranking-toggle')?.addEventListener('click', () => {
+    setRankingMobileMode(!rankingMobileMode);
+  });
+  document.getElementById('mobile-ranking-categories')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-mode]');
+    if (!btn) return;
+    setRankingMode(btn.dataset.mode);
+  });
+}
+
+// Per-village bubble snippet: rank line + disclaimer.
+// Mirrors the share-tower's .tally-count + .tower-disclaimer pattern so the
+// ranking lens speaks through the same UI surface (the village bubble) rather
+// than a competing floating pill. Returns '' when ranking is off so callers
+// can drop it into the existing innerHTML template unconditionally.
+function renderRankingBlock(townName, villageName) {
+  if (!_rankingMode) return '';
+  const key = townName.slice(0, -1) + '/' + villageName.slice(0, -1);
+  const rank = RANKINGS[_rankingMode]?.get(key) ?? null;
+  const cat = MOBILE_RANKING_CATEGORY_ZH[_rankingMode];
+  // 資料來源 line — what year(s) the ranking was computed from.
+  const sourceYear = _rankingMode === 'swing'
+    ? `${YEARS[0]}–${YEARS[YEARS.length - 1]} 跨年`
+    : `依 ${RANKINGS.latestYear} 中選會`;
+  // 免責 / 排序方法 — single-indicator caveat so reader knows what the
+  // ranking *is* and *isn't*. Mirrors the .tower-disclaimer slot's intent.
+  const methodHint = {
+    kmt:   'KMT 得票率單指標 · 不含 TPP / 獨立候選人',
+    dpp:   'DPP 得票率單指標 · 不含 TPP / 獨立候選人',
+    swing: '勝方政黨翻盤次數 · 1997 / 2001 ntpc 無里級資料',
+    close: '勝負差距絕對值 · 不分藍綠',
+  }[_rankingMode] || '';
+
+  const rankLine = rank
+    ? `<div class="rank-line"><span class="rank-trophy">🏆</span> ${cat} 第 <b>${rank}</b> 名 · ${sourceYear}</div>`
+    : `<div class="rank-line dim">本里非「${cat}」top 10 · ${sourceYear}</div>`;
+  const disclaimer = methodHint
+    ? `<div class="rank-disclaimer">排序方法：${methodHint}</div>`
+    : '';
+  return rankLine + disclaimer;
 }
 
 function wireRankingToolbar() {
@@ -1777,6 +1880,7 @@ if (!_cityParam) {
     buildVillagePanel();
     wireViewToggle();
     wireRankingToolbar();
+    wireMobileRankingUI();
     parseAndApplyUrl();
     // View tracking removed: counting every ?ref=share landing burned 2 reads
     // + 2 writes per visitor on the Worker, and a single viral village could
@@ -2280,12 +2384,17 @@ function renderBubble(mesh) {
       tallyBlock = `<div class="tally-count" data-town="${tName}" data-village="${vName}">分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（還差 ${remain} 次）</div>`;
     }
 
-    // 主 bubble — 投票結果 + 燈塔分享。歷史條 + 選民結構搬到 secondary。
+    // 排行榜 lens 區段 — 只在 ranking mode 開啟時插入。模仿 .tally-count
+     // 走在 bubble 內、不另開浮動 pill 的設計（跟燈塔系統一致）。
+    const rankBlock = renderRankingBlock(tName, vName);
+
+    // 主 bubble — 投票結果 + 排行榜（若有）+ 燈塔分享。歷史條 + 選民結構搬到 secondary。
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
       <div class="winner" style="color:${winColor}">${v.winner} 勝 ${v.margin.toFixed(1)}%</div>
       <div class="cands">${rows}</div>
       ${flipBlock}
+      ${rankBlock}
       ${tallyBlock}
       ${shareBlock}`;
     // Secondary bubble — 選民結構 + 17 年歷史條
