@@ -350,3 +350,8 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
 - **美學迭代**：視覺不要求一次到位，會隨開發反覆調整
 - **預覽一律用 MCP Chrome**：驗證畫面時使用 `mcp__Claude_in_Chrome__*` 工具（導航 → 截圖 → 讀 console），**不要**使用 Launch preview 面板
 - **回覆收尾語**：每次回答完問題、收尾一輪工作時，最後一句用中文寫「**已完成**」作為明確結束訊號
+- **「已完成」前的同步義務（強制）**：在說「已完成」之前，**先檢查並更新**：
+  - `SHARE_TOWER_TODO.md` —「進行中」勾掉 / 移到「完成」、「待辦事項」checkbox 補打、「驗證清單」狀態調整
+  - `CLAUDE.md` — 若該變動是「已成立的決策 / 永久里程碑」（不是純粹 bug fix），在對應 milestone 章節補上一段
+  - 區分原則：可逆的 bug 修補 → 只動 commit message；改變產品行為 / 介面契約 → 動 CLAUDE.md
+  - 觀察到「常常忘記」，所以這條被列為強制 checklist；session 收尾流程：commit → push → 更新 TODO/CLAUDE → 「已完成」
