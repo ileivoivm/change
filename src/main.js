@@ -325,6 +325,153 @@ const villageHistoryMap = (() => {
   return m;
 })();
 
+// ─────────── ranking lens ───────────
+// Top-10 lists across four dimensions, used to lift specific village voxels
+// into 「柱塔」so 地理分佈一目了然. Pre-computed once at startup.
+//
+//   kmt   — 最藍：latest year KMT (partyCode 1) 得票率最高
+//   dpp   — 最綠：latest year DPP (partyCode 16) 得票率最高
+//   swing — 最搖擺：1994–2022 跨年最終勝方政黨翻盤次數最多 (uses villageHistoryMap.flips)
+//   close — 最激戰：latest year 勝負差距 (winner − runner-up) 最小
+//
+// Each entry maps villageKey ("townStem/villageStem") → rank (1..10).
+// boostForKey() converts rank → height multiplier; rank-1 is tallest.
+const RANKING_TOP_N = 10;
+const KMT_CODE = '1';
+const DPP_CODE = '16';
+const RANKING_LABELS = {
+  kmt:   '最藍 · KMT 得票率',
+  dpp:   '最綠 · DPP 得票率',
+  swing: '最搖擺 · 翻盤次數',
+  close: '最激戰 · 勝負差距',
+};
+
+const RANKINGS = (() => {
+  const latestYear = VILLAGE_YEARS[VILLAGE_YEARS.length - 1];
+  const latest = (VILLAGE_ELECTIONS[latestYear]?.villages) || [];
+  const keyOf = v => v.townName.slice(0, -1) + '/' + v.villageName.slice(0, -1);
+  const rateOf = (v, code) => {
+    const r = (v.results || []).find(r => r.partyCode === code);
+    return r ? r.rate : 0;
+  };
+
+  const sortDesc = (arr) => arr.sort((a, b) => b.score - a.score).slice(0, RANKING_TOP_N);
+  const toRankMap = (arr) => new Map(arr.map((r, i) => [r.key, i + 1]));
+
+  const kmtList   = sortDesc(latest.map(v => ({ key: keyOf(v), score: rateOf(v, KMT_CODE), townName: v.townName, villageName: v.villageName })));
+  const dppList   = sortDesc(latest.map(v => ({ key: keyOf(v), score: rateOf(v, DPP_CODE), townName: v.townName, villageName: v.villageName })));
+  // Swing: villageHistoryMap aggregates every year. dataYears >= 3 filters
+  // 1-of-1 noise (a village with only one observed year can't have flipped).
+  const swingList = sortDesc(
+    [...villageHistoryMap.entries()]
+      .filter(([, e]) => e.dataYears >= 3)
+      .map(([k, e]) => ({ key: k, score: e.flips, townName: e.townName, villageName: e.villageName }))
+  );
+  // Close: smallest |margin| ranks first → invert sign so sortDesc surfaces it.
+  const closeList = sortDesc(
+    latest
+      .filter(v => (v.results || []).length >= 2)
+      .map(v => ({ key: keyOf(v), score: -Math.abs(v.margin || 0), margin: v.margin, townName: v.townName, villageName: v.villageName }))
+  );
+
+  return {
+    latestYear,
+    kmt:   toRankMap(kmtList),   kmtList,
+    dpp:   toRankMap(dppList),   dppList,
+    swing: toRankMap(swingList), swingList,
+    close: toRankMap(closeList), closeList,
+  };
+})();
+
+// Per-instance height boost: rank 1 = tallest 12×, rank 10 = 3×, others = 1×.
+function boostForKey(key) {
+  if (!_rankingMode) return 1;
+  const m = RANKINGS[_rankingMode];
+  if (!m) return 1;
+  const rank = m.get(key);
+  if (!rank) return 1;
+  return 3 + (RANKING_TOP_N - rank) * 1.0;
+}
+
+let _rankingMode = null; // null | 'kmt' | 'dpp' | 'swing' | 'close'
+const _rankM = new THREE.Matrix4();
+const _rankQ = new THREE.Quaternion();
+const _rankS = new THREE.Vector3();
+const _rankP = new THREE.Vector3();
+
+// Rewrite every village mesh's instance matrices so each ranked village's
+// voxels scale Y by `boost` (column rises from y=0 to y=boost*VOXEL_HEIGHT).
+// Unranked villages restore to the default (boost=1, height=VOXEL_HEIGHT).
+function applyVillageHeights() {
+  for (const mesh of villageMeshes) {
+    const cells = mesh.userData.cells;
+    if (!cells || !cells.length) continue;
+    const boost = boostForKey(mesh.userData.villageKey);
+    const newH = VOXEL_HEIGHT * boost;
+    _rankS.set(1, boost, 1);
+    for (let i = 0; i < cells.length; i++) {
+      _rankP.set(cells[i].x, newH / 2, cells[i].z);
+      _rankM.compose(_rankP, _rankQ, _rankS);
+      mesh.setMatrixAt(i, _rankM);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+    // Bubble + leader line read centroid.y. Anchor it to the top so the
+    // bubble sits above the column tip rather than buried mid-shaft.
+    mesh.userData.centroid.y = newH;
+  }
+}
+
+function setRankingMode(mode) {
+  if (mode === _rankingMode) return;
+  _rankingMode = mode;
+  applyVillageHeights();
+
+  // Ranking only makes sense in village mode. At top level (no drill) we may
+  // be in district mode → switch to village so the lifted voxels are visible.
+  // Inside a drill, viewMode is already 'village'. setViewMode is a no-op
+  // when mode hasn't changed AND drill state is preserved (since drilledDistrict
+  // is null at top level).
+  if (mode && !drilledDistrict && viewMode !== 'village') {
+    setViewMode('village');
+  }
+  // Auto-collapse the district/village card grid when ranking turns on so
+  // the lifted voxels are actually visible. The user can re-expand via the
+  // breadcrumb chip if they want the list back.
+  if (mode && !cardsCollapsed) {
+    cardsCollapsed = true;
+    layoutCards();
+  }
+
+  // Share towers stand at VOXEL_HEIGHT — they'd float in mid-air over scaled
+  // voxels. Hide the entire tower group while the ranking lens is on.
+  if (typeof towerGroup !== 'undefined' && towerGroup) {
+    towerGroup.visible = !mode;
+  }
+
+  // Sync UI active state + caption.
+  document.querySelectorAll('#ranking-toolbar button').forEach(b => {
+    b.classList.toggle('active', b.dataset.mode === (mode ?? 'off'));
+  });
+  const cap = document.getElementById('ranking-caption');
+  if (cap) {
+    cap.textContent = mode
+      ? `${RANKING_LABELS[mode]}（${mode === 'swing' ? `${YEARS[0]}–${YEARS[YEARS.length - 1]}` : `依 ${RANKINGS.latestYear}`}）`
+      : '';
+    cap.classList.toggle('visible', !!mode);
+  }
+}
+
+function wireRankingToolbar() {
+  const bar = document.getElementById('ranking-toolbar');
+  if (!bar) return;
+  bar.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-mode]');
+    if (!btn) return;
+    const m = btn.dataset.mode;
+    setRankingMode(m === 'off' ? null : m);
+  });
+}
+
 // Secondary bubble — 選民結構 + 17 年歷史條。Pure function；輸出整段
 // HTML 字串，呼叫端負責塞進 #label-secondary .bubble。
 function renderSecondaryBubble(townName, villageName) {
@@ -710,6 +857,10 @@ function buildVillageLayer(projector) {
       baseY: 0,
       isContext: false,
       centroid: new THREE.Vector3(bestCell.x, VOXEL_HEIGHT, bestCell.z),
+      // Persist raw cell coords so the ranking lens can rewrite per-instance
+      // matrices to scale Y (= 把里級方塊拉成柱塔). Without this the original
+      // (x, z) per cube would be lost after buildVillageLayer returns.
+      cells: cells.map(c => ({ x: c.x, z: c.z })),
       vote,
     };
     group.add(mesh);
@@ -1668,6 +1819,7 @@ if (!_cityParam) {
     updateTimelineActive();
     buildVillagePanel();
     wireViewToggle();
+    wireRankingToolbar();
     parseAndApplyUrl();
     // View tracking removed: counting every ?ref=share landing burned 2 reads
     // + 2 writes per visitor on the Worker, and a single viral village could
