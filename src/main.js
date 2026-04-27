@@ -2065,6 +2065,27 @@ function renderBubble(mesh) {
     const v = mesh.userData.vote;
     const vName = mesh.userData.villageName;
     const tName = mesh.userData.townName;
+
+    // Minimal hover bubble (NOT sticky/pinned): just village name + a
+    // colored stripe. Full bubble only on click. User feedback: drilled
+    // district view 時 hover 一堆 voxel 會被滿版資訊壓垮，輕量 bubble
+    // 才能 glanceable。
+    if (!sticky) {
+      const hex = v
+        ? '#' + colorForDistrict(v.results).toString(16).padStart(6, '0')
+        : '#bbb';
+      labelBubble.classList.add('minimal');
+      labelBubble.innerHTML = `
+        <div class="minimal-row">
+          <span class="minimal-stripe" style="background:${hex}"></span>
+          <span class="minimal-name">${vName}</span>
+        </div>`;
+      // No secondary bubble during transient hover — keep eye on map
+      if (secondaryEl) secondaryEl.classList.remove('visible');
+      return;
+    }
+    labelBubble.classList.remove('minimal');
+
     if (!v) {
       labelBubble.innerHTML = `<div class="row"><span class="tag">${CITY_CONFIG.nameZh} ${tName}</span><span class="name">${vName}</span></div>
         <div class="sub">${currentYear} 年無里級資料</div>
@@ -2148,6 +2169,24 @@ function renderBubble(mesh) {
       ? CITY_CONFIG.nameZh
       : CITY_CONFIGS[mesh.userData.layer]?.nameZh || mesh.userData.countyName || '';
 
+  // Minimal hover bubble for districts too (transient hover, no click).
+  // Hover-pinning is rare here — top-level click drills into the district —
+  // so this branch fires for nearly every district hover.
+  if (!sticky) {
+    const stripeHex = (election && election.results?.length)
+      ? '#' + colorForDistrict(election.results).toString(16).padStart(6, '0')
+      : '#bbb';
+    labelBubble.classList.add('minimal');
+    labelBubble.innerHTML = `
+      <div class="minimal-row">
+        <span class="minimal-stripe" style="background:${stripeHex}"></span>
+        <span class="minimal-name">${townName}</span>
+      </div>`;
+    if (secondaryEl) secondaryEl.classList.remove('visible');
+    return;
+  }
+  labelBubble.classList.remove('minimal');
+
   if (isContext) {
     labelBubble.innerHTML = `<div class="row"><span class="tag">${tag}</span><span class="name">${townName}</span></div>
       <div class="sub">（參考 · 無選舉資料）</div>`;
@@ -2194,14 +2233,16 @@ function setHover(mesh) {
     labelEl.classList.toggle('locked', sticky);
     labelEl.classList.add('visible');
     if (leaderSvg) leaderSvg.classList.add('visible');
-    // Secondary bubble visibility — village layer + 該 village 有 demographics 資料才顯
+    // Secondary bubble — 只在 sticky（pinned）狀態出現。Hover 時主 bubble
+    // 已經是輕量版（只有里名 + 彩條），secondary 也跟著收起來，避免畫面
+    // 滑過 voxel 就閃半張人口面板。
     const isVillage = mesh.userData.layer === 'village';
     let hasDemo = false;
-    if (isVillage && mesh.userData.townName && mesh.userData.villageName) {
+    if (sticky && isVillage && mesh.userData.townName && mesh.userData.villageName) {
       const k = mesh.userData.townName.slice(0, -1) + '/' + mesh.userData.villageName.slice(0, -1);
       hasDemo = demographicsMap.has(k);
     }
-    if (secondaryEl) secondaryEl.classList.toggle('visible', isVillage && hasDemo);
+    if (secondaryEl) secondaryEl.classList.toggle('visible', sticky && isVillage && hasDemo);
   } else {
     document.body.style.cursor = '';
     labelEl.classList.remove('visible');
