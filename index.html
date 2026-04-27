@@ -239,6 +239,55 @@
         }
       }
 
+      /* ─── Persistent rank labels above each top-10 column ───
+         Floating signposts so users can read 「延平里 / 建功里」 without
+         hover (especially mobile). Updated every frame by updateRankLabels()
+         which projects each ranked village's centroid to screen and
+         positions the label above the column tip. */
+      #rank-labels {
+        position: fixed; inset: 0;
+        pointer-events: none;
+        z-index: 45;
+      }
+      .rank-label {
+        position: absolute;
+        transform: translate(-50%, -100%);
+        display: none; /* shown by JS when ranking is on */
+        align-items: center; gap: 5px;
+        background: rgba(255,255,255,0.96); backdrop-filter: blur(4px);
+        padding: 3px 8px 3px 4px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+        font: 600 11px/1 -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+        white-space: nowrap;
+        pointer-events: auto;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 120ms;
+        will-change: left, top;
+      }
+      .rank-label:hover { transform: translate(-50%, calc(-100% - 2px)); }
+      .rank-label .rank-num {
+        background: #b8851a;  /* 暖橘金，呼應 .tally-count.lit + .rank-line b */
+        color: #fff;
+        border-radius: 8px;
+        min-width: 14px;
+        padding: 2px 5px;
+        text-align: center;
+        font-variant-numeric: tabular-nums;
+        font-weight: 700;
+      }
+      .rank-label .rank-village { color: #2a2a2a; }
+      @media (max-width: 640px) {
+        .rank-label {
+          font-size: 10px;
+          padding: 2px 7px 2px 3px;
+        }
+        .rank-label .rank-num {
+          font-size: 10px; padding: 2px 4px;
+        }
+      }
+
       #map-scrim {
         position: fixed;
         inset: 0;
@@ -1505,6 +1554,12 @@
       <button type="button" data-mode="dpp">最綠</button>
       <button type="button" data-mode="close">最激戰</button>
     </div>
+
+    <!-- Persistent rank labels — one DOM node per top-10 village, projected
+         to screen each frame above the column tip. Pool size 10 (fixed).
+         Empty until ranking lens turns on. Tap → drill+select that village
+         (exits ranking-mobile-mode first if active so bubble is visible). -->
+    <div id="rank-labels"></div>
 
     <div id="camera-readout">
       <div class="row"><span>pos</span><span id="cam-pos">—</span></div>
