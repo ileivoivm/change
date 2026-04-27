@@ -1007,23 +1007,30 @@
           max-width: calc(100vw - 40px);
           white-space: normal; text-align: center;
         }
-        /* Ranking lens — sit above timeline on mobile so it doesn't hug the
-           edge with the back chip; max-width keeps the 5-button row from
-           overflowing on narrow phones. */
+        /* Ranking lens — relocate to TOP-LEFT on mobile, under the back
+           button. Bottom on mobile already has timeline (12-52) + hint
+           (76-98); stacking toolbar + caption on top of that produced
+           4 pills jammed against each other and visually overlapping the
+           timeline. Back button is at top:64 ending ~y=93, so we sit at
+           y=108 with 15px gap. Caption follows directly below toolbar. */
         #ranking-toolbar {
-          bottom: 102px; left: 50%; transform: translateX(-50%);
+          top: 108px; bottom: auto;
+          left: 10px; right: auto;
+          transform: none;
           padding: 4px;
-          max-width: calc(100vw - 16px);
+          max-width: calc(100vw - 20px);
         }
         #ranking-toolbar button {
           font-size: 11px;
           padding: 6px 9px;
         }
         #ranking-caption {
-          bottom: 144px; left: 50%; transform: translateX(-50%);
+          top: 148px; bottom: auto;
+          left: 10px; right: auto;
+          transform: none;
           font-size: 10px; padding: 3px 9px;
-          max-width: calc(100vw - 32px);
-          white-space: normal; text-align: center;
+          max-width: calc(100vw - 20px);
+          white-space: normal; text-align: left;
         }
 
         #controls { top: 10px; right: 10px; gap: 7px; }
