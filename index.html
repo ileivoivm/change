@@ -1057,6 +1057,22 @@
         #label .bubble .history .hs-meta { font-size: 11px; }
         #label .bubble .share-btn { font-size: 12px; padding: 7px 10px; margin-top: 9px; }
 
+        /* 手機版 secondary bubble 跟 primary 一樣寬，配合 main.js
+           updateLabelPosition 走「垂直堆疊」分支：兩 bubble 上下排列、
+           水平置中，避免桌機版的左右並列在窄螢幕擠壓重疊（截圖案例：
+           primary 在上、secondary 在下被遮掉看不到）。 */
+        #label-secondary .bubble {
+          min-width: 0;
+          max-width: calc(100vw - 24px);
+          padding: 10px 14px;
+          border-radius: 12px;
+        }
+        #label-secondary .demo-row { font-size: 12px; line-height: 1.5; }
+        #label-secondary .demo-row .label { min-width: 52px; }
+        #label-secondary .age-stack { height: 7px; margin: 5px 0; }
+        #label-secondary .age-legend { font-size: 10px; gap: 3px 10px; }
+        #label-secondary .demo-source { font-size: 9px; margin-top: 8px; padding-top: 6px; }
+
         .card-city .name { font-size: 20px; }
         .card-city .meta { font-size: 10px; }
         .card.card-city { padding: 9px 12px 9px calc(var(--w, 7px) * 2 + 12px); }

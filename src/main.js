@@ -2506,34 +2506,57 @@ function updateLabelPosition() {
   const voxelX = (tmpVec.x * 0.5 + 0.5) * W;
   const voxelY = (-tmpVec.y * 0.5 + 0.5) * Hh;
 
-  // Anchor the bubble ABOVE-LEFT of the voxel so the share-tower stays
-  // visible (towers stand directly above the voxel centroid; centered
-  // bubble would cover them). Bubble's bottom-right corner sits at
-  // (anchorX, anchorY) with translate(-100%, -100%).
   const margin = 12;
-  const gap = 24;       // horizontal breathing room between bubble and tower
-  const liftY = 40;     // bubble lifted above voxel so leader line has length
+  const bh = labelBubble.offsetHeight;
   const bw = labelBubble.offsetWidth;
+  const hasSecondary = secondaryEl && secondaryBubble && secondaryEl.classList.contains('visible');
+  const sh = hasSecondary ? secondaryBubble.offsetHeight : 0;
+  const sw = hasSecondary ? secondaryBubble.offsetWidth : 0;
+
+  // 手機版（< 640px）：兩 bubble 垂直堆疊置中，避免桌機版「主左 / 副右」
+  // 在窄螢幕擠壓重疊。leader line 隱藏（bubble 在窄螢幕幾乎滿寬，連線
+  // 到 voxel 已無資訊量）。
+  if (W < 640 && hasSecondary) {
+    const stackGap = 6;
+    const totalH = bh + sh + stackGap;
+    // 整個 stack 預設靠近螢幕上半部，留下半部給地圖／voxel
+    let stackTop = Math.max(margin, Math.min(Hh - margin - totalH, margin + 8));
+    const px = Math.round((W - bw) / 2);
+    const sx = Math.round((W - sw) / 2);
+    const sy = stackTop + bh + stackGap;
+    labelEl.style.transform = `translate(${px}px, ${stackTop}px)`;
+    secondaryEl.style.transform = `translate(${sx}px, ${sy}px)`;
+    if (leaderLine) {
+      leaderLine.setAttribute('x1', 0);
+      leaderLine.setAttribute('y1', 0);
+      leaderLine.setAttribute('x2', 0);
+      leaderLine.setAttribute('y2', 0);
+    }
+    return;
+  }
+
+  // Desktop: bubble 錨在 voxel 上方偏左，secondary 鏡像在右側。
+  // Bubble's bottom-right corner sits at (anchorX, anchorY) with
+  // translate(-100%, -100%). Share-tower stands directly above the voxel
+  // centroid — gap keeps bubble and tower from overlapping.
+  const gap = 24;
+  const liftY = 40;
   let anchorX = voxelX - gap;
   let anchorY = voxelY - liftY;
-  // Clamp so bubble stays fully on screen.
   anchorX = Math.max(margin + bw, Math.min(W - margin, anchorX));
-  anchorY = Math.max(margin + labelBubble.offsetHeight, Math.min(Hh - margin, anchorY));
+  anchorY = Math.max(margin + bh, Math.min(Hh - margin, anchorY));
   labelEl.style.transform = `translate(${anchorX}px, ${anchorY}px) translate(-100%, -100%)`;
 
-  // Secondary bubble — mirror to the voxel's RIGHT side (bottom-left corner
-  // sits at (voxelX + gap, anchorY)). Clamp horizontally within viewport.
-  if (secondaryEl && secondaryBubble && secondaryEl.classList.contains('visible')) {
-    const sw = secondaryBubble.offsetWidth;
+  if (hasSecondary) {
     let secX = voxelX + gap;
     secX = Math.min(W - margin - sw, Math.max(margin, secX));
-    const secY = Math.max(margin + secondaryBubble.offsetHeight, Math.min(Hh - margin, anchorY));
+    const secY = Math.max(margin + sh, Math.min(Hh - margin, anchorY));
     secondaryEl.style.transform = `translate(${secX}px, ${secY}px) translate(0, -100%)`;
   }
 
-  // Leader line: from bubble's bottom-right corner (anchorX, anchorY) to
-  // the voxel top (voxelX, voxelY). User feedback: 「bubble 下方的黑線，
-  // 要接回 voxel 的位置，也就是預設燈塔的起點」.
+  // Leader line: from bubble's bottom-right corner to the voxel top.
+  // User feedback: 「bubble 下方的黑線，要接回 voxel 的位置，也就是預設
+  // 燈塔的起點」.
   if (leaderLine) {
     leaderLine.setAttribute('x1', anchorX);
     leaderLine.setAttribute('y1', anchorY);
