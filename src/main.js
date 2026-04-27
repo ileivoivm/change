@@ -331,7 +331,7 @@ const villageHistoryMap = (() => {
 //
 //   kmt   — 最藍：latest year KMT (partyCode 1) 得票率最高
 //   dpp   — 最綠：latest year DPP (partyCode 16) 得票率最高
-//   swing — 最搖擺：1994–2022 跨年最終勝方政黨翻盤次數最多 (uses villageHistoryMap.flips)
+//   swing — 最搖擺：1994–2022 跨年最終勝方政黨變動次數最多 (uses villageHistoryMap.flips)
 //   close — 最激戰：latest year 勝負差距 (winner − runner-up) 最小
 //
 // Each entry maps villageKey ("townStem/villageStem") → rank (1..10).
@@ -342,7 +342,7 @@ const DPP_CODE = '16';
 const RANKING_LABELS = {
   kmt:   '最藍 · KMT 得票率',
   dpp:   '最綠 · DPP 得票率',
-  swing: '最搖擺 · 翻盤次數',
+  swing: '最搖擺 · 變動次數',
   close: '最激戰 · 勝負差距',
 };
 
@@ -2297,9 +2297,9 @@ function renderBubble(mesh) {
     }).join('');
     const winColor = '#' + candidateColor(v.results[0]).toString(16).padStart(6, '0');
 
-    // Vote gap framing — descriptive, not mobilizational. P3 升級：把
-    // 「翻盤需 N 票改投」（動員話術）改成「差距 N 票」（事實陳述），
-    // 數字一樣但語氣中性。不再隱含「應該翻」的訴求。
+    // Vote gap framing — historical observation, not mobilizational. 把
+    // 「翻盤需 N 票改投」（動員話術）改成「上次差距 N 票」（中性敘事），
+    // 數字一樣但語氣只描述歷史事實，不暗示「應該翻」。
     let flipBlock = '';
     if (v.results.length >= 2 && v.results[0].votes > v.results[1].votes) {
       const w = v.results[0], l = v.results[1];
@@ -2308,7 +2308,7 @@ function renderBubble(mesh) {
       const mobilize = gap + 1;
       const loserColor = '#' + candidateColor(l).toString(16).padStart(6, '0');
       flipBlock = `<div class="flip">
-        <div class="flip-head">${w.name} 與 <span style="color:${loserColor}">${l.name}</span> 差距</div>
+        <div class="flip-head">${w.name} 與 <span style="color:${loserColor}">${l.name}</span> 上次差距</div>
         <div class="flip-row"><b>${fmt(gap)}</b> 票 <span class="dim">（${(gap / w.votes * 100).toFixed(1)}% 領先）</span></div>
         <div class="flip-row"><b>${fmt(swing)}</b> 票流動即可平手 <span class="dim">（1 票 = 2 差距）</span></div>
         <div class="flip-row">或多 <b>${fmt(mobilize)}</b> 張票進場 <span class="dim">（給落後方）</span></div>

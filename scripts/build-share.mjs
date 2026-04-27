@@ -298,7 +298,7 @@ function ogLayout(ctx) {
         letterSpacing: 1,
       },
     },
-      `${loser.partyName} 翻盤需 ${fmt(flip.swing)} 票改投`,
+      `${winner.name} 與 ${loser.name} 上次差距 ${fmt(flip.gap)} 票`,
     ),
 
     // footer
@@ -346,7 +346,7 @@ function shareHtml(ctx) {
   const shareUrl = `${SITE_BASE}/share/${cityKey}/${p1}/${p2}/`;
   const ogImageUrl = `${SITE_BASE}/og/${cityKey}/${p1}/${p2}.png`;
 
-  const title = `${cityName}・${district} ${village} — ${loser.partyName}翻盤需 ${fmt(flip.swing)} 票`;
+  const title = `${cityName}・${district} ${village} — 上次差距 ${fmt(flip.gap)} 票`;
   const desc = `${YEAR} ${mayorRole}：${winner.name} ${fmt(winner.votes)} 票 vs ${loser.name} ${fmt(loser.votes)} 票｜差距 ${margin.toFixed(1)}%`;
 
   return `<!DOCTYPE html>
@@ -397,7 +397,7 @@ function shareHtml(ctx) {
   <h1>${esc(village)}</h1>
   <div class="row"><b>${esc(winner.name)}</b>（${esc(winner.partyName)}）${fmt(winner.votes)} 票 · ${winner.rate.toFixed(1)}%</div>
   <div class="row"><b>${esc(loser.name)}</b>（${esc(loser.partyName)}）${fmt(loser.votes)} 票 · ${loser.rate.toFixed(1)}%</div>
-  <div class="flip">${esc(loser.partyName)} 翻盤需 ${fmt(flip.swing)} 票改投</div>
+  <div class="flip">${esc(winner.name)} 與 ${esc(loser.name)} 上次差距 ${fmt(flip.gap)} 票</div>
   <div class="hint">正在開啟互動地圖… 若未跳轉請 <a href="${esc(spaUrl)}">點這裡</a>。</div>
 </div>
 <script>
