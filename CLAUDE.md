@@ -327,7 +327,8 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
 - 教育桶 CSS 用 modifier `.age-stack.edu`（沿用 `.age-stack` 結構，覆寫 4 顏色）
 - demographicsMap 用 stem 索引（永和區/永和市命名差異不影響）
 - 只有 `sticky=true` 且 village 層 + `hasDemo` 才顯示 secondary（hover 時隱藏）
-- 鏡像佈局：voxel 在中間，A 在左、B 在右
+- 鏡像佈局（桌機）：voxel 在中間，A 在左、B 在右
+- **手機（< 640px）改垂直堆疊**：A 在上、B 在下、水平置中、整個 stack 貼螢幕上半部留下半部給地圖；leader line 在 mobile 不畫（bubble 幾乎滿寬，連線資訊量已失）。修法在 `updateLabelPosition` 走 `if (W < 640 && hasSecondary)` 分支，避免桌機左右並列在窄螢幕被 clamp 到中段擠成一團、下方 secondary 完全被上方 primary 遮住
 
 **Hover 輕量化（同期）**
 - 主 bubble 在 `!sticky` 時 → `.minimal` class，只顯示里/區名（38px 高，無候選人/差距/歷史）
