@@ -892,9 +892,10 @@ function selectVillage(v) {
   }
   if (vm) {
     panZoomWithPitch(vm.userData.centroid, 15, 42, (Math.random() - 0.5) * 100, true);
-    sticky = false;
-    setHover(vm);
+    // sticky 必須在 setHover 之前 = true，否則 renderBubble 會走 .minimal
+    // 分支只畫里名 + 彩條（pin 後該秀完整資訊）
     sticky = true;
+    setHover(vm);
     pulseMesh = vm;
     labelEl.classList.add('locked');
   } else {
@@ -924,9 +925,8 @@ function selectVillage(v) {
       position: { y: 0 },
       material: { emissive: { setHex() {} }, emissiveIntensity: 0 },
     };
-    sticky = false;
-    setHover(ghost);
     sticky = true;
+    setHover(ghost);
     pulseMesh = null;
     labelEl.classList.add('locked');
   }
