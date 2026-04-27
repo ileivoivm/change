@@ -19,6 +19,7 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 
 const YYYMM = process.env.YYYMM || '11503';
+const EDU_YYY = process.env.EDU_YYY || '113';   // ODRP020 年度，最新 113 (2024)
 const ONLY  = process.env.CITY || null;
 
 const CITIES = [
@@ -30,15 +31,15 @@ const CITIES = [
   { key: 'khh',  countyName: '高雄市' },
 ];
 
-async function fetchAllPages(yyymm, county) {
+async function fetchAllPages(yyymm, county, dataset = 'ODRP014') {
   const all = [];
   let page = 1;
   while (true) {
-    const url = `https://www.ris.gov.tw/rs-opendata/api/v1/datastore/ODRP014/${yyymm}?PAGE=${page}&COUNTY=${encodeURIComponent(county)}`;
+    const url = `https://www.ris.gov.tw/rs-opendata/api/v1/datastore/${dataset}/${yyymm}?PAGE=${page}&COUNTY=${encodeURIComponent(county)}`;
     const r = await fetch(url);
     const j = await r.json();
     if (j.responseCode !== 'OD-0101-S') {
-      if (page === 1) throw new Error(`No data for ${county} ${yyymm}: ${j.responseMessage}`);
+      if (page === 1) throw new Error(`No data for ${dataset}/${yyymm} ${county}: ${j.responseMessage}`);
       break;
     }
     all.push(...(j.responseData || []));
@@ -47,6 +48,51 @@ async function fetchAllPages(yyymm, county) {
     page++;
   }
   return all;
+}
+
+// ODRP020「各村里教育程度資料」每 row 51 欄，性別 × 畢業/肄業細分 11 種學歷。
+// 我們聚合成 4 桶（研究所以上 / 大學專科 / 高中職 / 國中以下），畢業+肄業
+// 一律算進對應桶（肄業也代表教育階段達到該層）。
+function summarizeEducation(eduRec) {
+  const sum = (...keys) => keys.reduce((s, k) => s + Number(eduRec[k] || 0), 0);
+  const grad = 'graduated', ungrad = 'ungraduated';
+
+  // 研究所以上 = 博士 + 碩士
+  const graduate = sum(
+    `edu_doctor_${grad}_m`,   `edu_doctor_${grad}_f`,
+    `edu_doctor_${ungrad}_m`, `edu_doctor_${ungrad}_f`,
+    `edu_master_${grad}_m`,   `edu_master_${grad}_f`,
+    `edu_master_${ungrad}_m`, `edu_master_${ungrad}_f`,
+  );
+  // 大學專科 = 大學 + 二技 + 五專最後 2 年
+  const college = sum(
+    `edu_university_${grad}_m`,                `edu_university_${grad}_f`,
+    `edu_university_${ungrad}_m`,              `edu_university_${ungrad}_f`,
+    `edu_juniorcollege_2ys_${grad}_m`,         `edu_juniorcollege_2ys_${grad}_f`,
+    `edu_juniorcollege_2ys_${ungrad}_m`,       `edu_juniorcollege_2ys_${ungrad}_f`,
+    `edu_juniorcollege_5ys_final2y_${grad}_m`, `edu_juniorcollege_5ys_final2y_${grad}_f`,
+    `edu_juniorcollege_5ys_final2y_${ungrad}_m`, `edu_juniorcollege_5ys_final2y_${ungrad}_f`,
+  );
+  // 高中職 = 高中（普通）+ 高職
+  const senior = sum(
+    `edu_senior_${grad}_m`,            `edu_senior_${grad}_f`,
+    `edu_senior_${ungrad}_m`,          `edu_senior_${ungrad}_f`,
+    `edu_seniorvocational_${grad}_m`,  `edu_seniorvocational_${grad}_f`,
+    `edu_seniorvocational_${ungrad}_m`, `edu_seniorvocational_${ungrad}_f`,
+  );
+  // 國中以下 = 國中 + 國小 + 自修 + 不識字 (15+ 人口扣掉前三桶 fallback 同等)
+  const junior = sum(
+    `edu_junior_${grad}_m`,    `edu_junior_${grad}_f`,
+    `edu_junior_${ungrad}_m`,  `edu_junior_${ungrad}_f`,
+    `edu_primary_${grad}_m`,   `edu_primary_${grad}_f`,
+    `edu_primary_${ungrad}_m`, `edu_primary_${ungrad}_f`,
+    `edu_selfeducation_m`,     `edu_selfeducation_f`,
+    `edu_illiterate_m`,        `edu_illiterate_f`,
+  );
+
+  const total15up = Number(eduRec.edu_age_15up_total || 0)
+    || (graduate + college + senior + junior);
+  return { total15up, graduate, college, senior, junior };
 }
 
 // Sum people across an age range (inclusive). 100+ is a single bucket.
@@ -111,13 +157,32 @@ async function main() {
   }
   for (const city of cities) {
     const t0 = Date.now();
-    console.log(`[${city.key}] fetching ${city.countyName} ${YYYMM}…`);
-    const raw = await fetchAllPages(YYYMM, city.countyName);
-    const villages = raw.map(r => summarize(r, city.countyName));
+    console.log(`[${city.key}] fetching ${city.countyName} age (${YYYMM}) + edu (${EDU_YYY})…`);
+    // 抓兩個資料集
+    const [ageRaw, eduRaw] = await Promise.all([
+      fetchAllPages(YYYMM, city.countyName, 'ODRP014'),
+      fetchAllPages(EDU_YYY, city.countyName, 'ODRP020'),
+    ]);
+    // 教育資料用 district_code 索引（兩個資料集共享）
+    const eduByCode = new Map();
+    for (const e of eduRaw) eduByCode.set(e.district_code, e);
+
+    const villages = ageRaw.map(r => {
+      const base = summarize(r, city.countyName);
+      const edu = eduByCode.get(r.district_code);
+      if (edu) base.education = summarizeEducation(edu);
+      return base;
+    });
     const outPath = `data/processed/${city.key}-demographics.json`;
     ensureDir(outPath);
-    writeFileSync(outPath, JSON.stringify({ yyymm: YYYMM, generatedAt: new Date().toISOString(), villages }));
-    console.log(`[${city.key}] ${villages.length} villages · ${((Date.now()-t0)/1000).toFixed(1)}s → ${outPath}`);
+    writeFileSync(outPath, JSON.stringify({
+      yyymm: YYYMM,
+      eduYyy: EDU_YYY,
+      generatedAt: new Date().toISOString(),
+      villages,
+    }));
+    const eduMatched = villages.filter(v => v.education).length;
+    console.log(`[${city.key}] ${villages.length} villages · edu matched ${eduMatched} · ${((Date.now()-t0)/1000).toFixed(1)}s → ${outPath}`);
   }
 }
 

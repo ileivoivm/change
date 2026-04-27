@@ -2206,7 +2206,25 @@ function renderBubble(mesh) {
 }
 
 function setHover(mesh) {
-  if (hovered === mesh) return;
+  // If same mesh, the emissive / position / hovered ref are already in
+  // place — but sticky might have just changed (hover→click pin). Re-render
+  // bubble so .minimal toggles correctly. Without this, clicking a voxel
+  // you were already hovering kept the minimal bubble (bug：「第二次才會
+  // 彈跳出資訊氣泡視窗」).
+  if (hovered === mesh) {
+    if (mesh) {
+      renderBubble(mesh);
+      labelEl.classList.toggle('locked', sticky);
+      const isVillage = mesh.userData.layer === 'village';
+      let hasDemo = false;
+      if (sticky && isVillage && mesh.userData.townName && mesh.userData.villageName) {
+        const k = mesh.userData.townName.slice(0, -1) + '/' + mesh.userData.villageName.slice(0, -1);
+        hasDemo = demographicsMap.has(k);
+      }
+      if (secondaryEl) secondaryEl.classList.toggle('visible', sticky && isVillage && hasDemo);
+    }
+    return;
+  }
   if (hovered) {
     hovered.material.emissive.setHex(0x000000);
     hovered.position.y = hovered.userData.baseY;

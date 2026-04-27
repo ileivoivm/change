@@ -240,42 +240,58 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
 | 小A | 驗證 | T0 預驗證 + 部署後 E2E + merge 修復 + 補強 |
 
 **T0 後端基礎建設（小C）**
-- `worker/src/index.js`：POST `/tally` 寫 share/view 事件、GET `/counts?city=xxx` 讀回該城市所有 KV
-- KV key 設計：`{city}-{districtId}-{villageId}`（例 `ntpc-板橋區-留侯里`）；value `{shares, views, lastUpdate}`
-- 防刷：Worker 端用 IP SHA-256 hash 做 lock key + 10 分鐘 TTL
+- `worker/src/index.js`：POST `/tally` 寫 share/view 事件、GET `/counts?city=xxx` 讀回該城市聚合計數
+- KV key 設計：`agg:{city}` 單一聚合 value，內容為 `{ "{city}-{district}-{village}": {shares, views, lastUpdate} }`；舊 per-village key 由 `loadAgg()` lazy migrate
+- 防刷：Worker 端用 IP SHA-256 hash 做 `lock:{city}-{district}-{village}:{ipHash}`，正式站 TTL 24 小時；同一 IP 對同一里一天只計一次（share/view 共用），localhost dev origin 旁路
+- `/counts` 使用 Cloudflare Cache API，依 city + origin 快取 60 秒；分享成功後前端做本地樂觀 +1，不再按分享後重抓整城 counts
+- Daily cron decay：每天每筆 `shares` 與 `views` 各 -1，歸零後從 agg 移除
 - CORS 白名單：`https://ileivoivm.github.io`（production）+ `localhost:5173/5200` + `127.0.0.1:5173/5200`（dev E2E）
 - Endpoint：`https://change-tw.ileivoivm.workers.dev`
 - KV namespace ID：`fb9b871a0c8e4a9595b27da13fdf2106`
 
-**T1 前端分享流程（小B）**
-- bubble 內 `.share-btn`：桌機 clipboard、手機 `navigator.share()` 原生分享
-- 分享連結帶 `?ref=share`，並透過 `scripts/build-share.mjs` 重定向時保留 query
-- 點分享按鈕 → `POST /tally {event:'share'}`
+**T1 前端分享流程（小B + 小A 補強）**
+- bubble 內 `.share-btn`：**全平台 clipboard**（手機 navigator.share 拿掉，使用者反映 iOS sheet 太突兀）
+- 三段 fallback：clipboard API → execCommand textarea → button 顯示「複製失敗 · 再試一次」（不再彈 prompt popup）
+- 按鈕文字「複製分享連結、點亮燈塔」明確說明兩件事（複製 + 後端 +1）
+- 分享連結帶 `?ref=share`，`scripts/build-share.mjs` 重定向時保留 query；2022 六都統一 `/share/{city}/{d}/{v}/?ref=share`，新北 legacy `/share/2022/{區}/{里}/` 雙寫向後相容（FB 30 天 cache 不失效）
+- 點分享按鈕 → `POST /tally {event:'share'}` + 76 顆粒子煙火（暖黃→暖橘調色盤）
 - 頁面載入 `parseAndApplyUrl` 偵測 `?ref=share` → `POST /tally {event:'view'}`
-- 防刷：sessionStorage 30 分鐘鎖（`tally_lock:{event}:{key}`）+ keepalive flag 讓使用者跳走也能寫入
+- 防刷：sessionStorage 30 分鐘鎖（`tally_lock:{event}:{key}`，dev 跳過）+ keepalive flag 讓跳走也能寫入
+
+**分享 URL 協定風險（長期記憶）**
+- 最近多次退化都集中在分享 / OG 路徑：SPA query 沒有 village-specific OG、中文路徑 URL encode、數字 ID 新協定、六都 OG 產生、OG 圖 cityName 曾寫死「新北市」。
+- 這條鏈路是高風險核心，不可再只靠手動發現。之後凡改 `scripts/build-share.mjs`、share button URL、`parseAndApplyUrl`、`?ref=share` tally、OG meta / image path，都要先對照明確規格並跑測試案例。
+- 最小測試矩陣：ntpc legacy 中文 URL、六都數字 URL、中文 stem fallback、SPA `?city=&y=&d=&v=&ref=share` 還原、crawler 可讀 OG meta、人類瀏覽器跳回 SPA 且保留 `ref=share`、非 ntpc 城市 OG 圖 cityName / mayorRole 正確。
 
 **T2 計數讀取與聚合（小B）**
 - `fetchShareCounts()` 城市載入時非同步呼叫 GET /counts
 - `window.shareCounts` / `districtShareCounts` 提供 debug 與塔渲染使用
 - `getTotalForVillage(townName, villageName)` → share + view 總和
 
-**T3 塔的視覺渲染（小B，InstancedMesh）**
-- `buildTowerIM()`：shaft `CylinderGeometry` r=0.05 + top `SphereGeometry` r=0.15
-- 自發光暖白 `emissive #fff5d6`；高度 = `log(count - threshold + 1) * 0.8`
-- 里級塔：count ≥ 10 才建塔；區級塔：聚合 ≥ 50 才建塔
-- LOD：dist < 60 顯示里塔，dist > 40 顯示區塔；每幀 `updateTowerLOD()` 淡入淡出切換
+**T3 塔的視覺渲染（小B + 小A 補強，InstancedMesh）**
+- `buildTowerIM()`：shaft `CylinderGeometry` r=**0.025**（半粗）+ top `SphereGeometry` r=0.15 (12 segments)
+- shaft 用 MeshStandardMaterial emissive `#fff5d6` × 0.5（柔和），top 用 MeshBasicMaterial 永遠滿亮（`toneMapped:false, fog:false`）讀作燈籠
+- **離散階梯高度**：每 10 次升 1 階、每階 1.0 unit、上限 `TOWER_MAX_LEVEL=10`（取代原 log 縮放）
+- 里級塔：filter `count ≥ 10` 才建塔，去重 villageKey 避免離島雙塔
+- 區級塔：聚合 ≥ 50 才建塔，但 **高度 / 顏色 / Lv. 一律沿用村級 threshold=10 公式**，避免 LOD 切換時跳動
+- LOD：**單一切換點 `dist=50`**（之前 40-60 重疊區會雙塔已修），近景村塔、遠景區塔
+- District tower 位置採該區已點亮 villages 的 **count-weighted 平均**，避免拉遠時位置跳到行政中心
+- **顏色漸變**：count=10 暖黃 `#FCE327` → count=100 暖橘 `#FC8654` 線性 lerp（per-instance setColorAt）
+- **星光閃爍**：`tickTowerTwinkle` 每幀 brightness 0.4–1.0 modulation，每顆隨機相位 + 2–6s 週期
+- **voxel 連動**：`tickTowerLift` 跟著 hover lift / pulse breathing 上下，跳過未變 lift 的紀錄
+- **drilled 隱藏**：drilled 進某區後其他區的村塔自動 `scale 0`
 
 **T4 互動（小B）**
-- `updateHover()` 優先偵測塔 → `setHover(towerGhost)` 顯示 tooltip
-- `handleCanvasClick()` 點塔 → `selectVillage` / `drillByStem` 沿用既有下鑽機制
-- mobile touch 對應同步
+- `checkTowerHit()` 優先偵測塔 → `setHover(towerGhost)` 顯示「🏯 Lv.N · 已被分享 N 次」
+- `handleCanvasClick()` 點塔 → `selectVillage` / `drillByStem`，**drilled 模式也吃**（之前只在 top-level 觸發已修）
+- mobile touch 同步（沿用 raycaster click handler）
 
-**T5 打磨（待做）**
-- [ ] 塔生長動畫（球先出現、線把球頂上去，0.8 秒 ease-out）
-- [ ] 確認 OG 圖在 FB / Threads / Line 預覽正常
-- [ ] 1000+ 塔效能測試（FPS ≥ 30）
-- [ ] 首頁文案：「這張地圖會隨民眾分享而生長，塔的高度是被點亮的次數」
-- [ ] （可選）時間衰減：舊分享慢慢沉下去，新的長起來
+**T5 已做的部分**
+- [x] OG 卡擴大六都 2022（commit `81053b3`，路徑 `/share/{city}/{d}/{v}/`）
+- [x] 時間衰減：Cloudflare cron `5 0 * * *` daily −1，雙 0 自動刪 key
+- [x] 分享按鈕煙火儀式感（76 顆粒子，commit `c1a3325`）
+
+**T5 待做** — 見 `SHARE_TOWER_TODO.md`
 
 #### Merge 殘留陷阱（小A 修復紀錄）
 
@@ -284,6 +300,37 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
 2. 小B 分支舊版的 `requestAnimationFrame(() => autoPanForBubble())` + 重複 function 宣告
 
 兩者並存導致 `SyntaxError: Identifier 'autoPanForBubble' has already been declared`，整個 SPA 無法啟動。修法：刪重複 function、移除 RAF 呼叫，保留 callback 串法。
+
+### ✅ M12 — 選民結構（內政部 ODRP014）+ secondary bubble
+
+把純票數視覺再往「結構脈絡」推進一層 — 看到誰贏不只是看誰贏，還能看「這個里是什麼樣的人住在這裡」。
+
+**資料管線（`scripts/extract-villages-demographics.mjs`）**
+- 抓內政部戶政司 ODRP014（`yyymm=11503`，2026-03 月度村里×單一年齡×性別）
+- 六都共 4,181 筆 villages（ntpc 1,032 / khh 890 / tnn 649 / txg 625 / tyc 529 / tpe 456）
+- 每筆從 210 欄壓縮到 ~10 欄：戶數 / 總人口 / 男女 / 選舉人(20+) / 中位年齡 / 4 段年齡桶（0-19, 20-39, 40-59, 60+）
+- 輸出至 `data/processed/{city}-demographics.json`，總 928KB
+- COUNTY 參數需用「臺」非「台」（API 嚴格要求）
+
+**UI（拆 bubble）**
+- 主 bubble（左）：tag + 里名 + winner + candidates + 差距試算 + 17 年歷史條 + 燈塔 tally + 分享
+- secondary bubble（右）：「選民結構」標頭 + 人口 / 選舉人 / 性別 / 中位年齡 + 4 段水平堆疊年齡條 + 2×2 圖例 + 資料來源浮水印
+- demographicsMap 用 stem 索引（永和區/永和市命名差異不影響）
+- 只有 `sticky=true` 且 village 層 + `hasDemo` 才顯示 secondary（hover 時隱藏）
+- 鏡像佈局：voxel 在中間，A 在左、B 在右
+
+**Hover 輕量化（同期）**
+- 主 bubble 在 `!sticky` 時 → `.minimal` class，只顯示里/區名（38px 高，無候選人/差距/歷史）
+- click pin 才升級成完整 bubble + secondary
+- 「畫面資訊過多」徹底解：transient hover 完全 minimal，連連莊 X 年都不秀
+- 注意：`selectVillage` 內 `sticky = true` 必須在 `setHover` **之前**，否則 renderBubble 走 minimal 分支只畫里名
+
+### ✅ M13 — 跨六都搜尋 + 報告 modal + minimal hover
+
+- **跨六都搜尋**：`/` 或 `Cmd+K` 開 modal，索引 ~5,500 筆（六都 2022 villages + districts）。多 token AND 比對（「永和 安和」要兩 token 都命中）。同城跳轉用 `selectVillage` / `drillByStem` 不重整；跨城用 `location.assign` 觸發整頁路由
+- **資料回報 modal**（電話圖示）：免責聲明 + 引用來源（CEC / 內政部 / g0v）+「開新 Issue 通報 ↗」連 GitHub
+- **「翻盤」措辭中性化**：bubble flip block 從「X 黨翻盤需 N 票改投」→「侯友宜 與 林佳龍 差距 N 票（X.X% 領先）」+「N 票流動即可平手」+「或多 N 張票進場」。數字算法相同，語氣從動員→事實
+- **「連莊 X 年 / 翻過 N 次」文案升級**：bubble 底部 hs-meta 從輕描述升級成五種狀態時序統計（永X里連莊 N 年 / 翻轉里翻過 1 次 / 搖擺里翻過 N 次）
 
 ### ☐ M10 — 開票日即時
 - [ ] 研究當年中選會即時 endpoint
