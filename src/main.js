@@ -123,6 +123,27 @@ const ALL_ELECTIONS = {
 const ELECTIONS = ALL_ELECTIONS[CITY_CONFIG.key] || ALL_ELECTIONS.ntpc;
 const ALL_VILLAGE_GEO = { ntpc: ntpcVillageGeo, tpe: tpeVillageGeo, tyc: tycVillageGeo, txg: txgVillageGeo, tnn: tnnVillageGeo, khh: khhVillageGeo };
 const villageGeo = ALL_VILLAGE_GEO[CITY_CONFIG.key] || ntpcVillageGeo;
+
+// Demographics (MOI ODRP014 latest snapshot, see scripts/extract-villages-demographics.mjs).
+// Per-village 戶數 / 人口 / 性別 / 年齡桶 / 中位年齡，作為「選民結構」 secondary bubble 用。
+import ntpcDemo from '../data/processed/ntpc-demographics.json';
+import tpeDemo  from '../data/processed/tpe-demographics.json';
+import tycDemo  from '../data/processed/tyc-demographics.json';
+import txgDemo  from '../data/processed/txg-demographics.json';
+import tnnDemo  from '../data/processed/tnn-demographics.json';
+import khhDemo  from '../data/processed/khh-demographics.json';
+const ALL_DEMOGRAPHICS = { ntpc: ntpcDemo, tpe: tpeDemo, tyc: tycDemo, txg: txgDemo, tnn: tnnDemo, khh: khhDemo };
+// Index by 兩字 stem so naming-mismatch (1982「永和市」 vs 現代「永和區」)不會錯失對應。
+const demographicsMap = (() => {
+  const m = new Map();
+  const data = ALL_DEMOGRAPHICS[CITY_CONFIG.key]?.villages || [];
+  for (const v of data) {
+    const k = v.townName.slice(0, -1) + '/' + v.villageName.slice(0, -1);
+    m.set(k, v);
+  }
+  return m;
+})();
+const DEMOGRAPHICS_YYYMM = ALL_DEMOGRAPHICS[CITY_CONFIG.key]?.yyymm || '';
 const ALL_DISTRICT_GEO = { ntpc: ntpcGeo, tpe: tpeGeo, tyc: tycGeo, txg: txgGeo, tnn: tnnGeo, khh: khhGeo };
 // Fallback village list (for district card counts when current year has no village data)
 const ALL_FALLBACK_VILLAGES = { ntpc: v2022.villages, tpe: tv2022.villages, tyc: yv2022.villages, txg: xv2022.villages, tnn: nv2022.villages, khh: kv2022.villages };
@@ -303,6 +324,52 @@ const villageHistoryMap = (() => {
   }
   return m;
 })();
+
+// Secondary bubble — 選民結構 + 17 年歷史條。Pure function；輸出整段
+// HTML 字串，呼叫端負責塞進 #label-secondary .bubble。
+function renderSecondaryBubble(townName, villageName) {
+  const k = townName.slice(0, -1) + '/' + villageName.slice(0, -1);
+  const demo = demographicsMap.get(k);
+  const fmt = n => n.toLocaleString('en-US');
+  const pct = (a, total) => total ? ((a / total) * 100).toFixed(1) + '%' : '—';
+
+  let demoBlock = '';
+  if (demo) {
+    const total = demo.pop;
+    const a = demo.age;
+    const widths = total ? {
+      a0: (a.a0_19  / total * 100).toFixed(1),
+      a1: (a.a20_39 / total * 100).toFixed(1),
+      a2: (a.a40_59 / total * 100).toFixed(1),
+      a3: (a.a60up  / total * 100).toFixed(1),
+    } : { a0:0, a1:0, a2:0, a3:0 };
+    demoBlock = `
+      <div class="sec-head">選民結構</div>
+      <div class="demo-row"><span class="label">人口</span> <b>${fmt(total)}</b> 人 <span class="dim">／ 戶數 ${fmt(demo.households)}</span></div>
+      <div class="demo-row"><span class="label">選舉人</span> <b>${fmt(demo.voters20up)}</b> 人 <span class="dim">（20 歲以上）</span></div>
+      <div class="demo-row"><span class="label">性別</span> 男 <b>${pct(demo.popM, total)}</b> · 女 <b>${pct(demo.popF, total)}</b></div>
+      <div class="demo-row"><span class="label">中位年齡</span> <b>${demo.medianAge ?? '—'}</b> 歲</div>
+      <div class="age-stack" title="年齡分布">
+        <span class="a0" style="width:${widths.a0}%"></span>
+        <span class="a1" style="width:${widths.a1}%"></span>
+        <span class="a2" style="width:${widths.a2}%"></span>
+        <span class="a3" style="width:${widths.a3}%"></span>
+      </div>
+      <div class="age-legend">
+        <span><span class="swatch" style="background:#e8c989"></span>0–19  ${pct(a.a0_19, total)}</span>
+        <span><span class="swatch" style="background:#c89e64"></span>20–39 ${pct(a.a20_39, total)}</span>
+        <span><span class="swatch" style="background:#9c6f48"></span>40–59 ${pct(a.a40_59, total)}</span>
+        <span><span class="swatch" style="background:#6b4830"></span>60+   ${pct(a.a60up, total)}</span>
+      </div>
+      <hr class="demo-divider">`;
+  }
+
+  const historyBlock = renderVillageHistoryStrip(townName, villageName);
+  const source = demo
+    ? `<div class="demo-source">人口資料：內政部戶政司 ${DEMOGRAPHICS_YYYMM} · 選舉資料：中選會</div>`
+    : '';
+  return `${demoBlock}${historyBlock}${source}`;
+}
 
 function renderVillageHistoryStrip(townName, villageName) {
   const k = townName.slice(0, -1) + '/' + villageName.slice(0, -1);
@@ -1588,6 +1655,8 @@ let pointerInside = false;
 
 const labelEl = document.getElementById('label');
 const labelBubble = labelEl.querySelector('.bubble');
+const secondaryEl = document.getElementById('label-secondary');
+const secondaryBubble = secondaryEl ? secondaryEl.querySelector('.bubble') : null;
 const leaderSvg  = document.getElementById('label-leader');
 const leaderLine = leaderSvg ? leaderSvg.querySelector('line') : null;
 const tmpVec = new THREE.Vector3();
@@ -2059,18 +2128,16 @@ function renderBubble(mesh) {
       tallyBlock = `<div class="tally-count" data-town="${tName}" data-village="${vName}">分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（還差 ${remain} 次）</div>`;
     }
 
-    // P2 武器化緩衝：燈塔免責小字，避免被當「選區重要性 = 政治戰場」工具
-    const towerDisclaimer = `<div class="tower-disclaimer">燈塔代表分享熱度，不代表選區政治重要性</div>`;
-
+    // 主 bubble — 投票結果 + 燈塔分享。歷史條 + 選民結構搬到 secondary。
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
       <div class="winner" style="color:${winColor}">${v.winner} 勝 ${v.margin.toFixed(1)}%</div>
       <div class="cands">${rows}</div>
       ${flipBlock}
-      ${renderVillageHistoryStrip(tName, vName)}
       ${tallyBlock}
-      ${towerDisclaimer}
       ${shareBlock}`;
+    // Secondary bubble — 選民結構 + 17 年歷史條
+    if (secondaryBubble) secondaryBubble.innerHTML = renderSecondaryBubble(tName, vName);
     return;
   }
 
@@ -2126,10 +2193,15 @@ function setHover(mesh) {
     labelEl.classList.toggle('locked', sticky);
     labelEl.classList.add('visible');
     if (leaderSvg) leaderSvg.classList.add('visible');
+    // Secondary bubble visibility — only show for villages (where 選民結構 +
+    // 歷史條 都有意義), 不在 district / context hover 時顯示
+    const isVillage = mesh.userData.layer === 'village';
+    if (secondaryEl) secondaryEl.classList.toggle('visible', isVillage);
   } else {
     document.body.style.cursor = '';
     labelEl.classList.remove('visible');
     if (leaderSvg) leaderSvg.classList.remove('visible');
+    if (secondaryEl) secondaryEl.classList.remove('visible');
   }
 }
 
@@ -2196,6 +2268,16 @@ function updateLabelPosition() {
   anchorX = Math.max(margin + bw, Math.min(W - margin, anchorX));
   anchorY = Math.max(margin + labelBubble.offsetHeight, Math.min(Hh - margin, anchorY));
   labelEl.style.transform = `translate(${anchorX}px, ${anchorY}px) translate(-100%, -100%)`;
+
+  // Secondary bubble — mirror to the voxel's RIGHT side (bottom-left corner
+  // sits at (voxelX + gap, anchorY)). Clamp horizontally within viewport.
+  if (secondaryEl && secondaryBubble && secondaryEl.classList.contains('visible')) {
+    const sw = secondaryBubble.offsetWidth;
+    let secX = voxelX + gap;
+    secX = Math.min(W - margin - sw, Math.max(margin, secX));
+    const secY = Math.max(margin + secondaryBubble.offsetHeight, Math.min(Hh - margin, anchorY));
+    secondaryEl.style.transform = `translate(${secX}px, ${secY}px) translate(0, -100%)`;
+  }
 
   // Leader line: from bubble's bottom-right corner (anchorX, anchorY) to
   // the voxel top (voxelX, voxelY). User feedback: 「bubble 下方的黑線，

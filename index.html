@@ -112,6 +112,85 @@
       }
       body.map-scrim-visible #map-scrim { opacity: 1; }
 
+      /* Secondary bubble — 鏡像至 voxel 右側，承載歷史條 + 選民結構，
+         讓主 bubble 能專注「投票結果 + 燈塔分享」不被資訊量壓垮。
+         共用 .bubble 樣式，只是錨點和 transform 反過來。 */
+      #label-secondary {
+        position: fixed; left: 0; top: 0;
+        pointer-events: none;
+        font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+        opacity: 0;
+        transition: opacity 120ms ease-out;
+        z-index: 50;
+      }
+      #label-secondary.visible { opacity: 1; }
+      #label-secondary .bubble {
+        background: rgba(255,255,255,0.97);
+        color: #1a1a1a;
+        padding: 14px 18px;
+        border-radius: 0;
+        min-width: 240px; max-width: 280px;
+        box-shadow: 0 8px 28px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.07);
+        backdrop-filter: blur(8px);
+      }
+      #label-secondary .sec-head {
+        font-size: 10px; font-weight: 300;
+        color: #999; letter-spacing: 0.3em;
+        margin-bottom: 8px;
+      }
+      #label-secondary .demo-row {
+        display: flex; align-items: baseline; gap: 6px;
+        font-size: 13px; font-weight: 300;
+        color: #444; line-height: 1.6;
+        font-variant-numeric: tabular-nums;
+      }
+      #label-secondary .demo-row .label {
+        color: #888; min-width: 60px;
+      }
+      #label-secondary .demo-row b {
+        color: #1a1a1a; font-weight: 500;
+      }
+      #label-secondary .demo-row .dim {
+        color: #999; font-size: 11px;
+      }
+      #label-secondary .demo-divider {
+        margin: 10px 0;
+        border: none; border-top: 1px solid rgba(0,0,0,0.06);
+      }
+      /* 年齡桶：四段水平堆疊長條，每段寬度 = 比例 × 100% */
+      #label-secondary .age-stack {
+        display: flex;
+        height: 8px;
+        margin: 6px 0;
+        background: #f0eee6;
+        overflow: hidden;
+      }
+      #label-secondary .age-stack > span {
+        display: block;
+        height: 100%;
+      }
+      #label-secondary .age-stack .a0  { background: #e8c989; }    /* 0-19 童 — 暖黃 */
+      #label-secondary .age-stack .a1  { background: #c89e64; }    /* 20-39 青 — 棕 */
+      #label-secondary .age-stack .a2  { background: #9c6f48; }    /* 40-59 中 — 深棕 */
+      #label-secondary .age-stack .a3  { background: #6b4830; }    /* 60+ 銀 — 巧克力 */
+      #label-secondary .age-legend {
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 4px 12px;
+        font-size: 11px; font-weight: 300;
+        color: #777;
+        font-variant-numeric: tabular-nums;
+      }
+      #label-secondary .age-legend .swatch {
+        display: inline-block; width: 8px; height: 8px;
+        margin-right: 6px; vertical-align: middle;
+      }
+      #label-secondary .demo-source {
+        margin-top: 10px; padding-top: 8px;
+        border-top: 1px solid rgba(0,0,0,0.06);
+        font-size: 10px; font-weight: 300;
+        color: #aaa; letter-spacing: 0.04em;
+      }
+
       /* floating speech bubble anchored to hovered district */
       #label {
         position: fixed; left: 0; top: 0;
@@ -1189,6 +1268,11 @@
 
     <div id="label">
       <div class="bubble"><span class="tag"></span><span class="name"></span></div>
+    </div>
+
+    <!-- Secondary bubble — 選民結構 + 17年歷史條，從主 bubble 拆出來避免畫面資訊過多 -->
+    <div id="label-secondary">
+      <div class="bubble"></div>
     </div>
 
     <div id="controls">
