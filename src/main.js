@@ -478,20 +478,11 @@ function updateMobileRankingTitle() {
     return;
   }
   // Mobile bubbles are hidden in ranking-mode → the title pill has to
-  // carry the 資料來源 / 免責 info (mirrors the bubble's rank-disclaimer
-  // on desktop). Two-line layout: main + dim sub.
-  const sourceYear = _rankingMode === 'swing'
-    ? `${YEARS[0]}–${YEARS[YEARS.length - 1]}`
-    : `依 ${RANKINGS.latestYear}`;
-  const methodHint = {
-    kmt:   'KMT 得票率單指標',
-    dpp:   'DPP 得票率單指標',
-    swing: '勝方政黨翻盤次數',
-    close: '勝負差距絕對值',
-  }[_rankingMode] || '';
+  // carry the 白話解釋 (mirrors the bubble's rank-disclaimer on desktop).
+  // Two-line layout: main (城市 · 分類) + sub (一般人看得懂的解釋).
   t.innerHTML = `
     <div class="mr-main">${CITY_CONFIG.nameZh} · ${cat}</div>
-    <div class="mr-sub">${methodHint} · ${sourceYear} 中選會</div>`;
+    <div class="mr-sub">${rankingPlainExplain(_rankingMode)}</div>`;
 }
 
 // Mobile ranking mode is the modal-style mode-switch. Entering it:
@@ -532,6 +523,106 @@ function wireMobileRankingUI() {
   });
 }
 
+// ─────────── persistent rank labels above each top-10 column ───────────
+// Pool of 10 DOM nodes; each frame we look up the ranked villages, project
+// their centroid (already lifted to column tip in applyVillageHeights) to
+// screen and reposition the label. No hover required — labels are always
+// visible while ranking lens is on. Tap → drill+select that village.
+const RANK_LABEL_POOL_SIZE = 10;
+const _rankLabelPool = [];
+const _rankLabelTmpVec = new THREE.Vector3();
+
+function buildRankLabelPool() {
+  const host = document.getElementById('rank-labels');
+  if (!host) return;
+  for (let i = 0; i < RANK_LABEL_POOL_SIZE; i++) {
+    const el = document.createElement('div');
+    el.className = 'rank-label';
+    el.innerHTML = `<span class="rank-num"></span><span class="rank-village"></span>`;
+    host.appendChild(el);
+    _rankLabelPool.push(el);
+  }
+  // Tap → exit ranking-mobile-mode (so bubble is visible) + drill+select
+  // that village. On desktop, just drill+select; bubble shows on hover.
+  host.addEventListener('click', (e) => {
+    const lbl = e.target.closest('.rank-label');
+    if (!lbl) return;
+    const tName = lbl.dataset.townName;
+    const vName = lbl.dataset.villageName;
+    if (!tName || !vName) return;
+    if (rankingMobileMode) setRankingMobileMode(false);
+    if (typeof selectVillage === 'function') selectVillage({ townName: tName, villageName: vName });
+  });
+}
+
+function updateRankLabels() {
+  if (!_rankingMode || _rankLabelPool.length === 0) {
+    for (const el of _rankLabelPool) {
+      if (el.style.display !== 'none') el.style.display = 'none';
+    }
+    return;
+  }
+  const rankMap = RANKINGS[_rankingMode];
+  if (!rankMap) return;
+
+  // Group meshes by rank, prefer visible meshes (drilled district hides others).
+  // Some villages span multiple GeoJSON features (離島 / 斷裂里) → multiple
+  // meshes. We pick the first mesh that's currently visible per rank.
+  const meshByRank = new Map();
+  for (const mesh of villageMeshes) {
+    const key = mesh.userData.villageKey;
+    const rank = rankMap.get(key);
+    if (!rank || rank > RANK_LABEL_POOL_SIZE) continue;
+    if (!mesh.visible) continue;
+    if (!meshByRank.has(rank)) meshByRank.set(rank, mesh);
+  }
+
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+  let used = 0;
+  // Iterate ranks 1..N in order so DOM source order matches visual hierarchy.
+  for (let rank = 1; rank <= RANK_LABEL_POOL_SIZE; rank++) {
+    const mesh = meshByRank.get(rank);
+    const el = _rankLabelPool[used];
+    if (!mesh || !el) continue;
+    used++;
+
+    _rankLabelTmpVec.copy(mesh.userData.centroid);
+    _rankLabelTmpVec.y += 0.4; // float just above the column tip
+    _rankLabelTmpVec.project(camera);
+    if (_rankLabelTmpVec.z > 1) {
+      el.style.display = 'none';
+      continue;
+    }
+    const x = (_rankLabelTmpVec.x * 0.5 + 0.5) * W;
+    const y = (-_rankLabelTmpVec.y * 0.5 + 0.5) * H;
+    el.style.display = 'flex';
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    el.querySelector('.rank-num').textContent = rank;
+    el.querySelector('.rank-village').textContent = mesh.userData.villageName;
+    el.dataset.townName = mesh.userData.townName;
+    el.dataset.villageName = mesh.userData.villageName;
+  }
+  // Hide unused pool slots.
+  for (let j = used; j < _rankLabelPool.length; j++) {
+    if (_rankLabelPool[j].style.display !== 'none') _rankLabelPool[j].style.display = 'none';
+  }
+}
+
+// Plain-language explanation of what the ranking means. Used in both the
+// village bubble's .rank-disclaimer AND the mobile title pill's .mr-sub —
+// single source of truth so the user reads the same prose in both places.
+function rankingPlainExplain(mode) {
+  const ly = RANKINGS.latestYear;
+  return {
+    kmt:   `這些里在 ${ly} 年最支持國民黨`,
+    dpp:   `這些里在 ${ly} 年最支持民進黨`,
+    swing: `這些里在歷屆選舉中，勝方政黨變動次數最多`,
+    close: `這些里在 ${ly} 年勝負最接近，每張票都關鍵`,
+  }[mode] || '';
+}
+
 // Per-village bubble snippet: rank line + disclaimer.
 // Mirrors the share-tower's .tally-count + .tower-disclaimer pattern so the
 // ranking lens speaks through the same UI surface (the village bubble) rather
@@ -546,20 +637,14 @@ function renderRankingBlock(townName, villageName) {
   const sourceYear = _rankingMode === 'swing'
     ? `${YEARS[0]}–${YEARS[YEARS.length - 1]} 跨年`
     : `依 ${RANKINGS.latestYear} 中選會`;
-  // 免責 / 排序方法 — single-indicator caveat so reader knows what the
-  // ranking *is* and *isn't*. Mirrors the .tower-disclaimer slot's intent.
-  const methodHint = {
-    kmt:   'KMT 得票率單指標 · 不含 TPP / 獨立候選人',
-    dpp:   'DPP 得票率單指標 · 不含 TPP / 獨立候選人',
-    swing: '勝方政黨翻盤次數 · 1997 / 2001 ntpc 無里級資料',
-    close: '勝負差距絕對值 · 不分藍綠',
-  }[_rankingMode] || '';
 
   const rankLine = rank
     ? `<div class="rank-line"><span class="rank-trophy">🏆</span> ${cat} 第 <b>${rank}</b> 名 · ${sourceYear}</div>`
     : `<div class="rank-line dim">本里非「${cat}」top 10 · ${sourceYear}</div>`;
-  const disclaimer = methodHint
-    ? `<div class="rank-disclaimer">排序方法：${methodHint}</div>`
+  // 白話解釋 — 「為什麼這些柱塔被挑出來」一般人看得懂的版本。
+  const plain = rankingPlainExplain(_rankingMode);
+  const disclaimer = plain
+    ? `<div class="rank-disclaimer">${plain}</div>`
     : '';
   return rankLine + disclaimer;
 }
@@ -1881,6 +1966,7 @@ if (!_cityParam) {
     wireViewToggle();
     wireRankingToolbar();
     wireMobileRankingUI();
+    buildRankLabelPool();
     parseAndApplyUrl();
     // View tracking removed: counting every ?ref=share landing burned 2 reads
     // + 2 writes per visitor on the Worker, and a single viral village could
@@ -3485,6 +3571,7 @@ window.addEventListener('resize', () => {
   tickTowerLift();
   tickTowerTwinkle(now);
   updateTowerLOD();
+  updateRankLabels();
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
 })();
