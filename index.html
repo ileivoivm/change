@@ -101,6 +101,53 @@
         z-index: 40;
       }
 
+      /* ranking lens toolbar — bottom-left pill, 5 modes (off + 4 categories) */
+      #ranking-toolbar {
+        position: fixed; bottom: 18px; left: 18px;
+        display: flex; gap: 2px;
+        background: rgba(255,255,255,0.82); backdrop-filter: blur(6px);
+        padding: 6px; border-radius: 30px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+        font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+        z-index: 40;
+      }
+      #ranking-toolbar button {
+        font: 600 12px/1 -apple-system, "Noto Sans TC", sans-serif;
+        color: #555;
+        background: transparent;
+        border: none;
+        padding: 7px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        user-select: none;
+        transition: background 150ms, color 150ms;
+        appearance: none;
+      }
+      #ranking-toolbar button:hover { background: rgba(0,0,0,0.06); }
+      #ranking-toolbar button.active {
+        background: #2a2a2a; color: #fff;
+      }
+      /* "排行" off button gets a subtler active treatment so the lens-on
+         buttons feel like the salient toggle. */
+      #ranking-toolbar button[data-mode="off"].active {
+        background: rgba(0,0,0,0.08); color: #2a2a2a;
+      }
+      #ranking-caption {
+        position: fixed; bottom: 64px; left: 18px;
+        font: 11px/1.2 -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
+        color: #2a2a2a;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(4px);
+        padding: 4px 10px; border-radius: 10px;
+        letter-spacing: 0.2px;
+        pointer-events: none;
+        white-space: nowrap;
+        z-index: 40;
+        opacity: 0;
+        transition: opacity 180ms ease-out;
+      }
+      #ranking-caption.visible { opacity: 1; }
+
       #map-scrim {
         position: fixed;
         inset: 0;
@@ -934,6 +981,24 @@
           max-width: calc(100vw - 40px);
           white-space: normal; text-align: center;
         }
+        /* Ranking lens — sit above timeline on mobile so it doesn't hug the
+           edge with the back chip; max-width keeps the 5-button row from
+           overflowing on narrow phones. */
+        #ranking-toolbar {
+          bottom: 102px; left: 50%; transform: translateX(-50%);
+          padding: 4px;
+          max-width: calc(100vw - 16px);
+        }
+        #ranking-toolbar button {
+          font-size: 11px;
+          padding: 6px 9px;
+        }
+        #ranking-caption {
+          bottom: 144px; left: 50%; transform: translateX(-50%);
+          font-size: 10px; padding: 3px 9px;
+          max-width: calc(100vw - 32px);
+          white-space: normal; text-align: center;
+        }
 
         #controls { top: 10px; right: 10px; gap: 7px; }
         #compass { width: 46px; height: 46px; }
@@ -1248,6 +1313,17 @@
 
     <div id="timeline-hint">里級資料自 2005 起 · 1997 / 2001 中選會未公開里級</div>
     <div id="timeline"></div>
+
+    <!-- Ranking lens — pull top-10 villages into 「柱塔」by category.
+         Heights scale per-instance; original party colors preserved. -->
+    <div id="ranking-toolbar" role="toolbar" aria-label="排行榜">
+      <button type="button" data-mode="off" class="active" title="關閉排行榜">排行</button>
+      <button type="button" data-mode="kmt" title="KMT 得票率最高 Top 10">最藍</button>
+      <button type="button" data-mode="dpp" title="DPP 得票率最高 Top 10">最綠</button>
+      <button type="button" data-mode="swing" title="跨年翻盤次數最多 Top 10">最搖擺</button>
+      <button type="button" data-mode="close" title="勝負差距最小 Top 10">最激戰</button>
+    </div>
+    <div id="ranking-caption"></div>
 
     <div id="camera-readout">
       <div class="row"><span>pos</span><span id="cam-pos">—</span></div>
