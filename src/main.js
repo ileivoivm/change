@@ -364,11 +364,10 @@ function renderSecondaryBubble(townName, villageName) {
       <hr class="demo-divider">`;
   }
 
-  const historyBlock = renderVillageHistoryStrip(townName, villageName);
   const source = demo
-    ? `<div class="demo-source">人口資料：內政部戶政司 ${DEMOGRAPHICS_YYYMM} · 選舉資料：中選會</div>`
+    ? `<div class="demo-source">人口資料：內政部戶政司 ${DEMOGRAPHICS_YYYMM}</div>`
     : '';
-  return `${demoBlock}${historyBlock}${source}`;
+  return `${demoBlock}${source}`;
 }
 
 function renderVillageHistoryStrip(townName, villageName) {
@@ -2128,15 +2127,17 @@ function renderBubble(mesh) {
       tallyBlock = `<div class="tally-count" data-town="${tName}" data-village="${vName}">分享點亮燈塔 · 進度 <b>${totalCount}/${VILLAGE_TOWER_THRESHOLD}</b>（還差 ${remain} 次）</div>`;
     }
 
-    // 主 bubble — 投票結果 + 燈塔分享。歷史條 + 選民結構搬到 secondary。
+    // 主 bubble — 投票結果 + 17 年歷史條 + 燈塔分享。
+    // 歷史條留主 bubble 因為 year-jump click handler 綁在 labelBubble；
+    // 搬到 secondary 會點不到。選民結構則拆到 secondary。
     labelBubble.innerHTML = `
       <div class="row"><span class="tag">${tName}</span><span class="name">${vName}</span></div>
       <div class="winner" style="color:${winColor}">${v.winner} 勝 ${v.margin.toFixed(1)}%</div>
       <div class="cands">${rows}</div>
       ${flipBlock}
+      ${renderVillageHistoryStrip(tName, vName)}
       ${tallyBlock}
       ${shareBlock}`;
-    // Secondary bubble — 選民結構 + 17 年歷史條
     if (secondaryBubble) secondaryBubble.innerHTML = renderSecondaryBubble(tName, vName);
     return;
   }
@@ -2193,10 +2194,14 @@ function setHover(mesh) {
     labelEl.classList.toggle('locked', sticky);
     labelEl.classList.add('visible');
     if (leaderSvg) leaderSvg.classList.add('visible');
-    // Secondary bubble visibility — only show for villages (where 選民結構 +
-    // 歷史條 都有意義), 不在 district / context hover 時顯示
+    // Secondary bubble visibility — village layer + 該 village 有 demographics 資料才顯
     const isVillage = mesh.userData.layer === 'village';
-    if (secondaryEl) secondaryEl.classList.toggle('visible', isVillage);
+    let hasDemo = false;
+    if (isVillage && mesh.userData.townName && mesh.userData.villageName) {
+      const k = mesh.userData.townName.slice(0, -1) + '/' + mesh.userData.villageName.slice(0, -1);
+      hasDemo = demographicsMap.has(k);
+    }
+    if (secondaryEl) secondaryEl.classList.toggle('visible', isVillage && hasDemo);
   } else {
     document.body.style.cursor = '';
     labelEl.classList.remove('visible');
