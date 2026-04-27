@@ -505,6 +505,103 @@ function tickRipple(now) {
   _rippleApplyTo(districtMeshes, now);
 }
 
+// ─────────── flip rain (year-change voxel particle drop on flipped villages) ───────────
+// On year change, villages whose winning party changed get N small voxel
+// particles in the NEW colour falling from the sky, ease-in fall + single
+// bounce, then fade. Composes with the existing 600ms colour tween: the
+// underlying mesh's tween is delayed to about when the particles land, so the
+// effect reads as "new colour rains down and stains the village".
+//
+// Non-flipped villages keep the existing instant-start 600ms tween — only the
+// flipped ones get the dramatic treatment. Districts are not rain-targeted
+// (spec scoped to 里); the existing tween still recolours them.
+const RAIN_FALL_MS = 600;
+const RAIN_BOUNCE_MS = 220;
+const RAIN_FADE_MS = 260;
+const RAIN_TOTAL_MS = RAIN_FALL_MS + RAIN_BOUNCE_MS + RAIN_FADE_MS;
+const RAIN_SKY_Y = 9.5;            // start altitude (well above voxel top at 0.9)
+const RAIN_SKY_JITTER = 1.6;
+const RAIN_BOUNCE_HEIGHT = 0.42;   // upward overshoot after impact
+const RAIN_PARTICLES_PER_VILLAGE = 3;
+const RAIN_INTRA_STAGGER_MS = 80;  // delay between particles within one village
+const RAIN_SPREAD = 0.55;          // horizontal jitter from village centroid
+const RAIN_PARTICLE_SIZE = 0.18;
+const RAIN_MAX_IN_FLIGHT = 800;    // hard cap to keep heavy years (e.g. all 1k villages flipping) sane
+const TWEEN_DELAY_AFTER_RAIN_MS = 520; // village colour starts changing about when particles land
+
+let rainGroup = null;
+let rainGeo = null;
+const rainParticles = []; // { mesh, startTime, startY, targetY }
+
+function ensureRainGroup() {
+  if (rainGroup) return;
+  rainGroup = new THREE.Group();
+  rainGroup.renderOrder = 4;
+  scene.add(rainGroup);
+  rainGeo = new THREE.BoxGeometry(RAIN_PARTICLE_SIZE, RAIN_PARTICLE_SIZE, RAIN_PARTICLE_SIZE);
+}
+
+function spawnFlipRain(centroid, hex, baseY = 0) {
+  if (rainParticles.length >= RAIN_MAX_IN_FLIGHT) return;
+  ensureRainGroup();
+  const targetY = baseY + VOXEL_HEIGHT + RAIN_PARTICLE_SIZE * 0.5;
+  const now = performance.now();
+  for (let i = 0; i < RAIN_PARTICLES_PER_VILLAGE; i++) {
+    if (rainParticles.length >= RAIN_MAX_IN_FLIGHT) break;
+    const mat = new THREE.MeshStandardMaterial({
+      color: hex,
+      emissive: hex,
+      emissiveIntensity: 0.35,
+      roughness: 0.7,
+      metalness: 0,
+      transparent: true,
+      opacity: 1,
+    });
+    const m = new THREE.Mesh(rainGeo, mat);
+    const angle = Math.random() * Math.PI * 2;
+    const r = Math.random() * RAIN_SPREAD;
+    const startY = RAIN_SKY_Y + Math.random() * RAIN_SKY_JITTER;
+    m.position.set(centroid.x + Math.cos(angle) * r, startY, centroid.z + Math.sin(angle) * r);
+    rainGroup.add(m);
+    rainParticles.push({
+      mesh: m,
+      startTime: now + i * RAIN_INTRA_STAGGER_MS + Math.random() * 40,
+      startY,
+      targetY,
+    });
+  }
+}
+
+function tickFlipRain(now) {
+  if (!rainParticles.length) return;
+  for (let i = rainParticles.length - 1; i >= 0; i--) {
+    const p = rainParticles[i];
+    const elapsed = now - p.startTime;
+    if (elapsed < 0) continue;
+    if (elapsed < RAIN_FALL_MS) {
+      // ease-in fall (t^2): slow start, accelerating drop
+      const t = elapsed / RAIN_FALL_MS;
+      const k = t * t;
+      p.mesh.position.y = p.startY + (p.targetY - p.startY) * k;
+    } else if (elapsed < RAIN_FALL_MS + RAIN_BOUNCE_MS) {
+      // single upward bounce — sin arc above target
+      const tb = (elapsed - RAIN_FALL_MS) / RAIN_BOUNCE_MS;
+      p.mesh.position.y = p.targetY + Math.sin(tb * Math.PI) * RAIN_BOUNCE_HEIGHT;
+    } else if (elapsed < RAIN_TOTAL_MS) {
+      // settled: fade out + slight shrink
+      const tf = (elapsed - RAIN_FALL_MS - RAIN_BOUNCE_MS) / RAIN_FADE_MS;
+      p.mesh.position.y = p.targetY;
+      p.mesh.material.opacity = 1 - tf;
+      const s = 1 - tf * 0.5;
+      p.mesh.scale.setScalar(s);
+    } else {
+      rainGroup.remove(p.mesh);
+      p.mesh.material.dispose();
+      rainParticles.splice(i, 1);
+    }
+  }
+}
+
 // Idle demo: fire a ripple every 5–10s at a random visible voxel so the
 // landing view has motion even when nobody is sharing. Skipped while the
 // ranking lens is on (voxels are scaled — ripples on a 12× column look
@@ -3392,6 +3489,8 @@ function setYear(newYear, { preserveContext = false } = {}) {
   if (!preserveContext && (drilledDistrict || selectedVillageKey || sticky)) {
     exitDrill(true);
   }
+  // Capture pre-change vote map so we can diff winnerPartyCode for flip rain.
+  const prevVillageVoteMap = villageVoteMap;
   currentYear = newYear;
   electionByStem = rebuildElectionByStem(newYear);
   villageVoteMap = rebuildVillageVoteMap(newYear);
@@ -3410,15 +3509,24 @@ function setYear(newYear, { preserveContext = false } = {}) {
     mesh.userData.election = election;
   }
 
-  // Village color tween — if year has no village data, go NEUTRAL
+  // Village color tween — if year has no village data, go NEUTRAL.
+  // Villages whose winning party flipped get a delayed tween + rain particles.
+  // Visibility-gate the rain spawn: at top level the village layer is hidden
+  // so dropping particles there would just litter empty sky.
+  const villagesVisible = !!(villageGroup && villageGroup.visible);
   for (const mesh of villageMeshes) {
     const v = villageVoteMap.get(mesh.userData.villageKey);
+    const prev = prevVillageVoteMap.get(mesh.userData.villageKey);
     const targetHex = v ? colorForDistrict(v.results) : NEUTRAL;
+    const flipped = !!(v && prev && v.winnerPartyCode !== prev.winnerPartyCode);
     mesh.userData.tweenFrom = mesh.material.color.clone();
     mesh.userData.tweenTo = new THREE.Color(targetHex);
-    mesh.userData.tweenStart = now;
+    mesh.userData.tweenStart = flipped ? now + TWEEN_DELAY_AFTER_RAIN_MS : now;
     mesh.userData.baseColor = targetHex;
     mesh.userData.vote = v || null;
+    if (flipped && villagesVisible && mesh.visible) {
+      spawnFlipRain(mesh.userData.centroid, targetHex, mesh.userData.baseY ?? 0);
+    }
   }
 
   rebuildVillagePanel();
@@ -3432,6 +3540,11 @@ function tickColorTween(now) {
   const tweenMesh = (mesh) => {
     const start = mesh.userData.tweenStart;
     if (start == null) return;
+    // Delayed start: village flips schedule tweenStart in the future so the
+    // colour change lines up with rain particles landing. Hold at tweenFrom
+    // (the prev-year colour, written into material.color before this scheduling)
+    // until the start time arrives.
+    if (now < start) return;
     const t = Math.min(1, (now - start) / COLOR_TWEEN_MS);
     const k = 1 - Math.pow(1 - t, 3);
     mesh.material.color.lerpColors(mesh.userData.tweenFrom, mesh.userData.tweenTo, k);
@@ -3822,6 +3935,7 @@ window.addEventListener('resize', () => {
   tickPulse(now);
   tickIdleRipple(now);
   tickRipple(now);
+  tickFlipRain(now);
   tickTowerLift();
   tickTowerTwinkle(now);
   updateTowerLOD();
