@@ -301,20 +301,30 @@ Bubble 疊在 `#village-list` 上，share-btn 才點得到。`#village-list` 的
 
 兩者並存導致 `SyntaxError: Identifier 'autoPanForBubble' has already been declared`，整個 SPA 無法啟動。修法：刪重複 function、移除 RAF 呼叫，保留 callback 串法。
 
-### ✅ M12 — 選民結構（內政部 ODRP014）+ secondary bubble
+### ✅ M12 — 選民結構（內政部 ODRP014 / ODRP020）+ secondary bubble
 
 把純票數視覺再往「結構脈絡」推進一層 — 看到誰贏不只是看誰贏，還能看「這個里是什麼樣的人住在這裡」。
 
 **資料管線（`scripts/extract-villages-demographics.mjs`）**
-- 抓內政部戶政司 ODRP014（`yyymm=11503`，2026-03 月度村里×單一年齡×性別）
+- 兩個 endpoint 並行抓：
+  - ODRP014（`yyymm=11503`，2026-03 月度村里×單一年齡×性別）
+  - ODRP020（`yyy=113`，2024 年度村里×教育程度×性別×畢肄業，51 欄壓成 4 桶）
+- 兩 dataset 用 `district_code` 串接（同一筆里的兩種觀察）
 - 六都共 4,181 筆 villages（ntpc 1,032 / khh 890 / tnn 649 / txg 625 / tyc 529 / tpe 456）
-- 每筆從 210 欄壓縮到 ~10 欄：戶數 / 總人口 / 男女 / 選舉人(20+) / 中位年齡 / 4 段年齡桶（0-19, 20-39, 40-59, 60+）
-- 輸出至 `data/processed/{city}-demographics.json`，總 928KB
+  - 教育命中：ntpc/tpe/txg/tnn/khh 100%、tyc 漏 13 筆 2024 新設里（acceptable）
+- 每筆從 210+51 欄壓縮到 ~15 欄：戶數 / 總人口 / 男女 / 選舉人(20+) / 中位年齡 / 4 段年齡桶（0-19, 20-39, 40-59, 60+）/ `education = { total15up, graduate, college, senior, junior }` 4 段教育桶
+- 輸出至 `data/processed/{city}-demographics.json`，總 ~1.27 MB（單城最大 ntpc 314 KB）
 - COUNTY 參數需用「臺」非「台」（API 嚴格要求）
 
 **UI（拆 bubble）**
 - 主 bubble（左）：tag + 里名 + winner + candidates + 差距試算 + 17 年歷史條 + 燈塔 tally + 分享
-- secondary bubble（右）：「選民結構」標頭 + 人口 / 選舉人 / 性別 / 中位年齡 + 4 段水平堆疊年齡條 + 2×2 圖例 + 資料來源浮水印
+- secondary bubble（右）：兩段並列
+  - 「選民結構」：人口 / 選舉人 / 性別 / 中位年齡 + 4 段水平堆疊年齡條（暖色系：黃→棕→深棕→巧克力）+ 2×2 圖例
+  - `<hr class="demo-divider">` 分隔
+  - 「教育程度」：中位學歷（從低到高 cumulative 過半的桶）+ 4 段水平堆疊教育桶（冷暖系：研究所 `#5b8def` 藍 → 大學專科 `#7eb6c7` 青 → 高中職 `#a89c7a` 卡其 → 國中以下 `#c98c70` 暖棕）+ 2×2 圖例
+  - 資料來源並列：「人口資料：內政部戶政司 11503　／　教育程度：內政部戶政司 ODRP020 113」
+- 教育桶分母用 `Math.max(total15up, sum of buckets)` 防資料不一致
+- 教育桶 CSS 用 modifier `.age-stack.edu`（沿用 `.age-stack` 結構，覆寫 4 顏色）
 - demographicsMap 用 stem 索引（永和區/永和市命名差異不影響）
 - 只有 `sticky=true` 且 village 層 + `hasDemo` 才顯示 secondary（hover 時隱藏）
 - 鏡像佈局：voxel 在中間，A 在左、B 在右

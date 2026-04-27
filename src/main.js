@@ -360,14 +360,58 @@ function renderSecondaryBubble(townName, villageName) {
         <span><span class="swatch" style="background:#c89e64"></span>20–39 ${pct(a.a20_39, total)}</span>
         <span><span class="swatch" style="background:#9c6f48"></span>40–59 ${pct(a.a40_59, total)}</span>
         <span><span class="swatch" style="background:#6b4830"></span>60+   ${pct(a.a60up, total)}</span>
-      </div>
-      <hr class="demo-divider">`;
+      </div>`;
   }
 
-  const source = demo
-    ? `<div class="demo-source">人口資料：內政部戶政司 ${DEMOGRAPHICS_YYYMM}</div>`
+  // 教育程度桶（內政部 ODRP020，分母 = 15 歲以上人口，與年齡桶分母不同）
+  let eduBlock = '';
+  const edu = demo?.education;
+  if (edu) {
+    const eduTotal = Math.max(edu.total15up, edu.graduate + edu.college + edu.senior + edu.junior, 1);
+    const ew = {
+      e0: (edu.graduate / eduTotal * 100).toFixed(1),
+      e1: (edu.college  / eduTotal * 100).toFixed(1),
+      e2: (edu.senior   / eduTotal * 100).toFixed(1),
+      e3: (edu.junior   / eduTotal * 100).toFixed(1),
+    };
+    // 中位學歷：從低到高累積，cumulative 過半的桶就是中位學歷
+    const buckets = [
+      { name: '國中以下',   n: edu.junior },
+      { name: '高中職',     n: edu.senior },
+      { name: '大學專科',   n: edu.college },
+      { name: '研究所以上', n: edu.graduate },
+    ];
+    let cum = 0, medianLabel = '—';
+    const half = eduTotal / 2;
+    for (const b of buckets) {
+      cum += b.n;
+      if (cum >= half) { medianLabel = b.name; break; }
+    }
+    eduBlock = `
+      <hr class="demo-divider">
+      <div class="sec-head">教育程度</div>
+      <div class="demo-row"><span class="label">中位學歷</span> <b>${medianLabel}</b> <span class="dim">（15 歲以上 ${fmt(edu.total15up)} 人）</span></div>
+      <div class="age-stack edu" title="教育程度分布">
+        <span class="a0" style="width:${ew.e0}%"></span>
+        <span class="a1" style="width:${ew.e1}%"></span>
+        <span class="a2" style="width:${ew.e2}%"></span>
+        <span class="a3" style="width:${ew.e3}%"></span>
+      </div>
+      <div class="age-legend">
+        <span><span class="swatch" style="background:#5b8def"></span>研究所以上 ${pct(edu.graduate, eduTotal)}</span>
+        <span><span class="swatch" style="background:#7eb6c7"></span>大學專科   ${pct(edu.college, eduTotal)}</span>
+        <span><span class="swatch" style="background:#a89c7a"></span>高中職     ${pct(edu.senior, eduTotal)}</span>
+        <span><span class="swatch" style="background:#c98c70"></span>國中以下   ${pct(edu.junior, eduTotal)}</span>
+      </div>`;
+  }
+
+  const sourceParts = [];
+  if (demo) sourceParts.push(`人口資料：內政部戶政司 ${DEMOGRAPHICS_YYYMM}`);
+  if (edu)  sourceParts.push(`教育程度：內政部戶政司 ODRP020 ${ALL_DEMOGRAPHICS[CITY_CONFIG.key]?.eduYyy || ''}`);
+  const source = sourceParts.length
+    ? `<div class="demo-source">${sourceParts.join('　／　')}</div>`
     : '';
-  return `${demoBlock}${source}`;
+  return `${demoBlock}${eduBlock}${source}`;
 }
 
 function renderVillageHistoryStrip(townName, villageName) {
